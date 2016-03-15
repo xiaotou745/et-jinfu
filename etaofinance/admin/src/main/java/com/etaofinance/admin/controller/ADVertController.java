@@ -100,8 +100,13 @@ public class ADVertController {
 	@RequestMapping("modify")
 	@ResponseBody
 	public HttpResultModel<ADVertResp> modify(ADVert  record, HttpServletRequest request) {
-		HttpResultModel<ADVertResp> resp= aDVertService.add(record);	
+		HttpResultModel<ADVertResp> resp= aDVertService.modify(record);	
 		return resp;
 	}
 
+	@RequestMapping("del")
+	@ResponseBody
+	public int del(Integer id) {
+		return aDVertService.deleteByPrimaryKey(id);
+	}
 }

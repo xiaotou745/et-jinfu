@@ -16,6 +16,8 @@ public interface IADVertService {
    
 
     ADVert selectByPrimaryKey(Integer id);
+    
+	int deleteByPrimaryKey(Integer id) ;
 
     
 	PagedResponse<ADVert>  query(PagedADVertReq req);

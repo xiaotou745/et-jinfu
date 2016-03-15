@@ -20,6 +20,26 @@
     <include refid="Base_Column_List" />
     from advert
     where Id = #{id,jdbcType=INTEGER}
+  </select>  
+    <sql id="queryWhere">
+		1=1	
+		<if test="title != null and  title   !='' ">
+			and title  LIKE ''%${title}%''
+		</if> 
+	</sql> 
+<select id="query" resultType="com.etaofinance.entity.ADVert" parameterType="com.etaofinance.entity.req.PagedADVertReq" statementType="CALLABLE">
+{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' advert as a ',
+		'
+		<include refid="queryWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)} 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from advert

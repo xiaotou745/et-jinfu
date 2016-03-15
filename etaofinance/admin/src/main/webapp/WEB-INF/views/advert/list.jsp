@@ -259,6 +259,7 @@ width: 100%;
 	
 	function saveModify()
 	{
+		var txtEId= $('#txtEId').val().trim();
 		var txtETitle= $('#txtETitle').val().trim();
 		var txtEUrl= $('#txtEUrl').val().trim();	
 		var sltEType= $('#sltEType').val().trim();
@@ -268,6 +269,7 @@ width: 100%;
 
 
 	    var paramaters = {
+	    		"id": txtEId.trim(),
                 "title": txtETitle.trim(),
                 "url": txtEUrl.trim(),
                 "typeid": sltEType.trim(),

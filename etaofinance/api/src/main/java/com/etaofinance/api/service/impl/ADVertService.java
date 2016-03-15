@@ -30,6 +30,14 @@ public class ADVertService implements IADVertService{
 	private IADVertDao aDVertDao;
 
 
+	
+	
+	@Override
+	public int deleteByPrimaryKey(Integer id) {
+		return aDVertDao.deleteByPrimaryKey(id);
+	}
+
+
 	@Override
 	public ADVert selectByPrimaryKey(Integer id) {
 		return aDVertDao.selectByPrimaryKey(id);
