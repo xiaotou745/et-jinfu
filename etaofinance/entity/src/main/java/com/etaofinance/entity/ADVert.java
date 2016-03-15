@@ -20,8 +20,18 @@ public class ADVert {
     private String createname;
 
     private Date createtime;
+    
+    private Integer clicknum;
+ 
+    public Integer getClicknum() {
+		return clicknum;
+	}
 
-    public Integer getId() {
+	public void setClicknum(Integer clicknum) {
+		this.clicknum = clicknum;
+	}
+
+	public Integer getId() {
         return id;
     }
 
