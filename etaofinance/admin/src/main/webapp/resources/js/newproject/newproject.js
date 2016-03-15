@@ -1,3 +1,8 @@
+//点击图片移除
+function RemoveImg(id,uploader){
+	$('#'+id).remove();
+	uploader.removeFile(id);
+};
 //初始化文件上传对象(upload对象,上传按钮ID,图片放置区ID,最大图片数量)
 function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 {
@@ -38,6 +43,7 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	
 	//当有文件添加进来的时候
 	uploader.on( 'fileQueued', function( file ) {
+		console.log(file);
 		//构建图片对象
 		var $li = $( '<li id="' + file.id + '">' +
         '<p class="imgWrap">'+
@@ -45,13 +51,13 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
         '</p></li>' ),
         //图片按钮
         $btns = $('<div class="file-panel">' +
-        '<span class="cancel">删除</span></div>').appendTo( $li ),
+        '<span class="cancel">删除</span>' +
+        '<span class="rotateRight">向右旋转</span>' +
+        '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
         //图片容器
         $imgbox=$('#'+imgboxId);
-		//按钮事件
-		$btns.on( 'click', function() {
-			uploader.removeFile( file );
-		});
+		console.log($imgbox);
+	
 	    // 创建缩略图
 	    // 如果为非图片文件，可以不用调用此方法。
 	    // thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -60,7 +66,6 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	            $img.replaceWith('<span>不能预览</span>');
 	            return;
 	        }
-	        console.log($li.find('img'));
 	        $li.find('img').attr( 'src', src );
 	    });
 	    $li.appendTo($imgbox);//将LI放置在图片容器里面
@@ -68,20 +73,16 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	});
 	// 文件删除。
 	uploader.on( 'fileDequeued', function(file) {
-			var $li = $('#'+file.id);
-			console.log($li);
-			$li.remove();		
+			console.log(file);
 	});
 
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 	uploader.on( 'uploadSuccess', function( file ) {
-		alert('上传成功');
 	  //  $( '#'+file.id ).addClass('upload-state-done');
 	});
 
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {
-		alert('上传失败');
 //	    var $li = $( '#'+file.id ),
 //	        $error = $li.find('div.error');
 //
@@ -95,10 +96,9 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 
 	// 完成上传完了，成功或者失败，先删除进度条。
 	uploader.on( 'uploadComplete', function( file ) {
-		alert('上传完成');
 	   // $( '#'+file.id ).find('.progress').remove();
 	});
-	return uploader;
+	
 }
 
 $(function(){
