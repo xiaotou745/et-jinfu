@@ -41,7 +41,7 @@
 		UnitPrice, ProvinceCode, CityCode, AreaCode, Address, ProjectImage, AuditStatus,
 		ProjectStatus, IsShelve, MemberId, PreheatTime, StartTime, EndTime,
 		Schedule, InvestmentNumber,
-		FollowNumber, AuditName, AuditTime, CreateName, CreateTime
+		FollowNumber, AuditName, AuditTime, CreateName, CreateTime,refusereasion
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">

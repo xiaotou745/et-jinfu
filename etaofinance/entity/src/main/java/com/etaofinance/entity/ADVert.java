@@ -20,10 +20,8 @@ public class ADVert {
     private String createname;
 
     private Date createtime;
-    
-    private Integer clicknum;  
 
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -94,12 +92,4 @@ public class ADVert {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
-    
-    public Integer getClicknum() {
-  		return clicknum;
-  	}
-
-  	public void setClicknum(Integer clicknum) {
-  		this.clicknum = clicknum;
-  	}
 }
