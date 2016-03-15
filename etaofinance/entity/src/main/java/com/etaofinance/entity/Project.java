@@ -58,6 +58,7 @@ public class Project {
     private String createname;
 
     private Date createtime;
+    private String refusereasion;
 
     public Long getId() {
         return id;
@@ -282,4 +283,12 @@ public class Project {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+	public String getRefusereasion() {
+		return refusereasion;
+	}
+
+	public void setRefusereasion(String refusereasion) {
+		this.refusereasion = refusereasion;
+	}
 }

@@ -4,9 +4,11 @@
 	<%@page import="com.etaofinance.entity.common.PagedResponse"%>
 <%@page import="com.etaofinance.core.util.PageHelper"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
     <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="com.etaofinance.entity.Project"%>
 <%@page import="com.etaofinance.core.enums.ProjectType"%>
+<%@page import="com.etaofinance.core.enums.ProjectAuditStatus"%>
 <%@page import="java.util.List"%>
 <%
 	String basePath =PropertyUtils.getProperty("java.admin.url");
@@ -31,6 +33,8 @@
 
 		<%
 			PagedResponse<Project> data = (PagedResponse<Project>) request.getAttribute("listData");
+			Map<Long,String> strategyMap = (Map<Long,String>) request.getAttribute("strategyMap");
+		
 			List<Project> list = data.getResultList();
 			if (list == null) {
 				list = new ArrayList<Project>();
@@ -43,11 +47,13 @@
 			<td><%=list.get(i).getAmount()%>%</td>
 			<td><%=ProjectType.getEnum(list.get(i).getTypeid()).desc()%></td>
 			<td><%=list.get(i).getCitycode()%></td>
-			<td><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getStarttime(), "") %></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getEndtime(), "") %></td>
-			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
+			<td><%=strategyMap.get(list.get(i).getId())%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
+			<td><%=ProjectAuditStatus.getEnum(list.get(i).getAuditstatus()).desc()%></td>
+			<td><%=list.get(i).getRefusereasion()%></td>
+			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">预览</a>
+			<a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">修改</a>
+			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">审核</a>
 			</td>
 		</tr>
 		<%

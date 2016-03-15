@@ -1,11 +1,11 @@
-package com.etaofinance.api.dao.inter;
+package com.etaofinance.api.service.inter;
 
 import java.util.List;
 
 import com.etaofinance.entity.ProjectStrategy;
 
-public interface IProjectStrategyDao {
-    int deleteByPrimaryKey(Long id);
+public interface IProjectStrategyService {
+	int deleteByPrimaryKey(Long id);
     int deleteByProjectId(Long projectid);
     int insertList(List<ProjectStrategy> recordList);
 

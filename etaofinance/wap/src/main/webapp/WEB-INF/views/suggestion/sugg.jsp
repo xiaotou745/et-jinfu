@@ -51,14 +51,19 @@
             <img src="<%=basePath%>/img/zc_07.png" alt="">
             <form id="searchForm">
             <div class="form" >
+            	<input type="hidden" name="city" id="hidExistCitys">
+                <input type="hidden" name="precity" id="hidExpectCity">
                 <ul>
                     <li><input type="text" placeholder="请输入项目名称"  name="projectname" id="projectname"></li>
                     <li><input type="text" placeholder="请输入联系人姓名" name="username" id="username"></li>
                     <li><input type="text" placeholder="请输入联系方式" name="phoneno" id="phoneno" maxlength="11"></li>
                     <li><input type="text" placeholder="请输入电子邮箱" name="email" id="email"></li>
-                    <li><input type="text" placeholder="请输入现有店铺数量" name="count" id="count"><i>家</i></li>
-                    <li><input type="text" placeholder="请选择现有店铺所在地(可多选)" name="city" id="existCitys" ><span></span></li>
-                    <li><input type="text" placeholder="预期众筹店铺所在地" name="precity" id="expectCity"><span></span></li>
+                    <li><input type="tel" placeholder="请输入现有店铺数量" name="count" id="count"><i>家</i></li>
+                    
+                     
+                    
+                    <li><input type="text" placeholder="请选择现有店铺所在地(可多选)" id="existCitys" disabled="disabled"><span></span></li>
+                    <li><input type="text" placeholder="预期众筹店铺所在地" id="expectCity" disabled="disabled"><span></span></li>
                     <li><input type="text" placeholder="预期众筹金额" name="amount" id="amount"><i>元</i></li>
                     <li><a href="javascript:void(0)" id="add">提交申请</a></li>
                 </ul>

@@ -3,6 +3,7 @@
  */
 
 $(function() {
+
     // DOM节点
     var dom = {
         popup_existCitys: $("#popup_existCitys"), // 现有店铺所在地 弹窗
@@ -20,32 +21,38 @@ $(function() {
 
 
     // 现有店铺所在地 点击事件
-    dom.existCitys.on("click", function() {
+    dom.existCitys.parent().on("click", function(e) {
+
     	if(!existCitysRendered){
     		renderMultiCity();
     	}
         dom.popup_existCitys.removeClass("hide");
+        $('html,body').addClass("overflow-hidden");
+
         
     });
 
     // 预期众筹所在地 点击事件
-    dom.expectCity.on("click", function() {
+    dom.expectCity.parent().on("click", function() {
     	if(!expectCityRendered){
     		renderSingleCity();
     	}
         dom.popup_expectCity.removeClass("hide");
+        $('html,body').addClass("overflow-hidden");
     });
 
     // 完成按钮 点击事件
     dom.popup_existCitys.find("#complete").on("click", function(){
     	dom.popup_existCitys.addClass("hide");
-//    	console.log(existCitys);
+    	$('html,body').removeClass("overflow-hidden");
     	dom.existCitys.val(existCitys.toString());
+    	$("#hidExistCitys").val(existCitys.toString());
     });
     dom.popup_expectCity.find("#complete").on("click", function(){
     	dom.popup_expectCity.addClass("hide");
-//    	console.log(expectCity);
+    	$('html,body').removeClass("overflow-hidden");
     	dom.expectCity.val(expectCity.toString());
+    	$("#hidExpectCity").val(expectCity.toString());
     });
 
     // 现有店铺所在地 弹窗事件绑定
@@ -79,6 +86,9 @@ $(function() {
                 existCitys.push(slectedAreaText);
             }
         });
+
+        // 滚动
+        // dom.popup_existCitys.on('touchmove', function(e){e.preventDefault();})
     }
 
    	// 预期众筹所在地 弹窗事件绑定

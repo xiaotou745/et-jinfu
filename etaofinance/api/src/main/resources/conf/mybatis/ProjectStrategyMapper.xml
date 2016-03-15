@@ -11,77 +11,23 @@
   <sql id="Base_Column_List" >
     Id, ProjectId, Key, Value, Description
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from projectstrategy
-    where Id = #{id,jdbcType=BIGINT}
-  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectstrategy
     where Id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.etaofinance.entity.ProjectStrategy" >
-    insert into projectstrategy (Id, ProjectId, Key, 
-      Value, Description)
-    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, #{key,jdbcType=VARCHAR}, 
-      #{value,jdbcType=REAL}, #{description,jdbcType=VARCHAR})
+    <delete id="deleteByProjectId" parameterType="java.lang.Long" >
+    delete from projectstrategy
+    where ProjectId = #{projectid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertList" parameterType="java.util.List" >
+  <foreach collection="list" index="index" item="item">
+    insert into projectstrategy (ProjectId, Key, Value, Description)
+    values (#{item.projectid,jdbcType=BIGINT}, #{item.key,jdbcType=VARCHAR}, 
+      #{item.value,jdbcType=REAL}, #{item.description,jdbcType=VARCHAR});
+	</foreach>
   </insert>
-  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectStrategy" >
-    insert into projectstrategy
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        Id,
-      </if>
-      <if test="projectid != null" >
-        ProjectId,
-      </if>
-      <if test="key != null" >
-        Key,
-      </if>
-      <if test="value != null" >
-        Value,
-      </if>
-      <if test="description != null" >
-        Description,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="projectid != null" >
-        #{projectid,jdbcType=BIGINT},
-      </if>
-      <if test="key != null" >
-        #{key,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null" >
-        #{value,jdbcType=REAL},
-      </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectStrategy" >
-    update projectstrategy
-    <set >
-      <if test="projectid != null" >
-        ProjectId = #{projectid,jdbcType=BIGINT},
-      </if>
-      <if test="key != null" >
-        Key = #{key,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null" >
-        Value = #{value,jdbcType=REAL},
-      </if>
-      <if test="description != null" >
-        Description = #{description,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where Id = #{id,jdbcType=BIGINT}
-  </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectStrategy" >
     update projectstrategy
     set ProjectId = #{projectid,jdbcType=BIGINT},
@@ -90,4 +36,13 @@
       Description = #{description,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getByProjectIds"  resultType="com.etaofinance.entity.ProjectStrategy" 
+    parameterType="java.util.List" >
+	select 
+    <include refid="Base_Column_List" />
+    from projectstrategy where ProjectId in 
+	     <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+	           ${item}
+	     </foreach> ;
+  </select>
 </mapper>
