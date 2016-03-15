@@ -32,8 +32,7 @@ public class ADVertService implements IADVertService{
 
 	@Override
 	public ADVert selectByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return aDVertDao.selectByPrimaryKey(id);
 	}
 
 
@@ -47,6 +46,18 @@ public class ADVertService implements IADVertService{
 	public HttpResultModel<ADVertResp> add(ADVert record) {
 		HttpResultModel<ADVertResp> resp = new HttpResultModel<ADVertResp>();		
 		aDVertDao.insertSelective(record);
+		resp.setCode(ADVertEnum.Success.value());
+		resp.setMsg(ADVertEnum.Success.desc());		
+		return resp;
+	}
+	
+	@Override
+	public  HttpResultModel<ADVertResp> modify(ADVert record)
+	{
+		HttpResultModel<ADVertResp> resp = new HttpResultModel<ADVertResp>();
+
+		
+		aDVertDao.updateByPrimaryKeySelective(record);
 		resp.setCode(ADVertEnum.Success.value());
 		resp.setMsg(ADVertEnum.Success.desc());		
 		return resp;

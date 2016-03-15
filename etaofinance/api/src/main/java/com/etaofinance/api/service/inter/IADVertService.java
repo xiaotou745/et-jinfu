@@ -23,5 +23,7 @@ public interface IADVertService {
 	HttpResultModel<ADVertResp> add(ADVert record);
 		
 
+	HttpResultModel<ADVertResp> modify(ADVert record);
+	
 
 }

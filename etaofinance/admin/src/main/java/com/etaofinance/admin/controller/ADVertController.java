@@ -79,6 +79,14 @@ public class ADVertController {
 		return model;
 	}		
 	
+	@RequestMapping("selectbyprimarykey")
+	@ResponseBody
+	public ADVert selectByPrimaryKey(int id)
+	{
+		ADVert model=aDVertService.selectByPrimaryKey(id);
+		return model;
+	}
+	
 	@RequestMapping("add")
 	@ResponseBody
 	public HttpResultModel<ADVertResp> add(ADVert record, HttpServletRequest request) {
@@ -88,13 +96,12 @@ public class ADVertController {
 		HttpResultModel<ADVertResp> resp= aDVertService.add(record);	
 		return resp;
 	}
-//	
-//	@RequestMapping("modify")
-//	@ResponseBody
-//	public HttpResultModel<TaskDistributionResp> modify(TaskDistribution  record, HttpServletRequest request) {
-//		record.setUpdatename(UserContext.getCurrentContext(request).getLoginName());
-//		record.setUpdatetime(new Date());
-//		return taskDistributionService.modify(record);
-//	}
+	
+	@RequestMapping("modify")
+	@ResponseBody
+	public HttpResultModel<ADVertResp> modify(ADVert  record, HttpServletRequest request) {
+		HttpResultModel<ADVertResp> resp= aDVertService.add(record);	
+		return resp;
+	}
 
 }

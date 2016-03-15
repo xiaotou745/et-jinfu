@@ -116,7 +116,7 @@ width: 100%;
             <div class="control-group">  
                 <label>是否启用：</label>      
   			 <select name="radAstatus"
-				 class="form-control m-b" id="commissionType" >				
+				 class="form-control m-b" id="radAstatus" >				
 					<option value="1">启用</option>
 					<option value="0">不启用</option>
 			</select> 
@@ -143,7 +143,7 @@ width: 100%;
 				<button class="close" type="button" data-dismiss="modal">
 					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
 				</button>
-				<h4 class="modal-title">修改广告<</h4>
+				<h4 class="modal-title">修改广告</h4>
 			</div>
 			<small class="font-bold">
 				<div class="modal-body">
@@ -157,13 +157,18 @@ width: 100%;
                 <label>链接地址：</label><input  name="txtEUrl" id="txtEUrl" type="text" >
             </div>
             <div class="control-group">  
-                <label>所属广告位：</label><input  name="txtETypeId" id="txtETypeId" type="text" >
+                <label>所属广告位：</label><%=HtmlHelper.getSelect("sltEType", EnumHelper.GetEnumItems(ADVertType.class), "desc", "value",null,"-1","全部") %>
             </div>            
               <div class="control-group">  
                 <label>图片地址：</label><input  name="txtEImageUrl" id="txtEImageUrl" type="text" >
             </div>
             <div class="control-group">  
-                <label>是否启用：</label><input  name="txtEIsShelve" id="txtEIsShelve" type="text" >
+                <label>是否启用：</label>
+                <select name="radEstatus"
+				 class="form-control m-b" id="radEstatus" >				
+					<option value="1">启用</option>
+					<option value="0">不启用</option>
+			</select> 
             </div>
            <div class="control-group">  
                 <label>排序：</label><input  name="txtESortNo" id="txtESortNo" type="text" >
@@ -208,8 +213,7 @@ width: 100%;
 
 	function showAdd(){ 
         $('#txtATitle').val('');
-        $('#txtAUrl').val('');
-        //$("#sltAType").val();
+        $('#txtAUrl').val('');       
          $('#txtAImageUrl').val('');
          $('#txtASortNo').val('0');         
         $('#divadd').modal('show');
@@ -219,7 +223,7 @@ width: 100%;
 		var txtAUrl= $('#txtAUrl').val().trim();	
 		var sltAType= $('#sltAType').val().trim();
 		var txtAImageUrl= $('#txtAImageUrl').val().trim();
-		var radAstatus= $('#radAstatus').val();
+		var radAstatus= $('#radAstatus').val();	
 		var txtASortNo= $('#txtASortNo').val().trim();		
 	   
 	    var paramaters = {
@@ -242,8 +246,8 @@ width: 100%;
 		           url: url,
 		           data: paramaters,
 		           success: function (result) {		    
-		        	   alert(result.message);		        	
-		               if (result.status == 1) {
+		        	   alert(result.msg);		        	
+		               if (result.code == 1) {
 		            	   window.location.href = "<%=basePath%>/advert/list";		
 		               }
 		                              
@@ -255,93 +259,42 @@ width: 100%;
 	
 	function saveModify()
 	{
-// 		var txtId= $('#txtEId').val().trim();
-// 		var txtKM= $('#txtEKM').val().trim();
-// 		var txtKG= $('#txtEKG').val().trim();
-// 		var txtESteps= $('#txtESteps').val().trim();
-// 		var txtERemark= $('#txtERemark').val().trim();	
-// 		var txtDistributionPrice= $('#txtEDistributionPrice').val().trim();		
-// 		var txtEIsMaster= $('#txtEIsMaster').val().trim();		
+		var txtETitle= $('#txtETitle').val().trim();
+		var txtEUrl= $('#txtEUrl').val().trim();	
+		var sltEType= $('#sltEType').val().trim();
+		var txtEImageUrl= $('#txtEImageUrl').val().trim();
+		var radEstatus= $('#radEstatus').val();	
+		var txtESortNo= $('#txtESortNo').val().trim();	
 
-// 		 if(txtKM == "")
-// 		 {
-// 			 alert("距离不能为空");
-// 		    return;
-// 		 }
-// 		 if(txtKG == "")
-// 		 {
-// 			 alert("重量不能为空");
-// 		    return;
-// 		 }
-// 		 if (txtEIsMaster==0)
-// 			 {
-// 				 if(txtKM>0 && txtKG>0)
-// 		    	 {
-// 					 alert("距离， 重量只能配置1个值");
-// 					return;		 
-// 				 }
-// 				 if(txtKM<=0 && txtKG<=0)
-// 		    	 {
-// 					 alert("距离， 重量必须有1个值不能为0");
-// 					return;		 
-// 				 }
-// 				 if(txtDistributionPrice == "")
-// 				 {
-// 					 alert("配送费");
-// 				    return;
-// 				 }
-// 				if(txtDistributionPrice<=0){
-// 				    	alert("配送费必须大于零");
-// 				    	return;
-// 				   }	
-// 				 if(txtESteps == "")
-// 				 {
-// 					 alert("计价阶梯不能为空");
-// 				    return;
-// 				 }
-// 				 if(txtESteps == "0")
-// 				 {
-// 					 alert("计价阶梯不能为0");
-// 				    return;
-// 				 }
-// 			 }
-// 		 else
-// 			 {
-// 				 if(txtERemark == "")
-// 				 {
-// 					 alert("备注不能为空");
-// 				    return;
-// 				 }
-// 			 }
-// 	    var paramaters = {	    		
-// 	    		"Id": txtId.trim(),
-//                 "KM": txtKM.trim(),
-//                 "KG": txtKG.trim(),
-//                 "Steps": txtESteps.trim(),                
-//                 "DistributionPrice": txtDistributionPrice.trim(),
-//                 "IsMaster": txtEIsMaster.trim(),
-//                 "Remark": txtERemark.trim(),
-//             };
-<%--        var url = "<%=basePath%>/taskdistributionconfig/modify"; --%>
-// 	   var la= layer.confirm('是否确认修改配置费？', {
-// 		    btn: ['确认','取消'], //按钮
-// 		    shade: false //显示遮罩
-// 		},function(){
-// 			layer.close(la);
-// 			$.ajax({
-// 		           type: 'POST',
-// 		           url: url,
-// 		           data: paramaters,
-// 		           success: function (result) {		    
-// 		        	   alert(result.message);		        	
-// 		               if (result.status == 1) {
-<%-- 		            	   window.location.href = "<%=basePath%>/taskdistributionconfig/list";		 --%>
-// 		               }
+
+	    var paramaters = {
+                "title": txtETitle.trim(),
+                "url": txtEUrl.trim(),
+                "typeid": sltEType.trim(),
+                "imageurl": txtEImageUrl.trim(),
+                "isshelve": radEstatus,
+                "sortno": txtESortNo.trim(),                
+            };
+       var url = "<%=basePath%>/advert/modify";
+	   var la= layer.confirm('是否确认修改广告？', {
+		    btn: ['确认','取消'], //按钮
+		    shade: false //显示遮罩
+		},function(){
+			layer.close(la);
+			$.ajax({
+		           type: 'POST',
+		           url: url,
+		           data: paramaters,
+		           success: function (result) {		    
+		        	   alert(result.msg);	        	
+		               if (result.code == 1) {
+		            	   window.location.href = "<%=basePath%>/advert/list";		
+		               }
 		                              
 		        	  
-// 		           }
-// 		       });
-// 		});       	    
+		           }
+		       });
+		});       	    
 	}	
 	
 	</script>		
