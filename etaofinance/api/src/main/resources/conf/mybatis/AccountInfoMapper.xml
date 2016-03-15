@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IAccountInfoDao" >
+
+  <insert id="insert" parameterType="com.etaofinance.entity.AccountInfo" >
+    insert into accountinfo (Password, trueName, 
+      LoginName, islock,
+       RoleId, opttime,optname,createtime,createname)
+    values (#{password,jdbcType=NVARCHAR}, 
+    #{truename,jdbcType=NVARCHAR}, 
+      #{loginname,jdbcType=NVARCHAR}, 
+      #{islock,jdbcType=INTEGER},
+    #{roleid,jdbcType=INTEGER}, 
+    now(),
+     #{optname,jdbcType=NVARCHAR}, 
+     now(),
+       #{createname,jdbcType=NVARCHAR}
+    )
+  </insert>
+    <update id="update" parameterType="com.etaofinance.entity.AccountInfo" >
+    update accountinfo
+    <set >
+    	opttime=now(),
+    	optname= #{optname,jdbcType=NVARCHAR}, 
+    	createname= #{createname,jdbcType=NVARCHAR}, 
+      <if test="islock != null" >
+        islock = #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="password != null and password!=''" >
+        passWord = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="queryWhere">
+		1=1
+		<if test="keyword != null and keyword!=''">
+			and (trueName like ''%${keyword}%'' or loginName like ''%${keyword}%'')
+		</if>
+	</sql> 
+<select id="query" resultType="com.etaofinance.entity.AccountInfo" parameterType="com.etaofinance.entity.req.PagedAccountInfoReq" statementType="CALLABLE">
+{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' accountinfo as a ',
+		'
+		<include refid="queryWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)} 
+  </select>
+  
+  <select id="getByID" resultType="com.etaofinance.entity.AccountInfo" parameterType="java.lang.Integer" >
+    select 
+   * 
+    from accountinfo
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="getByRoleID" resultType="com.etaofinance.entity.AccountInfo" 
+    parameterType="java.lang.Integer" >
+    select 
+* 
+    from accountinfo
+    where RoleId = #{roleID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from accountinfo
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+
+   <select id="login" parameterType="java.util.Map" resultType="com.etaofinance.entity.AccountInfo">
+  	SELECT  Id,Password,trueName,LoginName,islock,RoleId
+            FROM accountinfo
+            where LoginName=#{username,jdbcType=NVARCHAR} 
+            AND Password=#{password,jdbcType=NVARCHAR}
+            limit 1
+  </select>
+  <update id="updateRoleID"  parameterType="java.util.Map" >
+    update accountinfo set roleid=#{newRoleID,jdbcType=INTEGER}
+    where Id = #{userID,jdbcType=INTEGER}
+  </update>
+    <update id="updatePwd"  parameterType="com.etaofinance.entity.req.UpdatePwdReq" >
+    update accountinfo set Password=#{newPwd,jdbcType=NVARCHAR}
+    where Id = #{userId,jdbcType=INTEGER} and Password=#{oldPwd,jdbcType=NVARCHAR}
+  </update>
+</mapper>

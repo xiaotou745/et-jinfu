@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IADVertDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.ADVert" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="Url" property="url" jdbcType="VARCHAR" />
+    <result column="TypeId" property="typeid" jdbcType="SMALLINT" />
+    <result column="ImageUrl" property="imageurl" jdbcType="VARCHAR" />
+    <result column="IsShelve" property="isshelve" jdbcType="BIT" />
+    <result column="SortNo" property="sortno" jdbcType="INTEGER" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, Title, Url, TypeId, ImageUrl, IsShelve, SortNo, CreateName, CreateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advert
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+    <sql id="queryWhere">
+		1=1	
+	</sql> 
+<select id="query" resultType="com.etaofinance.entity.ADVert" parameterType="com.etaofinance.entity.req.PagedADVertReq" statementType="CALLABLE">
+{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' advert as a ',
+		'
+		<include refid="queryWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)} 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advert
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.ADVert" >
+    insert into advert (Id, Title, Url, 
+      TypeId, ImageUrl, IsShelve, 
+      SortNo, CreateName, CreateTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{typeid,jdbcType=SMALLINT}, #{imageurl,jdbcType=VARCHAR}, #{isshelve,jdbcType=BIT}, 
+      #{sortno,jdbcType=INTEGER}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.ADVert" >
+    insert into advert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="url != null" >
+        Url,
+      </if>
+      <if test="typeid != null" >
+        TypeId,
+      </if>
+      <if test="imageurl != null" >
+        ImageUrl,
+      </if>
+      <if test="isshelve != null" >
+        IsShelve,
+      </if>
+      <if test="sortno != null" >
+        SortNo,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="clicknum != null" >
+        ClickNum,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=SMALLINT},
+      </if>
+      <if test="imageurl != null" >
+        #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isshelve != null" >
+        #{isshelve,jdbcType=BIT},
+      </if>
+      <if test="sortno != null" >
+        #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="clicknum!= null" >
+        #{clicknum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ADVert" >
+    update advert
+    <set >
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        Url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        TypeId = #{typeid,jdbcType=SMALLINT},
+      </if>
+      <if test="imageurl != null" >
+        ImageUrl = #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isshelve != null" >
+        IsShelve = #{isshelve,jdbcType=BIT},
+      </if>
+      <if test="sortno != null" >
+        SortNo = #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ADVert" >
+    update advert
+    set Title = #{title,jdbcType=VARCHAR},
+      Url = #{url,jdbcType=VARCHAR},
+      TypeId = #{typeid,jdbcType=SMALLINT},
+      ImageUrl = #{imageurl,jdbcType=VARCHAR},
+      IsShelve = #{isshelve,jdbcType=BIT},
+      SortNo = #{sortno,jdbcType=INTEGER},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

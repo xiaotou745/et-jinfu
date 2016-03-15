@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IAdminOptLogDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.AdminOptLog" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="TypeId" property="typeid" jdbcType="INTEGER" />
+    <result column="AccountId" property="accountid" jdbcType="INTEGER" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="OptIp" property="optip" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, TypeId, AccountId, Remark, CreateName, CreateTime, OptIp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from adminoptlog
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from adminoptlog
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.AdminOptLog" >
+    insert into adminoptlog (Id, TypeId, AccountId, 
+      Remark, CreateName, CreateTime, 
+      OptIp)
+    values (#{id,jdbcType=BIGINT}, #{typeid,jdbcType=INTEGER}, #{accountid,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{optip,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.AdminOptLog" >
+    insert into adminoptlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="typeid != null" >
+        TypeId,
+      </if>
+      <if test="accountid != null" >
+        AccountId,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="optip != null" >
+        OptIp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null" >
+        #{accountid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optip != null" >
+        #{optip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.AdminOptLog" >
+    update adminoptlog
+    <set >
+      <if test="typeid != null" >
+        TypeId = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null" >
+        AccountId = #{accountid,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optip != null" >
+        OptIp = #{optip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.AdminOptLog" >
+    update adminoptlog
+    set TypeId = #{typeid,jdbcType=INTEGER},
+      AccountId = #{accountid,jdbcType=INTEGER},
+      Remark = #{remark,jdbcType=VARCHAR},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      OptIp = #{optip,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

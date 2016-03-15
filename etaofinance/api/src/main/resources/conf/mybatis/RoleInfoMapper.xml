@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IRoleInfoDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.RoleInfo" >
+    <result column="Id" property="id" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Remark" property="remark" jdbcType="NVARCHAR" />
+    <result column="OptName" property="optname" jdbcType="NVARCHAR" />
+    <result column="BeLock" property="belock" jdbcType="BIT" />
+  </resultMap>
+    <select id="selectList" resultType="com.etaofinance.entity.RoleInfo">
+    select * from roleinfo 
+  </select>
+  
+  <insert id="insert" parameterType="com.etaofinance.entity.RoleInfo" >
+    insert into roleinfo (RoleName, isLock,OptName,OptTime,CreateName,CreateTime)
+    values (#{rolename,jdbcType=VARCHAR}, 
+    #{islock,jdbcType=BIT},
+    #{optname,jdbcType=VARCHAR},
+    now(),
+    #{createname,jdbcType=VARCHAR},
+     now())
+  </insert>
+<update id="update" parameterType="com.etaofinance.entity.RoleInfo" >
+    update roleinfo
+    set RoleName = #{rolename,jdbcType=VARCHAR},
+    OptName=#{optname,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=BIT}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

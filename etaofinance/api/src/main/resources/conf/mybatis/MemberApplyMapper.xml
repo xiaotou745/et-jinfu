@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IMemberApplyDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.MemberApply" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="Status" property="status" jdbcType="SMALLINT" />
+    <result column="TypeId" property="typeid" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="AuditTime" property="audittime" jdbcType="TIMESTAMP" />
+    <result column="AuditName" property="auditname" jdbcType="VARCHAR" />
+    <result column="RefuseReasion" property="refusereasion" jdbcType="VARCHAR" />
+    <result column="ApplyInfo" property="applyinfo" jdbcType="VARCHAR" />
+    <result column="CompanyName" property="companyname" jdbcType="VARCHAR" />
+    <result column="CompanyTitle" property="companytitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, Status, TypeId, CreateTime, AuditTime, AuditName, RefuseReasion, ApplyInfo, 
+    CompanyName, CompanyTitle
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from memberapply
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memberapply
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.MemberApply" >
+    insert into memberapply (Id, MemberId, Status, 
+      TypeId, CreateTime, AuditTime, 
+      AuditName, RefuseReasion, ApplyInfo, 
+      CompanyName, CompanyTitle)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, 
+      #{typeid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{audittime,jdbcType=TIMESTAMP}, 
+      #{auditname,jdbcType=VARCHAR}, #{refusereasion,jdbcType=VARCHAR}, #{applyinfo,jdbcType=VARCHAR}, 
+      #{companyname,jdbcType=VARCHAR}, #{companytitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.MemberApply" >
+    insert into memberapply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="typeid != null" >
+        TypeId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="audittime != null" >
+        AuditTime,
+      </if>
+      <if test="auditname != null" >
+        AuditName,
+      </if>
+      <if test="refusereasion != null" >
+        RefuseReasion,
+      </if>
+      <if test="applyinfo != null" >
+        ApplyInfo,
+      </if>
+      <if test="companyname != null" >
+        CompanyName,
+      </if>
+      <if test="companytitle != null" >
+        CompanyTitle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audittime != null" >
+        #{audittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditname != null" >
+        #{auditname,jdbcType=VARCHAR},
+      </if>
+      <if test="refusereasion != null" >
+        #{refusereasion,jdbcType=VARCHAR},
+      </if>
+      <if test="applyinfo != null" >
+        #{applyinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companytitle != null" >
+        #{companytitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.MemberApply" >
+    update memberapply
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="typeid != null" >
+        TypeId = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="audittime != null" >
+        AuditTime = #{audittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditname != null" >
+        AuditName = #{auditname,jdbcType=VARCHAR},
+      </if>
+      <if test="refusereasion != null" >
+        RefuseReasion = #{refusereasion,jdbcType=VARCHAR},
+      </if>
+      <if test="applyinfo != null" >
+        ApplyInfo = #{applyinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        CompanyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companytitle != null" >
+        CompanyTitle = #{companytitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.MemberApply" >
+    update memberapply
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      Status = #{status,jdbcType=SMALLINT},
+      TypeId = #{typeid,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      AuditTime = #{audittime,jdbcType=TIMESTAMP},
+      AuditName = #{auditname,jdbcType=VARCHAR},
+      RefuseReasion = #{refusereasion,jdbcType=VARCHAR},
+      ApplyInfo = #{applyinfo,jdbcType=VARCHAR},
+      CompanyName = #{companyname,jdbcType=VARCHAR},
+      CompanyTitle = #{companytitle,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

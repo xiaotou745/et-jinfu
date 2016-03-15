@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IPublicProvinceCityDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.PublicProvinceCity" >
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="NVARCHAR" />
+    <result column="Code" property="code" jdbcType="INTEGER" />
+    <result column="ParentCode" property="parentcode" jdbcType="INTEGER" />
+    <result column="Jibie" property="jibie" jdbcType="INTEGER" />
+    <result column="LowerAcronym" property="loweracronym" jdbcType="NVARCHAR" />
+    <result column="UpperAcronym" property="upperacronym" jdbcType="NVARCHAR" />
+    <result column="LowerFullPinyin" property="lowerfullpinyin" jdbcType="NVARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.etaofinance.entity.PublicProvinceCity" >
+    insert into publicprovincecity (ID, Name, Code, 
+      ParentCode, Jibie, LowerAcronym, 
+      UpperAcronym, LowerFullPinyin)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=NVARCHAR}, #{code,jdbcType=INTEGER}, 
+      #{parentcode,jdbcType=INTEGER}, #{jibie,jdbcType=INTEGER}, #{loweracronym,jdbcType=NVARCHAR}, 
+      #{upperacronym,jdbcType=NVARCHAR}, #{lowerfullpinyin,jdbcType=NVARCHAR})
+  </insert>
+  <select id="getOpenCityList"  resultType="com.etaofinance.entity.domain.OpenCityModel" 
+    parameterType="com.etaofinance.entity.req.HotAndPublicCityReq" >
+	select  p.code ProvinceCode,
+	        p.name ProvinceName,
+	        c.code CityCode,
+	        c.name CityName,
+	        d.code DistrictCode,
+	        d.name DistrictName,
+	        d.IsPublic,
+	        d.IsHot 
+	from    publicprovincecity d 
+	        join publicprovincecity c  on d.ParentCode = c.code
+	        join publicprovincecity p  on c.ParentCode = p.code
+	 where   d.jibie=4 
+	 <if test="cityName != null" >
+	     and c.name like '%${cityName}%'
+     </if>
+  </select>
+    <select id="getAllOpenCity"  resultType="com.etaofinance.entity.PublicProvinceCity" >
+	select  * 
+	from    publicprovincecity a 
+	where a.ispublic=1  AND (a.Jibie=2 OR a.Jibie=3) order by LowerAcronym asc
+  </select>
+  <update id="modifyCity" parameterType="com.etaofinance.entity.domain.ModifyCityDomain" >
+  <!-- 开放城市 打开设置 -->
+  	 <if test="openPublicCityCodeList != null and openPublicCityCodeList.size>0">
+	     update publicprovincecity set IsPublic = 1 where Code in 
+	     <foreach collection="openPublicCityCodeList" index="index" item="item" open="(" separator="," close=")">
+	           ${item}
+	     </foreach> ;
+	     update publicprovincecity set IsPublic = 1 where Code in (${cityCode},${provenceCode});
+     </if>
+     <!-- 开放城市 关闭设置 -->
+     <if test="closePublicCityCodeList != null and closePublicCityCodeList.size>0">
+	     update publicprovincecity set IsPublic = 0 where Code in 
+	     <foreach collection="closePublicCityCodeList" index="index" item="item" open="(" separator="," close=")">
+	           ${item}
+	     </foreach> ;
+	     update publicprovincecity set IsPublic = 0 where Code =${cityCode}
+	     and not EXISTS(select 1 from (select 1 from publicprovincecity where IsPublic=1 and ParentCode=${cityCode}) opc);
+	     
+	    update publicprovincecity set IsPublic = 0 where Code =${provenceCode}
+	    and not EXISTS(select 1 from (select 1 from publicprovincecity where IsPublic=1 and ParentCode=${provenceCode}) opp);
+	 </if>
+     <!-- 热门城市 打开设置 -->
+     <if test="openHotCityCodeList != null and openHotCityCodeList.size>0">
+	     update publicprovincecity set IsHot = 1 where Code in 
+	     <foreach collection="openHotCityCodeList" index="index" item="item" open="(" separator="," close=")">
+	           ${item}
+	     </foreach> ;
+	     update publicprovincecity set IsHot = 1 where Code in (${cityCode},${provenceCode});
+     </if> 
+     
+	 <!-- 热门城市 关闭设置 -->
+     <if test="closeHotCityCodeList != null and closeHotCityCodeList.size>0">
+	     update publicprovincecity set IsHot = 0 where Code in 
+	     <foreach collection="closeHotCityCodeList" index="index" item="item" open="(" separator="," close=")">
+	           ${item}
+	     </foreach> ;
+	     update publicprovincecity set IsHot = 0 where Code =${cityCode}
+	     and  not EXISTS(select 1 from (select 1 from publicprovincecity where IsHot=1 and ParentCode=${cityCode}) cpc);
+	    
+	    update publicprovincecity set IsHot = 0 where Code =${provenceCode}
+	    and not EXISTS(select 1 from (select 1 from publicprovincecity where IsHot=1 and ParentCode=${provenceCode}) cpp);
+	 </if>
+  </update>
+</mapper>

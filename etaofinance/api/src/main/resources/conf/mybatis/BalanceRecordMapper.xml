@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IBalanceRecordDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.BalanceRecord" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="Amount" property="amount" jdbcType="REAL" />
+    <result column="AfterAmount" property="afteramount" jdbcType="REAL" />
+    <result column="TypeId" property="typeid" jdbcType="SMALLINT" />
+    <result column="ProjectId" property="projectid" jdbcType="BIGINT" />
+    <result column="RelationNo" property="relationno" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="OptName" property="optname" jdbcType="VARCHAR" />
+    <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, Amount, AfterAmount, TypeId, ProjectId, RelationNo, Remark, OptName, 
+    OptTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from balancerecord
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from balancerecord
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.BalanceRecord" >
+    insert into balancerecord (Id, MemberId, Amount, 
+      AfterAmount, TypeId, ProjectId, 
+      RelationNo, Remark, OptName, 
+      OptTime)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{amount,jdbcType=REAL}, 
+      #{afteramount,jdbcType=REAL}, #{typeid,jdbcType=SMALLINT}, #{projectid,jdbcType=BIGINT}, 
+      #{relationno,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{optname,jdbcType=VARCHAR}, 
+      #{opttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.BalanceRecord" >
+    insert into balancerecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="afteramount != null" >
+        AfterAmount,
+      </if>
+      <if test="typeid != null" >
+        TypeId,
+      </if>
+      <if test="projectid != null" >
+        ProjectId,
+      </if>
+      <if test="relationno != null" >
+        RelationNo,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="optname != null" >
+        OptName,
+      </if>
+      <if test="opttime != null" >
+        OptTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="afteramount != null" >
+        #{afteramount,jdbcType=REAL},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=SMALLINT},
+      </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=BIGINT},
+      </if>
+      <if test="relationno != null" >
+        #{relationno,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="optname != null" >
+        #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        #{opttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.BalanceRecord" >
+    update balancerecord
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="afteramount != null" >
+        AfterAmount = #{afteramount,jdbcType=REAL},
+      </if>
+      <if test="typeid != null" >
+        TypeId = #{typeid,jdbcType=SMALLINT},
+      </if>
+      <if test="projectid != null" >
+        ProjectId = #{projectid,jdbcType=BIGINT},
+      </if>
+      <if test="relationno != null" >
+        RelationNo = #{relationno,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="optname != null" >
+        OptName = #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        OptTime = #{opttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.BalanceRecord" >
+    update balancerecord
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      Amount = #{amount,jdbcType=REAL},
+      AfterAmount = #{afteramount,jdbcType=REAL},
+      TypeId = #{typeid,jdbcType=SMALLINT},
+      ProjectId = #{projectid,jdbcType=BIGINT},
+      RelationNo = #{relationno,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      OptName = #{optname,jdbcType=VARCHAR},
+      OptTime = #{opttime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

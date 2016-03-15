@@ -1,0 +1,16 @@
+INSERT  INTO dbo.ClienterRelation
+        ( ClienterId ,
+          OtherClienterId ,
+          OcJibie ,
+          ClienterLevel ,
+          CreateDate
+        )
+        SELECT  c.id ,
+                0 ,
+                1 ,
+                1 ,
+                GETDATE()
+        FROM     dbo.Clienter AS c ( NOLOCK )
+        where c.Id not in (
+			select cr.ClienterId from dbo.ClienterRelation cr (nolock)
+		)

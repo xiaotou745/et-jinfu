@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IZcSuggestionDao">
+	<resultMap id="BaseResultMap" type="com.etaofinance.entity.ZcSuggestion">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="ProjectName" property="projectname" jdbcType="VARCHAR" />
+		<result column="UserName" property="username" jdbcType="VARCHAR" />
+		<result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
+		<result column="Email" property="email" jdbcType="VARCHAR" />
+		<result column="Count" property="count" jdbcType="INTEGER" />
+		<result column="City" property="city" jdbcType="VARCHAR" />
+		<result column="PreCity" property="precity" jdbcType="VARCHAR" />
+		<result column="Amount" property="amount" jdbcType="DECIMAL" />
+		<result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="ClientIp" property="clientip" jdbcType="VARCHAR" />
+		<result column="Status" property="status" jdbcType="SMALLINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, ProjectName, UserName, PhoneNo, Email, Count, City, PreCity, Amount,
+		Createtime,
+		ClientIp, Status
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from zcsuggestion
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from zcsuggestion
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.etaofinance.entity.ZcSuggestion">
+		insert into zcsuggestion (id, ProjectName, UserName,
+		PhoneNo, Email, Count,
+		City, PreCity, Amount,
+		ClientIp
+		)
+		values (#{id,jdbcType=INTEGER}, #{projectname,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER},
+		#{city,jdbcType=VARCHAR}, #{precity,jdbcType=VARCHAR},
+		#{amount,jdbcType=DECIMAL},
+		#{clientip,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.etaofinance.entity.ZcSuggestion">
+		insert into zcsuggestion
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="projectname != null">
+				ProjectName,
+			</if>
+			<if test="username != null">
+				UserName,
+			</if>
+			<if test="phoneno != null">
+				PhoneNo,
+			</if>
+			<if test="email != null">
+				Email,
+			</if>
+			<if test="count != null">
+				Count,
+			</if>
+			<if test="city != null">
+				City,
+			</if>
+			<if test="precity != null">
+				PreCity,
+			</if>
+			<if test="amount != null">
+				Amount,
+			</if>
+			<if test="createtime != null">
+				Createtime,
+			</if>
+			<if test="clientip != null">
+				ClientIp,
+			</if>
+			<if test="status != null">
+				Status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="projectname != null">
+				#{projectname,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneno != null">
+				#{phoneno,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=INTEGER},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="precity != null">
+				#{precity,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="clientip != null">
+				#{clientip,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=SMALLINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ZcSuggestion">
+		update zcsuggestion
+		<set>
+			<if test="projectname != null">
+				ProjectName = #{projectname,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				UserName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneno != null">
+				PhoneNo = #{phoneno,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				Email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="count != null">
+				Count = #{count,jdbcType=INTEGER},
+			</if>
+			<if test="city != null">
+				City = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="precity != null">
+				PreCity = #{precity,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				Amount = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="createtime != null">
+				Createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="clientip != null">
+				ClientIp = #{clientip,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				Status = #{status,jdbcType=SMALLINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ZcSuggestion">
+		update zcsuggestion
+		set ProjectName = #{projectname,jdbcType=VARCHAR},
+		UserName = #{username,jdbcType=VARCHAR},
+		PhoneNo = #{phoneno,jdbcType=VARCHAR},
+		Email = #{email,jdbcType=VARCHAR},
+		Count = #{count,jdbcType=INTEGER},
+		City = #{city,jdbcType=VARCHAR},
+		PreCity = #{precity,jdbcType=VARCHAR},
+		Amount = #{amount,jdbcType=DECIMAL},
+		Createtime = #{createtime,jdbcType=TIMESTAMP},
+		ClientIp = #{clientip,jdbcType=VARCHAR},
+		Status = #{status,jdbcType=SMALLINT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

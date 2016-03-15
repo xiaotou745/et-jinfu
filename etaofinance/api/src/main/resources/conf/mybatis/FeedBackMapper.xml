@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IFeedBackDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.FeedBack" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="MemberId" property="memberid" jdbcType="INTEGER" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
+    <result column="EMail" property="email" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="IsDel" property="isdel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, Description, MemberId, CreateName, PhoneNo, EMail, CreateTime, IsDel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from feedback
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from feedback
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.FeedBack" >
+    insert into feedback (Id, Description, MemberId, 
+      CreateName, PhoneNo, EMail, 
+      CreateTime, IsDel)
+    values (#{id,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=INTEGER}, 
+      #{createname,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.FeedBack" >
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="description != null" >
+        Description,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo,
+      </if>
+      <if test="email != null" >
+        EMail,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.FeedBack" >
+    update feedback
+    <set >
+      <if test="description != null" >
+        Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMail = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=BIT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.FeedBack" >
+    update feedback
+    set Description = #{description,jdbcType=VARCHAR},
+      MemberId = #{memberid,jdbcType=INTEGER},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      EMail = #{email,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      IsDel = #{isdel,jdbcType=BIT}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

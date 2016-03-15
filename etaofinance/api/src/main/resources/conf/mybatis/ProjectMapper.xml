@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IProjectDao">
+	<resultMap id="BaseResultMap" type="com.etaofinance.entity.Project">
+		<id column="Id" property="id" jdbcType="BIGINT" />
+		<result column="ProjectName" property="projectname" jdbcType="VARCHAR" />
+		<result column="TypeId" property="typeid" jdbcType="SMALLINT" />
+		<result column="Description" property="description" jdbcType="VARCHAR" />
+		<result column="Amount" property="amount" jdbcType="REAL" />
+		<result column="FenShu" property="fenshu" jdbcType="INTEGER" />
+		<result column="LeadMinFenShu" property="leadminfenshu"
+			jdbcType="INTEGER" />
+		<result column="PreheatMaxFenShu" property="preheatmaxfenshu"
+			jdbcType="INTEGER" />
+		<result column="UnitPrice" property="unitprice" jdbcType="REAL" />
+		<result column="ProvinceCode" property="provincecode" jdbcType="INTEGER" />
+		<result column="CityCode" property="citycode" jdbcType="INTEGER" />
+		<result column="AreaCode" property="areacode" jdbcType="INTEGER" />
+		<result column="Address" property="address" jdbcType="VARCHAR" />
+		<result column="ProjectImage" property="projectimage" jdbcType="VARCHAR" />
+		<result column="AuditStatus" property="auditstatus" jdbcType="SMALLINT" />
+		<result column="ProjectStatus" property="projectstatus"
+			jdbcType="SMALLINT" />
+		<result column="IsShelve" property="isshelve" jdbcType="BIT" />
+		<result column="MemberId" property="memberid" jdbcType="BIGINT" />
+		<result column="PreheatTime" property="preheattime" jdbcType="TIMESTAMP" />
+		<result column="StartTime" property="starttime" jdbcType="TIMESTAMP" />
+		<result column="EndTime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="Schedule" property="schedule" jdbcType="INTEGER" />
+		<result column="InvestmentNumber" property="investmentnumber"
+			jdbcType="INTEGER" />
+		<result column="FollowNumber" property="follownumber" jdbcType="INTEGER" />
+		<result column="AuditName" property="auditname" jdbcType="VARCHAR" />
+		<result column="AuditTime" property="audittime" jdbcType="TIMESTAMP" />
+		<result column="CreateName" property="createname" jdbcType="VARCHAR" />
+		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		Id, ProjectName, TypeId, Description, Amount, FenShu, LeadMinFenShu,
+		PreheatMaxFenShu,
+		UnitPrice, ProvinceCode, CityCode, AreaCode, Address, ProjectImage, AuditStatus,
+		ProjectStatus, IsShelve, MemberId, PreheatTime, StartTime, EndTime,
+		Schedule, InvestmentNumber,
+		FollowNumber, AuditName, AuditTime, CreateName, CreateTime
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from project
+		where Id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from project
+		where Id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!-- 新增项目 茹化肖 -->
+	<insert id="insert" parameterType="com.etaofinance.entity.Project">
+		insert into project (ProjectName,
+		TypeId,
+		Description,
+		Amount,
+		FenShu,
+		LeadMinFenShu,
+		PreheatMaxFenShu,
+		UnitPrice,
+		ProvinceCode,
+		CityCode,
+		AreaCode,
+		Address,
+		ProjectImage,
+		MemberId,
+		PreheatTime,
+		StartTime,
+		EndTime,
+		CreateName)
+		values (#{projectname,jdbcType=VARCHAR},
+		#{typeid,jdbcType=SMALLINT},
+		#{description,jdbcType=VARCHAR},
+		#{amount,jdbcType=REAL},
+		#{fenshu,jdbcType=INTEGER},
+		#{leadminfenshu,jdbcType=INTEGER},
+		#{preheatmaxfenshu,jdbcType=INTEGER},
+		#{unitprice,jdbcType=REAL},
+		#{provincecode,jdbcType=INTEGER},
+		#{citycode,jdbcType=INTEGER},
+		#{areacode,jdbcType=INTEGER},
+		#{address,jdbcType=VARCHAR},
+		#{projectimage,jdbcType=VARCHAR},
+		#{memberid,jdbcType=BIGINT},
+		#{preheattime,jdbcType=TIMESTAMP},
+		#{starttime,jdbcType=TIMESTAMP},
+		#{endtime,jdbcType=TIMESTAMP},
+		#{createname,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.etaofinance.entity.Project">
+		insert into project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				Id,
+			</if>
+			<if test="projectname != null">
+				ProjectName,
+			</if>
+			<if test="typeid != null">
+				TypeId,
+			</if>
+			<if test="description != null">
+				Description,
+			</if>
+			<if test="amount != null">
+				Amount,
+			</if>
+			<if test="fenshu != null">
+				FenShu,
+			</if>
+			<if test="leadminfenshu != null">
+				LeadMinFenShu,
+			</if>
+			<if test="preheatmaxfenshu != null">
+				PreheatMaxFenShu,
+			</if>
+			<if test="unitprice != null">
+				UnitPrice,
+			</if>
+			<if test="provincecode != null">
+				ProvinceCode,
+			</if>
+			<if test="citycode != null">
+				CityCode,
+			</if>
+			<if test="areacode != null">
+				AreaCode,
+			</if>
+			<if test="address != null">
+				Address,
+			</if>
+			<if test="projectimage != null">
+				ProjectImage,
+			</if>
+			<if test="auditstatus != null">
+				AuditStatus,
+			</if>
+			<if test="projectstatus != null">
+				ProjectStatus,
+			</if>
+			<if test="isshelve != null">
+				IsShelve,
+			</if>
+			<if test="memberid != null">
+				MemberId,
+			</if>
+			<if test="preheattime != null">
+				PreheatTime,
+			</if>
+			<if test="starttime != null">
+				StartTime,
+			</if>
+			<if test="endtime != null">
+				EndTime,
+			</if>
+			<if test="schedule != null">
+				Schedule,
+			</if>
+			<if test="investmentnumber != null">
+				InvestmentNumber,
+			</if>
+			<if test="follownumber != null">
+				FollowNumber,
+			</if>
+			<if test="auditname != null">
+				AuditName,
+			</if>
+			<if test="audittime != null">
+				AuditTime,
+			</if>
+			<if test="createname != null">
+				CreateName,
+			</if>
+			<if test="createtime != null">
+				CreateTime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="projectname != null">
+				#{projectname,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				#{typeid,jdbcType=SMALLINT},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=REAL},
+			</if>
+			<if test="fenshu != null">
+				#{fenshu,jdbcType=INTEGER},
+			</if>
+			<if test="leadminfenshu != null">
+				#{leadminfenshu,jdbcType=INTEGER},
+			</if>
+			<if test="preheatmaxfenshu != null">
+				#{preheatmaxfenshu,jdbcType=INTEGER},
+			</if>
+			<if test="unitprice != null">
+				#{unitprice,jdbcType=REAL},
+			</if>
+			<if test="provincecode != null">
+				#{provincecode,jdbcType=INTEGER},
+			</if>
+			<if test="citycode != null">
+				#{citycode,jdbcType=INTEGER},
+			</if>
+			<if test="areacode != null">
+				#{areacode,jdbcType=INTEGER},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="projectimage != null">
+				#{projectimage,jdbcType=VARCHAR},
+			</if>
+			<if test="auditstatus != null">
+				#{auditstatus,jdbcType=SMALLINT},
+			</if>
+			<if test="projectstatus != null">
+				#{projectstatus,jdbcType=SMALLINT},
+			</if>
+			<if test="isshelve != null">
+				#{isshelve,jdbcType=BIT},
+			</if>
+			<if test="memberid != null">
+				#{memberid,jdbcType=BIGINT},
+			</if>
+			<if test="preheattime != null">
+				#{preheattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="schedule != null">
+				#{schedule,jdbcType=INTEGER},
+			</if>
+			<if test="investmentnumber != null">
+				#{investmentnumber,jdbcType=INTEGER},
+			</if>
+			<if test="follownumber != null">
+				#{follownumber,jdbcType=INTEGER},
+			</if>
+			<if test="auditname != null">
+				#{auditname,jdbcType=VARCHAR},
+			</if>
+			<if test="audittime != null">
+				#{audittime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createname != null">
+				#{createname,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Project">
+		update project
+		<set>
+			<if test="projectname != null">
+				ProjectName = #{projectname,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				TypeId = #{typeid,jdbcType=SMALLINT},
+			</if>
+			<if test="description != null">
+				Description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				Amount = #{amount,jdbcType=REAL},
+			</if>
+			<if test="fenshu != null">
+				FenShu = #{fenshu,jdbcType=INTEGER},
+			</if>
+			<if test="leadminfenshu != null">
+				LeadMinFenShu = #{leadminfenshu,jdbcType=INTEGER},
+			</if>
+			<if test="preheatmaxfenshu != null">
+				PreheatMaxFenShu = #{preheatmaxfenshu,jdbcType=INTEGER},
+			</if>
+			<if test="unitprice != null">
+				UnitPrice = #{unitprice,jdbcType=REAL},
+			</if>
+			<if test="provincecode != null">
+				ProvinceCode = #{provincecode,jdbcType=INTEGER},
+			</if>
+			<if test="citycode != null">
+				CityCode = #{citycode,jdbcType=INTEGER},
+			</if>
+			<if test="areacode != null">
+				AreaCode = #{areacode,jdbcType=INTEGER},
+			</if>
+			<if test="address != null">
+				Address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="projectimage != null">
+				ProjectImage = #{projectimage,jdbcType=VARCHAR},
+			</if>
+			<if test="auditstatus != null">
+				AuditStatus = #{auditstatus,jdbcType=SMALLINT},
+			</if>
+			<if test="projectstatus != null">
+				ProjectStatus = #{projectstatus,jdbcType=SMALLINT},
+			</if>
+			<if test="isshelve != null">
+				IsShelve = #{isshelve,jdbcType=BIT},
+			</if>
+			<if test="memberid != null">
+				MemberId = #{memberid,jdbcType=BIGINT},
+			</if>
+			<if test="preheattime != null">
+				PreheatTime = #{preheattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="starttime != null">
+				StartTime = #{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				EndTime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="schedule != null">
+				Schedule = #{schedule,jdbcType=INTEGER},
+			</if>
+			<if test="investmentnumber != null">
+				InvestmentNumber = #{investmentnumber,jdbcType=INTEGER},
+			</if>
+			<if test="follownumber != null">
+				FollowNumber = #{follownumber,jdbcType=INTEGER},
+			</if>
+			<if test="auditname != null">
+				AuditName = #{auditname,jdbcType=VARCHAR},
+			</if>
+			<if test="audittime != null">
+				AuditTime = #{audittime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createname != null">
+				CreateName = #{createname,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				CreateTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where Id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Project">
+		update project
+		set ProjectName = #{projectname,jdbcType=VARCHAR},
+		TypeId = #{typeid,jdbcType=SMALLINT},
+		Description = #{description,jdbcType=VARCHAR},
+		Amount = #{amount,jdbcType=REAL},
+		FenShu = #{fenshu,jdbcType=INTEGER},
+		LeadMinFenShu = #{leadminfenshu,jdbcType=INTEGER},
+		PreheatMaxFenShu = #{preheatmaxfenshu,jdbcType=INTEGER},
+		UnitPrice = #{unitprice,jdbcType=REAL},
+		ProvinceCode = #{provincecode,jdbcType=INTEGER},
+		CityCode = #{citycode,jdbcType=INTEGER},
+		AreaCode = #{areacode,jdbcType=INTEGER},
+		Address = #{address,jdbcType=VARCHAR},
+		ProjectImage = #{projectimage,jdbcType=VARCHAR},
+		AuditStatus = #{auditstatus,jdbcType=SMALLINT},
+		ProjectStatus = #{projectstatus,jdbcType=SMALLINT},
+		IsShelve = #{isshelve,jdbcType=BIT},
+		MemberId = #{memberid,jdbcType=BIGINT},
+		PreheatTime = #{preheattime,jdbcType=TIMESTAMP},
+		StartTime = #{starttime,jdbcType=TIMESTAMP},
+		EndTime = #{endtime,jdbcType=TIMESTAMP},
+		Schedule = #{schedule,jdbcType=INTEGER},
+		InvestmentNumber = #{investmentnumber,jdbcType=INTEGER},
+		FollowNumber = #{follownumber,jdbcType=INTEGER},
+		AuditName = #{auditname,jdbcType=VARCHAR},
+		AuditTime = #{audittime,jdbcType=TIMESTAMP},
+		CreateName = #{createname,jdbcType=VARCHAR},
+		CreateTime = #{createtime,jdbcType=TIMESTAMP}
+		where Id = #{id,jdbcType=BIGINT}
+	</update>
+	<sql id="queryProjectListWhere">
+		1=1
+	    <if test="id>0">
+			and id=${id}
+		</if>
+		<if test="typeId>0">
+			and typeId=${typeId}
+		</if>
+		<if test="auditStatus>0">
+			and auditStatus=${auditStatus}
+		</if>
+		<if test="projectStatus>=0">
+			and projectStatus=${projectStatus}
+		</if>
+		<if test="projectName != null and projectName!=''">
+			and projectName like ''%${projectName}%''
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and endTime>=''${startTime}''
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and date_add(''${endTime}'', INTERVAL 1 day)>startTime
+		</if>
+		<if test="startCreateTime != null and startCreateTime!=''">
+			and createTime>=''${startCreateTime}''
+		</if>
+		<if test="endCreateTime != null and endCreateTime!=''">
+			and date_add(''${endCreateTime}'', INTERVAL 1 day)>createTime
+		</if>
+	</sql>
+	<select id="queryProjectList" resultType="com.etaofinance.entity.Project"
+		parameterType="com.etaofinance.entity.req.PagedProjectReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' project as a ',
+		'<include refid="queryProjectListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+</mapper>

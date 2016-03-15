@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IMemberDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.Member" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
+    <result column="EMail" property="email" jdbcType="VARCHAR" />
+    <result column="LoginPwd" property="loginpwd" jdbcType="VARCHAR" />
+    <result column="ProvinceCode" property="provincecode" jdbcType="INTEGER" />
+    <result column="CityCode" property="citycode" jdbcType="INTEGER" />
+    <result column="AreaCode" property="areacode" jdbcType="INTEGER" />
+    <result column="Sex" property="sex" jdbcType="SMALLINT" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="IsLock" property="islock" jdbcType="BIT" />
+    <result column="TrueName" property="truename" jdbcType="VARCHAR" />
+    <result column="IdCard" property="idcard" jdbcType="VARCHAR" />
+    <result column="Level" property="level" jdbcType="SMALLINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="HeadImage" property="headimage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, UserName, PhoneNo, EMail, LoginPwd, ProvinceCode, CityCode, AreaCode, Sex, Remark, 
+    IsLock, TrueName, IdCard, Level, CreateTime, HeadImage
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from member
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.Member" >
+    insert into member (Id, UserName, PhoneNo, 
+      EMail, LoginPwd, ProvinceCode, 
+      CityCode, AreaCode, Sex, 
+      Remark, IsLock, TrueName, 
+      IdCard, Level, CreateTime, 
+      HeadImage)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{loginpwd,jdbcType=VARCHAR}, #{provincecode,jdbcType=INTEGER}, 
+      #{citycode,jdbcType=INTEGER}, #{areacode,jdbcType=INTEGER}, #{sex,jdbcType=SMALLINT}, 
+      #{remark,jdbcType=VARCHAR}, #{islock,jdbcType=BIT}, #{truename,jdbcType=VARCHAR}, 
+      #{idcard,jdbcType=VARCHAR}, #{level,jdbcType=SMALLINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{headimage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.Member" >
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo,
+      </if>
+      <if test="email != null" >
+        EMail,
+      </if>
+      <if test="loginpwd != null" >
+        LoginPwd,
+      </if>
+      <if test="provincecode != null" >
+        ProvinceCode,
+      </if>
+      <if test="citycode != null" >
+        CityCode,
+      </if>
+      <if test="areacode != null" >
+        AreaCode,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="islock != null" >
+        IsLock,
+      </if>
+      <if test="truename != null" >
+        TrueName,
+      </if>
+      <if test="idcard != null" >
+        IdCard,
+      </if>
+      <if test="level != null" >
+        Level,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="headimage != null" >
+        HeadImage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="provincecode != null" >
+        #{provincecode,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null" >
+        #{citycode,jdbcType=INTEGER},
+      </if>
+      <if test="areacode != null" >
+        #{areacode,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        #{islock,jdbcType=BIT},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headimage != null" >
+        #{headimage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Member" >
+    update member
+    <set >
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMail = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="provincecode != null" >
+        ProvinceCode = #{provincecode,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null" >
+        CityCode = #{citycode,jdbcType=INTEGER},
+      </if>
+      <if test="areacode != null" >
+        AreaCode = #{areacode,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        IsLock = #{islock,jdbcType=BIT},
+      </if>
+      <if test="truename != null" >
+        TrueName = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IdCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        Level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headimage != null" >
+        HeadImage = #{headimage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Member" >
+    update member
+    set UserName = #{username,jdbcType=VARCHAR},
+      PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      EMail = #{email,jdbcType=VARCHAR},
+      LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+      ProvinceCode = #{provincecode,jdbcType=INTEGER},
+      CityCode = #{citycode,jdbcType=INTEGER},
+      AreaCode = #{areacode,jdbcType=INTEGER},
+      Sex = #{sex,jdbcType=SMALLINT},
+      Remark = #{remark,jdbcType=VARCHAR},
+      IsLock = #{islock,jdbcType=BIT},
+      TrueName = #{truename,jdbcType=VARCHAR},
+      IdCard = #{idcard,jdbcType=VARCHAR},
+      Level = #{level,jdbcType=SMALLINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      HeadImage = #{headimage,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

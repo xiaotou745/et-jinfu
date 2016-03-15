@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IProjectSubscriptionDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectSubscription" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="IsLead" property="islead" jdbcType="BIT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Amount" property="amount" jdbcType="REAL" />
+    <result column="FenShu" property="fenshu" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="IdCard" property="idcard" jdbcType="VARCHAR" />
+    <result column="RefundStatus" property="refundstatus" jdbcType="SMALLINT" />
+    <result column="RefundName" property="refundname" jdbcType="VARCHAR" />
+    <result column="RefundTime" property="refundtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, IsLead, CreateTime, Amount, FenShu, Name, PhoneNo, Email, IdCard, RefundStatus, 
+    RefundName, RefundTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from projectsubscription
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from projectsubscription
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.ProjectSubscription" >
+    insert into projectsubscription (Id, MemberId, IsLead, 
+      CreateTime, Amount, FenShu, 
+      Name, PhoneNo, Email, 
+      IdCard, RefundStatus, RefundName, 
+      RefundTime)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{islead,jdbcType=BIT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, #{fenshu,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{idcard,jdbcType=VARCHAR}, #{refundstatus,jdbcType=SMALLINT}, #{refundname,jdbcType=VARCHAR}, 
+      #{refundtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectSubscription" >
+    insert into projectsubscription
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="islead != null" >
+        IsLead,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="fenshu != null" >
+        FenShu,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+      <if test="idcard != null" >
+        IdCard,
+      </if>
+      <if test="refundstatus != null" >
+        RefundStatus,
+      </if>
+      <if test="refundname != null" >
+        RefundName,
+      </if>
+      <if test="refundtime != null" >
+        RefundTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="islead != null" >
+        #{islead,jdbcType=BIT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="fenshu != null" >
+        #{fenshu,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="refundstatus != null" >
+        #{refundstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="refundname != null" >
+        #{refundname,jdbcType=VARCHAR},
+      </if>
+      <if test="refundtime != null" >
+        #{refundtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectSubscription" >
+    update projectsubscription
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="islead != null" >
+        IsLead = #{islead,jdbcType=BIT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="fenshu != null" >
+        FenShu = #{fenshu,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IdCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="refundstatus != null" >
+        RefundStatus = #{refundstatus,jdbcType=SMALLINT},
+      </if>
+      <if test="refundname != null" >
+        RefundName = #{refundname,jdbcType=VARCHAR},
+      </if>
+      <if test="refundtime != null" >
+        RefundTime = #{refundtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectSubscription" >
+    update projectsubscription
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      IsLead = #{islead,jdbcType=BIT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Amount = #{amount,jdbcType=REAL},
+      FenShu = #{fenshu,jdbcType=INTEGER},
+      Name = #{name,jdbcType=VARCHAR},
+      PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      IdCard = #{idcard,jdbcType=VARCHAR},
+      RefundStatus = #{refundstatus,jdbcType=SMALLINT},
+      RefundName = #{refundname,jdbcType=VARCHAR},
+      RefundTime = #{refundtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

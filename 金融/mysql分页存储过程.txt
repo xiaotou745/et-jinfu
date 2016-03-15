@@ -1,0 +1,25 @@
+DROP PROCEDURE IF EXISTS Sp_CustomPage2015_V1; 
+CREATE PROCEDURE `Sp_CustomPage2015_V1`(
+IN orderByColumn VARCHAR(5000),
+IN columnList VARCHAR(5000),
+IN tableList VARCHAR(5000),
+IN quaryCondition VARCHAR(5000),
+IN pageSize INT,
+IN currentPage INT,
+OUT totalRecord INT,
+out totalPage INT
+)
+COMMENT '·ÖÒ³´æ´¢¹ý³Ì'
+BEGIN
+ set @strsql = concat('select sql_calc_found_rows @rowindex:=@rowindex+1 as rownumber,',columnList,' from ',tableList,' where ',quaryCondition,' order by ',orderByColumn,' limit ',pageSize*(currentPage -1),',',pageSize);
+
+prepare stmtsql from @strsql;
+ execute stmtsql;
+ deallocate prepare stmtsql;
+
+SET totalRecord = FOUND_ROWS();  
+set totalPage=0;
+IF totalRecord > 0 then
+		set totalPage = (totalRecord+pageSize-1)/pageSize;
+end if;
+END;

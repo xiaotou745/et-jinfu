@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IMenuInfoDao" >
+   <select id="getMenuListByUserID" resultType="com.etaofinance.entity.MenuInfo" parameterType="java.lang.Integer" >
+       SELECT  amc.id ,
+            MenuId ,
+            ParId ,
+            MenuName ,
+            IFNULL(Url, '') AS Url ,
+            amc.isButton ,
+            amc.isLock ,
+            AuthCode
+    FROM    menuinfo amc
+            JOIN roleauth aam ON aam.MenuId = amc.Id
+            JOIN accountinfo kb ON kb.roleid = aam.RoleId
+            JOIN roleinfo ro ON ro.id = kb.roleid
+    WHERE   kb.id = #{accountId}
+            AND ro.isLock = 0
+            AND amc.isLock = 0
+            AND kb.islock = 0
+    UNION ALL
+    SELECT  amc.id ,
+            MenuId ,
+            ParId ,
+            MenuName ,
+            IfNULL(Url, '') AS Url ,
+            amc.IsButton ,
+            amc.isLock ,
+            AuthCode
+    FROM    menuinfo amc
+            JOIN accountauth aam ON aam.MenuId = amc.Id
+            JOIN accountinfo kb ON kb.id = aam.id
+    WHERE   0>=kb.RoleId
+            AND kb.id = #{accountId}
+            AND kb.isLock = 0
+            AND amc.isLock = 0
+  </select>
+   <select id="getAuthSettingList" resultType="com.etaofinance.entity.domain.MenuEntity"  parameterType="java.lang.Integer" >
+    SELECT  * ,
+            -1 AS accoutid
+    FROM     menuinfo a 
+            LEFT JOIN ( SELECT  b.MenuId
+                        FROM    accountauth b 
+                        WHERE   b.AccoutId = #{userID}
+                      ) t ON a.Id = t.MenuId  
+     where  a.isLock = 0 
+  </select>
+     <select id="getMenuListByRoleID" resultType="com.etaofinance.entity.domain.MenuEntity"  parameterType="java.lang.Integer" >
+SELECT  *,-1 as accoutid 
+FROM      menuinfo a
+        LEFT JOIN ( SELECT  b.MenuId
+                    FROM    roleauth b 
+                    WHERE   b.roleid = #{roleID}
+                  ) t ON a.Id = t.MenuId 
+  where  a.isLock = 0
+  </select>
+  
+  <select id="getListMenuByParId" resultType="com.etaofinance.entity.MenuInfo" parameterType="int">
+  	SELECT Id,ParId,MenuName,isLock,Url,IsButton, AuthCode  
+  	FROM menuinfo 
+  	where ParId=#{parId,jdbcType=INTEGER}  and isLock = 0
+  </select>
+  
+    <select id="getMenuById" resultType="com.etaofinance.entity.MenuInfo" parameterType="int">
+  	SELECT Id,ParId,MenuName,isLock,Url,IsButton, AuthCode  
+  	 FROM menuinfo 
+  	  where Id=#{Id,jdbcType=INTEGER} 
+  </select>
+   <!-- 查询所有菜单 茹化肖 -->
+  <select id="getListMenuAll" resultType="com.etaofinance.entity.domain.MenuEntity">
+  	SELECT Id,ParId,MenuName,isLock,Url,IsButton,AuthCode 
+  	FROM menuinfo 
+  </select>
+   
+  <!-- 查询菜单详情 茹化肖 -->
+  <select id="getMenuDetail" resultType="com.etaofinance.entity.domain.MenuDetail" 
+  parameterType="int">
+  	SELECT  amc.Id ,
+        amc.ParId ,
+        amc.MenuName ,
+        amc.isLock ,
+        amc.Url ,
+        amc.IsButton ,
+        amc.AuthCode,IFNULL(amc2.MenuName,'一级菜单') AS ParMenuName,
+        CASE WHEN amc.ParId=0 THEN 1 WHEN amc.ParId!=0 AND amc.IsButton =0 THEN 2 ELSE 3 END AS Jibie
+        FROM menuinfo AS amc 
+LEFT JOIN menuinfo AS amc2 ON amc.ParId=amc2.id
+WHERE amc.id=#{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 新增菜单 茹化肖 -->
+  <insert id="addMenu" parameterType="com.etaofinance.entity.MenuInfo">
+   INSERT INTO menuinfo(ParId,MenuName,islock,Url,IsButton,
+   AuthCode,createtime,createname,opttime,optname)
+  values (#{parid,jdbcType=INTEGER},
+    #{menuname,jdbcType=NVARCHAR},
+     0,
+      #{url,jdbcType=NVARCHAR},
+      #{isbutton,jdbcType=BIT},
+      #{authcode,jdbcType=NVARCHAR},
+       now(),
+      #{createname,jdbcType=NVARCHAR},
+     now(),
+      #{optname,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <!-- 编辑菜单 茹化肖 -->
+  <update id="updateMenu" parameterType="com.etaofinance.entity.MenuInfo">
+  UPDATE  menuinfo SET opttime=now(),
+  	  <trim suffixOverrides="," > 
+  	   <if test="optname != null" >
+         optname= #{optname,jdbcType=NVARCHAR},
+      </if> 
+      <if test="menuname != null" >
+       MenuName=#{menuname,jdbcType=NVARCHAR},
+      </if>
+      <if test="islock != null" >
+         islock=#{islock,jdbcType=BIT},
+      </if>
+      <if test="url != null" >
+        Url= #{url,jdbcType=NVARCHAR},
+      </if>
+      <if test="isbutton != null" >
+         IsButton= #{isbutton,jdbcType=BIT},
+      </if>
+      <if test="authcode != null" >
+         AuthCode= #{authcode,jdbcType=NVARCHAR}
+      </if> 
+      </trim>
+      WHERE ID=#{id,jdbcType=INTEGER}
+  </update>
+</mapper>

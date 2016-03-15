@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IQADao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.QA" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Question" property="question" jdbcType="VARCHAR" />
+    <result column="Answer" property="answer" jdbcType="VARCHAR" />
+    <result column="SortNo" property="sortno" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
+    <result column="OptName" property="optname" jdbcType="VARCHAR" />
+    <result column="IsDel" property="isdel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, Question, Answer, SortNo, CreateTime, CreateName, OptTime, OptName, IsDel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from qa
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from qa
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.QA" >
+    insert into qa (Id, Question, Answer, 
+      SortNo, CreateTime, CreateName, 
+      OptTime, OptName, IsDel
+      )
+    values (#{id,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{sortno,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{createname,jdbcType=VARCHAR}, 
+      #{opttime,jdbcType=TIMESTAMP}, #{optname,jdbcType=VARCHAR}, #{isdel,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.QA" >
+    insert into qa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="question != null" >
+        Question,
+      </if>
+      <if test="answer != null" >
+        Answer,
+      </if>
+      <if test="sortno != null" >
+        SortNo,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="opttime != null" >
+        OptTime,
+      </if>
+      <if test="optname != null" >
+        OptName,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.QA" >
+    update qa
+    <set >
+      <if test="question != null" >
+        Question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        Answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        SortNo = #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        OptTime = #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        OptName = #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=BIT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.QA" >
+    update qa
+    set Question = #{question,jdbcType=VARCHAR},
+      Answer = #{answer,jdbcType=VARCHAR},
+      SortNo = #{sortno,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      OptTime = #{opttime,jdbcType=TIMESTAMP},
+      OptName = #{optname,jdbcType=VARCHAR},
+      IsDel = #{isdel,jdbcType=BIT}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
