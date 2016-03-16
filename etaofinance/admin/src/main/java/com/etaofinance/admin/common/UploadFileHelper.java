@@ -76,6 +76,7 @@ public class UploadFileHelper {
 		String regionPath = "";
 		String rootPath = "";
 		List<FileItem> fileList = new ArrayList<FileItem>();
+		List<FileItem> fileItemList = new ArrayList<FileItem>();
 		DiskFileItemFactory dff = new DiskFileItemFactory();
 		dff.setSizeThreshold(1024000);
 		ServletFileUpload sfu = new ServletFileUpload(dff);
@@ -86,35 +87,31 @@ public class UploadFileHelper {
 		rootPath = PropertyUtils.getProperty("FileUploadPath") + "/"
 				+ regionPath;
 		FileUtil.createDirectory(rootPath);// 创建目录
-	
+
 		while (fii.hasNext()) {
 			FileItem fis = (FileItem) fii.next();
-
-			if (fis.getSize() > 1000000) {
-				obj.put("error", 1);
-				obj.put("message", "上传文件大小超过限制");
-				return obj.toJSONString();
+			if (fis.isFormField()) {
+				fileItemList.add(fis);
+					continue;
+			} else {
+				fileList.add(fis);
 			}
-			// 检查扩展名
-			String fileExt = fis.getName()
-					.substring(fis.getName().lastIndexOf(".") + 1)
-					.toLowerCase();
-			if (!ext.contains(fileExt)) {
-				obj.put("error", 1);
-				obj.put("message",
-						"上传文件扩展名是不允许的扩展名。\n只允许" + String.join(",", ext));
-				return obj.toJSONString();
+		}// while
+		if (request instanceof MultipartHttpServletRequest) {
+			MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;// request强制转换注意
+			MultipartFile file = mRequest.getFile("imgFile");
+			if (file != null) {
+				CommonsMultipartFile cf = (CommonsMultipartFile) file;
+				FileItem fi = cf.getFileItem();
+				fileList.add(fi);
 			}
-			fileList.add(fis);
-		}//while 
-			MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;//request强制转换注意
-	        MultipartFile file = mRequest.getFile("imgFile");
-	        if(file!=null)
-		    {
-	        	CommonsMultipartFile cf= (CommonsMultipartFile)file; 
-			    FileItem fi = cf.getFileItem(); 
-			    fileList.add(fi);
-		    }
+		}
+		String loadFromValue="";
+		for (FileItem fileItem : fileItemList) {
+			loadFromValue=request.getParameter(fileItem.getFieldName());
+			System.out.println(fileItem.getFieldName()+"="+loadFromValue);
+		}
+		
 		return saveFiles(fileList, originalSufix, regionPath, rootPath);
 
 	}
@@ -139,27 +136,28 @@ public class UploadFileHelper {
 		String fullPath = rootPath + "/" + temp;
 		// 创建目录
 		FileUtil.createDirectory(fullPath);
-			for (FileItem fileItem : fileList) {
-				String uploadFileName = fileItem.getName();
-				// 上传文件重命名
-				String realFileName = new Date().getTime() + originalSufix
-						+ uploadFileName.substring(uploadFileName.lastIndexOf("."));
-				try {
-					File uploadedFile = new File(rootPath + "/" + temp,
-							realFileName);
-					fileItem.write(uploadedFile);
-				} catch (Exception e) {
-					obj.put("error", 1);
-					obj.put("message", "上传文件失败");
-					return obj.toJSONString();
-				}
-				String relativePath = regionPath + "/" + temp + "/" + realFileName;
-				String url = PropertyUtils.getProperty("ImgShowUrl") + "/"
-						+ relativePath;
-				obj.put("error", 0);
-				obj.put("url", url);
+		for (FileItem fileItem : fileList) {
+			String uploadFileName = fileItem.getName();
+			// 上传文件重命名
+			String realFileName = new Date().getTime() + originalSufix
+					+ uploadFileName.substring(uploadFileName.lastIndexOf("."));
+			try {
+				File uploadedFile = new File(rootPath + "/" + temp,realFileName);
+				fileItem.write(uploadedFile);
+			} catch (Exception e) {
+				obj.put("error", 1);
+				obj.put("message", "上传文件失败");
 				return obj.toJSONString();
-			}//for
+			}
+			//图片的相对路径
+			String relativePath = regionPath + "/" + temp + "/" + realFileName;
+			//图片的完整路径
+			String url = PropertyUtils.getProperty("ImgShowUrl") + "/"+ relativePath;
+			obj.put("error", 0);
+			obj.put("url", url);
+			obj.put("relativeurl", relativePath);
+			return obj.toJSONString();
+		}// for
 		obj.put("error", 1);
 		obj.put("message", "请选择文件");
 		return obj.toJSONString();

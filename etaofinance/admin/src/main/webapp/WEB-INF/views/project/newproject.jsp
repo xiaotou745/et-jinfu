@@ -445,17 +445,14 @@ uploader5=InitUpload(uploader5,'ProjectHuibaoImgWap','ProjectHuibaoImgWapBox',10
 
 //上传全部文件
 $('#uploadallimg').click(function(){
-	//alert('a');
 	uploader.upload();
 	uploader2.upload();
 	uploader3.upload();
 	uploader4.upload();
 	uploader5.upload();
-// 	alert('b');
 });
 </script>
 <script>
-//
 $(function(){
 	//项目类型切换事件
 	$('input:radio[name="rProjectType"]').change(function() {
