@@ -220,4 +220,8 @@
       HeadImage = #{headimage,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <!-- 根据手机号查询会员信息 -->
+  <select id="selectByPhoneNo" parameterType="java.lang.String" resultType="com.etaofinance.entity.Member">
+  select <include refid="Base_Column_List" /> from member as m where m.PhoneNo=#{phoneno,jdbcType=VARCHAR}
+  </select>
 </mapper>

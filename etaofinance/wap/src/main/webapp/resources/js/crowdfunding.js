@@ -42,14 +42,16 @@ $(function() {
     });
 
     // 完成按钮 点击事件
-    dom.popup_existCitys.find("#complete").on("click", function(){
-    	dom.popup_existCitys.addClass("hide");
+    dom.popup_existCitys.find("#complete")[0].addEventListener("touchstart", function(e){
+    	e.preventDefault();
+        dom.popup_existCitys.addClass("hide");
     	$('html,body').removeClass("overflow-hidden");
     	dom.existCitys.val(existCitys.toString());
     	$("#hidExistCitys").val(existCitys.toString());
     });
-    dom.popup_expectCity.find("#complete").on("click", function(){
-    	dom.popup_expectCity.addClass("hide");
+    dom.popup_expectCity.find("#complete")[0].addEventListener("touchstart", function(e){
+    	e.preventDefault();
+        dom.popup_expectCity.addClass("hide");
     	$('html,body').removeClass("overflow-hidden");
     	dom.expectCity.val(expectCity.toString());
     	$("#hidExpectCity").val(expectCity.toString());
@@ -86,9 +88,6 @@ $(function() {
                 existCitys.push(slectedAreaText);
             }
         });
-
-        // 滚动
-        // dom.popup_existCitys.on('touchmove', function(e){e.preventDefault();})
     }
 
    	// 预期众筹所在地 弹窗事件绑定

@@ -357,6 +357,8 @@ body {
     padding: 15px 10px 40px;
     max-height: 70%;
     overflow-y: scroll;
+    position: relative;
+    z-index:100;
 }
 
 .popup .popup_bg .popup_con p {
@@ -425,7 +427,9 @@ body {
     border-radius: 3px;
     text-align: center;
     font-weight: bold;
-    margin: 30px 10px
+    margin: 30px 10px;
+    position:relative;
+    z-index: 200;
 }
 
 .popup .succeed {
@@ -476,5 +480,6 @@ input[disabled]::-webkit-input-placeholder{
 input[disabled]{
     color:#000 ;
     opacity: 1;
+    
 }
 

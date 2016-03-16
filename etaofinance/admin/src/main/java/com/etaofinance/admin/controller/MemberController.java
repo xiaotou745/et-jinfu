@@ -2,15 +2,21 @@ package com.etaofinance.admin.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.etaofinance.entity.Member;
+import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 @Controller
 @RequestMapping("member")
 public class MemberController {
-	
+	@Autowired
+	private IMemberService memberService;
 	/*
 	 * 会员列表 wangchao
 	 */
@@ -61,5 +67,20 @@ public class MemberController {
 	public ModelAndView leadinvestlistdo(PagedMemberReq req) { 
 		ModelAndView model = new ModelAndView("member/leadinvestlistdo");
 		return model;
+	}
+	/**
+	 * 通过手机号获取会员ID,0表示不存在
+	 * @param phoneno
+	 * @return
+	 */
+	@RequestMapping("getmemberid")
+	@ResponseBody
+	public Long getmemberid(String phoneno) { 
+		Member m=memberService.selectByPhoneNo(phoneno);
+		if(m!=null)
+		{
+			return m.getId();
+		}
+		return 0l;
 	}
 }

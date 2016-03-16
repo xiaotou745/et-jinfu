@@ -1,0 +1,54 @@
+package com.etaofinance.api.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.etaofinance.api.common.DaoBase;
+import com.etaofinance.api.dao.inter.IMemberDao;
+import com.etaofinance.entity.Member;
+@Repository
+public class MemberDao  extends DaoBase implements IMemberDao{
+
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(Member record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSelective(Member record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Member selectByPrimaryKey(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Member record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(Member record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	/**
+	 * 通过手机号获取会员信息
+	 */
+	@Override
+	public Member selectByPhoneNo(String phoneno) {
+		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByPhoneNo", phoneno);
+	}
+
+}

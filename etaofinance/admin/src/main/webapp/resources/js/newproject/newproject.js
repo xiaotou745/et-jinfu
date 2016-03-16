@@ -1,8 +1,25 @@
-//点击图片移除
-function RemoveImg(id,uploader){
-	$('#'+id).remove();
-	uploader.removeFile(id);
-};
+//正则 手机号验证
+function IsPhone(phone)
+{
+	return (/^1\d{10}$/.test(phone))	
+}
+//大于0正整数
+function isInt(n)
+{
+     return n == Math.abs( parseInt( n ) );
+}
+
+function IsDouble(n)
+{
+	return  /^(-?\d+)(\.\d{1,2})?$/.test(n);
+}
+
+
+
+
+
+
+
 //初始化文件上传对象(upload对象,上传按钮ID,图片放置区ID,最大图片数量)
 function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 {
@@ -14,6 +31,7 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	    swf: BasePath+'/js/webuploader0.1.5/Uploader.swf',
 	    // 文件接收服务端。
 	    server:'http://2betop.net/fileupload.php',
+	    server:BasePath+'/upload/img',
 	    // 选择文件的按钮。可选。
 	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 	    pick: '#'+buttonId,
@@ -38,26 +56,30 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	    	    // 为空的话则保留原有图片格式。
 	    	    // 否则强制转换成指定的类型。
 	    	    type: 'image/jpeg'
-	    }
+	    },
+	    //单个文件不能超过5M
+	    fileSingleSizeLimit:5*1024*1024
 	});
 	
 	//当有文件添加进来的时候
 	uploader.on( 'fileQueued', function( file ) {
-		console.log(file);
 		//构建图片对象
 		var $li = $( '<li id="' + file.id + '">' +
         '<p class="imgWrap">'+
-        '<img id="' + file.id + '" style="height: 80px;width: 100px;" onclick=RemoveImg("' + file.id + '")>'+
+        '<img id="' + file.id + '" style="height: 80px;width: 100px;">'+
+        '<inupt type="hidden" id="' + file.id + 'hideimg">'+
         '</p></li>' ),
         //图片按钮
         $btns = $('<div class="file-panel">' +
-        '<span class="cancel">删除</span>' +
-        '<span class="rotateRight">向右旋转</span>' +
-        '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
+        '<span class="cancel">删除</span><span id="' + file.id + 'tip">  <font color="red">等待上传</font></span></div>').appendTo( $li ),
+
+
         //图片容器
         $imgbox=$('#'+imgboxId);
-		console.log($imgbox);
-	
+		//按钮事件
+		$btns.on( 'click', function() {
+			uploader.removeFile( file );
+		});
 	    // 创建缩略图
 	    // 如果为非图片文件，可以不用调用此方法。
 	    // thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -73,32 +95,38 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	});
 	// 文件删除。
 	uploader.on( 'fileDequeued', function(file) {
-			console.log(file);
+			var $li = $('#'+file.id);
+			console.log($li);
+			$li.remove();		
+			var $li = $('#'+file.id);
+			$li.remove();		
 	});
 
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
-	uploader.on( 'uploadSuccess', function( file ) {
-	  //  $( '#'+file.id ).addClass('upload-state-done');
+	uploader.on( 'uploadSuccess', function( file ,response) {
+		console.log(response);
+		if(response.error==0)
+		{
+			$('#'+file.id+'hideimg').val(response.relativeurl);
+			$('#'+ file.id +'tip').html('  <font color="red">上传完成</font>')
+		}
+		else
+		{
+			alert(response.message);
+			$('#'+ file.id +'tip').html('  <font color="red">上传失败</font>')
+		}
 	});
 
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {
-//	    var $li = $( '#'+file.id ),
-//	        $error = $li.find('div.error');
-//
-//	    // 避免重复创建
-//	    if ( !$error.length ) {
-//	        $error = $('<div class="error"></div>').appendTo( $li );
-//	    }
-//
-//	    $error.text('上传失败');
+		//alert('上传失败');
 	});
 
 	// 完成上传完了，成功或者失败，先删除进度条。
 	uploader.on( 'uploadComplete', function( file ) {
-	   // $( '#'+file.id ).find('.progress').remove();
+		//alert('上传完成');
 	});
-	
+	return uploader;
 }
 
 $(function(){

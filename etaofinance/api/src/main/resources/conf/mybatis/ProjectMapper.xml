@@ -397,7 +397,7 @@
 		<if test="auditStatus>0">
 			and auditStatus=${auditStatus}
 		</if>
-		<if test="projectStatus>=0">
+		<if test="projectStatus>0">
 			and projectStatus=${projectStatus}
 		</if>
 		<if test="projectName != null and projectName!=''">
