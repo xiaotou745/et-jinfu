@@ -16,6 +16,7 @@ import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
+import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedProjectReq;
 /**
@@ -103,5 +104,27 @@ public class ProjectController {
 		view.addObject("viewPath", "project/newproject");
 		return view;
 	}
+	private String getCityStr(List<PublicProvinceCity> list){
+		Map<Integer, StringBuilder> resulMap=new HashMap<Integer, StringBuilder>();
+		for (PublicProvinceCity item : list) {
+			if (resulMap.containsKey(item.getParentCode())) {
+				resulMap.get(item.getParentCode()).append(";"+item.getCode()+"|"+item.getName());
+			}else {
+				StringBuilder builder=new StringBuilder();
+				builder.append(item.getCode()+"|"+item.getName());
+				resulMap.put(item.getParentCode(), builder);
+			}
+		}
+		StringBuilder resultBuilder=new StringBuilder();
+		for (Map.Entry<Integer, StringBuilder> entry : resulMap.entrySet()) {  
+			if (resultBuilder.toString().isEmpty()) {
+				resultBuilder.append(entry.getKey()+"="+entry.getValue().toString());
+			}else {
+				resultBuilder.append("#"+entry.getKey()+"="+entry.getValue().toString());
+			}
+			
+		}  
 
+		return resultBuilder.toString();
+	}
 }
