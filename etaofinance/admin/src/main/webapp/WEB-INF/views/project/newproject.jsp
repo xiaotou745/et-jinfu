@@ -130,6 +130,7 @@
 								<label class="col-sm-4 control-label">发起者会员手机号: </label>
 								<div class="col-sm-6">
 									<input type="text" maxlength="11" class="form-control" name="memberPhone" id="memberPhone" value=""/>
+									<input type="hidden"  id="memberId" value="0"/>
 								</div>
 							</div>
 						</div>
@@ -461,6 +462,23 @@ $(function(){
 		} else {
 			$('#ProjectType2').show();
 			$('#ProjectType1').hide();
+		}
+	});
+});
+//校验手机号会员ID
+$('#memberPhone').blur(function(){
+	var url='<%=basePath%>/member/getmemberid'
+	var phone=$('#memberPhone').val();
+	if(phone.length==0)
+		return ;
+	$.post(url,{'phoneno':phone},function(d){
+		if(d==0)//会员不存在
+		{
+			alert('该会员不存在,请重新输入手机号!');
+			$('#memberPhone').focus();//设置焦点
+		}
+		else{
+			$('#memberId').val(d);
 		}
 	});
 });

@@ -14,4 +14,11 @@ public interface IMemberDao {
     int updateByPrimaryKeySelective(Member record);
 
     int updateByPrimaryKey(Member record);
+    
+    /**
+     * 通过手机号获取会员信息
+     * @param phoneno
+     * @return
+     */
+    Member selectByPhoneNo(String  phoneno);
 }
