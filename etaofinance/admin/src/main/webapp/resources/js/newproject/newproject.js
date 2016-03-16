@@ -1,18 +1,19 @@
-
-
-
-
-
 //正则 手机号验证
 function IsPhone(phone)
 {
 	return (/^1\d{10}$/.test(phone))	
 }
 //大于0正整数
-function IsInt(par)
+function isInt(n)
 {
-	
+     return n == Math.abs( parseInt( n ) );
 }
+
+function IsDouble(n)
+{
+	return  /^(-?\d+)(\.\d{1,2})?$/.test(n);
+}
+
 
 
 
@@ -55,7 +56,6 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	    	    // 为空的话则保留原有图片格式。
 	    	    // 否则强制转换成指定的类型。
 	    	    type: 'image/jpeg'
-	    }
 	    },
 	    //单个文件不能超过5M
 	    fileSingleSizeLimit:5*1024*1024
@@ -66,13 +66,11 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 		//构建图片对象
 		var $li = $( '<li id="' + file.id + '">' +
         '<p class="imgWrap">'+
-        '<img id="' + file.id + '" style="height: 80px;width: 100px;" onclick=RemoveImg("' + file.id + '")>'+
         '<img id="' + file.id + '" style="height: 80px;width: 100px;">'+
         '<inupt type="hidden" id="' + file.id + 'hideimg">'+
         '</p></li>' ),
         //图片按钮
         $btns = $('<div class="file-panel">' +
-        '<span class="cancel">删除</span></div>').appendTo( $li ),
         '<span class="cancel">删除</span><span id="' + file.id + 'tip">  <font color="red">等待上传</font></span></div>').appendTo( $li ),
 
 
@@ -90,7 +88,6 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	            $img.replaceWith('<span>不能预览</span>');
 	            return;
 	        }
-	        console.log($li.find('img'));
 	        $li.find('img').attr( 'src', src );
 	    });
 	    $li.appendTo($imgbox);//将LI放置在图片容器里面
@@ -106,8 +103,6 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 	});
 
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
-	uploader.on( 'uploadSuccess', function( file ) {
-		alert('上传成功');
 	uploader.on( 'uploadSuccess', function( file ,response) {
 		console.log(response);
 		if(response.error==0)
@@ -120,28 +115,16 @@ function InitUpload(uploader,buttonId,imgboxId,maxImgCount)
 			alert(response.message);
 			$('#'+ file.id +'tip').html('  <font color="red">上传失败</font>')
 		}
-	  //  $( '#'+file.id ).addClass('upload-state-done');
 	});
 
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {
-		alert('上传失败');
-//	    var $li = $( '#'+file.id ),
-//	        $error = $li.find('div.error');
-//
-//	    // 避免重复创建
-//	    if ( !$error.length ) {
-//	        $error = $('<div class="error"></div>').appendTo( $li );
-//	    }
-//
-//	    $error.text('上传失败');
+		//alert('上传失败');
 	});
 
 	// 完成上传完了，成功或者失败，先删除进度条。
 	uploader.on( 'uploadComplete', function( file ) {
-		alert('上传完成');
-		//
-	   // $( '#'+file.id ).find('.progress').remove();
+		//alert('上传完成');
 	});
 	return uploader;
 }
