@@ -16,6 +16,108 @@
 <script type="text/javascript" src="<%=basePath%>/js/webuploader0.1.5/webuploader.js"></script>
 
 <!-- 百度图片上传 End -->
+<style>
+.uploader .placeholder .webuploader-pick-hover {
+    background: #00a2d4;
+}
+
+.uploader .placeholder .flashTip {
+    color: #666666;
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+.uploader .placeholder .flashTip a {
+    color: #0785d1;
+    text-decoration: none;
+}
+.uploader .placeholder .flashTip a:hover {
+    text-decoration: underline;
+}
+
+.uploader .filelist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.uploader .filelist:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.uploader .filelist li {
+    width: 110px;
+    height: 110px;
+    background: url(../images/bg.png) no-repeat;
+    text-align: center;
+    margin: 0 8px 20px 0;
+    position: relative;
+    display: inline;
+    float: left;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.uploader .filelist li p.log {
+    position: relative;
+    top: -45px;
+}
+
+.uploader .filelist li p.title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow : ellipsis;
+    top: 5px;
+    text-indent: 5px;
+    text-align: left;
+}
+
+.uploader .filelist li p.progress {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    overflow: hidden;
+    z-index: 50;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    -webkit-box-shadow: 0 0 0;
+}
+.uploader .filelist li p.progress span {
+    display: none;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    background: #1483d8 url(../images/progress.png) repeat-x;
+
+    -webit-transition: width 200ms linear;
+    -moz-transition: width 200ms linear;
+    -o-transition: width 200ms linear;
+    -ms-transition: width 200ms linear;
+    transition: width 200ms linear;
+
+    -webkit-animation: progressmove 2s linear infinite;
+    -moz-animation: progressmove 2s linear infinite;
+    -o-animation: progressmove 2s linear infinite;
+    -ms-animation: progressmove 2s linear infinite;
+    animation: progressmove 2s linear infinite;
+
+    -webkit-transform: translateZ(0);
+}
+</style>
 <div class="wrapper wrapper-content animated fadeInRight">
 <form method="POST" action="#" class="form-horizontal" id="searchForm">
 <fieldset>
@@ -221,8 +323,9 @@
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<div class="col-sm-8" id="projectHead">
-									
+								<div class="col-sm-8 uploader">
+								<ul id="ProjectImgBox" class="filelist">
+								</ul>
 								</div>
 							</div>
 						</div>
@@ -234,14 +337,15 @@
 								<div class="col-sm-6">
 									<!-- 文件上传部分 -->
    								<div id="ProjectDescImgPc">选择图片</div>
+   								
 								<!-- 文件上传部分 -->
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-9">
 							<div class="form-group">
-								<div class="col-sm-9">
-								<ul class="ProjectDescImgPcBox">
+								<div class="col-sm-9  uploader">
+								<ul id="ProjectDescImgPcBox" class="filelist">
 								</ul>
 								</div>
 							</div>
@@ -260,17 +364,9 @@
 						</div>
 						<div class="col-lg-9">
 							<div class="form-group">
-								<div class="col-sm-9">
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
+								<div class="col-sm-9  uploader">
+								<ul id="ProjectDescImgWapBox" class="filelist">
+								</ul>
 								</div>
 							</div>
 						</div>
@@ -288,17 +384,9 @@
 						</div>
 						<div class="col-lg-9">
 							<div class="form-group">
-								<div class="col-sm-9">
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
+								<div class="col-sm-9  uploader">
+								<ul id="ProjectHuibaoImgPcBox" class="filelist">
+								</ul>
 								</div>
 							</div>
 						</div>
@@ -316,17 +404,9 @@
 						</div>
 						<div class="col-lg-9">
 							<div class="form-group">
-								<div class="col-sm-9">
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
-									<img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" style="height: 80px;width: 100px;"/>
+								<div class="col-sm-9  uploader">
+								<ul id="ProjectHuibaoImgWapBox" class="filelist">
+								</ul>
 								</div>
 							</div>
 						</div>
@@ -346,13 +426,51 @@
 </div>
 
 <!--引入JS-->
+<script>
+var BasePath='<%=basePath%>';
+</script>
 <script type="text/javascript" src="<%=basePath%>/js/newproject/newproject.js"></script>
 <script type="text/javascript">
-var BasePath='<%=basePath%>';
+
 var uploader;//项目图片上传
-InitUpload(uploader,'ProjectImg','projectHead',1);
-var uploader2;//项目图片上传
-InitUpload(uploader2,'ProjectDescImgPc','ProjectDescImgPcBox',10);
+uploader=InitUpload(uploader,'ProjectImg','ProjectImgBox',1);
+var uploader2;//项目概况PC
+uploader2=InitUpload(uploader2,'ProjectDescImgPc','ProjectDescImgPcBox',10);
+var uploader3;//项目概况Wap
+uploader3=InitUpload(uploader3,'ProjectDescImgWap','ProjectDescImgWapBox',10);
+var uploader4;//项目回报说明PC
+uploader4=InitUpload(uploader4,'ProjectHuibaoImgPc','ProjectHuibaoImgPcBox',10);
+var uploader5;//项目回报说明Wap
+uploader5=InitUpload(uploader5,'ProjectHuibaoImgWap','ProjectHuibaoImgWapBox',10);
+
+//上传全部文件
+$('#uploadallimg').click(function(){
+	//alert('a');
+	uploader.upload();
+	uploader2.upload();
+	uploader3.upload();
+	uploader4.upload();
+	uploader5.upload();
+// 	alert('b');
+});
+uploader=InitUpload(uploader,'ProjectImg','ProjectImgBox',1);
+var uploader2;//项目概况PC
+uploader2=InitUpload(uploader2,'ProjectDescImgPc','ProjectDescImgPcBox',10);
+var uploader3;//项目概况Wap
+uploader3=InitUpload(uploader3,'ProjectDescImgWap','ProjectDescImgWapBox',10);
+var uploader4;//项目回报说明PC
+uploader4=InitUpload(uploader4,'ProjectHuibaoImgPc','ProjectHuibaoImgPcBox',10);
+var uploader5;//项目回报说明Wap
+uploader5=InitUpload(uploader5,'ProjectHuibaoImgWap','ProjectHuibaoImgWapBox',10);
+
+//上传全部文件
+$('#uploadallimg').click(function(){
+	uploader.upload();
+	uploader2.upload();
+	uploader3.upload();
+	uploader4.upload();
+	uploader5.upload();
+});
 </script>
 <script>
 //
@@ -367,12 +485,6 @@ $(function(){
 			$('#ProjectType2').show();
 			$('#ProjectType1').hide();
 		}
-	});
-	//上传全部文件
-	$('#uploadallimg').click(function(){
-		alert('开始上传文件1');
-		uploader.upload();
-		alert('开始上传文件2');
 	});
 });
 </script>
