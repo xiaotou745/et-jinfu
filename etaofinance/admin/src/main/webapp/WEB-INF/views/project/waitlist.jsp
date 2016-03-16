@@ -37,6 +37,7 @@
 						<div class="col-sm-7">
 							<select name="projectAuditStatus" class="form-control m-b"
 								id="projectAuditStatus">
+								<option value="-1">全部</option>
 								<option value="1">待审核</option>
 								<option value="3">审核拒绝</option>
 							</select>
