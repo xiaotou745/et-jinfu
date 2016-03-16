@@ -33,6 +33,8 @@
         <property name="testWhileIdle" value="${commonDbcp.testWhileIdle}"/>
         <property name="testOnBorrow" value="${commonDbcp.testOnBorrow}"/>
         <property name="testOnReturn" value="${commonDbcp.testOnReturn}"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/> 
 	</bean>
 	<bean id="readOnlyMySqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.readonlymysql.driver}" />
@@ -52,6 +54,8 @@
         <property name="testWhileIdle" value="${commonDbcp.testWhileIdle}"/>
         <property name="testOnBorrow" value="${commonDbcp.testOnBorrow}"/>
         <property name="testOnReturn" value="${commonDbcp.testOnReturn}"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/> 
 	</bean>
 
 	<bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
