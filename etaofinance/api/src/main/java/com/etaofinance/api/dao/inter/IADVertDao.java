@@ -1,10 +1,8 @@
 package com.etaofinance.api.dao.inter;
 
 import com.etaofinance.entity.ADVert;
-import com.etaofinance.entity.AccountInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
-import com.etaofinance.entity.req.PagedAccountInfoReq;
 
 public interface IADVertDao {
     int deleteByPrimaryKey(Integer id);

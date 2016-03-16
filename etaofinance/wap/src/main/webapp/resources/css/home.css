@@ -285,14 +285,22 @@ body {
 }
 
 .form li {
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background-color:#fff;
+
 }
 
 .form li input {
     height: 40px;
-    line-height: 40px;
+    /*line-height: 40px;*/
     width: 100%;
     text-indent: 15px
+}
+.form li input[disabled]{
+    background: #fff;
+    color:#000;
+
 }
 
 .form li i {
@@ -320,7 +328,7 @@ body {
     height: 42px;
     line-height: 42px;
     display: block;
-    border-radius: 3px;
+    
     text-align: center;
     margin-top: 15px;
     font-weight: bold
@@ -339,7 +347,7 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.75);
     color: #444
 }
 
@@ -391,7 +399,7 @@ body {
     background: url(../img/icon_l.png) no-repeat;
     background-size: 20px 13px;
     margin-top: 18px;
-    left: 3px
+    left: 3px;
 }
 
 .popup .popup_bg .on p {
@@ -446,12 +454,27 @@ body {
 .popup .succeed dd {
     padding-top: 10px;
     font-size: 1.4rem;
-    color: #343434
+    color: #343434;
+}
+
+.popup .popup_con{
+    position:relative;
 }
 
 .hide{
     display: none !important;
 }
-.popup .popup_con{
-    position:relative;
+
+.overflow-hidden{
+    overflow: hidden !important;
 }
+
+input[disabled]::-webkit-input-placeholder{
+    color:#cbcbcb;
+    opacity: 1;
+}
+input[disabled]{
+    color:#000 ;
+    opacity: 1;
+}
+

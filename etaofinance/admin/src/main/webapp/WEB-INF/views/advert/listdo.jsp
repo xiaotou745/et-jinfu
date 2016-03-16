@@ -42,6 +42,8 @@ if(list == null){
 			<td><%=list.get(i).getClicknum()%></td>			
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>		
 			<td>			
+				<a href="javascript:void(0)" onclick="modify(<%=list.get(i).getId() %>)">修改</a>
+				<a href="javascript:void(0)" onclick="del('<%=list.get(i).getId() %>')">删除</a>
 			</td>
 		</tr>
 
@@ -55,30 +57,29 @@ if(list == null){
 					data.getTotalPage())%>
 					
 <script>				
-    function modify(id,isMaster)
+    function modify(id)
     {    	
     	 var paramaters = {
                    "id": id
                };
-    	 var url = "<%=basePath%>/taskdistributionconfig/selectbyprimarykey";
+    	 var url = "<%=basePath%>/advert/selectbyprimarykey";
     	 $.ajax({
 	           type: 'POST',
 	           url: url,
 	           data: paramaters,
 	           success: function (result) {		    
 	        	             	
-	        	 	$('#txtEId').val(result.id);    	
-	                $('#txtEKM').val(result.kM);
-	                $('#txtEKG').val(result.kG);
-	                $('#txtESteps').val(result.steps);   
-	                $("#txtEDistributionPrice").val(result.distributionPrice);       
-	                $("#txtEIsMaster").val(result.isMaster); 
-	                $("#txtERemark").val(result.remark);    		
-	              	$('#txtERemark').attr("disabled",false);     
-	            	if(isMaster==0) 
-	            		$('#txtERemark').attr("disabled",true)    	
-	            		
-	                $('#modifyConfig').modal('show');
+	        	 	$('#txtEId').val(result.id);
+	        	 	$('#txtETitle').val(result.title);    	        	
+	                $('#txtEUrl').val(result.url);
+	                $('#sltEType').val(result.typeid);
+	                $('#txtEImageUrl').val(result.imageurl);
+	                if(result.isshelve)
+	                	$("#radEstatus").val(1);
+	                else
+	                	$("#radEstatus").val(0);	                     
+	                $("#txtESortNo").val(result.sortno); 	            		
+	                $('#divmodify').modal('show');
 	           }
 	       });   	
 		
@@ -88,8 +89,8 @@ function del(id){
 	    var paramaters = {
                 "id": id
             };
-       var url = "<%=basePath%>/taskdistributionconfig/del";
-	   var la= layer.confirm('是否确认删除配置费？', {
+       var url = "<%=basePath%>/advert/del";
+	   var la= layer.confirm('是否确认删除广告？', {
 		    btn: ['确认','取消'], //按钮
 		    shade: false //显示遮罩
 		},function(){
@@ -101,7 +102,7 @@ function del(id){
 		           success: function (result) {		    
 		        	      alert("删除成功!");	      	
 		             
-		            	   window.location.href = "<%=basePath%>/taskdistributionconfig/list";		
+		            	   window.location.href = "<%=basePath%>/advert/list";		
 		                              
 		        	  
 		           }

@@ -16,6 +16,8 @@ public interface IADVertService {
    
 
     ADVert selectByPrimaryKey(Integer id);
+    
+	int deleteByPrimaryKey(Integer id) ;
 
     
 	PagedResponse<ADVert>  query(PagedADVertReq req);
@@ -23,5 +25,7 @@ public interface IADVertService {
 	HttpResultModel<ADVertResp> add(ADVert record);
 		
 
+	HttpResultModel<ADVertResp> modify(ADVert record);
+	
 
 }

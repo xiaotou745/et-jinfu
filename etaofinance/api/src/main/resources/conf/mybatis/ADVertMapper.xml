@@ -13,16 +13,19 @@
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, Title, Url, TypeId, ImageUrl, IsShelve, SortNo, CreateName, CreateTime
+    Id, Title, Url, TypeId, ImageUrl, IsShelve, SortNo, CreateName, CreateTime,ClickNum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from advert
     where Id = #{id,jdbcType=INTEGER}
-  </select>
+  </select>  
     <sql id="queryWhere">
 		1=1	
+		<if test="title != null and  title   !='' ">
+			and title  LIKE ''%${title}%''
+		</if> 
 	</sql> 
 <select id="query" resultType="com.etaofinance.entity.ADVert" parameterType="com.etaofinance.entity.req.PagedADVertReq" statementType="CALLABLE">
 {call Sp_CustomPage2015_V1(
@@ -82,10 +85,6 @@
       <if test="createtime != null" >
         CreateTime,
       </if>
-      <if test="clicknum != null" >
-        ClickNum,
-      </if>
-      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -114,9 +113,6 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
-      </if>
-       <if test="clicknum!= null" >
-        #{clicknum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

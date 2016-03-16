@@ -16,8 +16,7 @@ public class ADVertDao extends DaoBase implements IADVertDao{
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().delete("IADVertDao.deleteByPrimaryKey", id);
 	}
 
 	@Override
@@ -34,14 +33,12 @@ public class ADVertDao extends DaoBase implements IADVertDao{
 
 	@Override
 	public ADVert selectByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getReadOnlySqlSessionUtil().selectOne("IADVertDao.selectByPrimaryKey",id);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(ADVert record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().update("IADVertDao.updateByPrimaryKeySelective",record);
 	}
 
 	@Override

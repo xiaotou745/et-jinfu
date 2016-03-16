@@ -445,6 +445,26 @@ uploader5=InitUpload(uploader5,'ProjectHuibaoImgWap','ProjectHuibaoImgWapBox',10
 
 //上传全部文件
 $('#uploadallimg').click(function(){
+	//alert('a');
+	uploader.upload();
+	uploader2.upload();
+	uploader3.upload();
+	uploader4.upload();
+	uploader5.upload();
+// 	alert('b');
+});
+uploader=InitUpload(uploader,'ProjectImg','ProjectImgBox',1);
+var uploader2;//项目概况PC
+uploader2=InitUpload(uploader2,'ProjectDescImgPc','ProjectDescImgPcBox',10);
+var uploader3;//项目概况Wap
+uploader3=InitUpload(uploader3,'ProjectDescImgWap','ProjectDescImgWapBox',10);
+var uploader4;//项目回报说明PC
+uploader4=InitUpload(uploader4,'ProjectHuibaoImgPc','ProjectHuibaoImgPcBox',10);
+var uploader5;//项目回报说明Wap
+uploader5=InitUpload(uploader5,'ProjectHuibaoImgWap','ProjectHuibaoImgWapBox',10);
+
+//上传全部文件
+$('#uploadallimg').click(function(){
 	uploader.upload();
 	uploader2.upload();
 	uploader3.upload();
@@ -453,6 +473,7 @@ $('#uploadallimg').click(function(){
 });
 </script>
 <script>
+//
 $(function(){
 	//项目类型切换事件
 	$('input:radio[name="rProjectType"]').change(function() {
