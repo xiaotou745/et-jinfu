@@ -34,7 +34,8 @@
 		<%
 			PagedResponse<Project> data = (PagedResponse<Project>) request.getAttribute("listData");
 			Map<Long,String> strategyMap = (Map<Long,String>) request.getAttribute("strategyMap");
-		
+			Map<Long,String> cityMap = (Map<Long,String>) request.getAttribute("cityMap");
+			
 			List<Project> list = data.getResultList();
 			if (list == null) {
 				list = new ArrayList<Project>();
@@ -46,7 +47,7 @@
 			<td><%=list.get(i).getProjectname()%></td>
 			<td><%=list.get(i).getAmount()%>%</td>
 			<td><%=ProjectType.getEnum(list.get(i).getTypeid()).desc()%></td>
-			<td><%=list.get(i).getCitycode()%></td>
+			<td><%=cityMap.get(list.get(i).getCitycode())%></td>
 			<td><%=strategyMap.get(list.get(i).getId())%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
 			<td><%=ProjectAuditStatus.getEnum(list.get(i).getAuditstatus()).desc()%></td>

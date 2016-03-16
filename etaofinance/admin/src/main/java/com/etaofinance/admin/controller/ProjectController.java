@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
+import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
@@ -29,6 +30,8 @@ public class ProjectController {
 	private IProjectService projectService;
 	@Autowired
 	private IProjectStrategyService projectStrategyService;
+	@Autowired
+	private IPublicProvinceCityService publicProvinceCityService;
 	/**
 	 * 项目列表查询页
 	 * @return
@@ -68,12 +71,18 @@ public class ProjectController {
 		view.addObject("listData", listData);
 		Map<Long,String> strategyMap=getStrategyMap(listData);
 		view.addObject("strategyMap", strategyMap);
+		Map<Integer,String> cityMap=publicProvinceCityService.getOpenCityMap();
+		view.addObject("cityMap", cityMap);
 		return view;
 	}
 	private Map<Long,String> getStrategyMap(PagedResponse<Project> listData){
-		List<Long> projectIds=listData.getResultList().stream().map(k->k.getId()).collect(Collectors.toList());
-		List<ProjectStrategy> strategyList=projectStrategyService.getByProjectIds(projectIds);
 		Map<Long,String> resultMap=new HashMap<Long, String>();
+		List<Long> projectIds=listData.getResultList().stream().map(k->k.getId()).collect(Collectors.toList());
+		if (projectIds.size()==0) {
+			return resultMap;
+		}
+		List<ProjectStrategy> strategyList=projectStrategyService.getByProjectIds(projectIds);
+
 
 		Map<Long, List<ProjectStrategy>> result =strategyList.stream().collect(Collectors.groupingBy(ProjectStrategy::getProjectid));
 		for (Long projectId : result.keySet()) {
