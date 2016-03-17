@@ -17,6 +17,7 @@ import com.etaofinance.entity.req.PagedMemberReq;
 public class MemberController {
 	@Autowired
 	private IMemberService memberService;
+
 	/*
 	 * 会员列表 wangchao
 	 */
