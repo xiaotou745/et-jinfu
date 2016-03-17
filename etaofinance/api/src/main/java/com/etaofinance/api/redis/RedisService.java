@@ -82,7 +82,11 @@ public class RedisService {
 	public <T> T get(String key, Class<T> type) {
 		return get(key,type,true);
 	}
-	
+	public void remove(String keyPattern,Boolean isSuffxKey) {
+		String finalKey=isSuffxKey?suffxKey(keyPattern):keyPattern;
+		Set<String> removeKeys = redisTemplate.keys(finalKey);
+		redisTemplate.delete(removeKeys);
+	}
 	public void remove(String keyPattern) {
 		Set<String> removeKeys = redisTemplate.keys(suffxKey(keyPattern));
 		redisTemplate.delete(removeKeys);

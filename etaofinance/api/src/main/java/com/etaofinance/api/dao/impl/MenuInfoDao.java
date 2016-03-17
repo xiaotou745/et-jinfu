@@ -24,6 +24,7 @@ public class MenuInfoDao extends DaoBase implements
 	@Override
 	public List<MenuInfo> getMenuListByUserID(int accountId) {
 		String key=RedissCacheKey.Menu_Auth+accountId;
+		redisService.remove(key);
 		List<MenuInfo> result=redisService.get(key, List.class);
 		if (result==null||result.size()==0) {
 			List<MenuInfo> list = getReadOnlySqlSessionUtil()

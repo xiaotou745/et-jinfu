@@ -101,9 +101,9 @@ public class AdminToolsController {
 	@ResponseBody
 	public Integer redisRemove(String key) {
 		if (key == null || key.isEmpty()) {
-			return 1;
+			return 0;
 		}
-		redisService.remove(key);
+		redisService.remove(key,false);
 		return 1;
 	}
 
