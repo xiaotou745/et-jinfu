@@ -3,28 +3,22 @@ package com.etaofinance.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Suggestion {
+public class LcSuggestion {
     private Integer id;
-
-    private String projectname;
 
     private String username;
 
     private String phoneno;
 
-    private String email;
-
     private BigDecimal amount;
 
-    private String repaymentdate;
+    private String resistance;
 
     private Date createtime;
 
     private String clientip;
 
-    private Short status;
-
-  
+    private BigDecimal yearamount;
 
     public Integer getId() {
         return id;
@@ -32,14 +26,6 @@ public class Suggestion {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getProjectname() {
-        return projectname;
-    }
-
-    public void setProjectname(String projectname) {
-        this.projectname = projectname == null ? null : projectname.trim();
     }
 
     public String getUsername() {
@@ -58,14 +44,6 @@ public class Suggestion {
         this.phoneno = phoneno == null ? null : phoneno.trim();
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -74,12 +52,12 @@ public class Suggestion {
         this.amount = amount;
     }
 
-    public String getRepaymentdate() {
-        return repaymentdate;
+    public String getResistance() {
+        return resistance;
     }
 
-    public void setRepaymentdate(String repaymentdate) {
-        this.repaymentdate = repaymentdate == null ? null : repaymentdate.trim();
+    public void setResistance(String resistance) {
+        this.resistance = resistance == null ? null : resistance.trim();
     }
 
     public Date getCreatetime() {
@@ -98,13 +76,11 @@ public class Suggestion {
         this.clientip = clientip == null ? null : clientip.trim();
     }
 
-    public Short getStatus() {
-        return status;
+    public BigDecimal getYearamount() {
+        return yearamount;
     }
 
-    public void setStatus(Short status) {
-        this.status = status;
+    public void setYearamount(BigDecimal yearamount) {
+        this.yearamount = yearamount;
     }
-
-   
 }
