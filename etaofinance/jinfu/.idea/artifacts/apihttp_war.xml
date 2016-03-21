@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="apihttp:war">
+    <output-path>$PROJECT_DIR$/../apihttp/target</output-path>
+    <root id="archive" name="apihttp.war">
+      <element id="artifact" artifact-name="apihttp:war exploded" />
+    </root>
+  </artifact>
+</component>

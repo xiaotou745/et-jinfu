@@ -83,7 +83,7 @@ public class QAController {
 		record.setCreatetime(new Date());
 		record.setCreatename(UserContext.getCurrentContext(request).getLoginName());
 
-		HttpResultModel<QAResp> resp= qAService.add(record);	
+		HttpResultModel<QAResp> resp= qAService.add(record);
 		return resp;
 	}
 	
