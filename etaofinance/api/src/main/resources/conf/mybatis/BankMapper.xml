@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IBankDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.Bank" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="BankName" property="bankname" jdbcType="VARCHAR" />
+    <result column="SortNo" property="sortno" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, BankName, SortNo, CreateTime, CreateName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bank
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  
+     <select id="getBankList" resultType="com.etaofinance.entity.Bank" >
+    select 
+    <include refid="Base_Column_List" />
+    from bank
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bank
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.Bank" >
+    insert into bank (Id, BankName, SortNo, 
+      CreateTime, CreateName)
+    values (#{id,jdbcType=INTEGER}, #{bankname,jdbcType=VARCHAR}, #{sortno,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.Bank" >
+    insert into bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="bankname != null" >
+        BankName,
+      </if>
+      <if test="sortno != null" >
+        SortNo,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bankname != null" >
+        #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Bank" >
+    update bank
+    <set >
+      <if test="bankname != null" >
+        BankName = #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="sortno != null" >
+        SortNo = #{sortno,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Bank" >
+    update bank
+    set BankName = #{bankname,jdbcType=VARCHAR},
+      SortNo = #{sortno,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      CreateName = #{createname,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
