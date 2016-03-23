@@ -1,6 +1,8 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.SendCodeReq;
+import com.etaofinance.entity.resp.SendCodeResp;
 
 /**
  * 接口
@@ -15,4 +17,11 @@ public interface IMemberService {
      * @return
      */
     Member selectByPhoneNo(String  phoneno);
+    /**
+     * 获取验证码
+     * @param req
+     * @return
+     */
+    SendCodeResp sendCode(SendCodeReq req);
+    
 }
