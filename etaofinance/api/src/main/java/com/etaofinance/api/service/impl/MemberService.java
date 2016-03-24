@@ -8,11 +8,15 @@ import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.SendCodeType;
+import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.resp.SendCodeResp;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 @Service
 public class MemberService implements IMemberService{
@@ -95,6 +99,40 @@ public class MemberService implements IMemberService{
 		resp.setMessage("验证码发送成功!");
 		return resp;
 	}
+	/**
+	 * 注册用户
+	 */
+	@Override
+	public  HttpResultModel<Member> regist(RegistReq req) {
+		HttpResultModel<Member>resultModel=new HttpResultModel<Member>();
+		String phoneNo = req.getPhoneNo();
+		boolean phoneIsExist	=memberDao.selectByPhoneNo(phoneNo)!=null;//不为空 存在.否则不存在
+		if(phoneIsExist){//手机号已经存在
+			resultModel.setCode(-1);
+			resultModel.setMsg("该手机号已经存在,不能注册!");
+			return resultModel;
+		}
+		String 	key = String.format(RedissCacheKey.JF_Member_Register ,phoneNo);
+		String RedisCode=redisService.get(key,String.class);
+		// 缓存验证码为空		参数验证码为空					验证码不匹配
+		if(RedisCode==null||req.getVeriCode()==null||!req.getVeriCode().equals(RedisCode))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重新输入");
+			return resultModel;
+		}
+		//注册
+		Member register=new Member();
+		register.setPhoneno(req.getPhoneNo());
+		register.setLoginpwd(MD5Util.MD5(req.getPwd()));
+		register.setUsername("etao_"+req.getPhoneNo());
+		memberDao.insertSelective(register);
+		resultModel.setCode(1);
+		resultModel.setData(register);
+		resultModel.setMsg("注册成功!");
+		return resultModel;
+	}
+
 
 
 }

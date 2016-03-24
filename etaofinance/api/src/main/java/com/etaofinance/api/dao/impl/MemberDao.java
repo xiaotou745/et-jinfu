@@ -22,8 +22,7 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 
 	@Override
 	public int insertSelective(Member record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().insert("IMemberDao.insertSelective", record);
 	}
 
 	@Override

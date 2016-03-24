@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.service.inter.IMemberService;
-import com.etaofinance.apihttp.common.HttpResultModel;
 import com.etaofinance.apihttp.service.inter.IUserService;
-import com.etaofinance.entity.req.SendCodeReq;
 /**
  * 用户相关Service
  * @author ofmyi_000
@@ -18,13 +16,13 @@ public class UserService implements IUserService {
 	private IMemberService memberService;
 	
 	
-	/**
-	 * 发送验证码
-	 */
-	@Override
-	public HttpResultModel<Object> sendcode(SendCodeReq req) {
-		HttpResultModel<Object> resultModel = new HttpResultModel<Object>();
-		return null;
-	}
+//	/**
+//	 * 发送验证码
+//	 */
+//	@Override
+//	public HttpResultModel<Object> sendcode(SendCodeReq req) {
+//		HttpResultModel<Object> resultModel = new HttpResultModel<Object>();
+//		return null;
+//	}
 
 }
