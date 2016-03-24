@@ -33,8 +33,8 @@ public class BankService implements IBankService{
 	private IBankDao bankDao;
 
 	@Override
-	public List<Bank> getBankList() {
-		return bankDao.getBankList();
+	public List<Bank> getList() {
+		return bankDao.getList();
 	}
 	
 

@@ -9,6 +9,7 @@ import com.etaofinance.api.dao.inter.IADVertDao;
 import com.etaofinance.api.dao.inter.IQADao;
 import com.etaofinance.api.dao.inter.IRoleInfoDao;
 import com.etaofinance.entity.ADVert;
+import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
@@ -57,4 +58,10 @@ public class QADao extends DaoBase implements IQADao{
 				"IQADao.query", req);
 	}
 
+	@Override
+	public List<QA> getList() {		
+		return getReadOnlySqlSessionUtil()
+				.selectList(
+						"IQADao.getList");	 
+	}
 }

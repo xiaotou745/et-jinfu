@@ -31,6 +31,6 @@ public class FinanceControllor {
 	@ResponseBody
 	public List<Bank> getBankList()
 	{
-		return bankService.getBankList();
+		return bankService.getList();
 	}
 }
