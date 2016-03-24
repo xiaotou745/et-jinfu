@@ -1,7 +1,9 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.resp.SendCodeResp;
 
 /**
@@ -23,5 +25,11 @@ public interface IMemberService {
      * @return
      */
     SendCodeResp sendCode(SendCodeReq req);
+    /**
+     * 注册用户
+     * @param req
+     * @return
+     */
+    HttpResultModel<Member> regist(RegistReq req);
     
 }

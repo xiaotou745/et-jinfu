@@ -47,7 +47,11 @@
       #{idcard,jdbcType=VARCHAR}, #{level,jdbcType=SMALLINT}, #{createtime,jdbcType=TIMESTAMP}, 
       #{headimage,jdbcType=VARCHAR})
   </insert>
+  <!-- 注册用户 茹化肖 2016年3月24日13:29:30 -->
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Member" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+		 SELECT LAST_INSERT_ID() AS id;
+	</selectKey>
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -150,6 +154,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Member" >
     update member
     <set >
