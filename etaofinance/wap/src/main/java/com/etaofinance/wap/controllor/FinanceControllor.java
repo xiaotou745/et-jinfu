@@ -28,6 +28,7 @@ public class FinanceControllor {
 
 	
 	@RequestMapping("/getbanklist")
+	@ResponseBody
 	public List<Bank> getBankList()
 	{
 		return bankService.getBankList();
