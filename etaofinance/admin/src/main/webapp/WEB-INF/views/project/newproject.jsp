@@ -5,8 +5,12 @@
 <%-- <%@page import="com.etaofinance.entity.RoleInfo"%> --%>
 <%@page import="java.util.List"%>
 <%@page import="com.etaofinance.core.util.HtmlHelper"%>
+<%@page import="com.etaofinance.entity.PublicProvinceCity"%>
 <%
-	String basePath =PropertyUtils.getProperty("java.admin.url");
+String basePath =PropertyUtils.getProperty("java.admin.url");
+List<PublicProvinceCity> provincelist = (List<PublicProvinceCity>) request.getAttribute("provincelist");
+String pro_city = (String) request.getAttribute("pro_city");
+String city_region = (String) request.getAttribute("city_region");
 %>
 <!-- 百度图片上传 start -->
 <!--引入CSS-->
@@ -14,6 +18,8 @@
 
 <!--引入JS-->
 <script type="text/javascript" src="<%=basePath%>/js/webuploader0.1.5/webuploader.js"></script>
+<!-- 省市区联动JS -->
+<script type="text/javascript" src="<%=basePath%>/js/pro_city_region.js"></script>
 
 <!-- 百度图片上传 End -->
 <style>
@@ -120,6 +126,8 @@
 </style>
 <div class="wrapper wrapper-content animated fadeInRight">
 <form method="POST" action="#" class="form-horizontal" id="searchForm">
+<input type="hidden" id="pro_city" value="<%=pro_city %>" /> 
+<input type="hidden" id="city_region" value="<%=city_region %>" />
 <fieldset>
 			<legend>基本信息</legend>
 			<div class="row">
@@ -160,7 +168,7 @@
 							<div class="form-group" id="ProjectType1">
 								<label class="col-sm-4 control-label">年化收益: </label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control"id="projectType1A" value="0" style="width: 50px;"/>
+									<input type="text" class="form-control"id="projectType1A" value="" style="width: 50px;"/>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">
 	  							  %
@@ -169,7 +177,7 @@
 	  							  +
 								</div>
 								<div class="col-sm-2" id="ProjectType1Check">
-									<input type="text" class="form-control"id="projectType1A" value="0" style="width: 50px;"/>
+									<input type="text" class="form-control"id="projectType1B" value="" style="width: 50px;"/>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">
 	  							  %
@@ -177,22 +185,22 @@
 							</div>
 							<div class="form-group" id="ProjectType2" style="display:none">
 								<label class="col-sm-4 control-label">年化收益: </label>
-								<div class="col-sm-1" style="line-height: 33px;">
+								<div class="col-sm-2" style="line-height: 33px;">
 	  							  预计
 								</div>
-								<div class="col-sm-2">
-									<input type="text" class="form-control"id="projectType1A" value="0" style="width: 50px;"/>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"id="projectType2A" value="" style="width: 50px;"/>
 								</div>
-								<div class="col-sm-1" style="line-height: 33px;">
+								<div class="col-sm-1" style="line-height: 33px;padding-left:35px">
 	  							  %
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">
 	  							  —
 								</div>
-								<div class="col-sm-2" id="ProjectType1Check">
-									<input type="text" class="form-control"id="projectType1A" value="0" style="width: 50px;"/>
+								<div class="col-sm-1" id="ProjectType1Check">
+									<input type="text" class="form-control"id="projectType2B" value="" style="width: 50px;"/>
 								</div>
-								<div class="col-sm-1" style="line-height: 33px;">
+								<div class="col-sm-1" style="line-height: 33px;padding-left:35px">
 	  							  %
 								</div>
 							</div>
@@ -246,21 +254,22 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="col-sm-4 control-label">领投人最低限制: </label>
+						<div class="form-group">
+								<label class="col-sm-4 control-label">领投总额最高限额: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="projectLeadMinFenShu" id="projectLeadMinFenShu" value="0"/>
+									<input type="text" class="form-control" name="projectPreheatMaxFenShu" id="projectPreheatMaxFenShu" value="0"/>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">
 	  							  份
 								</div>
 							</div>
+							
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="col-sm-4 control-label">领投总额最高限额: </label>
+								<label class="col-sm-4 control-label">领投人最低限制: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="projectPreheatMaxFenShu" id="projectPreheatMaxFenShu" value="0"/>
+									<input type="text" class="form-control" name="projectLeadMinFenShu" id="projectLeadMinFenShu" value="0"/>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">
 	  							  份
@@ -273,7 +282,7 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">省份: </label>
 								<div class="col-sm-6">
-									 <select class="form-control m-b" id="ProvinceCode" name="ProvinceCode">  <option value="22">省份</option><option value="22">E代送版本2</option></select>
+								<%=HtmlHelper.getSelect("provinceCode", provincelist, "name", "code", null,-1, "全部省份")%>
 								</div>
 							</div>
 						</div>
@@ -281,7 +290,9 @@
 							<div class="form-group">
 							<label class="col-sm-4 control-label">城市: </label>
 								<div class="col-sm-6">
-									 <select class="form-control m-b" id="ProvinceCode" name="ProvinceCode">  <option value="22">城市</option><option value="22">E代送版本2</option></select>
+									 <select id="cityCode" name="cityCode"  class="form-control m-b">
+										<option value="-1">全部城市</option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -289,7 +300,9 @@
 							<div class="form-group">
 							<label class="col-sm-4 control-label">区域: </label>
 								<div class="col-sm-6">
-									 <select class="form-control m-b" id="ProvinceCode" name="ProvinceCode">  <option value="22">区域</option><option value="22">E代送版本2</option></select>
+									<select id="regionCode" name="cityCode"  class="form-control m-b">
+										<option value="-1">全部区县</option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -415,7 +428,7 @@
 					<div class="row">
 						<div class="col-lg-4">
 						<button type="button" class="btn btn-w-m btn-primary" id="clearAll" style="margin-left: 3px; height: 30px;">重置全部</button>
-						<button type="button" class="btn btn-w-m btn-primary" id="saveProject" onclick="savetask()" style="margin-left: 3px; height: 30px;">保存</button>
+						<button type="button" class="btn btn-w-m btn-primary" id="saveProject"  style="margin-left: 3px; height: 30px;">保存</button>
 						<button type="button" class="btn btn-w-m btn-primary" id="uploadallimg"  style="margin-left: 3px; height: 30px;">上传所有图片</button>
 						</div>
 					</div>
@@ -453,6 +466,13 @@ $('#uploadallimg').click(function(){
 </script>
 <script>
 $(function(){
+	//重置全部
+	$('#clearAll').click(function(){
+		if(confirm('确定重置全部页面?'))
+		{
+			 window.location.reload();
+		}
+	});
 	//项目类型切换事件
 	$('input:radio[name="rProjectType"]').change(function() {
 		var id = $('input[name="rProjectType"]:checked').val();
@@ -463,6 +483,13 @@ $(function(){
 			$('#ProjectType2').show();
 			$('#ProjectType1').hide();
 		}
+	});
+	//计算份额
+	$('#projectAmount').blur(function(){
+		 FenshuJisuan();
+	});
+	$('#projectFenShu').blur(function(){
+		 FenshuJisuan();
 	});
 });
 //校验手机号会员ID
@@ -482,4 +509,46 @@ $('#memberPhone').blur(function(){
 		}
 	});
 });
+//份额计算
+function FenshuJisuan(){
+	var a=$('#projectAmount').val();
+	var b=$('#projectFenShu').val();
+	if(a.length==0||b.length==0)
+	{
+			return ;
+	}
+	if(!isInt(a))
+		{
+			alert('请输入正确的融资金额');
+			$('#projectAmount').focus();
+			return;
+		}
+		
+	if(!isInt(b))
+		{
+		alert('请输入正确的份数');
+		$('#projectFenShu').focus();
+		return;
+		}
+	var c=a/b;
+	if(!isInt(c)||c==0)
+	{
+		alert('每份金额必须为整数，请调整份数或者融资金额!');
+		$('#projectUnitPrice').val(0);
+	}
+	else
+	{
+		$('#projectUnitPrice').val(c);
+	}
+}
+//保存
+$('#saveProject').click(function(){
+	if(!SaveChek())
+	{
+		return ;
+	}
+	//验证通过
+	//构建数据库信息
+});
+
 </script>

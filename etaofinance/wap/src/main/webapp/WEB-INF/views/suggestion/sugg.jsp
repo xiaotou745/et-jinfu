@@ -70,10 +70,16 @@
             </div>
             </form>
         </div>
-        <!-- header-menu start -->
+         <!-- header-menu start -->
         <!-- $attr 用来使用当前block时，设置的参数 -->
-        <div class="footer-menu">也可把资料发至我们的邮箱：xiangmu@etao.cn</div>
+        <div class="footer-menu">
+            <ul>
+                <li>项目咨询电话：010-52427371</li>
+                <li>邮箱：xiangmu@etao.cn</li>
+            </ul>
+        </div>
         <!-- header-menu end -->
+
 
          <div class="popup hide" id="popup_existCitys">
             <div class="popup_bg">

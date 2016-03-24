@@ -40,7 +40,7 @@
     <select id="getAllOpenCity"  resultType="com.etaofinance.entity.PublicProvinceCity" >
 	select  * 
 	from    publicprovincecity a 
-	where a.ispublic=1  AND (a.Jibie=2 OR a.Jibie=3) order by LowerAcronym asc
+	where a.ispublic=1  AND (a.Jibie=2 OR a.Jibie=3 OR a.Jibie=4) order by LowerAcronym asc
   </select>
   <update id="modifyCity" parameterType="com.etaofinance.entity.domain.ModifyCityDomain" >
   <!-- 开放城市 打开设置 -->

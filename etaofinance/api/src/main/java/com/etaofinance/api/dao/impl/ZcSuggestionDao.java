@@ -5,9 +5,16 @@ import org.springframework.stereotype.Repository;
 import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IZcSuggestionDao;
 import com.etaofinance.entity.ZcSuggestion;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.req.PagedZcSuggestionReq;
 
 @Repository
 public class ZcSuggestionDao extends DaoBase implements IZcSuggestionDao {
+
+	@Override
+	public PagedResponse<ZcSuggestion> queryZcSuggestionList(PagedZcSuggestionReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IZcSuggestionDao.querySuggestionList", req);
+	}
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
@@ -18,8 +25,8 @@ public class ZcSuggestionDao extends DaoBase implements IZcSuggestionDao {
 	@Override
 	public int insert(ZcSuggestion record) {
 		// TODO Auto-generated method stub
-//		ISuggestionDao.insert
-		return getMasterSqlSessionUtil().insert("IZcSuggestionDao.insert", record);
+		return getMasterSqlSessionUtil().insert("IZcSuggestionDao.insert",
+				record);
 	}
 
 	@Override
@@ -30,8 +37,7 @@ public class ZcSuggestionDao extends DaoBase implements IZcSuggestionDao {
 
 	@Override
 	public ZcSuggestion selectByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getReadOnlySqlSessionUtil().selectOne("IZcSuggestionDao.selectByPrimaryKey",id);
 	}
 
 	@Override

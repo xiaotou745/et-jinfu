@@ -8,11 +8,12 @@
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
     <result column="EMail" property="email" jdbcType="VARCHAR" />
+    <result column="Contacts" property="contacts" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="IsDel" property="isdel" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, Description, MemberId, CreateName, PhoneNo, EMail, CreateTime, IsDel
+    Id, Description, MemberId, CreateName, PhoneNo, EMail,Contacts, CreateTime, IsDel
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,10 +27,10 @@
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.FeedBack" >
     insert into feedback (Id, Description, MemberId, 
-      CreateName, PhoneNo, EMail, 
+      CreateName, PhoneNo, EMail, Contacts
       CreateTime, IsDel)
     values (#{id,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=INTEGER}, 
-      #{createname,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{createname,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.FeedBack" >
@@ -52,6 +53,9 @@
       </if>
       <if test="email != null" >
         EMail,
+      </if>
+         <if test="contacts != null" >
+        Contacts,
       </if>
       <if test="createtime != null" >
         CreateTime,
@@ -79,6 +83,10 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
+        <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -105,6 +113,9 @@
       <if test="email != null" >
         EMail = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="contacts != null" >
+        Contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
       <if test="createtime != null" >
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -121,6 +132,7 @@
       CreateName = #{createname,jdbcType=VARCHAR},
       PhoneNo = #{phoneno,jdbcType=VARCHAR},
       EMail = #{email,jdbcType=VARCHAR},
+      Contacts = #{contacts,jdbcType=VARCHAR},      
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       IsDel = #{isdel,jdbcType=BIT}
     where Id = #{id,jdbcType=INTEGER}

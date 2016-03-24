@@ -73,7 +73,7 @@ public class QAController {
 	@ResponseBody
 	public QA selectByPrimaryKey(int id)
 	{
-		QA model=qAService.selectByPrimaryKey(id);
+		QA model=qAService.getById(id);
 		return model;
 	}
 	
@@ -83,7 +83,7 @@ public class QAController {
 		record.setCreatetime(new Date());
 		record.setCreatename(UserContext.getCurrentContext(request).getLoginName());
 
-		HttpResultModel<QAResp> resp= qAService.add(record);	
+		HttpResultModel<QAResp> resp= qAService.create(record);
 		return resp;
 	}
 	
@@ -97,6 +97,6 @@ public class QAController {
 	@RequestMapping("del")
 	@ResponseBody
 	public int del(Integer id) {
-		return qAService.deleteByPrimaryKey(id);
+		return qAService.remove(id);
 	}
 }

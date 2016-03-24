@@ -39,11 +39,9 @@
 <body>
     <div id="a1" class="g-main lc">
         <div class="main">
-            <img src="<%=basePath%>/img/lc_01.png" alt="">
-            <img src="<%=basePath%>/img/lc_02.png" alt="">
-            <img src="<%=basePath%>/img/lc_03.png" alt="">
-            <img src="<%=basePath%>/img/lc_04.png" alt="">
-            <img src="<%=basePath%>/img/lc_05.png" alt="">
+               <img src="<%=basePath%>/img/xd_01.png" alt="">
+            <img src="<%=basePath%>/img/xd_02.png" alt="">
+            <img src="<%=basePath%>/img/xd_03.png" alt="">
             <form id="searchForm">
             <div class="form">
                 <ul>
@@ -51,7 +49,7 @@
                     <li><input type="text" placeholder="请输入联系人姓名" name="username" id="username" maxlength="20"></li>
                     <li><input type="text" placeholder="请输入手机号" name="phoneno" id="phoneno" maxlength="11"></li>
                     <li><input type="text" placeholder="请输入电子邮箱" name="email" id="email" maxlength="50"></li>
-                    <li><input type="text" placeholder="请输入贷款金额" name="dkamount" id="dkamount" maxlength="5"><i>万元</i></li>
+<!--                     <li><input type="text" placeholder="请输入贷款金额" name="dkamount" id="dkamount" maxlength="5"><i>万元</i></li> -->
                     <li><input type="text" placeholder="请输入库存金额" name="amount" id="amount" maxlength="15"><i>万元</i></li>
                     <li><input type="text" placeholder="请输入还款日期" name="repaymentdate" id="repaymentdate"></li>
                     <li><a href="javascript:void(0)" id="add">提交申请</a></li>
@@ -63,8 +61,16 @@
         </div>
         <!-- header-menu start -->
         <!-- $attr 用来使用当前block时，设置的参数 -->
-        <div class="footer-menu">也可把资料发至我们的邮箱：xiangmu@etao.cn</div>
+        <div class="footer-menu">
+            <ul>
+                <li>项目咨询电话：010-52427371</li>
+                <li>邮箱：xiangmu@etao.cn</li>
+            </ul>
+        </div>
         <!-- header-menu end -->
+
+        <!-- header-menu end -->
+
 
     </div>
     <!-- warn: point:footer is not defined; modname islayout/c1 -->

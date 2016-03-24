@@ -12,11 +12,10 @@
     <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="ClientIp" property="clientip" jdbcType="VARCHAR" />
     <result column="Status" property="status" jdbcType="SMALLINT" />
-    <result column="DkAmount" property="dkamount" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, ProjectName, UserName, PhoneNo, Email, Amount, RepaymentDate, Createtime, ClientIp, 
-    Status, DkAmount
+    Status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,11 +31,11 @@
     insert into suggestion (id, ProjectName, UserName, 
       PhoneNo, Email, Amount, 
       RepaymentDate, ClientIp, 
-      Status, DkAmount)
+      Status)
     values (#{id,jdbcType=INTEGER}, #{projectname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
       #{repaymentdate,jdbcType=VARCHAR},#{clientip,jdbcType=VARCHAR}, 
-      0, #{dkamount,jdbcType=INTEGER})
+      0)
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Suggestion" >
     insert into suggestion
@@ -71,9 +70,7 @@
       <if test="status != null" >
         Status,
       </if>
-      <if test="dkamount != null" >
-        DkAmount,
-      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -106,9 +103,7 @@
       <if test="status != null" >
         #{status,jdbcType=SMALLINT},
       </if>
-      <if test="dkamount != null" >
-        #{dkamount,jdbcType=INTEGER},
-      </if>
+     
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Suggestion" >
@@ -141,9 +136,7 @@
       <if test="status != null" >
         Status = #{status,jdbcType=SMALLINT},
       </if>
-      <if test="dkamount != null" >
-        DkAmount = #{dkamount,jdbcType=INTEGER},
-      </if>
+     
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -157,8 +150,8 @@
       RepaymentDate = #{repaymentdate,jdbcType=VARCHAR},
       Createtime = #{createtime,jdbcType=TIMESTAMP},
       ClientIp = #{clientip,jdbcType=VARCHAR},
-      Status = #{status,jdbcType=SMALLINT},
-      DkAmount = #{dkamount,jdbcType=INTEGER}
+      Status = #{status,jdbcType=SMALLINT}
+    
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

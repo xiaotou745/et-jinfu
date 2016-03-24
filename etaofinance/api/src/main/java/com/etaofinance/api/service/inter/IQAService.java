@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountInfo;
+import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -14,20 +15,20 @@ import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
 
-public interface IQAService {
-   
+public interface IQAService {   
 
-	QA selectByPrimaryKey(Integer id);
-    
-	int deleteByPrimaryKey(Integer id) ;
-
-    
-	PagedResponse<QA>  query(PagedQAReq req);
+	HttpResultModel<QAResp> create(QA record);
 	
-	HttpResultModel<QAResp> add(QA record);
-		
+	int remove(Integer id) ;
 
 	HttpResultModel<QAResp> modify(QA record);
+	
+	QA getById(Integer id);
+    
+    
+	PagedResponse<QA>  query(PagedQAReq req);	
+
+	List<QA> getList();
 	
 
 }

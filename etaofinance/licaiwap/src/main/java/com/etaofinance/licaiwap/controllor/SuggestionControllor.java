@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.api.service.inter.ILcSuggestionService;
 import com.etaofinance.api.service.inter.ISuggestionService;
 import com.etaofinance.core.util.SystemUtils;
+import com.etaofinance.entity.LcSuggestion;
 import com.etaofinance.entity.Suggestion;
 
 @Controller
 //@RequestMapping("suggestion")
 public class SuggestionControllor {
 	@Autowired
-	private ISuggestionService suggestionService;
+	private ILcSuggestionService lcSuggestionService;
 	
 	@RequestMapping("/zt")
 	public ModelAndView suggAdd() {
@@ -26,9 +28,9 @@ public class SuggestionControllor {
 	
 	@RequestMapping("addsuggestion")
 	@ResponseBody
-	public int add(HttpServletRequest request,Suggestion record) {
+	public int add(HttpServletRequest request,LcSuggestion record) {
 		String clientIp = SystemUtils.getClientIp(request);
 		record.setClientip(clientIp);
-		return suggestionService.insert(record);
+		return lcSuggestionService.insert(record);
 	}
 }

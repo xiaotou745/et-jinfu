@@ -1,6 +1,5 @@
 package com.etaofinance.wap.controllor;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IPublicProviceCityService;
+import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.api.service.inter.ISuggestionService;
-import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.core.util.SystemUtils;
 import com.etaofinance.entity.PublicProvinceCity;
-import com.etaofinance.entity.Suggestion;
 import com.etaofinance.entity.ZcSuggestion;
 
 @Controller
@@ -27,14 +25,14 @@ public class SuggestionControllor {
 	private ISuggestionService suggestionService;
 
 	@Autowired
-	private IPublicProviceCityService publicProviceCityService;
+	private IPublicProvinceCityService publicProvinceCityService;
 
 	@RequestMapping("/zt")
 	public ModelAndView suggAdd() {
 
 		// 这里初始化城市
-		List<PublicProvinceCity> list = publicProviceCityService
-				.getAllOpenCity();
+		List<PublicProvinceCity> list = publicProvinceCityService.getOpenCityListFromRedis();
+//				.getAllOpenCity();
 		ModelAndView model = new ModelAndView("suggestion/sugg");
 
 		// StringBuffer sb = new StringBuffer();

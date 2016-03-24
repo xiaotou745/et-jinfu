@@ -8,11 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
+import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
@@ -93,7 +95,7 @@ public class ProjectController {
 		return resultMap;
 		}
 	/**
-	 * 项目列表查询页
+	 * 新建项目
 	 * @return
 	 */
 	@RequestMapping("newproject")
@@ -102,7 +104,20 @@ public class ProjectController {
 		view.addObject("subtitle", "项目管理");
 		view.addObject("currenttitle", "发布项目");
 		view.addObject("viewPath", "project/newproject");
+		view.addObject("provincelist", publicProvinceCityService.getOpenCityByJiBie(AreaLevel.Province));
+		view.addObject("pro_city", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
+		view.addObject("city_region", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
 		return view;
+	}
+	/**
+	 * 保存项目
+	 * @return
+	 */
+	@RequestMapping("saveproject")
+	@ResponseBody
+	public int saveproject(String data) {
+
+		return 1;
 	}
 	private String getCityStr(List<PublicProvinceCity> list){
 		Map<Integer, StringBuilder> resulMap=new HashMap<Integer, StringBuilder>();

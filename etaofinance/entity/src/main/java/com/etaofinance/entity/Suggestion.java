@@ -24,7 +24,7 @@ public class Suggestion {
 
     private Short status;
 
-    private Integer dkamount;
+  
 
     public Integer getId() {
         return id;
@@ -106,11 +106,5 @@ public class Suggestion {
         this.status = status;
     }
 
-    public Integer getDkamount() {
-        return dkamount;
-    }
-
-    public void setDkamount(Integer dkamount) {
-        this.dkamount = dkamount;
-    }
+   
 }

@@ -41,7 +41,7 @@
 			<td><%=list.get(i).getApplyDate() %></td>
 			<td><%=list.get(i).getAuditStatusString() %></td>
 			<td><%=list.get(i).getRefuseReasion() %></td>
-			<td>操作</td>
+			<td></td>
 		</tr>
 		<%
 			}

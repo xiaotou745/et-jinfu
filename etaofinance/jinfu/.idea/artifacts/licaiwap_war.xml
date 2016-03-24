@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="licaiwap:war">
+    <output-path>$PROJECT_DIR$/../licaiwap/target</output-path>
+    <root id="archive" name="licaiwap.war">
+      <element id="artifact" artifact-name="licaiwap:war exploded" />
+    </root>
+  </artifact>
+</component>
