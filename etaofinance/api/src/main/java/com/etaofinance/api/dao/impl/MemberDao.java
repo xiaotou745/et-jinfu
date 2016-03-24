@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.req.PagedMemberReq;
 @Repository
 public class MemberDao  extends DaoBase implements IMemberDao{
 
@@ -48,6 +51,11 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 	@Override
 	public Member selectByPhoneNo(String phoneno) {
 		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByPhoneNo", phoneno);
+	}
+
+	@Override
+	public PagedResponse<MemberModel> getMemberList(PagedMemberReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IMemberDao.getMemberList",req);
 	}
 
 }

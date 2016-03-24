@@ -14,9 +14,12 @@ import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.QAResp;
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -60,16 +63,7 @@ public class MemberService implements IMemberService{
 				resp.setMessage("该手机号已经存在,不能注册!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_Register ,phoneNo);
-			content = "您的验证码：#验证码#，请在5分钟内填写。此验证码只用于注册，如非本人操作，请不要理会";
-		}break;
-		case UpdatePasswrd:{//修改密码
-			if(!phoneIsExist)//手机号不存在
-			{
-				resp.setCode(-1);
-				resp.setMessage("该手机号不存在,不能修改密码!");
-			}
-			key = String.format(RedissCacheKey.JF_Member_UpdatePasswrd ,phoneNo);
-			content = "您的验证码：#验证码#，请在5分钟内填写。此验证码只用于修改密码，如非本人操作，请不要理会";
+			content = "验证码#验证码#，您正在注册易淘众筹，请勿向他人泄露短信验证码。";
 		}break;
 		case ForgetPassword:{//忘记密码
 			if(!phoneIsExist)//手机号不存在
@@ -78,7 +72,47 @@ public class MemberService implements IMemberService{
 				resp.setMessage("该手机号不存在,不能找回密码!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_ForgetPassword ,phoneNo);
-			content = "您的验证码：#验证码#，请在5分钟内填写。此验证码只用于找回密码，如非本人操作，请不要理会";
+			content = "验证码#验证码#，您正在找回易淘众筹登录密码，请勿向他人泄露短信验证码。";
+			
+		}break;
+		case SetPayPassWord:{//设置支付密码
+			if(!phoneIsExist)//手机号不存在
+			{
+				resp.setCode(-1);
+				resp.setMessage("该手机号不存在,不能设置支付密码!");
+			}
+			key = String.format(RedissCacheKey.JF_Member_SetPayPassWord ,phoneNo);
+			content = "验证码#验证码#，您正在设置易淘众筹支付密码，请勿向他人泄露短信验证码。";
+			
+		}break;
+		case FindPayPassWord:{//找回支付密码
+			if(!phoneIsExist)//手机号不存在
+			{
+				resp.setCode(-1);
+				resp.setMessage("该手机号不存在,不能找回支付密码!");
+			}
+			key = String.format(RedissCacheKey.JF_Member_FindPayPassWord ,phoneNo);
+			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
+			
+		}break;
+		case ChangePhone:{//修改手机绑定
+			if(!phoneIsExist)//手机号不存在
+			{
+				resp.setCode(-1);
+				resp.setMessage("该手机号不存在,不能修改手机绑定!");
+			}
+			key = String.format(RedissCacheKey.JF_Member_ChangePhone ,phoneNo);
+			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
+			
+		}break;
+		case BindNewPhone:{//绑定新手机
+			if(phoneIsExist)//手机号存在
+			{
+				resp.setCode(-1);
+				resp.setMessage("该手机号存在,不能绑定!");
+			}
+			key = String.format(RedissCacheKey.JF_Member_BindNewPhone ,phoneNo);
+			content = "验证码#验证码#，您正在绑定此手机号，请勿向他人泄露短信验证码。";
 			
 		}break;
 		default:
@@ -135,6 +169,10 @@ public class MemberService implements IMemberService{
 		resultModel.setData(register);
 		resultModel.setMsg("注册成功!");
 		return resultModel;
+	}	
+	@Override
+	public PagedResponse<MemberModel> getMemberList(PagedMemberReq req) {
+		return memberDao.getMemberList(req);
 	}
 	
 	/**

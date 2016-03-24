@@ -229,4 +229,39 @@
   <select id="selectByPhoneNo" parameterType="java.lang.String" resultType="com.etaofinance.entity.Member">
   select <include refid="Base_Column_List" /> from member as m where m.PhoneNo=#{phoneno,jdbcType=VARCHAR}
   </select>
+  <!-- 获取会员信息 wangchao -->
+  <select id="getMemberList" parameterType="com.etaofinance.entity.req.PagedMemberReq" resultType="com.etaofinance.entity.domain.MemberModel" statementType="CALLABLE"> 
+		{call Sp_CustomPage2015_V1(
+		' m.Id desc ',
+		' m.Id,m.UserName MemberName,m.phoneNo,m.EMail,m.lastLoginTime ',
+		' member m ',
+		'<include refid="queryMemberModelListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+  <sql id="queryMemberModelListWhere">
+		1=1
+	    <if test="applyId>0">
+			and m.id=${applyId}
+		</if>
+		<if test="memberName != null and memberName!=''">
+			and m.UserName>=''${memberName}''
+		</if>
+		<if test="mail != null and mail!=''">
+			and m.email>=''${mail}''
+		</if>
+		<if test="memberType>0">
+			and m.Level=${memberType}
+		</if>
+		<if test="registerStartDate != null and registerStartDate!=''">
+			and m.createTime>=''${registerStartDate}''
+		</if>
+		<if test="registerEndDate != null and registerEndDate!=''">
+			and ''${registerEndDate}''>m.createTime
+		</if>
+	</sql>
+  
 </mapper>

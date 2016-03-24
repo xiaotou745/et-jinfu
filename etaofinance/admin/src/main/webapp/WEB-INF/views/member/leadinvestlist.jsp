@@ -1,9 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="com.etaofinance.core.util.HtmlHelper"%>
-<%@ page import="com.etaofinance.core.util.EnumHelper"%>
-<%@ page import="com.etaofinance.core.enums.LeadInvestStatusEnum"%>
-
+<%@page import="com.etaofinance.core.util.HtmlHelper"%>
+<%@page import="com.etaofinance.core.util.EnumHelper"%>
+<%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@ page import="com.etaofinance.core.enums.MemberApplyInvestStatusEnum"%>
+<%
+	String basePath =PropertyUtils.getProperty("java.admin.url");
+%>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -70,7 +73,7 @@
 						<label class="col-sm-4 control-label">审核状态:</label>
 						<div class="col-sm-8">
 							<%=HtmlHelper.getSelect("auditStatus",
-					EnumHelper.GetEnumItems(LeadInvestStatusEnum.class),
+					EnumHelper.GetEnumItems(MemberApplyInvestStatusEnum.class),
 					"desc", "value", null, "-1", "全部")%>
 						</div>
 					</div>
@@ -92,3 +95,37 @@
 		<div class="ibox-content" id="content"></div>
 	</div>
 </div>
+<script>
+	var jss={
+			search:function(currentPage){	
+                 var id = $("#txtId").val();
+                 var memberName = $("#txtMemberName").val();          
+                 var mail=$("#txtMail").val();
+                 var auditStatus=$("#auditStatus").val();
+                 var applyStartDate=$("#applyStartDate").val();
+                 var applyEndDate=$("#applyEndDate").val();
+				 var paramaters = { 
+						 "applyId":id,
+						 "memberName": memberName,
+						 "mail": mail,
+						 "auditStatus": auditStatus,
+						 "applyStartDate":applyStartDate,
+						 "applyEndDate":applyEndDate,
+						 "currentPage":currentPage
+						 };        
+			        var url = "<%=basePath%>/member/leadinvestlistdo";
+			        $.ajax({
+			            type: 'POST',
+			            url: url,
+			            data: paramaters,
+			            success: function (result) {   			            
+			            	$("#content").html(result);               
+			            }
+			        });
+			}
+		}	
+	jss.search(1);
+	$("#btnSearch").click(function(){
+		jss.search(1);
+	});	
+</script>

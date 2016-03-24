@@ -6,13 +6,25 @@ public enum SendCodeType {
 	 */
 	Register(1, "注册"),
 	/**
-	 * 修改密码
-	 */
-	UpdatePasswrd(2, "修改密码"),
-	/**
 	 * 忘记密码
 	 */
-	ForgetPassword(3, "忘记密码");
+	ForgetPassword(2, "忘记密码"),
+	/**
+	 * 设置支付密码
+	 */
+	SetPayPassWord(3, "设置支付密码"),
+	/**
+	 * 找回支付密码
+	 */
+	FindPayPassWord(4, "找回支付密码"),
+	/**
+	 * 更换手机号
+	 */
+	ChangePhone(5, "找回支付密码"),
+	/**
+	 * 绑定新手机
+	 */
+	BindNewPhone(6, "绑定新手机");
 	private int value = 0;
 	private String desc;
 	private SendCodeType(int value, String desc) { 

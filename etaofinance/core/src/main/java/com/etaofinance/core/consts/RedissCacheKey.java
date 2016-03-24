@@ -24,8 +24,12 @@ public class RedissCacheKey {
      * 注册,修改密码,忘记密码
      */
     public static final String JF_Member_Register= "JF_Member_Register_%s";
-    public static final String JF_Member_UpdatePasswrd= "JF_Member_UpdatePasswrd_%s";
+    //public static final String JF_Member_UpdatePasswrd= "JF_Member_UpdatePasswrd_%s";
     public static final String JF_Member_ForgetPassword= "JF_Member_ForgetPassword_%s";
+    public static final String JF_Member_SetPayPassWord= "JF_Member_SetPayPassWord_%s";
+    public static final String JF_Member_FindPayPassWord= "JF_Member_FindPayPassWord_%s";
+    public static final String JF_Member_ChangePhone= "JF_Member_ChangePhone_%s";
+    public static final String JF_Member_BindNewPhone= "JF_Member_BindNewPhone_%s";
  
  
     /**

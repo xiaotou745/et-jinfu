@@ -4,17 +4,20 @@ package com.etaofinance.core.enums;
  * @author wangchao
  * @Date 20160314
  */
-public enum FollowInvestStatusEnum {
+public enum MemberApplyInvestStatusEnum {
+	
 	/**
 	 * 待审核
 	 */
-	WaitAudit(1, "未审核"),
+	WaitAudit(0, "未审核"),
 	
-	AuditPass(3,"审核未通过");
+	AuditPass(1,"审核通过"),
+	
+	AuditNotPass(2,"审核未通过");
 
 	private int value = 0;
 	private String desc;
-	private FollowInvestStatusEnum(int value, String desc) { // 必须是private的，否则编译错误
+	private MemberApplyInvestStatusEnum(int value, String desc) { // 必须是private的，否则编译错误
 		this.value = value;
 		this.desc = desc;
 	}
@@ -25,8 +28,8 @@ public enum FollowInvestStatusEnum {
 		return this.desc;
 	}
 
-	public static FollowInvestStatusEnum getEnum(int index) {
-		for (FollowInvestStatusEnum c : FollowInvestStatusEnum.values()) {
+	public static MemberApplyInvestStatusEnum getEnum(int index) {
+		for (MemberApplyInvestStatusEnum c : MemberApplyInvestStatusEnum.values()) {
 			if (c.value() == index) {
 				return c;
 			}
