@@ -53,11 +53,11 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 	 */
 	@Override
 	public List<PublicProvinceCity> getOpenCityListFromRedis() {
-		List<PublicProvinceCity> listdata=redisService.get(RedissCacheKey.RR_PublicProvinceCity, List.class); 
+		List<PublicProvinceCity> listdata=redisService.get(RedissCacheKey.JF_PublicProvinceCity, List.class); 
 		if (listdata==null||listdata.size()==0) {
 			listdata=publicProvinceCityDao.getAllOpenCity();
 			if (listdata!=null&&listdata.size()>0) {
-				redisService.set(RedissCacheKey.RR_PublicProvinceCity, listdata,360,TimeUnit.DAYS);
+				redisService.set(RedissCacheKey.JF_PublicProvinceCity, listdata,360,TimeUnit.DAYS);
 			}
 		}
 		return listdata;
@@ -160,7 +160,7 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 
 		int result = publicProvinceCityDao.modifyCity(modifyCityDomain);
 		if (result > 0) {
-			redisService.remove(RedissCacheKey.RR_PublicProvinceCity);
+			redisService.remove(RedissCacheKey.JF_PublicProvinceCity);
 		}
 
 		return result;
