@@ -161,4 +161,44 @@
       CompanyTitle = #{companytitle,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+	 <select id="getMemberApplyList" resultType="com.etaofinance.entity.domain.MemberApplyInvestModel"
+		parameterType="com.etaofinance.entity.req.PagedMemberReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' ma.Id desc ',
+		' ma.Id,m.UserName MemberName,m.PhoneNo,m.EMail,ma.Status AuditStatus,ma.CreateTime ApplyDate,ma.RefuseReasion ',
+		' memberapply ma JOIN member m ON ma.MemberId=m.Id ',
+		'<include refid="queryMemberApplyListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+  <sql id="queryMemberApplyListWhere">
+		1=1
+	    <if test="applyId>0">
+			and ma.id=${applyId}
+		</if>
+		<if test="memberName != null and memberName!=''">
+			and m.UserName>=''${memberName}''
+		</if>
+		<if test="mail != null and mail!=''">
+			and m.email>=''${mail}''
+		</if>
+		<if test="memberType>0">
+			and ma.typeId=${memberType}
+		</if>
+		<if test="auditStatus>0">
+			and ma.status=${auditStatus}
+		</if>
+		<if test="applyStartDate != null and applyStartDate!=''">
+			and ma.createTime>=''${applyStartDate}''
+		</if>
+		<if test="applyEndDate != null and applyEndDate!=''">
+			and ''${applyEndDate}''>ma.createTime
+		</if>
+	</sql>
+  
+  
 </mapper>

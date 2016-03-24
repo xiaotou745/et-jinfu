@@ -1,7 +1,4 @@
 package com.etaofinance.admin.controller;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +6,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberApplyInvestModel;
+import com.etaofinance.entity.domain.LeadInvestModel;
+import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 @Controller
@@ -17,6 +19,9 @@ import com.etaofinance.entity.req.PagedMemberReq;
 public class MemberController {
 	@Autowired
 	private IMemberService memberService;
+	
+	@Autowired
+	private IMemberApplyService memberApplyService;
 	/*
 	 * 会员列表 wangchao
 	 */
@@ -32,6 +37,9 @@ public class MemberController {
 	@RequestMapping("memberlistdo")
 	public ModelAndView memberlistdo(PagedMemberReq req) { 
 		ModelAndView model = new ModelAndView("member/memberlistdo");
+		PagedResponse<MemberModel> memberModelList = new PagedResponse<MemberModel>();
+		memberModelList=memberService.getMemberList(req);
+		model.addObject("listData",memberModelList);
 		return model;
 	}
 	
@@ -46,9 +54,15 @@ public class MemberController {
 		model.addObject("viewPath", "member/followinvestlist");
 		return model;
 	} 
+	
 	@RequestMapping("followinvestlistdo")
 	public ModelAndView followinvestlistdo(PagedMemberReq req) { 
+		
 		ModelAndView model = new ModelAndView("member/followinvestlistdo");
+		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
+		req.setMemberType(1); //跟投人
+		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
+		model.addObject("listData",memberApplyInvestModel);
 		return model;
 	}
 	
@@ -66,6 +80,9 @@ public class MemberController {
 	@RequestMapping("leadinvestlistdo")
 	public ModelAndView leadinvestlistdo(PagedMemberReq req) { 
 		ModelAndView model = new ModelAndView("member/leadinvestlistdo");
+		req.setMemberType(2);  //领投人
+		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
+		model.addObject("listData",memberApplyInvestModel);
 		return model;
 	}
 	/**

@@ -1,6 +1,9 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.req.PagedMemberReq;
 
 /**
  * 接口
@@ -15,4 +18,6 @@ public interface IMemberService {
      * @return
      */
     Member selectByPhoneNo(String  phoneno);
+
+	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
 }

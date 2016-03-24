@@ -3,7 +3,10 @@
 <%@ page import="com.etaofinance.core.util.HtmlHelper"%>
 <%@ page import="com.etaofinance.core.util.EnumHelper"%>
 <%@ page import="com.etaofinance.core.enums.MemberTypeEnum"%>
-
+<%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%
+	String basePath =PropertyUtils.getProperty("java.admin.url");
+%>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -50,8 +53,8 @@
 						<label class="col-sm-4 control-label">注册时间:</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" value=""
-								name="applyStartDate" id="applyStartDate"
-								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'applyEndDate\',{d:-1})||\'2030-10-01\'}'})" />
+								name="applyStartDate" id="registerStartDate"
+								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'registerEndDate\',{d:-1})||\'2030-10-01\'}'})" />
 						</div>
 					</div>
 				</div>
@@ -60,8 +63,8 @@
 						<label class="col-sm-4 control-label">到</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" value=""
-								name="applyEndDate" id="applyEndDate"
-								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'applyStartDate\',{d:1})}',maxDate:'2030-10-01'})" />
+								name="applyEndDate" id="registerEndDate"
+								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'registerStartDate\',{d:1})}',maxDate:'2030-10-01'})" />
 						</div>
 					</div>
 				</div>
@@ -69,7 +72,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label">用户类型:</label>
 						<div class="col-sm-8">
-							<%=HtmlHelper.getSelect("auditStatus",
+							<%=HtmlHelper.getSelect("memberType",
 					EnumHelper.GetEnumItems(MemberTypeEnum.class),
 					"desc", "value", null, "-1", "全部")%>
 						</div>
@@ -92,3 +95,37 @@
 		<div class="ibox-content" id="content"></div>
 	</div>
 </div>
+<script>
+	var jss={
+			search:function(currentPage){	
+                 var id = $("#txtId").val();
+                 var memberName = $("#txtMemberName").val();          
+                 var mail=$("#txtMail").val();
+                 var memberType=$("#memberType").val();
+                 var registerStartDate=$("#registerStartDate").val();
+                 var registerEndDate=$("#registerEndDate").val();
+				 var paramaters = { 
+						 "applyId":id,
+						 "memberName": memberName,
+						 "mail": mail,
+						 "memberType":memberType,
+						 "registerStartDate":registerStartDate,
+						 "registerEndDate":registerEndDate,
+						 "currentPage":currentPage
+						 };        
+			        var url = "<%=basePath%>/member/memberlistdo";
+			        $.ajax({
+			            type: 'POST',
+			            url: url,
+			            data: paramaters,
+			            success: function (result) {   			            
+			            	$("#content").html(result);               
+			            }
+			        });
+			}
+		}	
+	jss.search(1);
+	$("#btnSearch").click(function(){
+		jss.search(1);
+	});	
+</script>
