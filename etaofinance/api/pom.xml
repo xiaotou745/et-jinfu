@@ -188,4 +188,8 @@
 			<version>5.1.35</version>
 		</dependency>
 	</dependencies>
+		<build>
+		<defaultGoal>compile</defaultGoal>
+		<finalName>core</finalName>
+	</build>
 </project>
