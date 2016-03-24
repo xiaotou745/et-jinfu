@@ -14,8 +14,10 @@ public class FeedBack {
     private String phoneno;
 
     private String email;
+    
+    private String contacts;   
 
-    private Date createtime;
+	private Date createtime;
 
     private Boolean isdel;
 
@@ -82,4 +84,12 @@ public class FeedBack {
     public void setIsdel(Boolean isdel) {
         this.isdel = isdel;
     }
+    
+    public String getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
+	}
 }

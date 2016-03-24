@@ -7,6 +7,8 @@ import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.PublicEnum;
+import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
@@ -15,6 +17,8 @@ import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.resp.MemberResp;
+import com.etaofinance.entity.resp.QAResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
@@ -132,7 +136,19 @@ public class MemberService implements IMemberService{
 		resultModel.setMsg("注册成功!");
 		return resultModel;
 	}
-
+	
+	/**
+	 * 实名认证
+	 */
+	@Override
+	public HttpResultModel<MemberResp> Certification(Member record) {
+		HttpResultModel<MemberResp> resp = new HttpResultModel<MemberResp>();
+		memberDao.updateByPrimaryKeySelective(record);
+		resp.setCode(PublicEnum.Success.value());
+		resp.setMsg(PublicEnum.Success.desc());		
+		return resp;
+	}
+	
 
 
 }

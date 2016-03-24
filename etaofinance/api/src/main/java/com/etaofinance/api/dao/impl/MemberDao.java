@@ -33,8 +33,8 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(Member record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().update("IMemberDao.updateByPrimaryKeySelective", record);		
+	
 	}
 
 	@Override

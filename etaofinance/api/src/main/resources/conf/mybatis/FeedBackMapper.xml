@@ -26,19 +26,16 @@
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.FeedBack" >
-    insert into feedback (Id, Description, MemberId, 
-      CreateName, PhoneNo, EMail, Contacts
+    insert into feedback ( Description, MemberId, 
+      CreateName, PhoneNo, EMail, Contacts,
       CreateTime, IsDel)
-    values (#{id,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=INTEGER}, 
+    values ( #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=INTEGER}, 
       #{createname,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.FeedBack" >
     insert into feedback
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        Id,
-      </if>
+    <trim prefix="(" suffix=")" suffixOverrides="," >  
       <if test="description != null" >
         Description,
       </if>
@@ -64,10 +61,7 @@
         IsDel,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >  
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>

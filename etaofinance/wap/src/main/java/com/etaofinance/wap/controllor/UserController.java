@@ -14,6 +14,7 @@ import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 
 /**
@@ -51,4 +52,17 @@ public class UserController {
 		return  memberService.regist(req);			
 	}
 	
+	/**
+	 * 会员实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("certification")
+	@ResponseBody
+	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
+	{
+		return  memberService.Certification(record);	
+	}
 }

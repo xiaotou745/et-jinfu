@@ -26,7 +26,13 @@ public class FinanceControllor {
 	@Autowired
 	private IBankService bankService;
 
-	
+	/**
+	 * 获取银行列表
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
 	@RequestMapping("/getbanklist")
 	@ResponseBody
 	public List<Bank> getBankList()
