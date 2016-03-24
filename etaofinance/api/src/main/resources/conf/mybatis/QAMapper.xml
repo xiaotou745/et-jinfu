@@ -40,7 +40,13 @@
 		#{totalRecord,mode=OUT,jdbcType=INTEGER},
 		#{totalPage,mode=OUT,jdbcType=INTEGER}
 		)} 
+  </select>  
+ <select id="getList" resultType="com.etaofinance.entity.QA" >
+    select 
+    <include refid="Base_Column_List" />
+    from qa
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from qa
     where Id = #{id,jdbcType=INTEGER}

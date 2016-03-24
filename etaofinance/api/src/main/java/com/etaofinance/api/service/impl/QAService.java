@@ -19,6 +19,7 @@ import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
+import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -34,28 +35,9 @@ public class QAService implements IQAService{
 
 	@Autowired
 	private IQADao qADao;
-
-	
 	
 	@Override
-	public int deleteByPrimaryKey(Integer id) {
-		return qADao.deleteByPrimaryKey(id);
-	}
-
-
-	@Override
-	public QA selectByPrimaryKey(Integer id) {
-		return qADao.selectByPrimaryKey(id);
-	}
-
-
-	@Override
-	public PagedResponse<QA> query(PagedQAReq req) {
-		return qADao.query(req);
-	}
-
-	@Override
-	public HttpResultModel<QAResp> add(QA record) {
+	public HttpResultModel<QAResp> create(QA record) {
 		HttpResultModel<QAResp> resp = new HttpResultModel<QAResp>();		
 		qADao.insertSelective(record);
 		resp.setCode(QAEnum.Success.value());
@@ -64,16 +46,38 @@ public class QAService implements IQAService{
 	}
 	
 	@Override
+	public int remove (Integer id) {
+		return qADao.deleteByPrimaryKey(id);
+	}
+
+	@Override
 	public  HttpResultModel<QAResp> modify(QA record)
 	{
 		HttpResultModel<QAResp> resp = new HttpResultModel<QAResp>();
-
-		
 		qADao.updateByPrimaryKeySelective(record);
 		resp.setCode(QAEnum.Success.value());
 		resp.setMsg(QAEnum.Success.desc());		
 		return resp;
 	}
 	
+
+	@Override
+	public QA getById(Integer id) {
+		return qADao.selectByPrimaryKey(id);
+	}
+
+
+	@Override
+	public PagedResponse<QA> query(PagedQAReq req) {
+		return qADao.query(req);
+	}
+   
+	@Override
+	public List<QA> getList()
+	{
+		return qADao.getList();
+	}
+	
+
 
 }
