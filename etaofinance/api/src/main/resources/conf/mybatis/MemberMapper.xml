@@ -47,7 +47,11 @@
       #{idcard,jdbcType=VARCHAR}, #{level,jdbcType=SMALLINT}, #{createtime,jdbcType=TIMESTAMP}, 
       #{headimage,jdbcType=VARCHAR})
   </insert>
+  <!-- 注册用户 茹化肖 2016年3月24日13:29:30 -->
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Member" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+		 SELECT LAST_INSERT_ID() AS id;
+	</selectKey>
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -150,6 +154,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Member" >
     update member
     <set >
@@ -224,4 +229,39 @@
   <select id="selectByPhoneNo" parameterType="java.lang.String" resultType="com.etaofinance.entity.Member">
   select <include refid="Base_Column_List" /> from member as m where m.PhoneNo=#{phoneno,jdbcType=VARCHAR}
   </select>
+  <!-- 获取会员信息 wangchao -->
+  <select id="getMemberList" parameterType="com.etaofinance.entity.req.PagedMemberReq" resultType="com.etaofinance.entity.domain.MemberModel" statementType="CALLABLE"> 
+		{call Sp_CustomPage2015_V1(
+		' m.Id desc ',
+		' m.Id,m.UserName MemberName,m.phoneNo,m.EMail,m.lastLoginTime ',
+		' member m ',
+		'<include refid="queryMemberModelListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+  <sql id="queryMemberModelListWhere">
+		1=1
+	    <if test="applyId>0">
+			and m.id=${applyId}
+		</if>
+		<if test="memberName != null and memberName!=''">
+			and m.UserName>=''${memberName}''
+		</if>
+		<if test="mail != null and mail!=''">
+			and m.email>=''${mail}''
+		</if>
+		<if test="memberType>0">
+			and m.Level=${memberType}
+		</if>
+		<if test="registerStartDate != null and registerStartDate!=''">
+			and m.createTime>=''${registerStartDate}''
+		</if>
+		<if test="registerEndDate != null and registerEndDate!=''">
+			and ''${registerEndDate}''>m.createTime
+		</if>
+	</sql>
+  
 </mapper>

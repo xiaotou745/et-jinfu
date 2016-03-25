@@ -54,11 +54,11 @@ public class BankDao extends DaoBase implements IBankDao{
 	}
    
 	@Override
-	public List<Bank> getBankList() {
+	public List<Bank> getList() {
 		 List<Bank> list=null;
 		 list=getReadOnlySqlSessionUtil()
 				.selectList(
-						"IBankDao.getBankList");
+						"IBankDao.getList");
 		 
 		 return list;
 	}

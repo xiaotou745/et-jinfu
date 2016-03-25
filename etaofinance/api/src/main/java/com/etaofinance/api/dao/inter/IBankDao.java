@@ -17,5 +17,5 @@ public interface IBankDao {
 
     int updateByPrimaryKey(Bank record);
     
-    List<Bank> getBankList();
+    List<Bank> getList();
 }

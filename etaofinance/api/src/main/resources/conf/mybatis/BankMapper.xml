@@ -18,7 +18,7 @@
     where Id = #{id,jdbcType=INTEGER}
   </select>
   
-     <select id="getBankList" resultType="com.etaofinance.entity.Bank" >
+     <select id="getList" resultType="com.etaofinance.entity.Bank" >
     select 
     <include refid="Base_Column_List" />
     from bank
