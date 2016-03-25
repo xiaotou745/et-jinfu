@@ -30,8 +30,8 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 
 	@Override
 	public Member selectByPrimaryKey(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByPrimaryKey",id);
 	}
 
 	@Override
@@ -45,6 +45,21 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	/**
+	 * 通过用户名查询用户
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@Override
+    public Member selectByUserName(String username)
+    {
+		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByUserName", username);
+    }
+    
 	/**
 	 * 通过手机号获取会员信息
 	 */

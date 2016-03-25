@@ -1,10 +1,13 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.QA;
+import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.resp.ForgetPwdOneResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
@@ -17,12 +20,22 @@ import com.etaofinance.entity.resp.SendCodeResp;
  */
 public interface IMemberService {
 
+    
+    HttpResultModel<MemberResp> modify(Member record);
+    
 	 /**
      * 通过手机号获取会员信息
      * @param phoneno
      * @return
      */
-    Member selectByPhoneNo(String  phoneno);
+    Member selectByPhoneNo(String  phoneno);    
+
+    /**
+     * 通过ID获取会员信息
+     * @param phoneno
+     * @return
+     */
+    Member getById(Long  id);
     /**
      * 获取验证码
      * @param req
@@ -40,10 +53,19 @@ public interface IMemberService {
      * wangchao
      */
 	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
+
 	/**
-     * 实名认证信息
+	 * 实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+    HttpResultModel<MemberResp> Certification(Member record);
+    /**
+     * 忘记密码第一步
      * @param req
      * @return
      */
-    HttpResultModel<MemberResp> Certification(Member record);
+    HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(ForgetPwdOneReq req);
  }

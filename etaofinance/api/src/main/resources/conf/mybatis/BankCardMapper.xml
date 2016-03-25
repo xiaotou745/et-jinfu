@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IBankCardDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.BankCard" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="BankId" property="bankid" jdbcType="INTEGER" />
+    <result column="BankName" property="bankname" jdbcType="VARCHAR" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR" />
+    <result column="CardName" property="cardname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="IsDel" property="isdel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, BankId, BankName, CardNo, CardName, CreateTime, CreateName, IsDel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bankcard
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+       <select id="getListByMemberId" resultType="com.etaofinance.entity.BankCard"  parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bankcard   where memberid = #{memberId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bankcard
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.BankCard" >
+    insert into bankcard (Id, MemberId, BankId, 
+      BankName, CardNo, CardName, 
+      CreateTime, CreateName, IsDel
+      )
+    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=BIGINT}, #{bankid,jdbcType=INTEGER}, 
+      #{bankname,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, #{cardname,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createname,jdbcType=VARCHAR}, #{isdel,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.BankCard" >
+    insert into bankcard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="bankid != null" >
+        BankId,
+      </if>
+      <if test="bankname != null" >
+        BankName,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="cardname != null" >
+        CardName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="bankid != null" >
+        #{bankid,jdbcType=INTEGER},
+      </if>
+      <if test="bankname != null" >
+        #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardname != null" >
+        #{cardname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.BankCard" >
+    update bankcard
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="bankid != null" >
+        BankId = #{bankid,jdbcType=INTEGER},
+      </if>
+      <if test="bankname != null" >
+        BankName = #{bankname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        CardNo = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardname != null" >
+        CardName = #{cardname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=BIT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.BankCard" >
+    update bankcard
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      BankId = #{bankid,jdbcType=INTEGER},
+      BankName = #{bankname,jdbcType=VARCHAR},
+      CardNo = #{cardno,jdbcType=VARCHAR},
+      CardName = #{cardname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      IsDel = #{isdel,jdbcType=BIT}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
