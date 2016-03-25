@@ -158,7 +158,7 @@ public class AccountController {
 		account.setPassword(password);//这个是为了给cookie准备的参数
 		error = "成功";
 
-		//SimpleUserInfoModel loginUser = new SimpleUserInfoModel();
+		SimpleUserInfoModel loginUser = new SimpleUserInfoModel();
 		loginUser.setId(account.getId());
 		loginUser.setLoginName(account.getLoginname());
 		loginUser.setPassword("");
