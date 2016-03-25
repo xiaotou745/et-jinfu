@@ -20,7 +20,6 @@ import com.etaofinance.entity.resp.SendCodeResp;
  */
 public interface IMemberService {
 
-    Member getById(Long id);
     
     HttpResultModel<MemberResp> modify(Member record);
     

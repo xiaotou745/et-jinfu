@@ -5,28 +5,21 @@ package com.etaofinance.wap.controllor;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import javax.naming.spi.DirStateFactory.Result;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.ibatis.annotations.Results;
-import org.fusesource.hawtbuf.codec.VariableCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
-import com.etaofinance.core.security.AES;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
-import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.LoginReq;
@@ -38,7 +31,6 @@ import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.UserContext;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.UUIDGenerator;
 
 /**
  * 用户相关
