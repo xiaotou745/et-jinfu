@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -26,10 +28,12 @@ import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.LoginReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.resp.ForgetPwdOneResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
@@ -90,7 +94,7 @@ public class UserController {
 		if(LoginUtil.checkIsLogin(request, response))//已经登录
 		{
 			Member member=UserContext.getCurrentContext(request).getUserInfo();
-			result.setCode(1);
+			result.setCode(-1);
 			result.setData(member);
 			return result;	
 		}
@@ -128,5 +132,41 @@ public class UserController {
 	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
 	{
 		return  memberService.Certification(record);	
+	}
+	/**
+	 * 获取图形验证码
+	 * @param 
+	 * @author ruhuaxiao
+	 * @date 2016年3月25日16:53:16
+	 * @return
+	 */
+	@RequestMapping("code")
+	public ModelAndView code(int type) {
+		ModelAndView mv = new ModelAndView("user/code");
+		mv.addObject("CodeType", type);
+		return mv;
+	}
+	/**
+	 * 忘记密码第一步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetpone")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
+	{
+		HttpResultModel<ForgetPwdOneResp> res=new HttpResultModel<ForgetPwdOneResp>();
+		String cookieKey=CookieUtils.getCookie(request,LoginUtil.ADMIN_JSESSIONID);
+		//没有获取到验证码的UUID
+		if(cookieKey==null&&cookieKey.equals(""))
+		{
+			res.setCode(-1);
+			res.setMsg("请输入正确的验证码");
+			return res;
+		}
+		req.setCookieKey(cookieKey);
+		return memberService.forgetpwdsetpone(req);
 	}
 }

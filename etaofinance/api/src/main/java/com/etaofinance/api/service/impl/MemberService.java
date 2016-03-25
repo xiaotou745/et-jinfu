@@ -1,8 +1,12 @@
 package com.etaofinance.api.service.impl;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
@@ -14,12 +18,14 @@ import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.resp.ForgetPwdOneResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.QAResp;
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -194,6 +200,41 @@ public class MemberService implements IMemberService{
 	public Member getById(Long id) {
 		
 		return memberDao.selectByPrimaryKey(id);
+	}
+	/**
+	 * 忘记密码第一步
+	 */
+	@Override
+	public HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(ForgetPwdOneReq req) {
+		HttpResultModel<ForgetPwdOneResp> resultModel=new HttpResultModel<ForgetPwdOneResp>();
+		String redisImgCode=redisService.get(req.getCookieKey(), String.class);
+		if(redisImgCode==null||redisImgCode.equals("")||!redisImgCode.equals(req.getImgCode()))
+		{
+			//验证码错误
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试");
+			return resultModel;
+		}
+		//查询会员是否存在
+		Member member=memberDao.selectByPhoneNo(req.getLoginName());
+		if(member==null)
+		{
+			//验证码错误
+			resultModel.setCode(-1);
+			resultModel.setMsg("用户邮箱/登录名/手机号错误!");
+			return resultModel;
+		}
+		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+		String value=UUID.randomUUID().toString();
+		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,value);
+		redisService.set(key, value,60*5,TimeUnit.SECONDS);
+		//验证码错误
+		resultModel.setCode(1);
+		resultModel.setMsg("验证通过!");
+		ForgetPwdOneResp resp=new ForgetPwdOneResp();
+		resp.setUserID(member.getId());
+		resp.setCheckKey(value);
+		return resultModel;
 	}
 	
 

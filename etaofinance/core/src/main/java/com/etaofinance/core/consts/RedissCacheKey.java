@@ -28,6 +28,8 @@ public class RedissCacheKey {
     public static final String JF_Member_FindPayPassWord= "JF_Member_FindPayPassWord_%s";
     public static final String JF_Member_ChangePhone= "JF_Member_ChangePhone_%s";
     public static final String JF_Member_BindNewPhone= "JF_Member_BindNewPhone_%s";
+    //找回密码第一步缓存UUID
+    public static final String JF_Member_FindPassWordSetpOne= "JF_Member_FindPassWordSetpOne_%s";
  
  
     /**
