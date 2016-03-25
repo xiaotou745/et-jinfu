@@ -35,12 +35,15 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<Member> regist(RegistReq req);
-    
+    /*
+     * 获取会员信息
+     * wangchao
+     */
 	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
- /**
+	/**
      * 实名认证信息
      * @param req
      * @return
      */
     HttpResultModel<MemberResp> Certification(Member record);
-    }
+ }

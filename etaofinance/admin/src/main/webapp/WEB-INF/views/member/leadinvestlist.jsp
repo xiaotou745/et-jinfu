@@ -95,6 +95,48 @@
 		<div class="ibox-content" id="content"></div>
 	</div>
 </div>
+<div tabindex="-1" class="modal inmodal" id="showLeadAuditMemberDiv"
+	role="dialog" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content animated bounceInRight">
+			<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal">
+					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+				</button>
+				<h4 class="modal-title">领投人申请审核</h4> 
+			</div>
+			<small class="font-bold">
+				<div class="modal-body">
+					<fieldset>
+			            <div class="control-group">
+			            	<input type="hidden" value="" id="memberApplyId" />
+			                <label>身份证姓名：</label><label id="lblIdCardName"></label>
+			            </div>  
+			            <div class="control-group">
+			                <label>身份证号码：</label><label id="lblIdCardNo"></label>
+			            </div>
+			            <div class="control-group">
+			                <label>符合以下条件之一：</label><label id="lblFitCondition"></label>
+			            </div>
+			            <div class="control-group">
+			                <label>证明材料：</label><label id="lblCertifyMaterial"></label>
+			                <a href="#" id="btnDownloadMaterial">下载</a>
+			            </div>
+			            <div class="control-group">
+			                <label>审核操作：</label><input type="radio" id="rAuditPass" name="rAuditOpt" value="1" checked="checked"/>通过<input type="radio" id="rAuditNotPass" name="rAuditOpt" value="2" />不通过
+			            </div>
+			            <div class="control-group">
+			            	<label>拒绝原因：</label><textarea name="txtRefuseReason" id="txtRefuseReason" style="width:300px;height:60px;max-width:300px;max-height:60px;display:none;"></textarea>
+			            </div>
+			        </fieldset>
+				</div>
+				<div class="modal-footer">
+					<button id="btnConfirm" class="btn btn-white" type="button" data-dismiss="modal">确定</button>
+				</div>
+			</small>
+		</div> 
+	</div>
+</div>
 <script>
 	var jss={
 			search:function(currentPage){	
@@ -104,6 +146,7 @@
                  var auditStatus=$("#auditStatus").val();
                  var applyStartDate=$("#applyStartDate").val();
                  var applyEndDate=$("#applyEndDate").val();
+                 var phoneNo=$("#txtPhoneNo").val();
 				 var paramaters = { 
 						 "applyId":id,
 						 "memberName": memberName,
@@ -111,7 +154,8 @@
 						 "auditStatus": auditStatus,
 						 "applyStartDate":applyStartDate,
 						 "applyEndDate":applyEndDate,
-						 "currentPage":currentPage
+						 "currentPage":currentPage,
+						 "phoneNo":phoneNo
 						 };        
 			        var url = "<%=basePath%>/member/leadinvestlistdo";
 			        $.ajax({
@@ -128,4 +172,56 @@
 	$("#btnSearch").click(function(){
 		jss.search(1);
 	});	
+	function showLeadAuditMember(id){
+		//ajax调用获取申请人资料信息
+		$("#memberApplyId").val(id);
+		var url="<%=basePath%>/member/getmemberinfo";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{"memberApplyId":$("#memberApplyId").val()},
+			success:function(result){
+				$("#lblIdCardName").html(result.trueName);
+				$("#lblIdCardNo").html(result.idCard);
+				$("#lblFitCondition").html(result.applyInfo);
+				$("#lblCertifyMaterial").html("文件名字");
+				$("#showLeadAuditMemberDiv").modal("show");
+			}
+		});		
+	}
+	$('input:radio[name="rAuditOpt"]').change(function(){
+		if($(this).val() == 2){
+			$("#txtRefuseReason").show();
+		}else{
+			$("#txtRefuseReason").hide();
+		}
+	});
+	$("#btnConfirm").click(function(){
+		var auditStaus= $('input[name="rAuditOpt"]:checked').val();
+		var refuseReason=$("#txtRefuseReason").val();
+		if(auditStaus==0){
+			if(refuseReason.trim().length == 0){
+				alert("请输入拒绝原因！")
+				return;
+			}
+		}
+		var url="<%=basePath%>/member/auditconfirm";
+		var paramaters = { 
+				 	"memberApplyId":$("#memberApplyId").val(),
+				 	"auditStatus":auditStaus,
+				 	"refuseReason":refuseReason
+				 };  
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:paramaters,
+			success:function(result){
+				alert("成功！");
+				jss.search(1);
+			},
+			error:function(e){
+				alert("失败！");
+			}
+		});	 
+	});
 </script>
