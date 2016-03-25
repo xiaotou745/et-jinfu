@@ -29,6 +29,12 @@
     from member
     where Id = #{id,jdbcType=BIGINT}
   </select>
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where UserName = #{username,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from member
     where Id = #{id,jdbcType=BIGINT}

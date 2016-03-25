@@ -132,6 +132,33 @@ public class UserController {
 	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
 	{
 		return  memberService.Certification(record);	
+	}	
+	
+	/**
+	 * 获取用户信息  
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月25日10:50:53 
+	 * @return
+	 */
+	@RequestMapping("getuserinfo")
+	@ResponseBody
+	public Member getUserInfo(@RequestBody  Member record)
+	{
+		return  memberService.getById(record.getId());	
+	}
+	/**
+	 * 获取用户信息  
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月25日10:50:53 
+	 * @return
+	 */
+	@RequestMapping("modify")
+	@ResponseBody
+	public HttpResultModel<MemberResp> modify(@RequestBody Member record)
+	{
+		return  memberService.modify(record);	
 	}
 	/**
 	 * 获取图形验证码
