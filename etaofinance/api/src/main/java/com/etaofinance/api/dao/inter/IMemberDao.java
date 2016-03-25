@@ -18,6 +18,14 @@ public interface IMemberDao {
 
     int updateByPrimaryKey(Member record);
     
+	/**
+	 * 通过用户名查询用户
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+    Member selectByUserName(String username);
     /**
      * 通过手机号获取会员信息
      * @param phoneno

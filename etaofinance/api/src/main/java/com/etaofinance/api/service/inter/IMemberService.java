@@ -1,6 +1,7 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.QA;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -17,12 +18,17 @@ import com.etaofinance.entity.resp.SendCodeResp;
  */
 public interface IMemberService {
 
+    Member getById(Long id);
+    
+    HttpResultModel<MemberResp> modify(Member record);
+    
 	 /**
      * 通过手机号获取会员信息
      * @param phoneno
      * @return
      */
-    Member selectByPhoneNo(String  phoneno);
+    Member selectByPhoneNo(String  phoneno);    
+
     /**
      * 获取验证码
      * @param req
@@ -37,10 +43,13 @@ public interface IMemberService {
     HttpResultModel<Member> regist(RegistReq req);
     
 	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
- /**
-     * 实名认证信息
-     * @param req
-     * @return
-     */
+
+	/**
+	 * 实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
     HttpResultModel<MemberResp> Certification(Member record);
     }

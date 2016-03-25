@@ -7,6 +7,8 @@ import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.MemberCertificationEnum;
+import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
@@ -14,6 +16,7 @@ import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.QA;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -31,9 +34,41 @@ public class MemberService implements IMemberService{
 	private IMemberDao memberDao;
 	
 	@Autowired
-	private RedisService redisService;
+	private RedisService redisService;	
+	
+	@Override
+	public HttpResultModel<MemberResp> modify(Member record)
+	{
+		HttpResultModel<MemberResp> resp = new HttpResultModel<MemberResp>();
+		if(record.getUsername()!=null && !record.getUsername().equals(""))
+		{
+			//验证用户名是否已存在		
+			Member memberModel=memberDao.selectByUserName(record.getUsername());
+			if(memberModel!=null && memberModel.getId()!=record.getId())
+			{			
+				resp.setCode(MemberEnum.UserNameIsExist.value());
+				resp.setMsg(MemberEnum.UserNameIsExist.desc());
+				return resp;			
+			}
+		}
+		int row= memberDao.updateByPrimaryKeySelective(record);		
+		if(row<=0)
+		{
+			resp.setCode(MemberEnum.Err.value());
+			resp.setMsg(MemberEnum.Err.desc());
+			return resp;	
+		}
+		resp.setCode(MemberEnum.Success.value());
+		resp.setMsg(MemberEnum.Success.desc());		
+		return resp;
+	}
 	
  	@Override
+	public Member getById(Long id) {
+ 		return memberDao.selectByPrimaryKey(id);
+	}
+ 	
+	@Override
 	public Member selectByPhoneNo(String phoneno) {
 		return memberDao.selectByPhoneNo(phoneno);
 	}
@@ -173,20 +208,50 @@ public class MemberService implements IMemberService{
 	@Override
 	public PagedResponse<MemberModel> getMemberList(PagedMemberReq req) {
 		return memberDao.getMemberList(req);
-	}
-	
+	}	
+
 	/**
 	 * 实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月25日10:34:40
+	 * @return
 	 */
 	@Override
 	public HttpResultModel<MemberResp> Certification(Member record) {
 		HttpResultModel<MemberResp> resp = new HttpResultModel<MemberResp>();
-		memberDao.updateByPrimaryKeySelective(record);
-		resp.setCode(PublicEnum.Success.value());
-		resp.setMsg(PublicEnum.Success.desc());		
-		return resp;
-	}
 	
+		//验证
+		if(record.getId()==null || record.getId().equals(""))
+		{
+			resp.setCode(MemberCertificationEnum.IdIsNULL.value());
+			resp.setMsg(MemberCertificationEnum.IdIsNULL.desc());
+			return resp;			
+		}
+		if(record.getTruename()==null || record.getTruename().equals(""))
+		{
+			resp.setCode(MemberCertificationEnum.TrueNameIsNULL.value());
+			resp.setMsg(MemberCertificationEnum.TrueNameIsNULL.desc());
+			return resp;			
+		}
+		if(record.getIdcard()==null || record.getIdcard().equals(""))
+		{
+			resp.setCode(MemberCertificationEnum.IdCardIsNULL.value());
+			resp.setMsg(MemberCertificationEnum.IdCardIsNULL.desc());
+			return resp;			
+		}		
+		
+		int row=memberDao.updateByPrimaryKeySelective(record);
+		if(row<=0)
+		{
+			resp.setCode(MemberCertificationEnum.Err.value());
+			resp.setMsg(MemberCertificationEnum.Err.desc());
+			return resp;	
+		}
+		resp.setCode(MemberCertificationEnum.Success.value());
+		resp.setMsg(MemberCertificationEnum.Success.desc());		
+		return resp;
+	}	
 
 
 }
