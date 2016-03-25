@@ -24,6 +24,12 @@ public interface IMemberService {
      */
     Member selectByPhoneNo(String  phoneno);
     /**
+     * 通过ID获取会员信息
+     * @param phoneno
+     * @return
+     */
+    Member getById(Long  id);
+    /**
      * 获取验证码
      * @param req
      * @return

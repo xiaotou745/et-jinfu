@@ -30,8 +30,8 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 
 	@Override
 	public Member selectByPrimaryKey(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByPrimaryKey",id);
 	}
 
 	@Override

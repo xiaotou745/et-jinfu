@@ -11,10 +11,10 @@ import com.etaofinance.core.util.CookieUtils;
  *
  */
 public class LoginUtil {
-	public final static String ADMIN_JSESSIONID = "ADMIN_JSESSIONID";
-	public final static String LOGIN_COOKIE_NAME = "userinfo_edaisongcom";
+	public final static String ADMIN_JSESSIONID = "etaofinance_wap_jsessionid";
+	public final static String LOGIN_COOKIE_NAME = "userinfo_etaofinance_wap";
 	public static boolean checkIsLogin(HttpServletRequest request, HttpServletResponse response){
-		boolean isLogin= false;//UserContext.getCurrentContext(request)!=null;
+		boolean isLogin= UserContext.getCurrentContext(request)!=null;
 		if (!isLogin) {
 			CookieUtils.deleteCookie(request, response, LoginUtil.LOGIN_COOKIE_NAME);
 		}

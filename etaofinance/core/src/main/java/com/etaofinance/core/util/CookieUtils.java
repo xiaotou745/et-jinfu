@@ -141,7 +141,9 @@ public class CookieUtils {
 	public static void setCookie(HttpServletRequest request,HttpServletResponse response,
 			String name, String value, int maxAge,boolean httpOnly) {
 
-		String staticUrl=PropertyUtils.getProperty("java.admin.url");
+		String url=request.getRequestURL().toString();
+		String uri=request.getRequestURI().toString();
+		String staticUrl=url.replace(uri, "");
 		String domain=null;
 		int index=staticUrl.indexOf(".");
 		if (index>0) {

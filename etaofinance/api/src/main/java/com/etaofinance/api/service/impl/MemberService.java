@@ -187,6 +187,14 @@ public class MemberService implements IMemberService{
 		resp.setMsg(PublicEnum.Success.desc());		
 		return resp;
 	}
+	/**
+	 * 通过ID获取会员信息
+	 */
+	@Override
+	public Member getById(Long id) {
+		
+		return memberDao.selectByPrimaryKey(id);
+	}
 	
 
 
