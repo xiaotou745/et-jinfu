@@ -72,6 +72,7 @@ public class MemberService implements IMemberService{
 	public Member selectByPhoneNo(String phoneno) {
 		return memberDao.selectByPhoneNo(phoneno);
 	}
+
  	/**
  	 * 发送验证码
  	 */
@@ -251,7 +252,16 @@ public class MemberService implements IMemberService{
 		resp.setCode(MemberCertificationEnum.Success.value());
 		resp.setMsg(MemberCertificationEnum.Success.desc());		
 		return resp;
-	}	
+	}
+	/**
+	 * 通过ID获取会员信息
+	 */
+	@Override
+	public Member getById(Long id) {
+		
+		return memberDao.selectByPrimaryKey(id);
+	}
+	
 
 
 }

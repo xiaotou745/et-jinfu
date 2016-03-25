@@ -12,14 +12,12 @@ public class RedissCacheKey {
 	 * redisservice中会统一增加java前缀和版本前缀
 	 */
 	public static final String JF_PublicProvinceCity = "JF_PublicProvinceCity";// 省份和城市
-    public static final String LOGIN_COUNT_B = "JF_LoginCount_B_";//商家登录次数
-    public final static String Business_LOGIN_COOKIE = "JF_Business_login_";//登录Cookie的key,对应redis的缓存key
-    public final static String GroupBusiness_LOGIN_COOKIE = "GroupBusiness_login_";
-    public static final String Order_TimeSpan = "JF_jOrder_TimeSpan_";//商家发单时间戳
+
+    public final static String LOGIN_COOKIE = "JF_UserInfo_%s";//登录Cookie的UUID 对应的缓存信息
+  
     public static final String Menu_Auth = "JF_Menu_Auth_";//用户有权限的菜单
-    public static final String GlobalConfig_Key ="GlobalConfig_%s_0";
-    
-    public static final String SSCancelOrder = "JF_SSCancelOrder";
+    public static final String GlobalConfig_Key ="JF_GlobalConfig_%s_0";//全局配置
+
     /**
      * 注册,修改密码,忘记密码
      */
