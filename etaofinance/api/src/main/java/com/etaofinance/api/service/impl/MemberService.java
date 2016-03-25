@@ -37,6 +37,7 @@ public class MemberService implements IMemberService{
 	public Member selectByPhoneNo(String phoneno) {
 		return memberDao.selectByPhoneNo(phoneno);
 	}
+
  	/**
  	 * 发送验证码
  	 */

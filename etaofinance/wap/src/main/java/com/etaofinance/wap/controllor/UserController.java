@@ -1,6 +1,10 @@
 package com.etaofinance.wap.controllor;
 
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -40,7 +45,6 @@ public class UserController {
 	public  SendCodeResp sendcode(@RequestBody SendCodeReq req) {
 		return memberService.sendCode(req);
 	}
-	
 	/**
 	 * 注册
 	 * @param req
