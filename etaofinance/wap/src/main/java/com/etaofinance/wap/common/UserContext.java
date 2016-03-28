@@ -53,5 +53,12 @@ public class UserContext {
 		}
 		return null;
 	}
+	/**
+	 * 用户是否在线
+	 * @return
+	 */
+	public boolean IsOnline(){
+		return this.account!=null;
+	}
 
 }

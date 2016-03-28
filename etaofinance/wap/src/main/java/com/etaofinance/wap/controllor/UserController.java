@@ -5,36 +5,40 @@ package com.etaofinance.wap.controllor;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import javax.naming.spi.DirStateFactory.Result;
+
+
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.annotations.Results;
-import org.fusesource.hawtbuf.codec.VariableCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
-import com.etaofinance.core.security.AES;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
-import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.req.ForgetPwdOneReq;
+import com.etaofinance.entity.req.ForgetPwdThreeReq;
+import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.LoginReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.UserContext;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.UUIDGenerator;
 
 /**
  * 用户相关
@@ -90,7 +94,7 @@ public class UserController {
 		if(LoginUtil.checkIsLogin(request, response))//已经登录
 		{
 			Member member=UserContext.getCurrentContext(request).getUserInfo();
-			result.setCode(1);
+			result.setCode(-1);
 			result.setData(member);
 			return result;	
 		}
@@ -143,7 +147,6 @@ public class UserController {
 	{
 		return  memberService.getById(record.getId());	
 	}
-	
 	/**
 	 * 获取用户信息  
 	 * @param 
@@ -157,5 +160,88 @@ public class UserController {
 	{
 		return  memberService.modify(record);	
 	}
-	
+	/**
+	 * 获取图形验证码
+	 * @param 
+	 * @author ruhuaxiao
+	 * @date 2016年3月25日16:53:16
+	 * @return
+	 */
+	@RequestMapping("code")
+	public ModelAndView code(int type) {
+		ModelAndView mv = new ModelAndView("user/code");
+		mv.addObject("CodeType", type);
+		return mv;
+	}
+	/**
+	 * 忘记密码第一步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetpone")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
+	{
+		HttpResultModel<ForgetPwdResp> res=new HttpResultModel<ForgetPwdResp>();
+		String cookieKey=CookieUtils.getCookie(request,LoginUtil.ADMIN_JSESSIONID);
+		//没有获取到验证码的UUID
+		if(cookieKey==null&&cookieKey.equals(""))
+		{
+			res.setCode(-1);
+			res.setMsg("请输入正确的验证码");
+			return res;
+		}
+		req.setCookieKey(cookieKey);
+		return memberService.forgetpwdsetpone(req);
+	}
+	/**
+	 * 忘记密码第二步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetptwo")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(@RequestBody  ForgetPwdTwoReq req)
+	{
+		return memberService.forgetpwdsetptwo(req);
+	}
+	/**
+	 * 忘记密码第三步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetpthree")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(@RequestBody  ForgetPwdThreeReq req)
+	{
+		return memberService.forgetpwdsetpthree(req);
+	}
+	/**
+	 * 修改密码
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("modifypwd")
+	@ResponseBody
+	public HttpResultModel<Object> modifypwd(@RequestBody  ModifypwdReq req)
+	{
+		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		if(m.equals(null))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("用户未登录,请先登录用户!");
+			return resultModel;
+		}
+		req.setUserId(m.getId());
+		return memberService.modifypwd(req);
+	}
 }

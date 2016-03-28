@@ -5,6 +5,7 @@
 <%@page import="java.util.ArrayList"%>
     <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="com.etaofinance.entity.domain.MemberApplyInvestModel"%>
+<%@page import="com.etaofinance.core.enums.MemberApplyInvestStatusEnum"%>
 <%@page import="java.util.List"%>
 <%
 	String basePath =PropertyUtils.getProperty("java.admin.url");
@@ -37,11 +38,19 @@
 		<tr>
 			<td><%=list.get(i).getId() %></td>
 			<td><%=list.get(i).getMemberName()%></td>
+			<td><%=list.get(i).getPhoneNo()%></td>
 			<td><%=list.get(i).geteMail() %></td>
 			<td><%=list.get(i).getApplyDate() %></td>
 			<td><%=list.get(i).getAuditStatusString() %></td>
 			<td><%=list.get(i).getRefuseReasion() %></td>
-			<td>操作</td>
+			<td>
+			<%if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.WaitAudit.value() ){ %>
+				<input type="button" value="审核" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)" />
+			<% } else if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.AuditNotPass.value()) { %>
+				<input type="button" value="重审" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)" />
+			<% } else {%>
+			<% } %>
+			</td>
 		</tr>
 		<%
 			}

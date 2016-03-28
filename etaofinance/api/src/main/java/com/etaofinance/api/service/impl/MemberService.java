@@ -1,8 +1,12 @@
 package com.etaofinance.api.service.impl;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
@@ -16,17 +20,19 @@ import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
-import com.etaofinance.entity.QA;
+import com.etaofinance.entity.req.ForgetPwdOneReq;
+import com.etaofinance.entity.req.ForgetPwdThreeReq;
+import com.etaofinance.entity.req.ForgetPwdTwoReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
-import com.etaofinance.entity.resp.QAResp;
 import com.etaofinance.entity.resp.SendCodeResp;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 @Service
 public class MemberService implements IMemberService{
@@ -256,6 +262,154 @@ public class MemberService implements IMemberService{
 	public Member getById(Long id) {
 		
 		return memberDao.selectByPrimaryKey(id);
+	}
+	/**
+	 * 忘记密码第一步
+	 */
+	@Override
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req) {
+		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
+		String redisImgCode=redisService.get(req.getCookieKey(), String.class);
+		if(redisImgCode==null||redisImgCode.equals("")||!redisImgCode.equals(req.getImgCode()))
+		{
+			//验证码错误
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试");
+			return resultModel;
+		}
+		//查询会员是否存在
+		Member member=memberDao.selectByPhoneNo(req.getLoginName());
+		if(member==null)
+		{
+			//验证码错误
+			resultModel.setCode(-1);
+			resultModel.setMsg("用户邮箱/登录名/手机号错误!");
+			return resultModel;
+		}
+		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+		String value=UUID.randomUUID().toString();
+		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,value);
+		redisService.set(key, value,60*5,TimeUnit.SECONDS);
+		//验证码错误
+		resultModel.setCode(1);
+		resultModel.setMsg("验证通过!");
+		ForgetPwdResp resp=new ForgetPwdResp();
+		resp.setUserID(member.getId());
+		resp.setCheckKey(value);
+		return resultModel;
+	}
+	/**
+	 * 找回密码第二步
+	 * 
+	 */
+	@Override
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(ForgetPwdTwoReq req) {
+		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
+		//手机验证码
+		String key= String.format(RedissCacheKey.JF_Member_ForgetPassword ,req.getPhoneNo());
+		String value=redisService.get(key, String.class);
+		//第一步给返回的UUID
+		String key2=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,req.getCacheKey());
+		String value2=redisService.get(key2, String.class);
+		if(req.getPhoneNo()==null||req.getVeriCode()==null||value==null||req.getCacheKey()==null||value2==null
+				||req.getPhoneNo().equals("")||req.getVeriCode().equals("")||value.equals("")
+				||req.getCacheKey().equals("")||value2.equals("")
+				||!req.getVeriCode().equals(value)||!req.getCacheKey().equals(value2))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}
+		//删除第一次给的UUID,防止被重复使用
+		redisService.remove(key2);
+		//查询会员是否存在
+		Member member=memberDao.selectByPhoneNo(req.getPhoneNo());
+		if(member==null)
+		{
+			//验证码错误
+			resultModel.setCode(-1);
+			resultModel.setMsg("用户不存在!");
+			return resultModel;
+		}
+		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+		String UUIDvalue=UUID.randomUUID().toString();
+		String UUIDkey=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,value);
+		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
+		resultModel.setCode(1);
+		resultModel.setMsg("验证通过!");
+		ForgetPwdResp resp=new ForgetPwdResp();
+		resp.setUserID(member.getId());
+		resp.setCheckKey(UUIDvalue);
+		return resultModel;
+	}
+	/**
+	 * 找回密码第三部
+	 */
+	@Override
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(
+			ForgetPwdThreeReq req) {
+		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
+		//第二步给返回的UUID
+		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,req.getCacheKey());
+		String value=redisService.get(key, String.class);
+		if(req.getCacheKey()==null||req.getCacheKey().equals("")||value==null||value.equals(""))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证信息有误,请重新找回密码!");
+			return resultModel;
+		}
+		if(req.getNewPwd()==null||req.getNewPwd().equals("")||
+				req.getNewPwd().length()<6||req.getNewPwd().length()>20)
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("密码长度需要6-20位,请重试!");
+			return resultModel;
+		}
+		//删除第二步给的缓存,.
+		redisService.remove(key);
+		//设置新密码
+		String nPwdString=MD5Util.MD5(req.getNewPwd());
+		Member member=new Member();
+		member.setId(req.getUserId());
+		member.setLoginpwd(nPwdString);
+		int re= memberDao.updateByPrimaryKeySelective(member);
+		if(re>0)
+		{
+			resultModel.setCode(1);
+			resultModel.setMsg("新密码设置成功,请重新登录!");
+			return resultModel;
+		}
+		resultModel.setCode(-1);
+		resultModel.setMsg("新密码设置失败,请重新设置!");
+		return resultModel;
+	}
+	/**
+	 * 修改密码接口
+	 */
+	@Override
+	public HttpResultModel<Object> modifypwd(ModifypwdReq req) {
+		HttpResultModel<Object> res=new HttpResultModel<Object>();
+		Member oldMember=memberDao.selectByPrimaryKey(req.getUserId());
+		String opwd=MD5Util.MD5(req.getOldPwd());
+		String npwd=MD5Util.MD5(req.getNewPwd());
+		if(!oldMember.getLoginpwd().equals(opwd))
+		{
+			res.setCode(-1);
+			res.setMsg("旧密码错误,请重试!");
+			return res;
+		}
+		Member member=new Member();
+		member.setId(req.getUserId());
+		member.setLoginpwd(npwd);
+		if(memberDao.updateByPrimaryKeySelective(member)>0)
+		{
+			res.setCode(1);
+			res.setMsg("密码修改成功!");
+			return res;
+		}
+		res.setCode(-1);
+		res.setMsg("密码修改失败,请重试!");
+		return res;
 	}
 	
 
