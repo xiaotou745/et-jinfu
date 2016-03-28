@@ -3,6 +3,8 @@ package com.etaofinance.api.service.inter;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
+import com.etaofinance.entity.req.ForgetPwdThreeReq;
+import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -68,4 +70,16 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req);
+    /**
+     * 忘记密码第二步
+     * @param req
+     * @return
+     */
+    HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(ForgetPwdTwoReq req);
+    /**
+     * 忘记密码第三步
+     * @param req
+     * @return
+     */
+    HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(ForgetPwdThreeReq req);
  }

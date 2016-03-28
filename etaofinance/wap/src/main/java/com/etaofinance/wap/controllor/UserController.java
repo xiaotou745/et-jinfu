@@ -6,14 +6,18 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -22,6 +26,8 @@ import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
+import com.etaofinance.entity.req.ForgetPwdThreeReq;
+import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.LoginReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -187,5 +193,31 @@ public class UserController {
 		}
 		req.setCookieKey(cookieKey);
 		return memberService.forgetpwdsetpone(req);
+	}
+	/**
+	 * 忘记密码第二步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetptwo")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(@RequestBody  ForgetPwdTwoReq req)
+	{
+		return memberService.forgetpwdsetptwo(req);
+	}
+	/**
+	 * 忘记密码第三步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("forgetpwdsetpthree")
+	@ResponseBody
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(@RequestBody  ForgetPwdThreeReq req)
+	{
+		return memberService.forgetpwdsetpthree(req);
 	}
 }
