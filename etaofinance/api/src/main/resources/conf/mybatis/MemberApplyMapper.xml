@@ -161,6 +161,7 @@
       CompanyTitle = #{companytitle,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <!-- 跟投人 领投人列表页面查询 wangchao -->
 	 <select id="getMemberApplyList" resultType="com.etaofinance.entity.domain.MemberApplyInvestModel"
 		parameterType="com.etaofinance.entity.req.PagedMemberReq"
 		statementType="CALLABLE">
@@ -181,10 +182,13 @@
 			and ma.id=${applyId}
 		</if>
 		<if test="memberName != null and memberName!=''">
-			and m.UserName>=''${memberName}''
+			and m.UserName=''${memberName}''
 		</if>
 		<if test="mail != null and mail!=''">
-			and m.email>=''${mail}''
+			and m.email=''${mail}''
+		</if>
+		<if test="phoneNo != null and phoneNo!=''">
+			and m.phoneNo=''${phoneNo}''
 		</if>
 		<if test="memberType>0">
 			and ma.typeId=${memberType}
@@ -199,6 +203,19 @@
 			and ''${applyEndDate}''>ma.createTime
 		</if>
 	</sql>
-  
+	<!-- 跟投领投审核操作时候获取申请人信息 wangchao -->
+	<select id="getMemberApplyInfo" resultType="com.etaofinance.entity.domain.MemberApplyAuditModel" parameterType="java.lang.Long" >
+		  SELECT m.Id,m1.TrueName,m1.IdCard,m.ApplyInfo,m.CompanyName,m.CompanyTitle FROM memberapply m
+  JOIN member m1 ON m.MemberId=m1.Id WHERE m.Id=#{memberApplyId,jdbcType=BIGINT}
+	</select>
+	<!-- 跟投人 领投人列表审核操作 wangchao -->
+  <update id="auditConfirm" parameterType="com.etaofinance.entity.req.MemberApplyAuditReq" >
+    UPDATE memberapply m 
+    	set m.Status=${auditStatus},m.AuditTime=NOW(),m.AuditName='${auditName}'
+    	<if test="auditStatus == 2">
+    		,m.RefuseReasion='${refuseReason}'
+    	</if>
+    WHERE m.Id=${memberApplyId}
+  </update>
   
 </mapper>

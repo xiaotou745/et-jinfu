@@ -49,7 +49,7 @@
 			<td><%=list.get(i).getInvestCount() %></td>
 			<td><%=list.get(i).getAttentionCount() %></td>
 			<td><%=list.get(i).getMemberStatusString() %></td>		
-			<td>操作</td>
+			<td><a href="http://www.baidu.com" target="_Blank">详情</a></td>
 		</tr>
 		<%
 			}

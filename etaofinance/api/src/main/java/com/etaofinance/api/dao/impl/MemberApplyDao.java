@@ -6,7 +6,9 @@ import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IMemberApplyDao;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
+import com.etaofinance.entity.req.MemberApplyAuditReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 @Repository
@@ -52,6 +54,16 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 	public PagedResponse<MemberApplyInvestModel> getMemberApplyList(
 			PagedMemberReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IMemberApplyDao.getMemberApplyList", req);
+	}
+
+	@Override
+	public MemberApplyAuditModel getMemberApplyInfo(long memberApplyId) {
+		return getReadOnlySqlSessionUtil().selectOne("IMemberApplyDao.getMemberApplyInfo",memberApplyId);
+	}
+
+	@Override
+	public int auditConfirm(MemberApplyAuditReq req) {
+		return getMasterSqlSessionUtil().update("IMemberApplyDao.auditConfirm",req);
 	}
 
 }

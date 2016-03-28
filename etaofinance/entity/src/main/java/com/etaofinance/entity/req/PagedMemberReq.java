@@ -7,6 +7,7 @@ public class PagedMemberReq extends PagedRequestBase{
 	
 	private String memberName;
 	
+	private String phoneNo;
 	private String mail;
 	
 	private int memberType;
@@ -82,5 +83,13 @@ public class PagedMemberReq extends PagedRequestBase{
 
 	public void setApplyId(String applyId) {
 		this.applyId = applyId;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 }

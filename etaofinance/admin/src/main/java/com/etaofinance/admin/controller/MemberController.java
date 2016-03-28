@@ -1,17 +1,24 @@
 package com.etaofinance.admin.controller;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Member;
+import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
 import com.etaofinance.entity.domain.LeadInvestModel;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.req.MemberApplyAuditReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 @Controller
@@ -82,6 +89,7 @@ public class MemberController {
 		ModelAndView model = new ModelAndView("member/leadinvestlistdo");
 		req.setMemberType(2);  //领投人
 		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
+		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
 		model.addObject("listData",memberApplyInvestModel);
 		return model;
 	}
@@ -99,5 +107,22 @@ public class MemberController {
 			return m.getId();
 		}
 		return 0l;
+	}
+	/*
+	 * 根据申请Id获取申请投资人信息 wangchao
+	 */
+	@RequestMapping("getmemberinfo")
+	@ResponseBody
+	public MemberApplyAuditModel getmemberInfo(String memberApplyId){
+		MemberApplyAuditModel member= memberApplyService.getMemberApplyInfo(ParseHelper.ToLong(memberApplyId,0));
+		return member;
+	}
+	@RequestMapping("auditconfirm")
+	@ResponseBody
+	public int auditConfirm(HttpServletRequest request, MemberApplyAuditReq req){
+		UserContext uContext= UserContext.getCurrentContext(request);
+		req.setAuditName(uContext.getLoginName());
+		int i= memberApplyService.auditConfirm(req);
+		return i;
 	}
 }

@@ -48,7 +48,10 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<Member> regist(RegistReq req);
-    
+    /*
+     * 获取会员信息
+     * wangchao
+     */
 	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
 
 	/**
@@ -65,4 +68,4 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req);
-    }
+ }

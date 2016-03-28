@@ -1,3 +1,4 @@
+<%@page import="com.etaofinance.core.enums.MemberApplyInvestStatusEnum"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	<%@page import="com.etaofinance.entity.common.PagedResponse"%>
@@ -37,11 +38,19 @@
 		<tr>
 			<td><%=list.get(i).getId() %></td>
 			<td><%=list.get(i).getMemberName()%></td>
+			<td><%=list.get(i).getPhoneNo()%></td>
 			<td><%=list.get(i).geteMail() %></td>
 			<td><%=list.get(i).getApplyDate() %></td>
 			<td><%=list.get(i).getAuditStatusString() %></td>
 			<td><%=list.get(i).getRefuseReasion() %></td>
-			<td></td>
+			<td>
+			<%if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.WaitAudit.value() ){ %>
+				<input type="button" value="审核" onclick="showFollowAuditMember(<%=list.get(i).getId()%>)" />
+			<% } else if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.AuditNotPass.value()) { %>
+				<input type="button" value="重审" onclick="showFollowAuditMember(<%=list.get(i).getId()%>)" />
+			<% } else {%>
+			<% } %>
+			</td>
 		</tr>
 		<%
 			}
