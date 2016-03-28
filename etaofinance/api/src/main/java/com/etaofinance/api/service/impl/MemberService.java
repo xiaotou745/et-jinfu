@@ -61,12 +61,8 @@ public class MemberService implements IMemberService{
 		resp.setCode(MemberEnum.Success.value());
 		resp.setMsg(MemberEnum.Success.desc());		
 		return resp;
-	}
-	
- 	@Override
-	public Member getById(Long id) {
- 		return memberDao.selectByPrimaryKey(id);
-	}
+	}	
+
  	
 	@Override
 	public Member selectByPhoneNo(String phoneno) {
