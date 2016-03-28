@@ -4,7 +4,7 @@ package com.etaofinance.entity.resp;
  * @author ofmyi_000
  *
  */
-public class ForgetPwdOneResp {
+public class ForgetPwdResp {
 private Long userID;
 private String checkKey;
 public Long getUserID() {

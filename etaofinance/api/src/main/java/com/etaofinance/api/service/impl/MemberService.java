@@ -28,7 +28,7 @@ import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
-import com.etaofinance.entity.resp.ForgetPwdOneResp;
+import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -265,8 +265,8 @@ public class MemberService implements IMemberService{
 	 * 忘记密码第一步
 	 */
 	@Override
-	public HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(ForgetPwdOneReq req) {
-		HttpResultModel<ForgetPwdOneResp> resultModel=new HttpResultModel<ForgetPwdOneResp>();
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req) {
+		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
 		String redisImgCode=redisService.get(req.getCookieKey(), String.class);
 		if(redisImgCode==null||redisImgCode.equals("")||!redisImgCode.equals(req.getImgCode()))
 		{
@@ -291,7 +291,7 @@ public class MemberService implements IMemberService{
 		//验证码错误
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
-		ForgetPwdOneResp resp=new ForgetPwdOneResp();
+		ForgetPwdResp resp=new ForgetPwdResp();
 		resp.setUserID(member.getId());
 		resp.setCheckKey(value);
 		return resultModel;

@@ -7,7 +7,7 @@ import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.resp.ForgetPwdOneResp;
+import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
@@ -64,5 +64,5 @@ public interface IMemberService {
      * @param req
      * @return
      */
-    HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(ForgetPwdOneReq req);
+    HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req);
     }

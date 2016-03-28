@@ -26,7 +26,7 @@ import com.etaofinance.entity.req.LoginReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.resp.ForgetPwdOneResp;
+import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
@@ -174,9 +174,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetpone")
 	@ResponseBody
-	public HttpResultModel<ForgetPwdOneResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
+	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
 	{
-		HttpResultModel<ForgetPwdOneResp> res=new HttpResultModel<ForgetPwdOneResp>();
+		HttpResultModel<ForgetPwdResp> res=new HttpResultModel<ForgetPwdResp>();
 		String cookieKey=CookieUtils.getCookie(request,LoginUtil.ADMIN_JSESSIONID);
 		//没有获取到验证码的UUID
 		if(cookieKey==null&&cookieKey.equals(""))
