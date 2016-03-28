@@ -23,6 +23,7 @@ import com.etaofinance.entity.Member;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -380,6 +381,34 @@ public class MemberService implements IMemberService{
 		resultModel.setCode(-1);
 		resultModel.setMsg("新密码设置失败,请重新设置!");
 		return resultModel;
+	}
+	/**
+	 * 修改密码接口
+	 */
+	@Override
+	public HttpResultModel<Object> modifypwd(ModifypwdReq req) {
+		HttpResultModel<Object> res=new HttpResultModel<Object>();
+		Member oldMember=memberDao.selectByPrimaryKey(req.getUserId());
+		String opwd=MD5Util.MD5(req.getOldPwd());
+		String npwd=MD5Util.MD5(req.getNewPwd());
+		if(!oldMember.getLoginpwd().equals(opwd))
+		{
+			res.setCode(-1);
+			res.setMsg("旧密码错误,请重试!");
+			return res;
+		}
+		Member member=new Member();
+		member.setId(req.getUserId());
+		member.setLoginpwd(npwd);
+		if(memberDao.updateByPrimaryKeySelective(member)>0)
+		{
+			res.setCode(1);
+			res.setMsg("密码修改成功!");
+			return res;
+		}
+		res.setCode(-1);
+		res.setMsg("密码修改失败,请重试!");
+		return res;
 	}
 	
 

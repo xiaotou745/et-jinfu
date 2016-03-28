@@ -1,10 +1,13 @@
 package com.etaofinance.api.service.inter;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -82,4 +85,11 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(ForgetPwdThreeReq req);
+    
+    /**
+     *修改用户密码
+     * @param req
+     * @return
+     */
+    HttpResultModel<Object> modifypwd(ModifypwdReq req);
  }

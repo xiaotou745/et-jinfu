@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +30,7 @@ import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.LoginReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
@@ -219,5 +221,27 @@ public class UserController {
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(@RequestBody  ForgetPwdThreeReq req)
 	{
 		return memberService.forgetpwdsetpthree(req);
+	}
+	/**
+	 * 修改密码
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("modifypwd")
+	@ResponseBody
+	public HttpResultModel<Object> modifypwd(@RequestBody  ModifypwdReq req)
+	{
+		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		if(m.equals(null))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("用户未登录,请先登录用户!");
+			return resultModel;
+		}
+		req.setUserId(m.getId());
+		return memberService.modifypwd(req);
 	}
 }
