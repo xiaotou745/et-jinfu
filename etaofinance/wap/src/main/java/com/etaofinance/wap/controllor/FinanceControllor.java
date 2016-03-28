@@ -20,6 +20,7 @@ import com.etaofinance.api.service.inter.ISuggestionService;
 import com.etaofinance.core.util.SystemUtils;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.BankCard;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
@@ -32,7 +33,8 @@ public class FinanceControllor {
 	private IBankService bankService;
 	
 	@Autowired
-	private IBankCardService bankCardService;
+	private IBankCardService bankCardService;	
+
 
 	/**
 	 * 获取银行列表
@@ -90,4 +92,6 @@ public class FinanceControllor {
 		return bankCardService.getListByMemberId(record.getMemberid());
 	}	
 	
+	
+
 }
