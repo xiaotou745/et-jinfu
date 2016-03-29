@@ -1,56 +1,60 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "Beta",
-        "title": "Supplier（单店）"
+        "version": "1.0.0",
+        "title": "易淘金服-众筹"
     },
     "paths": {
-        "/shoppingCart/CreateCar": {
+        "/demo/demopost": {
             "post": {
-                "description": "购物车 - 创建购物车",
+                "description": "POST接口描述",
                 "parameters": [
                     {
-                        "name": "SupplierId",
+                        "name": "参数1",
                         "in": "query",
-                        "description": "门店id",
+                        "description": "参数1描述",
                         "required": true,
                         "type": "number"
                     },
                     {
-                        "name": "UniqueString",
+                        "name": "参数2",
                         "in": "query",
-                        "description": "购物车唯一标示",
+                        "description": "参数2描述",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "DeliveryMethodId",
+                        "name": "参数3",
                         "in": "query",
-                        "description": "送餐类型  1--自提， 2--外送",
+                        "description": "参数3描述",
                         "required": true,
                         "type": "number"
                     },
                     {
-                        "name": "Type",
+                        "name": "参数4",
                         "in": "query",
-                        "description": "业务类型  1--外卖，2--堂食",
+                        "description": "参数4描述",
                         "required": true,
                         "type": "number"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "响应描述",
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "code": {
                                     "type": "number",
-                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                    "description": "第一个对象 number类型"
                                 },
-                                "carEntity": {
+                                "msg": {
+                                    "type": "string",
+                                    "description": "第二个对象 string类型"
+                                },
+                                "data": {
                                     "type": "object",
-                                    "description": "购物车对象"
+                                    "$ref": "#/definitions/DemoEntity"
                                 }
                             }
                         }
@@ -58,16 +62,16 @@
                 }
             }
         },
-        "/shoppingCart/GetCar/:uniquestring": {
+        "/demo/demoget/": {
             "get": {
                 "description": "购物车 - 获取购物车",
                 "parameters": [
                     {
-                        "name": "uniquestring",
+                        "name": "id",
                         "in": "query",
-                        "description": "购物车唯一标示",
+                        "description": "参数1",
                         "required": true,
-                        "type": "string"
+                        "type": "number"
                     }
                 ],
                 "responses": {
@@ -78,11 +82,11 @@
                             "properties": {
                                 "code": {
                                     "type": "number",
-                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                    "description": "id"
                                 },
-                                "carEntity": {
-                                    "type": "object",
-                                    "description": "购物车对象"
+                                "msg": {
+                                    "type": "string",
+                                    "description": "提示消息"
                                 }
                             }
                         }
@@ -92,49 +96,41 @@
         }
     },
     "definitions": {
-        "Dish": {
+        "DemoEntity": {
             "type": "object",
             "properties": {
-                "supplierdishid": {
+                "id": {
                     "type": "number",
-                    "description": "菜品id"
+                    "description": "id"
                 },
-                "supplierdishname": {
+                "type": {
                     "type": "string",
-                    "description": "菜品名称"
+                    "description": "类型"
                 },
                 "price": {
                     "type": "number",
-                    "description": "菜品价格"
+                    "description": "价格"
                 },
-                "imagepath": {
-                    "type": "string",
-                    "description": "菜品图片"
+                "otherobj": {
+                    "type": "object",
+                    "$ref": "#/definitions/DemoEntity2"
                 }
             }
         },
-        "Category": {
+        "DemoEntity2": {
             "type": "object",
             "properties": {
-                "supplierid": {
+                "id": {
                     "type": "number",
-                    "description": "门店id"
+                    "description": "model2ID"
                 },
-                "categoryid": {
-                    "type": "number",
-                    "description": "菜品分类id"
-                },
-                "categoryname": {
+                "type": {
                     "type": "string",
-                    "description": "菜品分类名称"
+                    "description": "类型"
                 },
-                "suppliercategoryid": {
+                "price": {
                     "type": "number",
-                    "description": "门店关联菜品分类id，查询菜品信息是使用该值"
-                },
-                "categoryorder": {
-                    "type": "number",
-                    "description": "菜品分类排序"
+                    "description": "价格"
                 }
             }
         }
