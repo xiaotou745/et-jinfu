@@ -37,7 +37,7 @@ public interface IMemberService {
 
     /**
      * 通过ID获取会员信息
-     * @param phoneno
+     * @param 会员id
      * @return
      */
     Member getById(Long  id);

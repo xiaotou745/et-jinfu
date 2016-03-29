@@ -120,7 +120,7 @@
 			            </div>
 			            <div class="control-group">
 			                <label>证明材料：</label><label id="lblCertifyMaterial"></label>
-			                <a href="#" id="btnDownloadMaterial">下载</a>
+			                <a href="" id="btnDownloadMaterial">下载</a>
 			            </div>
 			            <div class="control-group">
 			                <label>审核操作：</label><input type="radio" id="rAuditPass" name="rAuditOpt" value="1" checked="checked"/>通过<input type="radio" id="rAuditNotPass" name="rAuditOpt" value="2" />不通过
@@ -184,7 +184,8 @@
 				$("#lblIdCardName").html(result.trueName);
 				$("#lblIdCardNo").html(result.idCard);
 				$("#lblFitCondition").html(result.applyInfo);
-				$("#lblCertifyMaterial").html("文件名字");
+				$("#lblCertifyMaterial").html(result.certifyMaterialName);
+				$("#btnDownloadMaterial").attr("href",result.certifyMaterialUrl);
 				$("#showLeadAuditMemberDiv").modal("show");
 			}
 		});		
