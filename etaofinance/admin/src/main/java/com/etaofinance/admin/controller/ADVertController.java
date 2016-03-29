@@ -93,7 +93,7 @@ public class ADVertController {
 		record.setCreatetime(new Date());
 		record.setCreatename(UserContext.getCurrentContext(request).getLoginName());
 
-		HttpResultModel<ADVertResp> resp= aDVertService.add(record);	
+		HttpResultModel<ADVertResp> resp= aDVertService.create(record);	
 		return resp;
 	}
 	

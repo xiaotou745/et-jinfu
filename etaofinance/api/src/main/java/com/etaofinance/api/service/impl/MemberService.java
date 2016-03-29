@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.dao.inter.IMemberDao;
+import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -20,6 +21,7 @@ import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
@@ -38,7 +40,8 @@ import com.etaofinance.entity.resp.SendCodeResp;
 public class MemberService implements IMemberService{
 	@Autowired
 	private IMemberDao memberDao;
-	
+	@Autowired
+	private IMemberOtherDao memberOtherDao;
 	@Autowired
 	private RedisService redisService;	
 	
@@ -197,12 +200,17 @@ public class MemberService implements IMemberService{
 			resultModel.setMsg("验证码错误,请重新输入");
 			return resultModel;
 		}
+		//清除验证码
+		redisService.remove(key);
 		//注册
 		Member register=new Member();
 		register.setPhoneno(req.getPhoneNo());
 		register.setLoginpwd(MD5Util.MD5(req.getPwd()));
 		register.setUsername("etao_"+req.getPhoneNo());
 		memberDao.insertSelective(register);
+		MemberOther moMemberOther=new MemberOther();
+		moMemberOther.setMemberid(register.getId());
+		memberOtherDao.insertSelective(moMemberOther);
 		resultModel.setCode(1);
 		resultModel.setData(register);
 		resultModel.setMsg("注册成功!");
