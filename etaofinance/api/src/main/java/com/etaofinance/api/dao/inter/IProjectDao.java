@@ -2,6 +2,7 @@ package com.etaofinance.api.dao.inter;
 
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 
 public interface IProjectDao {
@@ -17,4 +18,10 @@ public interface IProjectDao {
 
     int updateByPrimaryKey(Project record);
     PagedResponse<Project>  queryProjectList(PagedProjectReq req);
+    /**
+     * WWap获取项目列表
+     * @param req
+     * @return
+     */
+    PagedResponse<ProjectModel> getProjectList(PagedProjectReq req);
 }

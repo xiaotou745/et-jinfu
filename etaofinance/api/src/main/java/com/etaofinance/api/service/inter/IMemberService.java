@@ -46,7 +46,7 @@ public interface IMemberService {
      * @param req
      * @return
      */
-    SendCodeResp sendCode(SendCodeReq req);
+    HttpResultModel<Object> sendCode(SendCodeReq req);
     /**
      * 注册用户
      * @param req
