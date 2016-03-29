@@ -8,6 +8,13 @@ public class LoginReq {
 	private String loginName;
 	private String pwd;
 	private String remberMe;
+	private String reUrl;
+	public String getReUrl() {
+		return reUrl;
+	}
+	public void setReUrl(String reUrl) {
+		this.reUrl = reUrl;
+	}
 	public String getLoginName() {
 		return loginName;
 	}

@@ -50,8 +50,17 @@ public class Project {
     private Integer investmentnumber;
 
     private Integer follownumber;
+    private Integer isNovice;
 
-    private String auditname;
+    public Integer getIsNovice() {
+		return isNovice;
+	}
+
+	public void setIsNovice(Integer isNovice) {
+		this.isNovice = isNovice;
+	}
+
+	private String auditname;
 
     private Date audittime;
 

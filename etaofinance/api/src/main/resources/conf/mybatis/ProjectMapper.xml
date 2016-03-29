@@ -440,6 +440,7 @@
 		  AND p.ProjectStatus != 1
 		  AND p.ProjectStatus != 5 
 		  AND p.ProjectStatus != 4
+		  AND P.IsNovice!=1
 		  AND p.AuditStatus = 2 
 		  AND NOW() >= p.PreheatTime 
 		  AND p.EndTime >= NOW()

@@ -27,8 +27,7 @@ public class MemberOtherDao  extends DaoBase implements IMemberOtherDao{
 
 	@Override
 	public int insertSelective(MemberOther record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().insert("IMemberOtherDao.insertSelective",record);
 	}
 
 	@Override

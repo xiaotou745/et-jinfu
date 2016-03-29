@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.dao.inter.IMemberDao;
+import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -18,8 +19,10 @@ import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
+import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
@@ -38,7 +41,8 @@ import com.etaofinance.entity.resp.SendCodeResp;
 public class MemberService implements IMemberService{
 	@Autowired
 	private IMemberDao memberDao;
-	
+	@Autowired
+	private IMemberOtherDao memberOtherDao;
 	@Autowired
 	private RedisService redisService;	
 	
@@ -69,7 +73,9 @@ public class MemberService implements IMemberService{
 		return resp;
 	}	
 
- 	
+ 	/**
+ 	 * 手机号获取信息
+ 	 */
 	@Override
 	public Member selectByPhoneNo(String phoneno) {
 		return memberDao.selectByPhoneNo(phoneno);
@@ -197,12 +203,17 @@ public class MemberService implements IMemberService{
 			resultModel.setMsg("验证码错误,请重新输入");
 			return resultModel;
 		}
+		//清除验证码
+		redisService.remove(key);
 		//注册
 		Member register=new Member();
 		register.setPhoneno(req.getPhoneNo());
 		register.setLoginpwd(MD5Util.MD5(req.getPwd()));
 		register.setUsername("etao_"+req.getPhoneNo());
 		memberDao.insertSelective(register);
+		MemberOther moMemberOther=new MemberOther();
+		moMemberOther.setMemberid(register.getId());
+		memberOtherDao.insertSelective(moMemberOther);
 		resultModel.setCode(1);
 		resultModel.setData(register);
 		resultModel.setMsg("注册成功!");
@@ -278,10 +289,24 @@ public class MemberService implements IMemberService{
 			return resultModel;
 		}
 		//查询会员是否存在
-		Member member=memberDao.selectByPhoneNo(req.getLoginName());
+		Member member=null;
+		//1.手机号
+		if(RegexHelper.IsPhone(req.getLoginName()))
+		{
+			member=memberDao.selectByPhoneNo(req.getLoginName());
+		}
+		//2.邮箱
+		if(member==null&&RegexHelper.IsEmail(req.getLoginName()))
+		{
+			member=memberDao.selectByemail(req.getLoginName());
+		}
+		//3.登录名
 		if(member==null)
 		{
-			//验证码错误
+			member=memberDao.selectByUserName(req.getLoginName());
+		}
+		if(member==null)
+		{
 			resultModel.setCode(-1);
 			resultModel.setMsg("用户邮箱/登录名/手机号错误!");
 			return resultModel;
@@ -410,6 +435,21 @@ public class MemberService implements IMemberService{
 		res.setCode(-1);
 		res.setMsg("密码修改失败,请重试!");
 		return res;
+	}
+
+	/**
+	 * 通过用户吗获取信息
+	 */
+	@Override
+	public Member selectByUserName(String username) {
+		return memberDao.selectByUserName(username);
+	}
+
+
+	@Override
+	public Member selectByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

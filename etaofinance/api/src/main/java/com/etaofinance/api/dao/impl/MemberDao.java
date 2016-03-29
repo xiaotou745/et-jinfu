@@ -72,5 +72,12 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 	public PagedResponse<MemberModel> getMemberList(PagedMemberReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IMemberDao.getMemberList",req);
 	}
+	/**
+	 * 通过手机号查询会员信息
+	 */
+	@Override
+	public Member selectByemail(String email) {
+		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByemail", email);
+	}
 
 }

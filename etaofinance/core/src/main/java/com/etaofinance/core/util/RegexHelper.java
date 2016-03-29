@@ -21,6 +21,24 @@ public class RegexHelper {
 	        return flg; 
 	}
 	/**
+	 * @param 手机号
+	 * @return 录入字符串中有符合表达式的返回true 否则返回false
+	 */
+	public static Boolean IsPhone(String phoneNo)
+	{
+		  	String regStr="^1\\d{10}$";
+		  	return regexBool(regStr, phoneNo);
+	}
+	/**
+	 * @param 手机号
+	 * @return 录入字符串中有符合表达式的返回true 否则返回false
+	 */
+	public static Boolean IsEmail(String email)
+	{
+		  	String regStr="^(\\w-*\\.*)+@(\\w-?)+(\\.\\w{2,})+$";
+		  	return regexBool(regStr, email);
+	}
+	/**
 	 * 验证字符串格式是否类似 于 2010-09
 	 * 范围1900-2100
 	 * @param str 需要匹配的字符串
