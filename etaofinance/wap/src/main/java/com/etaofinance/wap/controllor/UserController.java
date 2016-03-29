@@ -2,8 +2,11 @@ package com.etaofinance.wap.controllor;
 
 
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+
 
 
 
@@ -29,6 +32,7 @@ import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
@@ -92,10 +96,11 @@ public class UserController {
 	 * 登录
 	 * @param req
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("login")
 	@ResponseBody
-	public  HttpResultModel<Member> login(@RequestBody LoginReq req) {
+	public  HttpResultModel<Member> login(@RequestBody LoginReq req) throws IOException {
 		HttpResultModel<Member> result=new HttpResultModel<Member>(); 
 		int cookieMaxAge = 60*60*24;//cookie时间 1天
 		if(req.getRemberMe().endsWith("1"))//记住我
@@ -139,6 +144,11 @@ public class UserController {
 		redisService.set(rediskey, redisValue,cookieMaxAge,TimeUnit.SECONDS);
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
+		if(req.getReUrl()==null||req.getReUrl().equals(""))
+		{
+			String basePath =PropertyUtils.getProperty("java.wap.url");
+			response.sendRedirect(basePath + "/"+req.getReUrl());
+		}
 		result.setCode(1);
 		result.setMsg("登录成功");
 		result.setData(member);
