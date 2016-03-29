@@ -1,0 +1,776 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "Beta",
+        "title": "Supplier（单店）"
+    },
+    "paths": {
+        "/Order/FacePaymentList": {
+            "post": {
+                "description": "订单列表 - 当面付\n",
+                "parameters": [
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "当前页",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "页码",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "html",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/CreateCar": {
+            "post": {
+                "description": "购物车 - 创建购物车",
+                "parameters": [
+                    {
+                        "name": "SupplierId",
+                        "in": "query",
+                        "description": "门店id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "UniqueString",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "DeliveryMethodId",
+                        "in": "query",
+                        "description": "送餐类型  1--自提， 2--外送",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Type",
+                        "in": "query",
+                        "description": "业务类型  1--外卖，2--堂食",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/GetCar/:uniquestring": {
+            "get": {
+                "description": "购物车 - 获取购物车",
+                "parameters": [
+                    {
+                        "name": "uniquestring",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/UpdateCar/AddDish": {
+            "put": {
+                "description": "购物车 - 向购物车中添加菜品",
+                "parameters": [
+                    {
+                        "name": "UniqueString",
+                        "in": "query",
+                        "description": "购物车唯一标示，也就是获取购物车时的key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "DishId",
+                        "in": "query",
+                        "description": "菜品id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "DishName",
+                        "in": "query",
+                        "description": "菜品名称",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/UpdateCar/DeleteDish": {
+            "put": {
+                "description": "购物车 - 从购物车中删除一个菜品",
+                "parameters": [
+                    {
+                        "name": "UniqueString",
+                        "in": "query",
+                        "description": "购物车唯一标示，也就是获取购物车时的key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "DishId",
+                        "in": "query",
+                        "description": "要删除的菜品Id",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/UpdateCar/Clear": {
+            "put": {
+                "description": "购物车 - 清空购物车中的菜品",
+                "parameters": [
+                    {
+                        "name": "UniqueString",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/Delete": {
+            "get": {
+                "description": "购物车 - 删除购物车",
+                "parameters": [
+                    {
+                        "name": "uniquestring",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/UpdateCar": {
+            "put": {
+                "description": "购物车 - 更新购物车",
+                "parameters": [
+                    {
+                        "name": "shoppingCart",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mobileservice/Sms/Word": {
+            "post": {
+                "description": "短信服务 - 发送文字短信",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "手机号码",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "要发送的短信信息",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "supplierId",
+                        "in": "query",
+                        "description": "门店id",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "发送短信结果，0-成功，1-发送失败"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "description": "发送结果描述信息"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mobileservice/Sms/Voice": {
+            "post": {
+                "description": "短信服务 - 发送语音短信",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "手机号码",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "要发送的短信信息",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "supplierId",
+                        "in": "query",
+                        "description": "门店id",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "发送短信结果，0-成功，1-发送失败"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "description": "发送结果描述信息"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category/CategoryList": {
+            "get": {
+                "description": "菜品分类 - 获取门店菜品分类信息",
+                "parameters": [
+                    {
+                        "name": "supplierid",
+                        "in": "query",
+                        "description": "门店id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "业务类型 1--外卖，2--堂食",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "result": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Category"
+                                    }
+                                },
+                                "rowcount": {
+                                    "type": "number",
+                                    "description": "返回记录条数"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/supplierdish/SupplierDishList/SupplierCategoryID/:id": {
+            "get": {
+                "description": "菜品分类 - 获取门店菜品分类信息",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "门店关联菜品分类id",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "result": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Dish"
+                                    }
+                                },
+                                "rowcount": {
+                                    "type": "number",
+                                    "description": "返回记录条数"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Order/PaymentDetail": {
+            "post": {
+                "description": "订单详情 - 当面付",
+                "parameters": [
+                    {
+                        "name": "orderNumber",
+                        "in": "query",
+                        "description": "订单号",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "SupplierName": {
+                                    "type": "string",
+                                    "description": "餐厅名称"
+                                },
+                                "SupplierPhone": {
+                                    "type": "string",
+                                    "description": "餐厅电话"
+                                },
+                                "CustomerTotal": {
+                                    "type": "number",
+                                    "description": "实付金额"
+                                },
+                                "OrderNumber": {
+                                    "type": "string",
+                                    "description": "订单号"
+                                },
+                                "TradeCode": {
+                                    "type": "string",
+                                    "description": "交易单号"
+                                },
+                                "PaymentMethod": {
+                                    "type": "string",
+                                    "description": "支付方式"
+                                },
+                                "IsPaid": {
+                                    "type": "boolean",
+                                    "description": "订单是否支付"
+                                },
+                                "OrderStatusId": {
+                                    "type": "number",
+                                    "description": "订单状态Id"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/eatinorder/SaveDineOrder": {
+            "post": {
+                "description": "堂食下单接口",
+                "parameters": [
+                    {
+                        "name": "DeskNo",
+                        "in": "query",
+                        "description": "桌位号",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "CustomerID",
+                        "in": "query",
+                        "description": "用户id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "ContactName",
+                        "in": "query",
+                        "description": "订餐人",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ContactPhone",
+                        "in": "query",
+                        "description": "联系电话",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "SupplierID",
+                        "in": "query",
+                        "description": "当前餐厅ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Total",
+                        "in": "query",
+                        "description": "总金额",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "CustomerTotal",
+                        "in": "query",
+                        "description": "用户应付金额",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "InvoiceTitle",
+                        "in": "query",
+                        "description": "发票Title",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PaymentMethodId",
+                        "in": "query",
+                        "description": "支付方式",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "CustomerNotes",
+                        "in": "query",
+                        "description": "用户备注",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Templateid",
+                        "in": "query",
+                        "description": "订单渠道",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Path",
+                        "in": "query",
+                        "description": "订单来源",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "DishNames",
+                        "in": "query",
+                        "description": "菜品名称",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "orderid": {
+                                    "type": "number",
+                                    "description": "订单orderid"
+                                },
+                                "orderNumber": {
+                                    "type": "string",
+                                    "description": "订单号"
+                                },
+                                "customerid": {
+                                    "type": "number",
+                                    "description": "用户customerID"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/facepayorder/AddFpOrder": {
+            "post": {
+                "description": "当面付下单接口",
+                "parameters": [
+                    {
+                        "name": "CustomerID",
+                        "in": "query",
+                        "description": "用户id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "ContactName",
+                        "in": "query",
+                        "description": "支付人",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ContactPhone",
+                        "in": "query",
+                        "description": "用户电话",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "SupplierID",
+                        "in": "query",
+                        "description": "当前餐厅ID",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Total",
+                        "in": "query",
+                        "description": "总金额",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "PaymentMethodId",
+                        "in": "query",
+                        "description": "支付方式",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Templateid",
+                        "in": "query",
+                        "description": "订单渠道",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Path",
+                        "in": "query",
+                        "description": "订单来源",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "total": {
+                                    "type": "number",
+                                    "description": "订单金额"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Dish": {
+            "type": "object",
+            "properties": {
+                "supplierdishid": {
+                    "type": "number",
+                    "description": "菜品id"
+                },
+                "supplierdishname": {
+                    "type": "string",
+                    "description": "菜品名称"
+                },
+                "price": {
+                    "type": "number",
+                    "description": "菜品价格"
+                },
+                "imagepath": {
+                    "type": "string",
+                    "description": "菜品图片"
+                }
+            }
+        },
+        "Category": {
+            "type": "object",
+            "properties": {
+                "supplierid": {
+                    "type": "number",
+                    "description": "门店id"
+                },
+                "categoryid": {
+                    "type": "number",
+                    "description": "菜品分类id"
+                },
+                "categoryname": {
+                    "type": "string",
+                    "description": "菜品分类名称"
+                },
+                "suppliercategoryid": {
+                    "type": "number",
+                    "description": "门店关联菜品分类id，查询菜品信息是使用该值"
+                },
+                "categoryorder": {
+                    "type": "number",
+                    "description": "菜品分类排序"
+                }
+            }
+        }
+    }
+}
