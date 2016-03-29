@@ -6,6 +6,7 @@ import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IProjectDao;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 @Repository
 public class ProjectDao extends DaoBase implements IProjectDao{
@@ -43,6 +44,13 @@ return getMasterSqlSessionUtil().update("IProjectDao.updateByPrimaryKey", record
 	@Override
 	public PagedResponse<Project> queryProjectList(PagedProjectReq req) {
 return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList", req);
+	}
+	/**
+	 * wap获取项目列表
+	 */
+	@Override
+	public PagedResponse<ProjectModel> getProjectList(PagedProjectReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.getProjectList", req);
 	}
 
 }
