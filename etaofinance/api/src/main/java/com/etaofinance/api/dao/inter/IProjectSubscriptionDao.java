@@ -1,6 +1,9 @@
 package com.etaofinance.api.dao.inter;
 
+import java.util.List;
+
 import com.etaofinance.entity.ProjectSubscription;
+import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 
 public interface IProjectSubscriptionDao {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface IProjectSubscriptionDao {
     int updateByPrimaryKeySelective(ProjectSubscription record);
 
     int updateByPrimaryKey(ProjectSubscription record);
+    
+    List<ProjectSubscriptionDM> getListMore(ProjectSubscriptionDM record);
 }

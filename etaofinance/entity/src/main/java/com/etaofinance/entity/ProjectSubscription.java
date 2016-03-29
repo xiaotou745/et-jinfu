@@ -7,6 +7,8 @@ public class ProjectSubscription {
 
     private Long memberid;
 
+    private Long projectid;
+
     private Boolean islead;
 
     private Date createtime;
@@ -43,6 +45,14 @@ public class ProjectSubscription {
 
     public void setMemberid(Long memberid) {
         this.memberid = memberid;
+    }
+
+    public Long getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Long projectid) {
+        this.projectid = projectid;
     }
 
     public Boolean getIslead() {

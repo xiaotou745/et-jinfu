@@ -8,6 +8,17 @@ import com.etaofinance.entity.Withdrawform;
 
 public class WithdrawformDM extends Withdrawform{
 	private String statusName;
+	
+	private String projectStatus;
+	
+
+	public String getProjectStatus() {
+		return projectStatus;
+	}
+
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
+	}
 
 	public String getStatusName() {
 		return statusName;
