@@ -1,6 +1,6 @@
 package com.etaofinance.core.util;
 
-public class DistanceConvert {
+public class Convert {
 	
 	public static String ToString(Object o, String defaultValue) {
 		
@@ -15,6 +15,23 @@ public class DistanceConvert {
 		} 
 		 
 		return result;
+	}
+	/**
+	 * 转换金额
+	 * @param money
+	 * @return
+	 */
+	public static String toMoneyString(Float money)
+	{
+		return toMoneyString(money,"￥");
+	}
+	public static String toMoneyString(Float money,String flag)
+	{
+		if(money>=10000)
+		{
+			return flag+(money/10000*1.0)+"万";
+		}
+		return flag+money;
 	}
 
 }

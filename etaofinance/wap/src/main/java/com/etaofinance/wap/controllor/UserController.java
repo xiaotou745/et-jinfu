@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,12 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.redis.RedisService;
+import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
@@ -49,7 +53,12 @@ import com.etaofinance.wap.common.UserContext;
 @RequestMapping("user")
 public class UserController {
 	@Autowired
-	IMemberService memberService;
+	IMemberService memberService;	
+	@Autowired
+	IMemberOtherService memberOtherService;
+	
+	@Autowired
+	private IMemberOtherService bankCardService;
 	@Autowired
 	HttpServletRequest request;
 	@Autowired
@@ -64,7 +73,7 @@ public class UserController {
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
-	public  SendCodeResp sendcode(@RequestBody SendCodeReq req) {
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
 		return memberService.sendCode(req);
 	}
 	/**
@@ -244,4 +253,54 @@ public class UserController {
 		req.setUserId(m.getId());
 		return memberService.modifypwd(req);
 	}
+	
+	/**
+	 * 创建支付密码
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月28日16:31:15
+	 * @return
+	 */
+	@RequestMapping("createpaypwd")
+	@ResponseBody
+	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
+	{
+		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
+//		Member m=UserContext.getCurrentContext(request).getUserInfo();
+//		if(m.equals(null))
+//		{
+//			resultModel.setCode(-1);
+//			resultModel.setMsg("用户未登录,请先登录用户!");
+//			return resultModel;
+//		}
+		long tempUserid=(long)(1);
+		record.setMemberid(tempUserid);
+		return memberOtherService.createPayPwd(record);
+	}
+	
+	
+	/**
+	 * 验证支付密码
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月28日17:13:36
+	 * @return
+	 */
+	@RequestMapping("verificationpaypwd")
+	@ResponseBody
+	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
+	{
+		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
+//		Member m=UserContext.getCurrentContext(request).getUserInfo();
+//		if(m.equals(null))
+//		{
+//			resultModel.setCode(-1);
+//			resultModel.setMsg("用户未登录,请先登录用户!");
+//			return resultModel;
+//		}
+		long tempUserid=(long)(1);
+		record.setMemberid(tempUserid);
+		return memberOtherService.verificationPayPwd(record);
+	}
+	
 }

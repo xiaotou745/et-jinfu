@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IPublicProviceCityService;
@@ -30,40 +29,71 @@ import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 
 @Controller
-@RequestMapping("finance")
-public class FinanceControllor {
+@RequestMapping("bank")
+public class BankControllor {
 	@Autowired
-	private IBalanceRecordService balanceRecordService;	
+	private IBankService bankService;
+	
+	@Autowired
+	private IBankCardService bankCardService;	
 
+
+	/**
+	 * 获取银行列表
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("/getbanklist")
+	@ResponseBody
+	public List<Bank> getBankList()
+	{
+		return bankService.getList();
+	}	
 	
 	/**
-	 * 获取账户流水
+	 * 绑定银行卡
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月25日17:07:19
+	 * @return
+	 */
+	@RequestMapping("/bindbankcard")
+	@ResponseBody
+	HttpResultModel<ResponseBase> BindBankCard(@RequestBody  BankCard record)
+	{
+		return bankCardService.create(record);
+	}
+	
+	/**
+	 * 解绑银行卡
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月25日17:09:37
+	 * @return
+	 */
+	@RequestMapping("/unbindbankcard")
+	@ResponseBody
+	int UnBindBankCard(@RequestBody  BankCard record)
+	{
+		return bankCardService.remove(record.getId());
+	}
+	
+	/**
+	 * 获取银行卡列表
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年3月25日17:13:18
 	 * @return
 	 */
-	@RequestMapping("/getbalancerecordlist")
+	@RequestMapping("/getbankcardlist")
 	@ResponseBody
-	public List<BalanceRecordDM> getBalanceRecordList(@RequestBody BalanceRecord record)
+	public List<BankCard> getBankCardList(@RequestBody  BankCard record)
 	{
-		return balanceRecordService.getListMore(record);
-	}
-	
-	/**
-	 * 获取账户流水详情
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年3月25日17:13:18
-	 * @return
-	 */
-	@RequestMapping("/getbalancerecordDetail")
-	@ResponseBody
-	public BalanceRecordDM getBalanceRecordDetail(@RequestBody BalanceRecord record)
-	{
-		return balanceRecordService.selectDMByPrimaryKey(record.getId());
-	}
-	
-	
+		return bankCardService.getListByMemberId(record.getMemberid());
+	}		
+
+
 
 }

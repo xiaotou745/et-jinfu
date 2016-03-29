@@ -7,6 +7,7 @@ import com.etaofinance.api.dao.inter.IProjectDao;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 
 @Service
@@ -36,6 +37,14 @@ return projectDao.updateByPrimaryKey(record);
 	@Override
 	public PagedResponse<Project> queryProjectList(PagedProjectReq req) {
 return projectDao.queryProjectList(req);
+	}
+	/**
+	 * Wap获取项目列表
+	 * 茹化肖
+	 */
+	@Override
+	public PagedResponse<ProjectModel> getProjectList(PagedProjectReq req) {
+		return projectDao.getProjectList(req);
 	}
 
 }

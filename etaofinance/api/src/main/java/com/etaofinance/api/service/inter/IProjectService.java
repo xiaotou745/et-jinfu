@@ -2,6 +2,7 @@ package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 
 public interface IProjectService {
@@ -13,4 +14,10 @@ public interface IProjectService {
 
     int updateByPrimaryKey(Project record);
     PagedResponse<Project>  queryProjectList(PagedProjectReq req);
+    /**
+     * WAp获取项目列表
+     * @param req
+     * @return
+     */
+    PagedResponse<ProjectModel>  getProjectList(PagedProjectReq req);
 }

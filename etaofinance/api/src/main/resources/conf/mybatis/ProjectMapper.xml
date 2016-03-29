@@ -430,4 +430,50 @@
 		#{totalPage,mode=OUT,jdbcType=INTEGER}
 		)}
 	</select>
+	<!-- Wap获取项目列表 start -->
+	<sql id="getProjectListWhere">
+		1=1
+		<if test="projectStatus>0">
+			and projectStatus=${projectStatus>0}
+		</if>
+		  AND p.IsShelve = 1 
+		  AND p.ProjectStatus != 1
+		  AND p.ProjectStatus != 5 
+		  AND p.ProjectStatus != 4
+		  AND p.AuditStatus = 2 
+		  AND NOW() >= p.PreheatTime 
+		  AND p.EndTime >= NOW()
+	</sql>
+	<select id="getProjectList" resultType="com.etaofinance.entity.domain.ProjectModel"
+		parameterType="com.etaofinance.entity.req.PagedProjectReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' p.ProjectStatus ASC ,p.EndTime ASC ',
+		' p.Id,
+  p.ProjectName,
+  p.TypeId,
+  p.Amount,
+  p.FenShu,
+  p.UnitPrice,
+  p.ProjectImage,
+  p.Schedule,
+  p.ProjectStatus,
+  p.StartTime,
+  IFNULL((SELECT
+      p2.Value
+    FROM projectstrategy p2
+    WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
+  IFNULL((SELECT
+      p2.Value
+    FROM projectstrategy p2
+    WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
+		'  project p ',
+		'<include refid="getProjectListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+	<!-- Wap获取项目列表 end -->
 </mapper>

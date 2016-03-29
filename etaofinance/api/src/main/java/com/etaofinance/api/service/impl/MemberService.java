@@ -67,8 +67,9 @@ public class MemberService implements IMemberService{
 		resp.setCode(MemberEnum.Success.value());
 		resp.setMsg(MemberEnum.Success.desc());		
 		return resp;
-	}
-	
+	}	
+
+ 	
 	@Override
 	public Member selectByPhoneNo(String phoneno) {
 		return memberDao.selectByPhoneNo(phoneno);
@@ -78,17 +79,17 @@ public class MemberService implements IMemberService{
  	 * 发送验证码
  	 */
 	@Override
-	public SendCodeResp sendCode(SendCodeReq req) {
+	public HttpResultModel<Object> sendCode(SendCodeReq req) {
 		String key = "";
 		String phoneNo = req.getPhoneNo();
 		String content = "";// "欢迎您的使用，验证码：#验证码#，请妥善保管相关信息。若非您本人操作，请忽略。";
 		//获取验证码类型
 		SendCodeType codeType=SendCodeType.getEnum(req.getType());
-		SendCodeResp resp=new SendCodeResp();
+		HttpResultModel<Object> resp=new HttpResultModel<Object>();
 		if(codeType==null)//类型不存在
 		{
 			resp.setCode(-1);
-			resp.setMessage("不存在的类型!");
+			resp.setMsg("不存在的类型!");
 			return resp;
 		}
 		boolean phoneIsExist	=memberDao.selectByPhoneNo(phoneNo)!=null;//不为空 存在.否则不存在
@@ -97,7 +98,7 @@ public class MemberService implements IMemberService{
 			if(phoneIsExist)//手机号已经存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号已经存在,不能注册!");
+				resp.setMsg("该手机号已经存在,不能注册!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_Register ,phoneNo);
 			content = "验证码#验证码#，您正在注册易淘众筹，请勿向他人泄露短信验证码。";
@@ -106,7 +107,7 @@ public class MemberService implements IMemberService{
 			if(!phoneIsExist)//手机号不存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号不存在,不能找回密码!");
+				resp.setMsg("该手机号不存在,不能找回密码!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_ForgetPassword ,phoneNo);
 			content = "验证码#验证码#，您正在找回易淘众筹登录密码，请勿向他人泄露短信验证码。";
@@ -116,7 +117,7 @@ public class MemberService implements IMemberService{
 			if(!phoneIsExist)//手机号不存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号不存在,不能设置支付密码!");
+				resp.setMsg("该手机号不存在,不能设置支付密码!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_SetPayPassWord ,phoneNo);
 			content = "验证码#验证码#，您正在设置易淘众筹支付密码，请勿向他人泄露短信验证码。";
@@ -126,7 +127,7 @@ public class MemberService implements IMemberService{
 			if(!phoneIsExist)//手机号不存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号不存在,不能找回支付密码!");
+				resp.setMsg("该手机号不存在,不能找回支付密码!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_FindPayPassWord ,phoneNo);
 			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
@@ -136,7 +137,7 @@ public class MemberService implements IMemberService{
 			if(!phoneIsExist)//手机号不存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号不存在,不能修改手机绑定!");
+				resp.setMsg("该手机号不存在,不能修改手机绑定!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_ChangePhone ,phoneNo);
 			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
@@ -146,7 +147,7 @@ public class MemberService implements IMemberService{
 			if(phoneIsExist)//手机号存在
 			{
 				resp.setCode(-1);
-				resp.setMessage("该手机号存在,不能绑定!");
+				resp.setMsg("该手机号存在,不能绑定!");
 			}
 			key = String.format(RedissCacheKey.JF_Member_BindNewPhone ,phoneNo);
 			content = "验证码#验证码#，您正在绑定此手机号，请勿向他人泄露短信验证码。";
@@ -163,7 +164,7 @@ public class MemberService implements IMemberService{
 			long resultValue = SmsUtils.sendSMS(phoneNo, content);
 			if (resultValue <= 0) {
 				resp.setCode(-1);
-				resp.setMessage("验证码发送失败!");
+				resp.setMsg("验证码发送失败!");
 				return resp;
 			}
 			
@@ -171,7 +172,7 @@ public class MemberService implements IMemberService{
 			e.printStackTrace();
 		}
 		resp.setCode(1);
-		resp.setMessage("验证码发送成功!");
+		resp.setMsg("验证码发送成功!");
 		return resp;
 	}
 	/**
