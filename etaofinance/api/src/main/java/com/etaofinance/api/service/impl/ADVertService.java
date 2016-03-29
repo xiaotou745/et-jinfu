@@ -51,7 +51,7 @@ public class ADVertService implements IADVertService{
 	}
 
 	@Override
-	public HttpResultModel<ADVertResp> add(ADVert record) {
+	public HttpResultModel<ADVertResp> create(ADVert record) {
 		HttpResultModel<ADVertResp> resp = new HttpResultModel<ADVertResp>();		
 		aDVertDao.insertSelective(record);
 		resp.setCode(ADVertEnum.Success.value());

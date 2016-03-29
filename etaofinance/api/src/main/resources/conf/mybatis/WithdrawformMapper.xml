@@ -26,17 +26,46 @@
     from withdrawform
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectDMByPrimaryKey" resultType="com.etaofinance.entity.domain.WithdrawformDM"  parameterType="java.lang.Long" >
+ select 
+     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, 
+    w.OptName, w.OptTime, w.AccountType, w.AccountNo,
+    
+CASE WHEN w.Status = 1 THEN '待审核'	
+WHEN w.Status = 2 THEN '审核通过'	
+WHEN w.Status = 3 THEN '打款完成'
+WHEN w.Status = -1 THEN '审核拒绝'	
+WHEN w.Status =-2 THEN '打款失败'		
+else '其它'
+		END AS statusName 
+    from withdrawform w
+    where w.Id = #{id,jdbcType=BIGINT}   
+
+  </select>
+   <select id="getListMore" resultType="com.etaofinance.entity.domain.WithdrawformDM"  parameterType="java.lang.Long" >
+ select 
+     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, 
+    w.OptName, w.OptTime, w.AccountType, w.AccountNo,
+    
+CASE WHEN w.AccountType = 1 THEN '网银'	
+WHEN w.AccountType = 2 THEN '支付宝'	
+WHEN w.AccountType = 3 THEN '微信'	
+else '其它'
+		END AS statusName 
+    from withdrawform w    
+where w.memberid = #{memberid,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from withdrawform
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.Withdrawform" >
-    insert into withdrawform (Id, MemberId, WithwardNo, 
+    insert into withdrawform ( MemberId, WithwardNo, 
       Amount, AfterAmount, Status, 
       Remark, CreateName, CreateTime, 
       OptName, OptTime, AccountType, 
       AccountNo)
-    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{withwardno,jdbcType=VARCHAR}, 
+    values ( #{memberid,jdbcType=BIGINT}, #{withwardno,jdbcType=VARCHAR}, 
       #{amount,jdbcType=REAL}, #{afteramount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, 
       #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{optname,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=VARCHAR}, 
@@ -44,10 +73,7 @@
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Withdrawform" >
     insert into withdrawform
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        Id,
-      </if>
+    <trim prefix="(" suffix=")" suffixOverrides="," > 
       <if test="memberid != null" >
         MemberId,
       </if>
@@ -86,9 +112,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="memberid != null" >
         #{memberid,jdbcType=BIGINT},
       </if>
