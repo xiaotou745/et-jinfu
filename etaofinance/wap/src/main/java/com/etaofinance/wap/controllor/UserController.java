@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +29,7 @@ import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
+import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
@@ -107,8 +109,22 @@ public class UserController {
 			result.setData(member);
 			return result;	
 		}
-		//进行登录流程 1.手机号 2 邮箱 3用户名 暂时只用手机号登录
-		Member member=memberService.selectByPhoneNo(req.getLoginName());
+		Member member=null;
+		//进行登录流程 1.手机号 2 邮箱 3用户名 
+		if(RegexHelper.IsPhone(req.getLoginName()))
+		{
+			member=memberService.selectByPhoneNo(req.getLoginName());
+		}
+		//邮箱
+		if(member==null&&RegexHelper.IsEmail(req.getLoginName()))
+		{
+			member=memberService.selectByEmail(req.getLoginName());
+		}
+		//用户名
+		if(member==null)
+		{
+			member=memberService.selectByUserName(req.getLoginName());
+		}
 		//用户不存在 或者密码不匹配
 		if(member==null||!member.getLoginpwd().equals(MD5Util.MD5(req.getPwd())))
 		{

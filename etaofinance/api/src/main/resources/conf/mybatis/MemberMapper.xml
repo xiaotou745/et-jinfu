@@ -35,6 +35,12 @@
     from member
     where UserName = #{username,jdbcType=VARCHAR} LIMIT 1
   </select>
+  <select id="selectByemail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where EMail = #{email,jdbcType=VARCHAR} LIMIT 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from member
     where Id = #{id,jdbcType=BIGINT}
