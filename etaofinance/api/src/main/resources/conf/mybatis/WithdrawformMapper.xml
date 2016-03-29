@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IWithdrawformDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.Withdrawform" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="WithwardNo" property="withwardno" jdbcType="VARCHAR" />
+    <result column="Amount" property="amount" jdbcType="REAL" />
+    <result column="AfterAmount" property="afteramount" jdbcType="REAL" />
+    <result column="Status" property="status" jdbcType="SMALLINT" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="OptName" property="optname" jdbcType="VARCHAR" />
+    <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
+    <result column="AccountType" property="accounttype" jdbcType="VARCHAR" />
+    <result column="AccountNo" property="accountno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, WithwardNo, Amount, AfterAmount, Status, Remark, CreateName, CreateTime, 
+    OptName, OptTime, AccountType, AccountNo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from withdrawform
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from withdrawform
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.Withdrawform" >
+    insert into withdrawform (Id, MemberId, WithwardNo, 
+      Amount, AfterAmount, Status, 
+      Remark, CreateName, CreateTime, 
+      OptName, OptTime, AccountType, 
+      AccountNo)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{withwardno,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=REAL}, #{afteramount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{optname,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=VARCHAR}, 
+      #{accountno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.Withdrawform" >
+    insert into withdrawform
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="withwardno != null" >
+        WithwardNo,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="afteramount != null" >
+        AfterAmount,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="optname != null" >
+        OptName,
+      </if>
+      <if test="opttime != null" >
+        OptTime,
+      </if>
+      <if test="accounttype != null" >
+        AccountType,
+      </if>
+      <if test="accountno != null" >
+        AccountNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="withwardno != null" >
+        #{withwardno,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="afteramount != null" >
+        #{afteramount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accounttype != null" >
+        #{accounttype,jdbcType=VARCHAR},
+      </if>
+      <if test="accountno != null" >
+        #{accountno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Withdrawform" >
+    update withdrawform
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="withwardno != null" >
+        WithwardNo = #{withwardno,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="afteramount != null" >
+        AfterAmount = #{afteramount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        OptName = #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        OptTime = #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accounttype != null" >
+        AccountType = #{accounttype,jdbcType=VARCHAR},
+      </if>
+      <if test="accountno != null" >
+        AccountNo = #{accountno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Withdrawform" >
+    update withdrawform
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      WithwardNo = #{withwardno,jdbcType=VARCHAR},
+      Amount = #{amount,jdbcType=REAL},
+      AfterAmount = #{afteramount,jdbcType=REAL},
+      Status = #{status,jdbcType=SMALLINT},
+      Remark = #{remark,jdbcType=VARCHAR},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      OptName = #{optname,jdbcType=VARCHAR},
+      OptTime = #{opttime,jdbcType=TIMESTAMP},
+      AccountType = #{accounttype,jdbcType=VARCHAR},
+      AccountNo = #{accountno,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

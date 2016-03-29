@@ -23,6 +23,35 @@
     from balancerecord
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  
+   <select id="selectDMByPrimaryKey" resultType="com.etaofinance.entity.domain.BalanceRecordDM"  parameterType="java.lang.Long" >
+ select 
+    b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.ProjectId, b.RelationNo, b.Remark, b.OptName, 
+    b.OptTime,CASE WHEN b.TypeId = 1 THEN '投资'	
+WHEN b.TypeId = 2 THEN '退款至余额'	
+WHEN b.TypeId = 3 THEN '充值'	
+WHEN b.TypeId = 4 THEN '提现'	
+else '其它'
+		END AS typeName ,
+p.ProjectName
+    from balancerecord b
+left join project  p on b.ProjectId=p.Id
+    where b.Id = #{id,jdbcType=BIGINT}
+  </select>
+   <select id="getListMore" resultType="com.etaofinance.entity.domain.BalanceRecordDM"  parameterType="java.lang.Long" >
+ select 
+    b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.ProjectId, b.RelationNo, b.Remark, b.OptName, 
+    b.OptTime,CASE WHEN b.TypeId = 1 THEN '投资'	
+WHEN b.TypeId = 2 THEN '退款至余额'	
+WHEN b.TypeId = 3 THEN '充值'	
+WHEN b.TypeId = 4 THEN '提现'	
+else '其它'
+		END AS typeName ,
+p.ProjectName
+    from balancerecord b
+left join project  p on b.ProjectId=p.Id
+where b.memberid = #{memberid,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from balancerecord
     where Id = #{id,jdbcType=BIGINT}

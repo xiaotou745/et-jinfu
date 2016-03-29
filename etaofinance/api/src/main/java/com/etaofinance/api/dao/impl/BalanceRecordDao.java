@@ -1,0 +1,76 @@
+package com.etaofinance.api.dao.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.etaofinance.api.common.DaoBase;
+import com.etaofinance.api.dao.inter.IADVertDao;
+import com.etaofinance.api.dao.inter.IBalanceRecordDao;
+import com.etaofinance.api.dao.inter.IBankDao;
+import com.etaofinance.api.dao.inter.IRoleInfoDao;
+import com.etaofinance.entity.ADVert;
+import com.etaofinance.entity.BalanceRecord;
+import com.etaofinance.entity.Bank;
+import com.etaofinance.entity.RoleInfo;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.MenuEntity;
+import com.etaofinance.entity.req.PagedADVertReq;
+@Repository
+public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
+
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insert(BalanceRecord record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSelective(BalanceRecord record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public BalanceRecord selectByPrimaryKey(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(BalanceRecord record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateByPrimaryKey(BalanceRecord record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BalanceRecordDM> getListMore(BalanceRecord record) {
+		 List<BalanceRecordDM> list=null;
+		 list=getReadOnlySqlSessionUtil()
+				.selectList(
+						"IBalanceRecordDao.getListMore",record.getMemberid());
+		 
+		 return list;
+	}
+	
+	@Override
+	public BalanceRecordDM selectDMByPrimaryKey(Long id)
+	{
+		return getReadOnlySqlSessionUtil().selectOne("IBalanceRecordDao.selectDMByPrimaryKey",id);
+	}
+	
+
+}
