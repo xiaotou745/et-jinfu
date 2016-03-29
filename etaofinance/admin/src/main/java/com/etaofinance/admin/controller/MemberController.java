@@ -1,4 +1,6 @@
 package com.etaofinance.admin.controller;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberApply;
 import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
@@ -117,6 +121,9 @@ public class MemberController {
 		MemberApplyAuditModel member= memberApplyService.getMemberApplyInfo(ParseHelper.ToLong(memberApplyId,0));
 		return member;
 	}
+	/*
+	 * 审核 重审 确认对话框 保存 wangchao
+	 */
 	@RequestMapping("auditconfirm")
 	@ResponseBody
 	public int auditConfirm(HttpServletRequest request, MemberApplyAuditReq req){
@@ -124,5 +131,38 @@ public class MemberController {
 		req.setAuditName(uContext.getLoginName());
 		int i= memberApplyService.auditConfirm(req);
 		return i;
+	}
+	
+	/*
+	 * 会员详情  wangchao
+	 */
+	@RequestMapping("memberdetail")
+	public ModelAndView memberDetail(HttpServletRequest request,String id) {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "会员管理");
+		model.addObject("currenttitle", "会员详情");
+		model.addObject("viewPath", "member/memberdetail");
+		//根据会员id获取会员基本信息
+		Member member=memberService.getById(ParseHelper.ToLong(id, 0));
+		model.addObject("member", member); //会员基础信息
+		//获取会员类型 跟投人 领投人 最新申请信息
+		MemberApply followMemberApply=new MemberApply();
+		MemberApply leadMemberApply = new MemberApply();
+		if(member!=null){
+			List<MemberApply> mList= memberApplyService.getMemberApplyInfoByMemberId(ParseHelper.ToLong(id, 0));
+			if(mList!=null){
+				for (int i = 0; i < mList.size(); i++) {
+					if(mList.get(i).getTypeid().equals(MemberTypeEnum.FollowInvestUser.value())){ //跟投人
+						followMemberApply=mList.get(i);   
+					}
+					if(mList.get(i).getTypeid().equals(MemberTypeEnum.LeadInvestUser.value())){ //跟投人
+						leadMemberApply=mList.get(i);
+					}					
+				}
+			}
+			model.addObject("followMemberApply", followMemberApply);   
+			model.addObject("leadMemberApply", leadMemberApply);
+		}
+		return model;
 	}
 }

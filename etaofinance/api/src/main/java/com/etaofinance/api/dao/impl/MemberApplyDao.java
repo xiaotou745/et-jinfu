@@ -1,5 +1,7 @@
 package com.etaofinance.api.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.etaofinance.api.common.DaoBase;
@@ -64,6 +66,11 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 	@Override
 	public int auditConfirm(MemberApplyAuditReq req) {
 		return getMasterSqlSessionUtil().update("IMemberApplyDao.auditConfirm",req);
+	}
+
+	@Override
+	public List<MemberApply> getMemberApplyInfoByMemberId(long memberId) {
+		return getReadOnlySqlSessionUtil().selectList("IMemberApplyDao.getMemberApplyInfoByMemberId",memberId);
 	}
 
 }

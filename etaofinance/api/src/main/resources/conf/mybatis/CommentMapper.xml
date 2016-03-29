@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.ICommentDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.Comment" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="ProjectId" property="projectid" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="IsReply" property="isreply" jdbcType="TINYINT" />
+    <result column="ReCommentId" property="recommentid" jdbcType="BIGINT" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="IsDel" property="isdel" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, ProjectId, MemberId, Content, IsReply, ReCommentId, CreateTime, IsDel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comment
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.Comment" >
+    insert into comment (Id, ProjectId, MemberId, 
+      Content, IsReply, ReCommentId, 
+      CreateTime, IsDel)
+    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{isreply,jdbcType=TINYINT}, #{recommentid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="projectid != null" >
+        ProjectId,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="isreply != null" >
+        IsReply,
+      </if>
+      <if test="recommentid != null" >
+        ReCommentId,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isreply != null" >
+        #{isreply,jdbcType=TINYINT},
+      </if>
+      <if test="recommentid != null" >
+        #{recommentid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Comment" >
+    update comment
+    <set >
+      <if test="projectid != null" >
+        ProjectId = #{projectid,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isreply != null" >
+        IsReply = #{isreply,jdbcType=TINYINT},
+      </if>
+      <if test="recommentid != null" >
+        ReCommentId = #{recommentid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Comment" >
+    update comment
+    set ProjectId = #{projectid,jdbcType=BIGINT},
+      MemberId = #{memberid,jdbcType=BIGINT},
+      Content = #{content,jdbcType=VARCHAR},
+      IsReply = #{isreply,jdbcType=TINYINT},
+      ReCommentId = #{recommentid,jdbcType=BIGINT},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      IsDel = #{isdel,jdbcType=TINYINT}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
