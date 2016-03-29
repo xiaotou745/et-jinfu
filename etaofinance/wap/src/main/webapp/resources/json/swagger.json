@@ -1,0 +1,142 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "Beta",
+        "title": "Supplier（单店）"
+    },
+    "paths": {
+        "/shoppingCart/CreateCar": {
+            "post": {
+                "description": "购物车 - 创建购物车",
+                "parameters": [
+                    {
+                        "name": "SupplierId",
+                        "in": "query",
+                        "description": "门店id",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "UniqueString",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "DeliveryMethodId",
+                        "in": "query",
+                        "description": "送餐类型  1--自提， 2--外送",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "Type",
+                        "in": "query",
+                        "description": "业务类型  1--外卖，2--堂食",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shoppingCart/GetCar/:uniquestring": {
+            "get": {
+                "description": "购物车 - 获取购物车",
+                "parameters": [
+                    {
+                        "name": "uniquestring",
+                        "in": "query",
+                        "description": "购物车唯一标示",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "获取购物车结果编码，0-成功，1-购物车不存在"
+                                },
+                                "carEntity": {
+                                    "type": "object",
+                                    "description": "购物车对象"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Dish": {
+            "type": "object",
+            "properties": {
+                "supplierdishid": {
+                    "type": "number",
+                    "description": "菜品id"
+                },
+                "supplierdishname": {
+                    "type": "string",
+                    "description": "菜品名称"
+                },
+                "price": {
+                    "type": "number",
+                    "description": "菜品价格"
+                },
+                "imagepath": {
+                    "type": "string",
+                    "description": "菜品图片"
+                }
+            }
+        },
+        "Category": {
+            "type": "object",
+            "properties": {
+                "supplierid": {
+                    "type": "number",
+                    "description": "门店id"
+                },
+                "categoryid": {
+                    "type": "number",
+                    "description": "菜品分类id"
+                },
+                "categoryname": {
+                    "type": "string",
+                    "description": "菜品分类名称"
+                },
+                "suppliercategoryid": {
+                    "type": "number",
+                    "description": "门店关联菜品分类id，查询菜品信息是使用该值"
+                },
+                "categoryorder": {
+                    "type": "number",
+                    "description": "菜品分类排序"
+                }
+            }
+        }
+    }
+}
