@@ -25,6 +25,10 @@ public class MemberApply {
 
     private String companytitle;
 
+    private String certifyMaterialName;
+    
+    private String certifyMaterialUrl;
+    
     public Long getId() {
         return id;
     }
@@ -112,4 +116,20 @@ public class MemberApply {
     public void setCompanytitle(String companytitle) {
         this.companytitle = companytitle == null ? null : companytitle.trim();
     }
+
+	public String getCertifyMaterialName() {
+		return certifyMaterialName;
+	}
+
+	public void setCertifyMaterialName(String certifyMaterialName) {
+		this.certifyMaterialName = certifyMaterialName;
+	}
+
+	public String getCertifyMaterialUrl() {
+		return certifyMaterialUrl;
+	}
+
+	public void setCertifyMaterialUrl(String certifyMaterialUrl) {
+		this.certifyMaterialUrl = certifyMaterialUrl;
+	}
 }

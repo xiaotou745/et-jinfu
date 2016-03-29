@@ -1,5 +1,7 @@
 package com.etaofinance.api.dao.inter;
 
+import java.util.List;
+
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberApplyAuditModel;
@@ -25,4 +27,6 @@ public interface IMemberApplyDao {
 	MemberApplyAuditModel getMemberApplyInfo(long memberApplyId);
 
 	int auditConfirm(MemberApplyAuditReq req);
+
+	List<MemberApply> getMemberApplyInfoByMemberId(long memberId);
 }
