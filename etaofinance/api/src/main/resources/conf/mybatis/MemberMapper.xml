@@ -269,5 +269,31 @@
 			and ''${registerEndDate}''>m.createTime
 		</if>
 	</sql>
-  
+  <update id="modifyMember" parameterType="com.etaofinance.entity.req.ModifyMemberReq" >
+	update member
+	    <set >
+	      <if test="loginpwd != null and loginpwd!='' " >
+	        LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+	      </if>
+	      <if test="provincecode != null" >
+	        ProvinceCode = #{provincecode,jdbcType=INTEGER},
+	      </if>
+	      <if test="citycode != null" >
+	        CityCode = #{citycode,jdbcType=INTEGER},
+	      </if>
+	      <if test="areacode != null" >
+	        AreaCode = #{areacode,jdbcType=INTEGER},
+	      </if>
+	      <if test="sex != null" >
+	        Sex = #{sex,jdbcType=SMALLINT},
+	      </if>
+	      <if test="remark != null and remark!=''">
+	        Remark = #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="islock != null" >
+	        IsLock = #{islock,jdbcType=BIT}
+	      </if>
+	    </set>
+	    where Id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

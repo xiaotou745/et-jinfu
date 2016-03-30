@@ -10,29 +10,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.entity.BalanceRecord;
+import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.admin.common.UserContext;
+import com.etaofinance.api.service.impl.BalanceRecordService;
+import com.etaofinance.api.service.inter.IBalanceRecordService;
+import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
-import com.etaofinance.entity.domain.LeadInvestModel;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.req.MemberApplyAuditReq;
+import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
+import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 @Controller
 @RequestMapping("member")
 public class MemberController {
 	@Autowired
-	private IMemberService memberService;
-	
+	private IMemberService memberService;	
 	@Autowired
-	private IMemberApplyService memberApplyService;
+	private IMemberApplyService memberApplyService;	
+	@Autowired
+	private IBankCardService bankCardService;
+	@Autowired
+	private IPublicProvinceCityService publicProvinceCityService;
+	@Autowired
+	private IBalanceRecordService balanceRecordService;
 	/*
 	 * 会员列表 wangchao
 	 */
@@ -72,6 +85,7 @@ public class MemberController {
 		ModelAndView model = new ModelAndView("member/followinvestlistdo");
 		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
 		req.setMemberType(1); //跟投人
+		req.setApplyId(ParseHelper.ToString(ParseHelper.ToLong(req.getApplyId(),0),"0"));
 		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
 		model.addObject("listData",memberApplyInvestModel);
 		return model;
@@ -92,6 +106,7 @@ public class MemberController {
 	public ModelAndView leadinvestlistdo(PagedMemberReq req) { 
 		ModelAndView model = new ModelAndView("member/leadinvestlistdo");
 		req.setMemberType(2);  //领投人
+		req.setApplyId(ParseHelper.ToString(ParseHelper.ToLong(req.getApplyId(),0),"0"));
 		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
 		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
 		model.addObject("listData",memberApplyInvestModel);
@@ -138,31 +153,60 @@ public class MemberController {
 	 */
 	@RequestMapping("memberdetail")
 	public ModelAndView memberDetail(HttpServletRequest request,String id) {
+		Long memberId =ParseHelper.ToLong(id, 0);
 		ModelAndView model = new ModelAndView("adminView");
 		model.addObject("subtitle", "会员管理");
 		model.addObject("currenttitle", "会员详情");
 		model.addObject("viewPath", "member/memberdetail");
+		model.addObject("provincelist", publicProvinceCityService.getOpenCityByJiBie(AreaLevel.Province));
+		model.addObject("pro_city", publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
+		model.addObject("city_region",publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
 		//根据会员id获取会员基本信息
-		Member member=memberService.getById(ParseHelper.ToLong(id, 0));
+		Member member=memberService.getById(memberId);
 		model.addObject("member", member); //会员基础信息
 		//获取会员类型 跟投人 领投人 最新申请信息
 		MemberApply followMemberApply=new MemberApply();
 		MemberApply leadMemberApply = new MemberApply();
 		if(member!=null){
-			List<MemberApply> mList= memberApplyService.getMemberApplyInfoByMemberId(ParseHelper.ToLong(id, 0));
+			List<MemberApply> mList= memberApplyService.getMemberApplyInfoByMemberId(memberId);
 			if(mList!=null){
 				for (int i = 0; i < mList.size(); i++) {
 					if(mList.get(i).getTypeid().equals(MemberTypeEnum.FollowInvestUser.value())){ //跟投人
 						followMemberApply=mList.get(i);   
 					}
-					if(mList.get(i).getTypeid().equals(MemberTypeEnum.LeadInvestUser.value())){ //跟投人
+					if(mList.get(i).getTypeid().equals(MemberTypeEnum.LeadInvestUser.value())){ //领投人
 						leadMemberApply=mList.get(i);
 					}					
 				}
 			}
 			model.addObject("followMemberApply", followMemberApply);   
 			model.addObject("leadMemberApply", leadMemberApply);
+			//获取会员银行卡信息记录
+			List<BankCard> bankCards= bankCardService.getListByMemberId(memberId);
+			model.addObject("bankCards", bankCards);
 		}
 		return model;
 	}
+	/*
+	 * 修改会员部分基础信息 wangchao 还需要加修改日志
+	 */
+	@RequestMapping("modifymember")
+	@ResponseBody
+	public int modifyMember(HttpServletRequest request,ModifyMemberReq req){
+		int i= memberService.modifyMember(req);
+		return i;
+	}
+	/*
+	 * 查询会员收支记录 
+	 */
+	@RequestMapping("incomerecordlistdo")	 
+	public ModelAndView incomeRecordListdo(PagedMemberBalanceRecordReq req){
+		ModelAndView model = new ModelAndView("member/incomerecordlistdo");
+		PagedResponse<BalanceRecord> memberBalanceRecord = new PagedResponse<BalanceRecord>();
+		req.setId(ParseHelper.ToString(ParseHelper.ToInt(req.getId()),"0"));
+		memberBalanceRecord=balanceRecordService.getPageList(req);
+		model.addObject("listData",memberBalanceRecord);
+		return model;
+	}
+	
 }

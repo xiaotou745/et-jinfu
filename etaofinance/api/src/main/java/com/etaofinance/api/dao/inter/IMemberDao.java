@@ -3,6 +3,7 @@ package com.etaofinance.api.dao.inter;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 
 public interface IMemberDao {
@@ -34,4 +35,6 @@ public interface IMemberDao {
     Member selectByPhoneNo(String  phoneno);
 
 	PagedResponse<MemberModel> getMemberList(PagedMemberReq req);
+
+	int modifyMember(ModifyMemberReq req);
 }

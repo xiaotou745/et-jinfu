@@ -105,8 +105,8 @@ public class ProjectController {
 		view.addObject("currenttitle", "发布项目");
 		view.addObject("viewPath", "project/newproject");
 		view.addObject("provincelist", publicProvinceCityService.getOpenCityByJiBie(AreaLevel.Province));
-		view.addObject("pro_city", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
-		view.addObject("city_region", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
+		view.addObject("pro_city",  publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
+		view.addObject("city_region", publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
 		return view;
 	}
 	/**
@@ -118,28 +118,5 @@ public class ProjectController {
 	public int saveproject(String data) {
 
 		return 1;
-	}
-	private String getCityStr(List<PublicProvinceCity> list){
-		Map<Integer, StringBuilder> resulMap=new HashMap<Integer, StringBuilder>();
-		for (PublicProvinceCity item : list) {
-			if (resulMap.containsKey(item.getParentCode())) {
-				resulMap.get(item.getParentCode()).append(";"+item.getCode()+"|"+item.getName());
-			}else {
-				StringBuilder builder=new StringBuilder();
-				builder.append(item.getCode()+"|"+item.getName());
-				resulMap.put(item.getParentCode(), builder);
-			}
-		}
-		StringBuilder resultBuilder=new StringBuilder();
-		for (Map.Entry<Integer, StringBuilder> entry : resulMap.entrySet()) {  
-			if (resultBuilder.toString().isEmpty()) {
-				resultBuilder.append(entry.getKey()+"="+entry.getValue().toString());
-			}else {
-				resultBuilder.append("#"+entry.getKey()+"="+entry.getValue().toString());
-			}
-			
-		}  
-
-		return resultBuilder.toString();
-	}
+	}	
 }

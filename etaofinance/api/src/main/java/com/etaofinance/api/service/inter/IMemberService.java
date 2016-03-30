@@ -7,6 +7,7 @@ import com.etaofinance.entity.QA;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
+import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
@@ -92,4 +93,9 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<Object> modifypwd(ModifypwdReq req);
+
+    /*
+     * 后台用户 修改会员基本信息 wangchao
+     */
+	int modifyMember(ModifyMemberReq req);
  }
