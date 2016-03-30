@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,6 +50,8 @@ import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
+import com.etaofinance.wap.common.NoRequireLogin;
+import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 /**
