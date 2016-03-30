@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectSubscription" >
     <id column="Id" property="id" jdbcType="BIGINT" />
     <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="ProjectId" property="projectid" jdbcType="BIGINT" />
     <result column="IsLead" property="islead" jdbcType="BIT" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="Amount" property="amount" jdbcType="REAL" />
@@ -17,8 +18,8 @@
     <result column="RefundTime" property="refundtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, MemberId, IsLead, CreateTime, Amount, FenShu, Name, PhoneNo, Email, IdCard, RefundStatus, 
-    RefundName, RefundTime
+    Id, MemberId, ProjectId, IsLead, CreateTime, Amount, FenShu, Name, PhoneNo, Email, 
+    IdCard, RefundStatus, RefundName, RefundTime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -26,21 +27,33 @@
     from projectsubscription
     where Id = #{id,jdbcType=BIGINT}
   </select>
+ <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectSubscriptionDM"  parameterType="com.etaofinance.entity.domain.ProjectSubscriptionDM" >
+ select 
+ ps.Id, ps.MemberId, ps.ProjectId, ps.IsLead, ps.CreateTime, ps.Amount, ps.FenShu, ps.Name, ps.PhoneNo, ps.Email, 
+    ps.IdCard, ps.RefundStatus, ps.RefundName, ps.RefundTime,
+p.ProjectName, p.projectStatus
+    from projectsubscription ps
+left join project  p on ps.ProjectId=p.Id
+where ps.memberid = #{memberid,jdbcType=BIGINT}
+	<if test="projectStatus != null">
+		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
+	</if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectsubscription
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.ProjectSubscription" >
-    insert into projectsubscription (Id, MemberId, IsLead, 
-      CreateTime, Amount, FenShu, 
-      Name, PhoneNo, Email, 
-      IdCard, RefundStatus, RefundName, 
-      RefundTime)
-    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{islead,jdbcType=BIT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, #{fenshu,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{idcard,jdbcType=VARCHAR}, #{refundstatus,jdbcType=SMALLINT}, #{refundname,jdbcType=VARCHAR}, 
-      #{refundtime,jdbcType=TIMESTAMP})
+    insert into projectsubscription (Id, MemberId, ProjectId, 
+      IsLead, CreateTime, Amount, 
+      FenShu, Name, PhoneNo, 
+      Email, IdCard, RefundStatus, 
+      RefundName, RefundTime)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, 
+      #{islead,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, #{amount,jdbcType=REAL}, 
+      #{fenshu,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{refundstatus,jdbcType=SMALLINT}, 
+      #{refundname,jdbcType=VARCHAR}, #{refundtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectSubscription" >
     insert into projectsubscription
@@ -50,6 +63,9 @@
       </if>
       <if test="memberid != null" >
         MemberId,
+      </if>
+      <if test="projectid != null" >
+        ProjectId,
       </if>
       <if test="islead != null" >
         IsLead,
@@ -92,6 +108,9 @@
       <if test="memberid != null" >
         #{memberid,jdbcType=BIGINT},
       </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=BIGINT},
+      </if>
       <if test="islead != null" >
         #{islead,jdbcType=BIT},
       </if>
@@ -133,6 +152,9 @@
       <if test="memberid != null" >
         MemberId = #{memberid,jdbcType=BIGINT},
       </if>
+      <if test="projectid != null" >
+        ProjectId = #{projectid,jdbcType=BIGINT},
+      </if>
       <if test="islead != null" >
         IsLead = #{islead,jdbcType=BIT},
       </if>
@@ -172,6 +194,7 @@
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectSubscription" >
     update projectsubscription
     set MemberId = #{memberid,jdbcType=BIGINT},
+      ProjectId = #{projectid,jdbcType=BIGINT},
       IsLead = #{islead,jdbcType=BIT},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       Amount = #{amount,jdbcType=REAL},

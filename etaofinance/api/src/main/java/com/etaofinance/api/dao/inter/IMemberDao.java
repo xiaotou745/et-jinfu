@@ -27,6 +27,16 @@ public interface IMemberDao {
 	 * @return
 	 */
     Member selectByUserName(String username);
+    
+    /**
+	 * 通过用email查询用户
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+    Member selectByemail(String email);
+    
     /**
      * 通过手机号获取会员信息
      * @param phoneno

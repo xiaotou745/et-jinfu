@@ -34,7 +34,19 @@ public interface IMemberService {
      * @param phoneno
      * @return
      */
-    Member selectByPhoneNo(String  phoneno);    
+    Member selectByPhoneNo(String  phoneno);   
+    /**
+     * 通过账号获取会员信息
+     * @param username
+     * @return
+     */
+    Member selectByUserName(String  username);  
+    /**
+     * 通过邮箱获取会员信息
+     * @param email
+     * @return
+     */
+    Member selectByEmail(String  email);  
 
     /**
      * 通过ID获取会员信息

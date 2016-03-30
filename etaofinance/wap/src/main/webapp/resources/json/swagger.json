@@ -1,0 +1,138 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "易淘金服-众筹"
+    },
+    "paths": {
+        "/demo/demopost": {
+            "post": {
+                "description": "POST接口描述",
+                "parameters": [
+                    {
+                        "name": "参数1",
+                        "in": "query",
+                        "description": "参数1描述",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "参数2",
+                        "in": "query",
+                        "description": "参数2描述",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "参数3",
+                        "in": "query",
+                        "description": "参数3描述",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "参数4",
+                        "in": "query",
+                        "description": "参数4描述",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "响应描述",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "第一个对象 number类型"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "description": "第二个对象 string类型"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/DemoEntity"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/demo/demoget/": {
+            "get": {
+                "description": "购物车 - 获取购物车",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "参数1",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "description": "id"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "description": "提示消息"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DemoEntity": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "id"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "类型"
+                },
+                "price": {
+                    "type": "number",
+                    "description": "价格"
+                },
+                "otherobj": {
+                    "type": "object",
+                    "$ref": "#/definitions/DemoEntity2"
+                }
+            }
+        },
+        "DemoEntity2": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "model2ID"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "类型"
+                },
+                "price": {
+                    "type": "number",
+                    "description": "价格"
+                }
+            }
+        }
+    }
+}

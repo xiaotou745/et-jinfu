@@ -2,8 +2,14 @@ package com.etaofinance.wap.controllor;
 
 
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+
+
+
+
 
 
 
@@ -28,6 +34,8 @@ import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
+import com.etaofinance.core.util.PropertyUtils;
+import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
@@ -42,6 +50,8 @@ import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
+import com.etaofinance.wap.common.NoRequireLogin;
+import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 /**
@@ -90,10 +100,11 @@ public class UserController {
 	 * 登录
 	 * @param req
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("login")
 	@ResponseBody
-	public  HttpResultModel<Member> login(@RequestBody LoginReq req) {
+	public  HttpResultModel<Member> login(@RequestBody LoginReq req) throws IOException {
 		HttpResultModel<Member> result=new HttpResultModel<Member>(); 
 		int cookieMaxAge = 60*60*24;//cookie时间 1天
 		if(req.getRemberMe().endsWith("1"))//记住我
@@ -107,8 +118,22 @@ public class UserController {
 			result.setData(member);
 			return result;	
 		}
-		//进行登录流程 1.手机号 2 邮箱 3用户名 暂时只用手机号登录
-		Member member=memberService.selectByPhoneNo(req.getLoginName());
+		Member member=null;
+		//进行登录流程 1.手机号 2 邮箱 3用户名 
+		if(RegexHelper.IsPhone(req.getLoginName()))
+		{
+			member=memberService.selectByPhoneNo(req.getLoginName());
+		}
+		//邮箱
+		if(member==null&&RegexHelper.IsEmail(req.getLoginName()))
+		{
+			member=memberService.selectByEmail(req.getLoginName());
+		}
+		//用户名
+		if(member==null)
+		{
+			member=memberService.selectByUserName(req.getLoginName());
+		}
 		//用户不存在 或者密码不匹配
 		if(member==null||!member.getLoginpwd().equals(MD5Util.MD5(req.getPwd())))
 		{
@@ -123,6 +148,11 @@ public class UserController {
 		redisService.set(rediskey, redisValue,cookieMaxAge,TimeUnit.SECONDS);
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
+		if(req.getReUrl()==null||req.getReUrl().equals(""))
+		{
+			String basePath =PropertyUtils.getProperty("java.wap.url");
+			response.sendRedirect(basePath + "/"+req.getReUrl());
+		}
 		result.setCode(1);
 		result.setMsg("登录成功");
 		result.setData(member);

@@ -11,10 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.etaofinance.api.common.LoginHelper;
+import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
+import com.etaofinance.entity.ProjectSubscription;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.SubProjectReq;
+import com.etaofinance.wap.common.LoginUtil;
+import com.etaofinance.wap.common.UserContext;
 
 
 @Controller
@@ -27,6 +37,12 @@ public class ProjectController {
 	@Autowired
 	IProjectService  projectService;
 	
+	@Autowired
+	IProjectSubscriptionService  projectSubscriptionService;
+	
+	@Autowired
+	IProjectFavoriteService  projectFavoriteService;
+	
 	/**
 	 * 项目列表接口(WAP)
 	 * @param req
@@ -37,4 +53,52 @@ public class ProjectController {
 	public  PagedResponse<ProjectModel> projectlist(@RequestBody PagedProjectReq req) {
 		return projectService.getProjectList(req);
 	}
+	/**
+	 * 认购项目
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("subproject")
+	@ResponseBody
+	public   HttpResultModel<Object>  subproject(@RequestBody SubProjectReq req) {
+		if(!LoginUtil.checkIsLogin(request, response))
+		{
+			HttpResultModel<Object> resultModel=new HttpResultModel<Object> ();
+			resultModel.setCode(-1);
+			resultModel.setMsg("请先登录,再认购你想要的项目!");
+			return resultModel;
+		}
+		return null;
+		//return projectService.subproject(req);
+	}
+	
+	/**
+	 * 我投资的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月29日19:59:34
+	 * @return
+	 */
+	@RequestMapping("getinvestproject")
+	@ResponseBody
+	public List<ProjectSubscriptionDM> getInvestProject(@RequestBody ProjectSubscriptionDM record)
+	{
+		return projectSubscriptionService.getListMore(record);
+	}
+	
+	/**
+	 * 我关注的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月29日20:37:42
+	 * @return
+	 */
+	@RequestMapping("getfavoriteproject")
+	@ResponseBody
+	public List<ProjectFavoriteDM> getFavoriteProject(@RequestBody ProjectFavoriteDM record)
+	{
+		return projectFavoriteService.getListMore(record);
+	}
+	
+	
 }

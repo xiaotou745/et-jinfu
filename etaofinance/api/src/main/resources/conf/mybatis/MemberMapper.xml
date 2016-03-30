@@ -33,7 +33,13 @@
     select 
     <include refid="Base_Column_List" />
     from member
-    where UserName = #{username,jdbcType=VARCHAR}
+    where UserName = #{username,jdbcType=VARCHAR} LIMIT 1
+  </select>
+  <select id="selectByemail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where EMail = #{email,jdbcType=VARCHAR} LIMIT 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from member
@@ -233,7 +239,7 @@
   </update>
   <!-- 根据手机号查询会员信息 -->
   <select id="selectByPhoneNo" parameterType="java.lang.String" resultType="com.etaofinance.entity.Member">
-  select <include refid="Base_Column_List" /> from member as m where m.PhoneNo=#{phoneno,jdbcType=VARCHAR}
+  select <include refid="Base_Column_List" /> from member as m where m.PhoneNo=#{phoneno,jdbcType=VARCHAR} LIMIT 1
   </select>
   <!-- 获取会员信息 wangchao -->
   <select id="getMemberList" parameterType="com.etaofinance.entity.req.PagedMemberReq" resultType="com.etaofinance.entity.domain.MemberModel" statementType="CALLABLE"> 
