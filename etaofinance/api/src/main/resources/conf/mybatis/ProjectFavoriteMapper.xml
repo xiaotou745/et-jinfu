@@ -17,6 +17,17 @@
     from projectfavorite
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectFavoriteDM"  parameterType="com.etaofinance.entity.domain.ProjectFavoriteDM" >
+ select 
+   bf.Id, bf.MemberId, bf.ProjectId, bf.CreateTime, bf.IsDel,
+p.ProjectName, p.projectStatus
+    from projectfavorite bf
+left join project  p on bf.ProjectId=p.Id
+where bf.memberid = #{memberid,jdbcType=BIGINT}
+	<if test="projectStatus != null">
+		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
+	</if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectfavorite
     where Id = #{id,jdbcType=BIGINT}
