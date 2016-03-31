@@ -14,10 +14,12 @@ import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.MemberCertificationEnum;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
 import com.etaofinance.core.security.MD5Util;
+import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.core.util.SmsUtils;
@@ -254,7 +256,7 @@ public class MemberService implements IMemberService{
 			resp.setMsg(MemberCertificationEnum.IdCardIsNULL.desc());
 			return resp;			
 		}		
-		
+		record.setLevel(ParseHelper.ToShort(MemberTypeEnum.CertificationUser.value()));
 		int row=memberDao.updateByPrimaryKeySelective(record);
 		if(row<=0)
 		{

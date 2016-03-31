@@ -51,5 +51,12 @@ public class MemberOtherDao  extends DaoBase implements IMemberOtherDao{
 	{
 		return getMasterSqlSessionUtil().update("IMemberOtherDao.updateByMemberIdSelective",record);
 	}
+	/**
+	 * 根据用户ID获取账号金融信息
+	 */
+	@Override
+	public MemberOther selectByMemberId(Long id) {
+		return getMasterSqlSessionUtil().selectOne("IMemberOtherDao.selectByMemberId",id);
+	}
 	
 }

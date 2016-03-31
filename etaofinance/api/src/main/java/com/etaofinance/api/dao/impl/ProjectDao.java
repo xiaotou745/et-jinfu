@@ -52,5 +52,12 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	public PagedResponse<ProjectModel> getProjectList(PagedProjectReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.getProjectList", req);
 	}
+	/**
+	 * 获取预热或进行中的项目
+	 */
+	@Override
+	public Project getFinceingProject(Long id) {
+		return getMasterSqlSessionUtil().selectOne("IProjectDao.getFinceingProject", id);
+	}
 
 }

@@ -24,6 +24,7 @@ import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
 import com.etaofinance.wap.common.LoginUtil;
+import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 
@@ -60,16 +61,10 @@ public class ProjectController {
 	 */
 	@RequestMapping("subproject")
 	@ResponseBody
+	@RequireLogin
 	public   HttpResultModel<Object>  subproject(@RequestBody SubProjectReq req) {
-		if(!LoginUtil.checkIsLogin(request, response))
-		{
-			HttpResultModel<Object> resultModel=new HttpResultModel<Object> ();
-			resultModel.setCode(-1);
-			resultModel.setMsg("请先登录,再认购你想要的项目!");
-			return resultModel;
-		}
-		return null;
-		//return projectService.subproject(req);
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
+		return projectService.subproject(req);
 	}
 	
 	/**

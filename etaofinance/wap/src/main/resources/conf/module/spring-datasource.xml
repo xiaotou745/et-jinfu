@@ -62,7 +62,8 @@
 		<property name="dataSource" ref="readOnlyMySqlDataSource" />
 		 <property name="mapperLocations" value="classpath:conf/mybatis/*.xml" /> 
 	</bean>
-
+	
+	<!-- 配置Spring事务 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="mySqlDataSource" />

@@ -4,11 +4,11 @@ public enum MemberTypeEnum {
 	 
 	CommonUser(0,"普通用户"),
 	
-	LeadInvestUser(1,"跟投人"),
+	LeadInvestUser(2,"跟投人"),
 	
-	FollowInvestUser(2,"领投人"),
+	FollowInvestUser(3,"领投人"),
 	
-	CertificationUser(3,"实名认证用户");
+	CertificationUser(1,"实名认证用户");
 	
 	private int value = 0;
 	private String desc;

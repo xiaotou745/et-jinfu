@@ -8,9 +8,12 @@
 		<result column="Description" property="description" jdbcType="VARCHAR" />
 		<result column="Amount" property="amount" jdbcType="REAL" />
 		<result column="FenShu" property="fenshu" jdbcType="INTEGER" />
+		<result column="RedidueFenshu" property="redidueFenshu" jdbcType="INTEGER" />
 		<result column="LeadMinFenShu" property="leadminfenshu"
 			jdbcType="INTEGER" />
 		<result column="PreheatMaxFenShu" property="preheatmaxfenshu"
+			jdbcType="INTEGER" />
+			<result column="RediduePreheatMaxFenShu" property="rediduePreheatMaxFenShu"
 			jdbcType="INTEGER" />
 		<result column="UnitPrice" property="unitprice" jdbcType="REAL" />
 		<result column="ProvinceCode" property="provincecode" jdbcType="INTEGER" />
@@ -41,7 +44,7 @@
 		UnitPrice, ProvinceCode, CityCode, AreaCode, Address, ProjectImage, AuditStatus,
 		ProjectStatus, IsShelve, MemberId, PreheatTime, StartTime, EndTime,
 		Schedule, InvestmentNumber,
-		FollowNumber, AuditName, AuditTime, CreateName, CreateTime,refusereasion
+		FollowNumber, AuditName, AuditTime, CreateName, CreateTime,Refusereasion,RedidueFenshu,RediduePreheatMaxFenShu
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
@@ -49,6 +52,18 @@
 		<include refid="Base_Column_List" />
 		from project
 		where Id = #{id,jdbcType=BIGINT}
+	</select>
+	<!-- 获取预热或跟头中的项目 -->
+	<select id="getFinceingProject" resultType="com.etaofinance.entity.Project" parameterType="java.lang.Long">
+		select
+		*
+		from project
+		where Id = #{id,jdbcType=BIGINT}
+		AND (ProjectStatus=2 OR ProjectStatus=3)
+    	AND IsShelve=1
+    	AND AuditStatus=2
+  		AND NOW()>PreheatTime
+  		AND EndTime>NOW()
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from project

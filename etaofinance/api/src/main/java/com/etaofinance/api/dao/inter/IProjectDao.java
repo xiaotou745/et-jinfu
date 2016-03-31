@@ -16,7 +16,12 @@ public interface IProjectDao {
     int insertSelective(Project record);
 
     Project selectByPrimaryKey(Long id);
-
+    /**
+     * 获取预热和进行中的项目
+     * @param id
+     * @return
+     */
+    Project getFinceingProject(Long id);
     int updateByPrimaryKeySelective(Project record);
 
     int updateByPrimaryKey(Project record);

@@ -10,6 +10,20 @@ public class SubProjectReq {
 	private Long userId;
 	private Integer quantity;
 	private Integer isLead;
+	private String payPwd;
+	private Long projectId;
+	public Long getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+	public String getPayPwd() {
+		return payPwd;
+	}
+	public void setPayPwd(String payPwd) {
+		this.payPwd = payPwd;
+	}
 	public Long getUserId() {
 		return userId;
 	}
