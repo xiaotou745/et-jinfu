@@ -14,6 +14,12 @@ public interface IMemberDao {
     int insertSelective(Member record);
 
     Member selectByPrimaryKey(Long id);
+    /**
+     * 事务用到
+     * @param id
+     * @return
+     */
+    Member selectById(Long id);
 
     int updateByPrimaryKeySelective(Member record);
 

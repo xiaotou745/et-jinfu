@@ -80,6 +80,13 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 	public Member selectByemail(String email) {
 		return getReadOnlySqlSessionUtil().selectOne("IMemberDao.selectByemail", email);
 	}
+	/**
+	 * 事务用到
+	 */
+	@Override
+	public Member selectById(Long id) {
+		return getMasterSqlSessionUtil().selectOne("IMemberDao.selectByPrimaryKey",id);
+	}
 
 	@Override
 	public int modifyMember(ModifyMemberReq req) {

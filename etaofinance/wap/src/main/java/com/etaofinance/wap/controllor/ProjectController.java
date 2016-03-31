@@ -15,6 +15,7 @@ import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
+import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -24,6 +25,7 @@ import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
 import com.etaofinance.wap.common.LoginUtil;
+import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 
@@ -60,16 +62,10 @@ public class ProjectController {
 	 */
 	@RequestMapping("subproject")
 	@ResponseBody
+	@RequireLogin
 	public   HttpResultModel<Object>  subproject(@RequestBody SubProjectReq req) {
-		if(!LoginUtil.checkIsLogin(request, response))
-		{
-			HttpResultModel<Object> resultModel=new HttpResultModel<Object> ();
-			resultModel.setCode(-1);
-			resultModel.setMsg("请先登录,再认购你想要的项目!");
-			return resultModel;
-		}
-		return null;
-		//return projectService.subproject(req);
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
+		return projectService.subproject(req);
 	}
 	
 	/**
@@ -98,7 +94,20 @@ public class ProjectController {
 	public List<ProjectFavoriteDM> getFavoriteProject(@RequestBody ProjectFavoriteDM record)
 	{
 		return projectFavoriteService.getListMore(record);
-	}
+	}	
 	
+	/**
+	 * 我发起的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月31日11:53:25
+	 * @return
+	 */
+	@RequestMapping("getlaunchproject")
+	@ResponseBody
+	public List<Project> getLaunchProject(@RequestBody Project record)
+	{
+		return projectService.getList(record);
+	}
 	
 }

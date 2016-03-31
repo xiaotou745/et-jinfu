@@ -14,8 +14,25 @@ public class Project {
     private Float amount;
 
     private Integer fenshu;
+    private Integer redidueFenshu;
+    private Integer rediduePreheatMaxFenShu;
+    public Integer getRediduePreheatMaxFenShu() {
+		return rediduePreheatMaxFenShu;
+	}
 
-    private Integer leadminfenshu;
+	public void setRediduePreheatMaxFenShu(Integer rediduePreheatMaxFenShu) {
+		this.rediduePreheatMaxFenShu = rediduePreheatMaxFenShu;
+	}
+
+	public Integer getRedidueFenshu() {
+		return redidueFenshu;
+	}
+
+	public void setRedidueFenshu(Integer redidueFenshu) {
+		this.redidueFenshu = redidueFenshu;
+	}
+
+	private Integer leadminfenshu;
 
     private Integer preheatmaxfenshu;
 

@@ -12,11 +12,17 @@ public interface IMemberOtherDao {
     int insertSelective(MemberOther record);
 
     MemberOther selectByPrimaryKey(Long id);
-
+    /**
+     * 根据ID获取用户信息
+     * @param id
+     * @return
+     */
+    MemberOther selectByMemberId(Long id);
     int updateByPrimaryKeySelective(MemberOther record);
 
     int updateByPrimaryKey(MemberOther record);
     
     
     int updateByMemberIdSelective(MemberOther record);
+
 }
