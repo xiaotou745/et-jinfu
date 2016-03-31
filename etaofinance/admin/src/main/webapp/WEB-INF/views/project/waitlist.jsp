@@ -18,7 +18,7 @@
 						<label class="col-sm-5 control-label">项目ID:</label>
 						<div class="col-sm-7">
 							<input type="text" placeholder="请输入项目ID" class="form-control"
-								id="ProjectId" />
+								id="ProjectId" onkeyup="this.value = parseInt(this.value); if (this.value=='NaN') { this.value = ''}" maxlength="10" />
 						</div>
 					</div>
 				</div>

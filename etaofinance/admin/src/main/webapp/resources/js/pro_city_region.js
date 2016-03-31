@@ -2,7 +2,6 @@ $(function(){
 	  $("#provinceCode").on("change",provinceChange);
 	  $("#cityCode").on("change",cityChange);
 });
-
 //手动注册省市区区事件
 function initProvinceCityChange() {
 	$("#provinceCode").on("change",provinceChange);

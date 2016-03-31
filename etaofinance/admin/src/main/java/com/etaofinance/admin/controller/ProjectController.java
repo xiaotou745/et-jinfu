@@ -16,6 +16,7 @@ import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
+import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
@@ -51,6 +52,7 @@ public class ProjectController {
 	public ModelAndView listDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/listdo");
 		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
+		req.setId(ParseHelper.ToInt(req.getId(),0));
 		PagedResponse<Project> listData=projectService.queryProjectList(req);
 		view.addObject("listData", listData);
 		return view;
@@ -70,6 +72,7 @@ public class ProjectController {
 	@RequestMapping("waitlistdo")
 	public ModelAndView waitListDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/waitlistdo");
+		req.setId(ParseHelper.ToInt(req.getId(),0));
 		PagedResponse<Project> listData=projectService.queryProjectList(req);
 		view.addObject("listData", listData);
 		Map<Long,String> strategyMap=getStrategyMap(listData);

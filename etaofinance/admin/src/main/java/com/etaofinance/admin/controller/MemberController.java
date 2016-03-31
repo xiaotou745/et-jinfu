@@ -85,7 +85,7 @@ public class MemberController {
 		ModelAndView model = new ModelAndView("member/followinvestlistdo");
 		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
 		req.setMemberType(1); //跟投人
-		req.setApplyId(ParseHelper.ToString(ParseHelper.ToLong(req.getApplyId(),0),"0"));
+		
 		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
 		model.addObject("listData",memberApplyInvestModel);
 		return model;
@@ -106,7 +106,6 @@ public class MemberController {
 	public ModelAndView leadinvestlistdo(PagedMemberReq req) { 
 		ModelAndView model = new ModelAndView("member/leadinvestlistdo");
 		req.setMemberType(2);  //领投人
-		req.setApplyId(ParseHelper.ToString(ParseHelper.ToLong(req.getApplyId(),0),"0"));
 		PagedResponse<MemberApplyInvestModel> memberApplyInvestModel = new PagedResponse<MemberApplyInvestModel>();
 		memberApplyInvestModel=memberApplyService.getMemberApplyList(req);
 		model.addObject("listData",memberApplyInvestModel);
@@ -203,7 +202,6 @@ public class MemberController {
 	public ModelAndView incomeRecordListdo(PagedMemberBalanceRecordReq req){
 		ModelAndView model = new ModelAndView("member/incomerecordlistdo");
 		PagedResponse<BalanceRecord> memberBalanceRecord = new PagedResponse<BalanceRecord>();
-		req.setId(ParseHelper.ToString(ParseHelper.ToInt(req.getId()),"0"));
 		memberBalanceRecord=balanceRecordService.getPageList(req);
 		model.addObject("listData",memberBalanceRecord);
 		return model;

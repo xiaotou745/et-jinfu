@@ -9,7 +9,7 @@
     <result column="Description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, ProjectId, Key, Value, Description
+    Id, ProjectId, `Key`, `Value`, Description
   </sql>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -22,7 +22,7 @@
   </delete>
   <insert id="insertList" parameterType="java.util.List" >
   <foreach collection="list" index="index" item="item">
-    insert into projectstrategy (ProjectId, Key, Value, Description)
+    insert into projectstrategy (ProjectId, `Key`, `Value`, Description)
     values (#{item.projectid,jdbcType=BIGINT}, #{item.key,jdbcType=VARCHAR}, 
       #{item.value,jdbcType=REAL}, #{item.description,jdbcType=VARCHAR});
 	</foreach>
@@ -31,8 +31,8 @@
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectStrategy" >
     update projectstrategy
     set ProjectId = #{projectid,jdbcType=BIGINT},
-      Key = #{key,jdbcType=VARCHAR},
-      Value = #{value,jdbcType=REAL},
+      `Key` = #{key,jdbcType=VARCHAR},
+      `Value` = #{value,jdbcType=REAL},
       Description = #{description,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>

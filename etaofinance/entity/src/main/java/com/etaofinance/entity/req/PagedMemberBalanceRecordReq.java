@@ -3,7 +3,7 @@ package com.etaofinance.entity.req;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedMemberBalanceRecordReq extends PagedRequestBase{
-	private String id;
+	private int id;
 	
 	private String createStartTime;
 	
@@ -11,11 +11,11 @@ public class PagedMemberBalanceRecordReq extends PagedRequestBase{
 	
 	private int typeId;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -193,7 +193,7 @@
 	</select>
 	<sql id="queryMemberApplyListWhere">
 		1=1
-		<if test="applyId>=0">
+		<if test="applyId>0">
 			and ma.id=${applyId}
 		</if>
 		<if test="memberName != null and memberName!=''">
