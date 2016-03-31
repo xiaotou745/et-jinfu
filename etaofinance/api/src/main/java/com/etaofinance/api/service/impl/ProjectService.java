@@ -1,9 +1,12 @@
 package com.etaofinance.api.service.impl;
 
+import org.apache.poi.hssf.record.BlankRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.etaofinance.api.common.TransactionalRuntimeException;
+import com.etaofinance.api.dao.inter.IBalanceRecordDao;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.dao.inter.IProjectDao;
@@ -11,7 +14,10 @@ import com.etaofinance.api.dao.inter.IProjectSubscriptionDao;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.enums.ProjectStatus;
+import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.core.security.MD5Util;
+import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
@@ -32,6 +38,8 @@ public class ProjectService implements IProjectService{
 	private IMemberOtherDao memberOtherDao;
 	@Autowired
 	private IProjectSubscriptionDao projectSubscriptionDao;
+	@Autowired
+	private IBalanceRecordDao blanceRecordDao;
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 return projectDao.deleteByPrimaryKey(id);
@@ -69,6 +77,7 @@ return projectDao.queryProjectList(req);
 	 * 茹化肖
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public HttpResultModel<Object> subproject(SubProjectReq req) {
 		HttpResultModel<Object> result=new HttpResultModel<Object>();
 		Member user=memberDao.selectById(req.getUserId());
@@ -129,14 +138,14 @@ return projectDao.queryProjectList(req);
 				return result;
 			}
 			//领投份数大于该项目的剩余可领投份额
-			if(req.getQuantity()>project.getRediduePreheatMaxFenShu())
+			if(req.getQuantity()>(project.getPreheatmaxfenshu()-project.getRediduePreheatMaxFenShu()))
 			{
 				result.setCode(-1);
 				result.setMsg("您领投的份额大于该项目的剩余领投份额!");
 				return result;
 			}
 			//领投份数大于该项目的剩余可领投份额
-			if(req.getQuantity()>project.getRedidueFenshu())
+			if(req.getQuantity()>(project.getFenshu()-project.getRedidueFenshu()))
 			{
 				result.setCode(-1);
 				result.setMsg("您领投的份额大于该项目的剩余份额!");
@@ -165,7 +174,6 @@ return projectDao.queryProjectList(req);
 	 * 进行认购处理
 	 * @return
 	 */
-	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public HttpResultModel<Object> dealSubproject(SubProjectReq req,Member m,MemberOther mo,Project p)
 	{
 		//1.生成购买记录
@@ -181,8 +189,46 @@ return projectDao.queryProjectList(req);
 		psr.setIdcard(m.getIdcard());
 		int res1= projectSubscriptionDao.insertSelective(psr);
 		//2.扣减账户余额
-		
-		return null;
+		MemberOther updateOther=new MemberOther();
+		//余额=余额-应付款
+		Float yF=(p.getUnitprice()*req.getQuantity());
+		Double YR=mo.getBalanceprice();
+		updateOther.setBalanceprice(YR-yF);
+		updateOther.setAllowwithdrawprice(mo.getAllowwithdrawprice()-yF);
+		updateOther.setId(mo.getId());
+		int res2=memberOtherDao.updateByMemberIdSelective(updateOther);
+		//3.插入流水.
+		BalanceRecord bRecord=new BalanceRecord();
+		bRecord.setAmount(-yF);
+		bRecord.setMemberid(m.getId());
+		bRecord.setAfteramount((float) (YR-yF));
+		bRecord.setTypeid(ParseHelper.ToShort(RecordType.Invest.value()));
+		bRecord.setProjectid(p.getId());
+		bRecord.setRemark("认购项目");
+		bRecord.setOptname(m.getTruename());
+		int res3=blanceRecordDao.insertSelective(bRecord);
+		//4.更新项目信息
+		Project updateProject=new Project();
+		updateProject.setId(p.getId());
+		updateProject.setRedidueFenshu(p.getRedidueFenshu()+req.getQuantity());
+		updateProject.setInvestmentnumber(p.getInvestmentnumber()+1);
+		//已购买份数除以份数*100
+		int rp=Math.round(updateProject.getRedidueFenshu()/p.getFenshu())*100;
+		updateProject.setSchedule(rp);
+		if(req.getIsLead()==1)//领投
+		{
+			//已购买的份数加上新的份数
+			updateProject.setRediduePreheatMaxFenShu(p.getRediduePreheatMaxFenShu()+req.getQuantity());
+		}
+		int res4=projectDao.updateByPrimaryKeySelective(updateProject);
+		if(res1!=1||res2!=1||res3!=1||res4!=1)//每个操作都应该只有一条影响
+		{
+			throw new TransactionalRuntimeException("认购失败!");
+		}
+		HttpResultModel<Object> rModel=new HttpResultModel<Object>();
+		rModel.setCode(1);
+		rModel.setMsg("认购成功!");
+		return rModel;
 	}
 
 }
