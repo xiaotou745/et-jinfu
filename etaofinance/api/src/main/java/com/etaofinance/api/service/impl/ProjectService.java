@@ -1,6 +1,7 @@
 package com.etaofinance.api.service.impl;
 
-import org.apache.poi.hssf.record.BlankRecord;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -229,6 +230,18 @@ return projectDao.queryProjectList(req);
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");
 		return rModel;
+	}	
+	
+	/**
+	 * 我发起的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月31日11:46:29
+	 * @return
+	 */	
+	public List<Project> getList(Project record)
+	{
+		return projectDao.getList(record);
 	}
 
 }

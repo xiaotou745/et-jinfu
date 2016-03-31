@@ -15,6 +15,7 @@ import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
+import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -93,7 +94,20 @@ public class ProjectController {
 	public List<ProjectFavoriteDM> getFavoriteProject(@RequestBody ProjectFavoriteDM record)
 	{
 		return projectFavoriteService.getListMore(record);
-	}
+	}	
 	
+	/**
+	 * 我发起的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月31日11:53:25
+	 * @return
+	 */
+	@RequestMapping("getlaunchproject")
+	@ResponseBody
+	public List<Project> getLaunchProject(@RequestBody Project record)
+	{
+		return projectService.getList(record);
+	}
 	
 }
