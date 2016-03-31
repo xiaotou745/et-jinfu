@@ -5,6 +5,7 @@ import java.util.List;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 
@@ -32,7 +33,16 @@ public interface IProjectDao {
      * @param req
      * @return
      */
-    PagedResponse<ProjectModel> getProjectList(PagedProjectReq req);    
+    PagedResponse<ProjectModel> getProjectList(PagedProjectReq req);        
+
+	/**
+	 * 我发起的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date time2016年3月31日11:46:29
+	 * @return
+	 */
+    List<Project> getList(Project record);
     
    
 }

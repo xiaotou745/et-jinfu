@@ -65,6 +65,15 @@
   		AND NOW()>PreheatTime
   		AND EndTime>NOW()
 	</select>
+	 <select id="getList" resultType="com.etaofinance.entity.Project"  parameterType="com.etaofinance.entity.Project" >
+ select 
+<include refid="Base_Column_List" />
+from project  
+where memberid = #{memberid,jdbcType=BIGINT}
+	<if test="projectstatus != null">
+		and	projectstatus=#{projectstatus,jdbcType=SMALLINT}
+	</if>
+  </select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from project
 		where Id = #{id,jdbcType=BIGINT}

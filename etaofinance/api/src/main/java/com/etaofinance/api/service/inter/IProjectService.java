@@ -1,4 +1,6 @@
 package com.etaofinance.api.service.inter;
+import java.util.List;
+
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -27,4 +29,13 @@ public interface IProjectService {
      * @return
      */
     HttpResultModel<Object>  subproject(SubProjectReq req);
+    
+	/**
+	 * 我发起的项目
+	 * @param 
+	 * @author hulingbo
+	 * @date time2016年3月31日11:46:29
+	 * @return
+	 */	
+	List<Project> getList(Project record);
 }
