@@ -49,10 +49,7 @@
 	</insert>
 	<insert id="insertSelective" parameterType="com.etaofinance.entity.MemberApply">
 		insert into memberapply
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				Id,
-			</if>
+		<trim prefix="(" suffix=")" suffixOverrides=",">		
 			<if test="memberid != null">
 				MemberId,
 			</if>
@@ -84,10 +81,7 @@
 				CompanyTitle,
 			</if>
 		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=BIGINT},
-			</if>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">	
 			<if test="memberid != null">
 				#{memberid,jdbcType=BIGINT},
 			</if>

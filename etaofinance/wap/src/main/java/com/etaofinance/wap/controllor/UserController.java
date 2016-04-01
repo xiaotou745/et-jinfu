@@ -17,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.redis.RedisService;
+import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -37,6 +41,7 @@ import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
@@ -46,6 +51,7 @@ import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -65,10 +71,11 @@ public class UserController {
 	@Autowired
 	IMemberService memberService;	
 	@Autowired
-	IMemberOtherService memberOtherService;
+	IMemberOtherService memberOtherService;	
 	
 	@Autowired
-	private IMemberOtherService bankCardService;
+	IMemberApplyService memberApplyService;	
+	
 	@Autowired
 	HttpServletRequest request;
 	@Autowired
@@ -96,6 +103,7 @@ public class UserController {
 	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) {
 		return  memberService.regist(req);			
 	}
+	
 	/**
 	 * 登录
 	 * @param req
@@ -158,20 +166,7 @@ public class UserController {
 		result.setData(member);
 		return result;				
 	}
-	
-	/**
-	 * 会员实名认证
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年3月24日18:05:14
-	 * @return
-	 */
-	@RequestMapping("certification")
-	@ResponseBody
-	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
-	{
-		return  memberService.Certification(record);	
-	}	
+
 	
 	/**
 	 * 获取用户信息  
@@ -187,7 +182,7 @@ public class UserController {
 		return  memberService.getById(record.getId());	
 	}
 	/**
-	 * 获取用户信息  
+	 * 修改用户信息  
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年3月25日10:50:53 
@@ -198,19 +193,6 @@ public class UserController {
 	public HttpResultModel<MemberResp> modify(@RequestBody Member record)
 	{
 		return  memberService.modify(record);	
-	}
-	/**
-	 * 获取图形验证码
-	 * @param 
-	 * @author ruhuaxiao
-	 * @date 2016年3月25日16:53:16
-	 * @return
-	 */
-	@RequestMapping("code")
-	public ModelAndView code(int type) {
-		ModelAndView mv = new ModelAndView("user/code");
-		mv.addObject("CodeType", type);
-		return mv;
 	}
 	/**
 	 * 忘记密码第一步
@@ -333,4 +315,31 @@ public class UserController {
 		return memberOtherService.verificationPayPwd(record);
 	}
 	
+	/**
+	 * 会员实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("certification")
+	@ResponseBody
+	public HttpResultModel<MemberResp> certification(@RequestBody  Member record)
+	{
+		return  memberService.Certification(record);	
+	}	
+	
+	/**
+	 * 领头人,投资人认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("certificationinvestor")
+	@ResponseBody
+	public HttpResultModel<ResponseBase> certificationInvestor(@RequestBody  MemberApply record)
+	{
+		return  memberApplyService.create(record);	
+	}	
 }

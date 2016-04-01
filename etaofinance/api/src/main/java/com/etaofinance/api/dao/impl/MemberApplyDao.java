@@ -30,9 +30,8 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 
 	@Override
 	public int insertSelective(MemberApply record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		return getMasterSqlSessionUtil().insert("IMemberApplyDao.insertSelective", record);	
+		}
 
 	@Override
 	public MemberApply selectByPrimaryKey(Long id) {

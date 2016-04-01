@@ -1,5 +1,6 @@
 package com.etaofinance.api.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.dao.inter.IMemberApplyDao;
 import com.etaofinance.api.service.inter.IMemberApplyService;
+import com.etaofinance.core.enums.BankCardEnum;
+import com.etaofinance.core.enums.MemberApplyEnum;
 import com.etaofinance.entity.MemberApply;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
 import com.etaofinance.entity.req.MemberApplyAuditReq;
@@ -43,4 +48,22 @@ public class MemberApplyService implements IMemberApplyService{
 		return memberApplyDao.getMemberApplyInfoByMemberId(memberId);
 	}
 
+	@Override
+	public HttpResultModel<ResponseBase> create(MemberApply record) {		
+		
+		HttpResultModel<ResponseBase> resp = new HttpResultModel<ResponseBase>();	
+		record.setCreatetime(new Date());		
+		int row= memberApplyDao.insertSelective(record);		
+		if(row<=0)
+		{
+			resp.setCode(MemberApplyEnum.Err.value());
+			resp.setMsg(MemberApplyEnum.Err.desc());
+			return resp;	
+		}
+		resp.setCode(MemberApplyEnum.Success.value());
+		resp.setMsg(MemberApplyEnum.Success.desc());		
+		return resp;
+	}
+
+	
 }
