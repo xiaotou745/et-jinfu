@@ -25,8 +25,6 @@ import com.etaofinance.entity.domain.OpenCityModel;
 import com.etaofinance.entity.req.HotAndPublicCityReq;
 import com.etaofinance.entity.req.ModifyCityReq;
 
-
-
 @Service
 public class PublicProvinceCityService implements IPublicProvinceCityService {
 	@Autowired
@@ -40,34 +38,34 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 	 * @author CaoHeYang
 	 */
 	@Override
-	public List<OpenCityModel> getOpenCityList(HotAndPublicCityReq hotAndPublicCityReq) {
+	public List<OpenCityModel> getOpenCityList(
+			HotAndPublicCityReq hotAndPublicCityReq) {
 		return publicProvinceCityDao.getOpenCityList(hotAndPublicCityReq);
 	};
 
-	
-
-	
 	/**
 	 * 获取所有开发省份 城市 区域
 	 * 
 	 */
 	@Override
 	public List<PublicProvinceCity> getOpenCityListFromRedis() {
-		List<PublicProvinceCity> listdata=redisService.get(RedissCacheKey.JF_PublicProvinceCity, List.class); 
-		if (listdata==null||listdata.size()==0) {
-			listdata=publicProvinceCityDao.getAllOpenCity();
-			if (listdata!=null&&listdata.size()>0) {
-				redisService.set(RedissCacheKey.JF_PublicProvinceCity, listdata,360,TimeUnit.DAYS);
+		List<PublicProvinceCity> listdata = redisService.get(
+				RedissCacheKey.JF_PublicProvinceCity, List.class);
+		if (listdata == null || listdata.size() == 0) {
+			listdata = publicProvinceCityDao.getAllOpenCity();
+			if (listdata != null && listdata.size() > 0) {
+				redisService.set(RedissCacheKey.JF_PublicProvinceCity,
+						listdata, 360, TimeUnit.DAYS);
 			}
 		}
 		return listdata;
 	}
+
 	/**
 	 * 根据级别获取开发城市数据
 	 */
 	@Override
-	public List<PublicProvinceCity> getOpenCityByJiBie(AreaLevel jiBie)
-	{
+	public List<PublicProvinceCity> getOpenCityByJiBie(AreaLevel jiBie) {
 		List<PublicProvinceCity> list = getOpenCityListFromRedis();
 		return list
 				.stream()
@@ -75,9 +73,10 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 				.sorted((a, b) -> a.getFirstLetter().compareTo(
 						b.getFirstLetter())).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * 根据城市Id获取对应的区县列表
+	 * 
 	 * @author zhaohailong
 	 */
 	@Override
@@ -89,10 +88,6 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 						.value() && k.getParentCode().intValue() == cityId)
 				.collect(Collectors.toList());
 	}
-
-
-
-
 
 	@Override
 	public Map<Integer, String> getOpenCityMap() {
@@ -107,11 +102,9 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 		return listnew;
 	}
 
-
-
-/**
- * 只保存发生了变更的数据
- */
+	/**
+	 * 只保存发生了变更的数据
+	 */
 	@Override
 	public int modifyCity(ModifyCityReq modifyCityReq) {
 		List<String> oldOpenHotCityCodeList = new ArrayList<String>();
@@ -139,23 +132,32 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 		modifyCityDomain.setProvenceCode(modifyCityReq.getProvenceCode());
 		if (modifyCityReq.getOpenPublicCityCodeList().length() > 0) {
 			modifyCityDomain.setOpenPublicCityCodeList(new ArrayList<String>());
-			Collections.addAll(modifyCityDomain.getOpenPublicCityCodeList(), modifyCityReq.getOpenPublicCityCodeList().split(","));
-			modifyCityDomain.getOpenPublicCityCodeList().removeAll(oldOpenPublicCityCodeList);
+			Collections.addAll(modifyCityDomain.getOpenPublicCityCodeList(),
+					modifyCityReq.getOpenPublicCityCodeList().split(","));
+			modifyCityDomain.getOpenPublicCityCodeList().removeAll(
+					oldOpenPublicCityCodeList);
 		}
 		if (modifyCityReq.getClosePublicCityCodeList().length() > 0) {
-			modifyCityDomain.setClosePublicCityCodeList(new ArrayList<String>());
-			Collections.addAll(modifyCityDomain.getClosePublicCityCodeList(), modifyCityReq.getClosePublicCityCodeList().split(","));
-			modifyCityDomain.getClosePublicCityCodeList().removeAll(oldClosePublicCityCodeList);
+			modifyCityDomain
+					.setClosePublicCityCodeList(new ArrayList<String>());
+			Collections.addAll(modifyCityDomain.getClosePublicCityCodeList(),
+					modifyCityReq.getClosePublicCityCodeList().split(","));
+			modifyCityDomain.getClosePublicCityCodeList().removeAll(
+					oldClosePublicCityCodeList);
 		}
 		if (modifyCityReq.getOpenHotCityCodeList().length() > 0) {
 			modifyCityDomain.setOpenHotCityCodeList(new ArrayList<String>());
-			Collections.addAll(modifyCityDomain.getOpenHotCityCodeList(), modifyCityReq.getOpenHotCityCodeList().split(","));
-			modifyCityDomain.getOpenHotCityCodeList().removeAll(oldOpenHotCityCodeList);
+			Collections.addAll(modifyCityDomain.getOpenHotCityCodeList(),
+					modifyCityReq.getOpenHotCityCodeList().split(","));
+			modifyCityDomain.getOpenHotCityCodeList().removeAll(
+					oldOpenHotCityCodeList);
 		}
 		if (modifyCityReq.getCloseHotCityCodeList().length() > 0) {
 			modifyCityDomain.setCloseHotCityCodeList(new ArrayList<String>());
-			Collections.addAll(modifyCityDomain.getCloseHotCityCodeList(), modifyCityReq.getCloseHotCityCodeList().split(","));
-			modifyCityDomain.getCloseHotCityCodeList().removeAll(oldCloseHotCityCodeList);
+			Collections.addAll(modifyCityDomain.getCloseHotCityCodeList(),
+					modifyCityReq.getCloseHotCityCodeList().split(","));
+			modifyCityDomain.getCloseHotCityCodeList().removeAll(
+					oldCloseHotCityCodeList);
 		}
 
 		int result = publicProvinceCityDao.modifyCity(modifyCityDomain);
@@ -165,9 +167,6 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 
 		return result;
 	}
-
-
-
 
 	@Override
 	public Map<Integer, PublicProvinceCity> getOpenCityDetailMap() {
@@ -182,7 +181,29 @@ public class PublicProvinceCityService implements IPublicProvinceCityService {
 		return listnew;
 	}
 
-
-
-
+	@Override
+	public String getCityStr(List<PublicProvinceCity> list) {
+		Map<Integer, StringBuilder> resulMap = new HashMap<Integer, StringBuilder>();
+		for (PublicProvinceCity item : list) {
+			if (resulMap.containsKey(item.getParentCode())) {
+				resulMap.get(item.getParentCode()).append(
+						";" + item.getCode() + "|" + item.getName());
+			} else {
+				StringBuilder builder = new StringBuilder();
+				builder.append(item.getCode() + "|" + item.getName());
+				resulMap.put(item.getParentCode(), builder);
+			}
+		}
+		StringBuilder resultBuilder = new StringBuilder();
+		for (Map.Entry<Integer, StringBuilder> entry : resulMap.entrySet()) {
+			if (resultBuilder.toString().isEmpty()) {
+				resultBuilder.append(entry.getKey() + "="
+						+ entry.getValue().toString());
+			} else {
+				resultBuilder.append("#" + entry.getKey() + "="
+						+ entry.getValue().toString());
+			}
+		}
+		return resultBuilder.toString();
+	}
 }

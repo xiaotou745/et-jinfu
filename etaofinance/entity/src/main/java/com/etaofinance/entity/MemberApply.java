@@ -2,6 +2,9 @@ package com.etaofinance.entity;
 
 import java.util.Date;
 
+import com.etaofinance.core.enums.MemberApplyInvestStatusEnum;
+import com.etaofinance.core.enums.MemberStatusEnum;
+
 public class MemberApply {
     private Long id;
 
@@ -47,6 +50,15 @@ public class MemberApply {
 
     public Short getStatus() {
         return status;
+    }
+    public String getStatusString(){
+    	if(MemberApplyInvestStatusEnum.getEnum(status)!=null)
+		{
+			return MemberApplyInvestStatusEnum.getEnum(status).desc();
+		}
+		else {
+			return "";
+		}
     }
 
     public void setStatus(Short status) {

@@ -3,7 +3,7 @@ package com.etaofinance.entity.req;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedMemberReq extends PagedRequestBase{
-	private String applyId;
+	private int applyId;
 	
 	private String memberName;
 	
@@ -77,11 +77,11 @@ public class PagedMemberReq extends PagedRequestBase{
 		this.registerEndDate = registerEndDate;
 	}
 
-	public String getApplyId() {
+	public int getApplyId() {
 		return applyId;
 	}
 
-	public void setApplyId(String applyId) {
+	public void setApplyId(int applyId) {
 		this.applyId = applyId;
 	}
 

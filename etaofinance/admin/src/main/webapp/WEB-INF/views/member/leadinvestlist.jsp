@@ -15,7 +15,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label">ID:</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" name="txtId" id="txtId" />
+							<input type="text" class="form-control" name="txtId" id="txtId" onkeyup="this.value = parseInt(this.value); if (this.value=='NaN') { this.value = ''}" maxlength="10" />
 						</div>
 					</div>
 				</div>
@@ -140,7 +140,7 @@
 <script>
 	var jss={
 			search:function(currentPage){	
-                 var id = $("#txtId").val();
+                 var id = $("#txtId").val().trim()==""?"0":$("#txtId").val().trim();
                  var memberName = $("#txtMemberName").val();          
                  var mail=$("#txtMail").val();
                  var auditStatus=$("#auditStatus").val();
@@ -179,7 +179,7 @@
 		$.ajax({
 			type:"POST",
 			url:url,
-			data:{"memberApplyId":$("#memberApplyId").val()},
+			data:{"memberApplyId":$("#memberApplyId").val().trim()==""?"0":$("#memberApplyId").val().trim()},
 			success:function(result){
 				$("#lblIdCardName").html(result.trueName);
 				$("#lblIdCardNo").html(result.idCard);

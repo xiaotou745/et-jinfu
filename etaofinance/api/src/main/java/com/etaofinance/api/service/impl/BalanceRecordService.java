@@ -25,6 +25,7 @@ import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
@@ -45,6 +46,11 @@ public class BalanceRecordService implements IBalanceRecordService{
 	public BalanceRecordDM selectDMByPrimaryKey(Long id)
 	{
 		return balanceRecordDao.selectDMByPrimaryKey(id);
+	}
+
+	@Override
+	public PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req) {
+		return balanceRecordDao.getPageList(req);
 	}
 	
 
