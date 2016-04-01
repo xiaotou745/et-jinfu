@@ -31,43 +31,46 @@
 
 <script src="<%=basePath%>/js/inspinia.js"></script>
 
+
 <!-- jQuery UI -->
 <script src="<%=basePath%>/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
 <!-- 第三方弹窗js -->
 <script src="<%=basePath%>/js/layer.js"></script>
-<link rel="stylesheet" href="<%=basePath%>/css/plugins/datapicker/datepicker3.css" />
-<script src="<%=basePath%>/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 <script>
-    $(document).ajaxError( function(event, jqXHR, options, errorMsg){
-   	 var content="内部服务器错误";
-    	if(jqXHR.responseText==undefined){
-    		content=jqXHR.statusText;
-    	}else{
-    	 var start=jqXHR.responseText.indexOf("<body>");
+$(document).ajaxError( function(event, jqXHR, options, errorMsg){
+	try{
+		$("#btnSearch").attr("disabled",false);
+		$("#tip").html("");
+	}catch(ex){}
+	
+  	 var content="内部服务器错误";
+   	if(jqXHR.responseText==undefined){
+   		content=jqXHR.statusText;
+   	}else{
+   	 var start=jqXHR.responseText.indexOf("<body>");
 
-    	 if(start>0){
-        	 var end=jqXHR.responseText.indexOf("</body>");
-        	 content=jqXHR.responseText.substring(start+6,end);
-        	 content=content.replace("h1","h4"); 
-    	 }else{
-    		 var start2=jqXHR.responseText.indexOf("<pre>");
-    		 var end2=jqXHR.responseText.indexOf("</pre>");
-        	 content=jqXHR.responseText.substring(start2,end2+6);
-    	 }
-    	 }
+   	 if(start>0){
+       	 var end=jqXHR.responseText.indexOf("</body>");
+       	 content=jqXHR.responseText.substring(start+6,end);
+       	 content=content.replace("h1","h4"); 
+   	 }else{
+   		 var start2=jqXHR.responseText.indexOf("<pre>");
+   		 var end2=jqXHR.responseText.indexOf("</pre>");
+       	 content=jqXHR.responseText.substring(start2,end2+6);
+   	 }
+   	 }
 		if(content.indexOf("AjaxNotLoginRunTimeException")>0){
 			alert("由于你长时间没操作，请重新登录");  
 			window.location.href = "<%=basePath %>";
 			return;
 		}
-    	 $("#gloablErrorParam").html(options.url+"调用出错了！");
-    	 $("#gloablErrorContent").html(content);
-    	 $("#gloablShowError").html("显示详细信息");
-    	 $("#gloablErrorContent").hide();
-    	 $('#gloablErrorDiv').modal('show');
-    });
-    
+   	 $("#gloablErrorParam").html(options.url+"调用出错了！");
+   	 $("#gloablErrorContent").html(content);
+   	 $("#gloablShowError").html("显示详细信息");
+   	 $("#gloablErrorContent").hide();
+   	 $('#gloablErrorDiv').modal('show');
+   });
+   
 	$(document).ready(function() {
 		  //初始化时间控件
 		  $(' .input-group.date').datepicker({
@@ -96,20 +99,34 @@
 				$("#gloablErrorContent").slideUp(500);
 			}
 		});
-		//分页跳转按钮事件处理方法
-		$(document).on("click", "#pagesearch", function(){
-			var page=$("#pagesearchvalue").val();
-			var maxpage=$("#pagesearchmax").val();
-			var currentpage=$("#pagesearchcurrentpage").val();
+		//分页跳转按钮事件处理方法(页面上可能会有多个分页列表，此时，每个分页列表的分页按钮的id不一样)
+		//此时根据当前分页按钮来调用自己的分页search
+		$(document).on("click", "input[type='button'][id^='pagesearch']", function(e){
+			var fix=e.target.id.replace("pagesearch","");
+			var page=$("#pagesearchvalue"+fix).val().trim();
+			var maxpage=$("#pagesearchmax"+fix).val();
+			var currentpage=$("#pagesearchcurrentpage"+fix).val();
+			if(page==""){
+				  alert("页索引不能为空");
+				  $("#pagesearchvalue"+fix).val("1");
+				  return;
+			}
 			var s = new RegExp("^\\s*(\\d+)\\s*$");
 			if(!s.test(page)||parseInt(page) < 1 || parseInt(page) > maxpage){
 			  alert("页索引超出范围");
-			  $("#pagesearchvalue").val(currentpage);
+			  $("#pagesearchvalue"+fix).val(currentpage);
 			  return;
 			}
-			jss.search(page);
+			try{
+				var m=eval("jss"+fix);
+				m.search(page);
+			//或下面这种方式，都可以动态获取到当前上下文中定义的js变量
+// 			var t=window["jss"+fix];
+// 			t.search(page);
+			//jss.search(page);
+			}catch(ex){}
 		}); 
-		$(document).on("keydown", "#pagesearchvalue", function(e){
+		$(document).on("keydown", "input[type='text'][id^='pagesearchvalue']", function(e){
 		    var key = null;
 		    if (e.which) {
 		        key = e.which;
@@ -118,7 +135,7 @@
 		        key = e.keyCode;
 		    }
 
-			if ((48<=key&&key<=57)||(96<=key&&key<=105)) {
+			if ((48<=key&&key<=57)||(96<=key&&key<=105)||key==8) {
 			    return true;
 			}else{
 			    return false;
@@ -127,8 +144,11 @@
 		//列表页下拉框改变时，自动查询
 		$("select").on("change",function(e){
 			try{
+				try{
+					beforeselectchange(e);
+				}catch(ex){}
 				jss.search(1);
-			}catch(e){
+			}catch(ex){
 			}
 		});
 		//列表页点击回车时，自动查询
