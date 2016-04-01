@@ -1,8 +1,11 @@
 package com.etaofinance.api.service.inter;
 import java.util.List;
 
+import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.MemberApply;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
 import com.etaofinance.entity.req.MemberApplyAuditReq;
@@ -18,4 +21,5 @@ public interface IMemberApplyService {
 
 	List<MemberApply> getMemberApplyInfoByMemberId(long memberId);
 
+	HttpResultModel<ResponseBase> create(MemberApply record);
 }

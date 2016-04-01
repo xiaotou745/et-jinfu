@@ -18,7 +18,7 @@ $(function(){
 			var second=parseInt(timeSection.innerHTML);
 			if(second<=0){
 				clearInterval(intervalId);
-				window.location.href = "<%=basePath%>/order/list";
+				window.location.href = "<%=basePath%>";
 			}else{
 				timeSection.innerHTML=second-1;
 			}

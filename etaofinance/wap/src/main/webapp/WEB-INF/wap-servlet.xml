@@ -59,7 +59,10 @@
              </set>    
          </property>    
      </bean> 
-	
+     <!-- Swagger 注入配置 -->
+	<bean class="com.etaofinance.wap.common.MySwaggerConfig">
+	</bean> 
+	<!-- Swagger 注入配置 -->
 	<!-- 该节点配置视图渲染相关 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
