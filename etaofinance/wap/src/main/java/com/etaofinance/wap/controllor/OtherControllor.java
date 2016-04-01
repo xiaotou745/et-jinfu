@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IFeedBackService;
 import com.etaofinance.api.service.inter.IMessageService;
+import com.etaofinance.api.service.inter.IProjectEnrollService;
 import com.etaofinance.api.service.inter.IPublicProviceCityService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.api.service.inter.IQAService;
@@ -23,11 +24,13 @@ import com.etaofinance.core.util.SystemUtils;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Message;
+import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.QA;
 import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedQAReq;
 import com.etaofinance.entity.resp.FeedBackResp;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -43,6 +46,9 @@ public class OtherControllor {
 
 	@Autowired
 	private IMessageService messageService;	
+	
+	@Autowired
+	private IProjectEnrollService projectEnrollService;	
 
 	/**
 	 * 获取常见问题列表
@@ -59,6 +65,24 @@ public class OtherControllor {
 	public  List<QA> getQAlist() {
 		return qAService.getList();
 	}
+	
+	/**
+	 * 项目报名
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月1日17:21:03
+	 * @return
+	 */
+	@RequestMapping("/createprojectenroll")
+	@ResponseBody
+	@ApiOperation(value = "项目报名", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "项目报名")
+	public HttpResultModel<ResponseBase> createProjectEnroll(@RequestBody  ProjectEnroll record) 
+	{		
+		return	projectEnrollService.create(record);
+	}
+	
 	
 	/**
 	 * 创建意见反馈

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IProjectEnrollDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectEnroll" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="OwnedIndustry" property="ownedindustry" jdbcType="VARCHAR" />
+    <result column="BusinessPlanName" property="businessplanname" jdbcType="VARCHAR" />
+    <result column="BusinessPlanUrl" property="businessplanurl" jdbcType="VARCHAR" />
+    <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
+    <result column="EMail" property="email" jdbcType="VARCHAR" />
+    <result column="Contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, Contacts, 
+    CreateName, CreateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from projectenroll
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from projectenroll
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.ProjectEnroll" >
+    insert into projectenroll (Id, Title, OwnedIndustry, 
+      BusinessPlanName, BusinessPlanUrl, PhoneNo, 
+      EMail, Contacts, CreateName, 
+      CreateTime)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{ownedindustry,jdbcType=VARCHAR}, 
+      #{businessplanname,jdbcType=VARCHAR}, #{businessplanurl,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
+    insert into projectenroll
+    <trim prefix="(" suffix=")" suffixOverrides="," > 
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="ownedindustry != null" >
+        OwnedIndustry,
+      </if>
+      <if test="businessplanname != null" >
+        BusinessPlanName,
+      </if>
+      <if test="businessplanurl != null" >
+        BusinessPlanUrl,
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo,
+      </if>
+      <if test="email != null" >
+        EMail,
+      </if>
+      <if test="contacts != null" >
+        Contacts,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," > 
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ownedindustry != null" >
+        #{ownedindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="businessplanname != null" >
+        #{businessplanname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessplanurl != null" >
+        #{businessplanurl,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
+    update projectenroll
+    <set >
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ownedindustry != null" >
+        OwnedIndustry = #{ownedindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="businessplanname != null" >
+        BusinessPlanName = #{businessplanname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessplanurl != null" >
+        BusinessPlanUrl = #{businessplanurl,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null" >
+        PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMail = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        Contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectEnroll" >
+    update projectenroll
+    set Title = #{title,jdbcType=VARCHAR},
+      OwnedIndustry = #{ownedindustry,jdbcType=VARCHAR},
+      BusinessPlanName = #{businessplanname,jdbcType=VARCHAR},
+      BusinessPlanUrl = #{businessplanurl,jdbcType=VARCHAR},
+      PhoneNo = #{phoneno,jdbcType=VARCHAR},
+      EMail = #{email,jdbcType=VARCHAR},
+      Contacts = #{contacts,jdbcType=VARCHAR},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
