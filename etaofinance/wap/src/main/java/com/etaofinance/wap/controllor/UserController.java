@@ -88,19 +88,7 @@ public class UserController {
 	@Autowired
 	RedisService redisService;
 	
-	/**
-	 * 获取验证码接口
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping("sendcode")
-	@ResponseBody
-	@ApiOperation(value = "发送验证码", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取验证码")
-	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
-		return memberService.sendCode(req);
-	}
+	
 	/**
 	 * 注册
 	 * @param req

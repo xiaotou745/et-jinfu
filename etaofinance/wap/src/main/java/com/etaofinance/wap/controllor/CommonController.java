@@ -1,25 +1,4 @@
 package com.etaofinance.wap.controllor;
-
-
-
-import java.io.IOException;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-
-
-
-
-
-
-
-
-
-
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,60 +6,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.etaofinance.api.redis.RedisService;
-import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
-import com.etaofinance.core.consts.RedissCacheKey;
-import com.etaofinance.core.security.MD5Util;
-import com.etaofinance.core.util.CookieUtils;
-import com.etaofinance.core.util.JsonUtil;
-import com.etaofinance.core.util.PropertyUtils;
-import com.etaofinance.core.util.RegexHelper;
-import com.etaofinance.entity.Member;
-import com.etaofinance.entity.MemberOther;
-import com.etaofinance.entity.req.ForgetPwdOneReq;
-import com.etaofinance.entity.req.ForgetPwdThreeReq;
-import com.etaofinance.entity.req.ForgetPwdTwoReq;
-import com.etaofinance.entity.req.LoginReq;
-import com.etaofinance.entity.req.ModifypwdReq;
-import com.etaofinance.entity.req.RegistReq;
-import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.resp.ForgetPwdResp;
-import com.etaofinance.entity.resp.MemberResp;
-import com.etaofinance.entity.resp.SendCodeResp;
-import com.etaofinance.wap.common.LoginUtil;
-import com.etaofinance.wap.common.NoRequireLogin;
-import com.etaofinance.wap.common.RequireLogin;
-import com.etaofinance.wap.common.UserContext;
+import com.etaofinance.entity.req.SendCodeReq;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 
 /**
- * ¹«¹²Ïà¹Ø
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author ofmyi_000
  *
  */
 @Controller
 @RequestMapping("common")
 public class CommonController {
-	
-@RequestMapping("/swagger")
+	@Autowired
+	IMemberService memberService;
+	@RequestMapping("/swagger")
 	public ModelAndView suggAdd() {
 		ModelAndView model = new ModelAndView("common/swagger");
 		return model;
 	}
 
 	/**
-	 * »ñÈ¡Í¼ĞÎÑéÖ¤Âë
+	 * ï¿½ï¿½È¡Í¼ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	 * @param 
 	 * @author ruhuaxiao
-	 * @date 2016Äê3ÔÂ25ÈÕ16:53:16
+	 * @date 2016ï¿½ï¿½3ï¿½ï¿½25ï¿½ï¿½16:53:16
 	 * @return
 	 */
 	@RequestMapping("code")
+	@ApiOperation(value = "å›¾ç‰‡éªŒè¯ç ", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "å›¾ç‰‡éªŒè¯ç ")
 	public ModelAndView code(int type) {
 		ModelAndView mv = new ModelAndView("user/code");
 		mv.addObject("CodeType", type);
 		return mv;
+	}
+	/**
+	 * è·å–éªŒè¯ç æ¥å£
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("sendcode")
+	@ResponseBody
+	@ApiOperation(value = "å‘é€éªŒè¯ç ", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "è·å–éªŒè¯ç ")
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
+		return memberService.sendCode(req);
 	}
 	
 }
