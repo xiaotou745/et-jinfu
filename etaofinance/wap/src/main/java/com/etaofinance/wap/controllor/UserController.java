@@ -180,22 +180,6 @@ public class UserController {
 		result.setData(member);
 		return result;				
 	}
-
-	
-	/**
-	 * 会员实名认证
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年3月24日18:05:14
-	 * @return
-	 */
-	@RequestMapping("certification")
-	@ResponseBody
-	
-	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
-	{
-		return  memberService.Certification(record);	
-	}	
 	
 	/**
 	 * 获取用户信息  
