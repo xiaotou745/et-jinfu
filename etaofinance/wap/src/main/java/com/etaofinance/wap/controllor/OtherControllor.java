@@ -30,6 +30,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedQAReq;
 import com.etaofinance.entity.resp.FeedBackResp;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("other")
@@ -52,6 +53,9 @@ public class OtherControllor {
 	 */
 	@RequestMapping("/getqalist")
 	@ResponseBody
+	@ApiOperation(value = "获取常见问题列表", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取常见问题列表")
 	public  List<QA> getQAlist() {
 		return qAService.getList();
 	}
@@ -65,6 +69,9 @@ public class OtherControllor {
 	 */
 	@RequestMapping("/createfeedback")
 	@ResponseBody
+	@ApiOperation(value = "创建意见反馈", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "创建意见反馈")
 	public HttpResultModel<FeedBackResp> createFeedBack(@RequestBody  FeedBack record) 
 	{		
 		return	feedBackService.create(record);
@@ -80,6 +87,9 @@ public class OtherControllor {
 	 */
 	@RequestMapping("/getmessagelist")
 	@ResponseBody
+	@ApiOperation(value = "获取我的消息列表", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取我的消息列表")
 	public  List<Message> getMessagelist(@RequestBody  Message record) {
 		return messageService.getList(record);
 	}

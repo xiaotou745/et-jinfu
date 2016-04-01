@@ -120,6 +120,9 @@ public class UserController {
 	 */
 	@RequestMapping("login")
 	@ResponseBody
+	@ApiOperation(value = "登录", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "登录")
 	public  HttpResultModel<Member> login(@RequestBody LoginReq req) throws IOException {
 		HttpResultModel<Member> result=new HttpResultModel<Member>(); 
 		int cookieMaxAge = 60*60*24;//cookie时间 1天
@@ -184,6 +187,7 @@ public class UserController {
 	 */
 	@RequestMapping("certification")
 	@ResponseBody
+	
 	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
 	{
 		return  memberService.Certification(record);	
@@ -223,6 +227,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("code")
+	@ApiOperation(value = "获取图形验证码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取图形验证码")
 	public ModelAndView code(int type) {
 		ModelAndView mv = new ModelAndView("user/code");
 		mv.addObject("CodeType", type);
@@ -237,6 +244,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetpone")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第一步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第一步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
 	{
 		HttpResultModel<ForgetPwdResp> res=new HttpResultModel<ForgetPwdResp>();
@@ -260,6 +270,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetptwo")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第二步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第二步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(@RequestBody  ForgetPwdTwoReq req)
 	{
 		return memberService.forgetpwdsetptwo(req);
@@ -273,6 +286,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetpthree")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第三步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第三步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(@RequestBody  ForgetPwdThreeReq req)
 	{
 		return memberService.forgetpwdsetpthree(req);
@@ -287,6 +303,9 @@ public class UserController {
 	@RequestMapping("modifypwd")
 	@ResponseBody
 	@RequireLogin
+	@ApiOperation(value = "修改密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "修改密码")
 	public HttpResultModel<Object> modifypwd(@RequestBody  ModifypwdReq req)
 	{
 		Member m=UserContext.getCurrentContext(request).getUserInfo();
@@ -304,6 +323,9 @@ public class UserController {
 	@RequestMapping("createpaypwd")
 	@ResponseBody
 	@RequireLogin
+	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
@@ -323,6 +345,9 @@ public class UserController {
 	@RequestMapping("verificationpaypwd")
 	@ResponseBody
 	@RequireLogin
+	@ApiOperation(value = "验证支付密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "验证支付密码")
 	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();

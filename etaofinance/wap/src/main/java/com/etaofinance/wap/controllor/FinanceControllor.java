@@ -31,6 +31,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.WithdrawformDM;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("finance")
@@ -50,6 +51,9 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getbalancerecordlist")
 	@ResponseBody
+	@ApiOperation(value = "获取账户流水", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取账户流水")
 	public List<BalanceRecordDM> getBalanceRecordList(@RequestBody BalanceRecord record)
 	{
 		return balanceRecordService.getListMore(record);
@@ -64,6 +68,9 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getbalancerecorddetail")
 	@ResponseBody
+	@ApiOperation(value = "获取账户流水详情", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取账户流水详情")
 	public BalanceRecordDM getBalanceRecordDetail(@RequestBody BalanceRecord record)
 	{
 		return balanceRecordService.selectDMByPrimaryKey(record.getId());
@@ -77,7 +84,10 @@ public class FinanceControllor {
 	 * @return
 	 */
 	@RequestMapping("/createwithdrawform")
-	@ResponseBody	
+	@ResponseBody
+	@ApiOperation(value = "提现", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "提现")
 	public HttpResultModel<ResponseBase> createWithdrawform(@RequestBody Withdrawform record)
 	{
 		return withdrawformService.create(record);
@@ -92,6 +102,9 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getwithdrawformlist")
 	@ResponseBody
+	@ApiOperation(value = "获取可提现记录", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取可提现记录")
 	public List<WithdrawformDM> getWithdrawformList(@RequestBody Withdrawform record)
 	{
 		return withdrawformService.getListMore(record);
@@ -106,6 +119,9 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getWithdrawformdetail")
 	@ResponseBody
+	@ApiOperation(value = "获取可提现记录详情", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取可提现记录详情")
 	public WithdrawformDM getWithdrawformDetail(@RequestBody Withdrawform record)
 	{
 		return withdrawformService.selectDMByPrimaryKey(record.getId());

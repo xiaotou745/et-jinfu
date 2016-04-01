@@ -5,6 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
  
 
+
+
 import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
 import com.mangofactory.swagger.models.dto.ApiInfo;
 import com.mangofactory.swagger.plugin.EnableSwagger;
@@ -13,7 +15,6 @@ import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 @EnableSwagger
 public class MySwaggerConfig {
 	private SpringSwaggerConfig springSwaggerConfig;
-	 
     /**
      * Required to autowire SpringSwaggerConfig
      */
@@ -43,7 +44,7 @@ public class MySwaggerConfig {
                 "My Apps API terms of service", 
                 "ru.huaxiao@etao.cn", 
                 "My Apps API Licence Type",
-                "My Apps API License URL");
+                "http:100.com");
         return apiInfo;
     }
 }
