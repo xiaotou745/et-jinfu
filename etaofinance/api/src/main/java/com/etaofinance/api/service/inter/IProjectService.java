@@ -5,6 +5,7 @@ import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
@@ -38,4 +39,6 @@ public interface IProjectService {
 	 * @return
 	 */	
 	List<Project> getList(Project record);
+
+	int publishProject(PublishProjectReq req);
 }
