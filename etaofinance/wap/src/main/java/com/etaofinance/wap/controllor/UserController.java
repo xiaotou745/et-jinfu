@@ -286,16 +286,10 @@ public class UserController {
 	 */
 	@RequestMapping("modifypwd")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<Object> modifypwd(@RequestBody  ModifypwdReq req)
 	{
-		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
 		Member m=UserContext.getCurrentContext(request).getUserInfo();
-		if(m.equals(null))
-		{
-			resultModel.setCode(-1);
-			resultModel.setMsg("用户未登录,请先登录用户!");
-			return resultModel;
-		}
 		req.setUserId(m.getId());
 		return memberService.modifypwd(req);
 	}
@@ -309,16 +303,10 @@ public class UserController {
 	 */
 	@RequestMapping("createpaypwd")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-//		Member m=UserContext.getCurrentContext(request).getUserInfo();
-//		if(m.equals(null))
-//		{
-//			resultModel.setCode(-1);
-//			resultModel.setMsg("用户未登录,请先登录用户!");
-//			return resultModel;
-//		}
 		long tempUserid=(long)(1);
 		record.setMemberid(tempUserid);
 		return memberOtherService.createPayPwd(record);
@@ -334,16 +322,10 @@ public class UserController {
 	 */
 	@RequestMapping("verificationpaypwd")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-//		Member m=UserContext.getCurrentContext(request).getUserInfo();
-//		if(m.equals(null))
-//		{
-//			resultModel.setCode(-1);
-//			resultModel.setMsg("用户未登录,请先登录用户!");
-//			return resultModel;
-//		}
 		long tempUserid=(long)(1);
 		record.setMemberid(tempUserid);
 		return memberOtherService.verificationPayPwd(record);
