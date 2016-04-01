@@ -1,10 +1,6 @@
 package com.etaofinance.entity.common;
 
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
-
-
-
-
 public class HttpResultModel<T> {
 	private int code = HttpReturnRnums.Success.value();
 	private String msg = HttpReturnRnums.Success.desc();

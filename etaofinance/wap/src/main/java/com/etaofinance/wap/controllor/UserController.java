@@ -17,6 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
+
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,6 +58,11 @@ import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiImplicitParam;
+import com.wordnik.swagger.annotations.ApiImplicitParams;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 
 /**
  * 用户相关
@@ -83,6 +93,9 @@ public class UserController {
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
+	@ApiOperation(value = "发送验证码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取验证码")
 	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
 		return memberService.sendCode(req);
 	}
@@ -93,6 +106,9 @@ public class UserController {
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
+	@ApiOperation(value = "注册", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "用户注册")
 	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) {
 		return  memberService.regist(req);			
 	}
