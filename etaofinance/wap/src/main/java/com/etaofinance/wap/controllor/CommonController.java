@@ -55,7 +55,7 @@ import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 /**
- * å…¬å…±ç›¸å…³
+ * ¹«¹²Ïà¹Ø
  * @author ofmyi_000
  *
  */
@@ -63,11 +63,17 @@ import com.etaofinance.wap.common.UserContext;
 @RequestMapping("common")
 public class CommonController {
 	
+@RequestMapping("/swagger")
+	public ModelAndView suggAdd() {
+		ModelAndView model = new ModelAndView("common/swagger");
+		return model;
+	}
+
 	/**
-	 * è·å–å›¾å½¢éªŒè¯ç 
+	 * »ñÈ¡Í¼ĞÎÑéÖ¤Âë
 	 * @param 
 	 * @author ruhuaxiao
-	 * @date 2016å¹´3æœˆ25æ—¥16:53:16
+	 * @date 2016Äê3ÔÂ25ÈÕ16:53:16
 	 * @return
 	 */
 	@RequestMapping("code")

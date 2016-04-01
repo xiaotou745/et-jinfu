@@ -7,6 +7,7 @@ import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 @Repository
 public class MemberDao  extends DaoBase implements IMemberDao{
@@ -85,6 +86,11 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 	@Override
 	public Member selectById(Long id) {
 		return getMasterSqlSessionUtil().selectOne("IMemberDao.selectByPrimaryKey",id);
+	}
+
+	@Override
+	public int modifyMember(ModifyMemberReq req) {
+		return getMasterSqlSessionUtil().update("IMemberDao.modifyMember",req);
 	}
 
 }

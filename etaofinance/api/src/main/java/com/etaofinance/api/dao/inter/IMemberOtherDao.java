@@ -24,4 +24,5 @@ public interface IMemberOtherDao {
     
     
     int updateByMemberIdSelective(MemberOther record);
+
 }

@@ -54,5 +54,7 @@ public interface IPublicProvinceCityService {
 	  * wangchao
 	  */
 	int modifyCity(ModifyCityReq modifyCityReq);
+	
+	String getCityStr(List<PublicProvinceCity> list);
 
 }

@@ -3,7 +3,9 @@ package com.etaofinance.api.dao.inter;
 import java.util.List;
 
 import com.etaofinance.entity.BalanceRecord;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 
 public interface IBalanceRecordDao {
     int deleteByPrimaryKey(Long id);
@@ -21,4 +23,6 @@ public interface IBalanceRecordDao {
     List<BalanceRecordDM> getListMore(BalanceRecord record);
     
     BalanceRecordDM selectDMByPrimaryKey(Long id);
+
+	PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req);
 }

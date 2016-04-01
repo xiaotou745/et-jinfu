@@ -1,7 +1,15 @@
 package com.etaofinance.core.util;
 
 public class PageHelper {
-
+	public static String getPage(int pageSize, int currentPage,int totalRecord, int totalPage,String serfix) {
+		String result=getPage(pageSize,  currentPage, totalRecord,  totalPage);
+		result=result.replace("jss.search", "jss"+serfix+".search");
+		result=result.replace("pagesearchcurrentpage", "pagesearchcurrentpage"+serfix);
+		result=result.replace("pagesearchmax", "pagesearchmax"+serfix);
+		result=result.replace("pagesearchvalue", "pagesearchvalue"+serfix);
+		result=result.replace("pagesearch\"", "pagesearch"+serfix+"\"");
+		return result;
+	}
 	/**
 	 * 生成分页相关的html
 	 * @author hailongzhao
@@ -39,8 +47,8 @@ public class PageHelper {
 		sb.append(getEndPage(currentPage, totalPage));
 
 		//跳转到指定页
-		sb.append("<input type=\"hidden\" id=\"pagesearchmax\" value=\""+totalPage+"\">");
 		sb.append("<input type=\"hidden\" id=\"pagesearchcurrentpage\" value=\""+currentPage+"\">");
+		sb.append("<input type=\"hidden\" id=\"pagesearchmax\" value=\""+totalPage+"\">");
 		sb.append("<input type=\"text\" id=\"pagesearchvalue\"  value=\""+currentPage+"\" style=\"width:30px;height:28px;\">");
 		sb.append("<input type=\"button\" id=\"pagesearch\" value=\"跳转\" data-submitbutton=\"true\">");
 		sb.append("</ul></div></div></div>");

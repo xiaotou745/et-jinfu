@@ -16,6 +16,7 @@ import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
+import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
@@ -51,6 +52,7 @@ public class ProjectController {
 	public ModelAndView listDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/listdo");
 		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
+		req.setId(ParseHelper.ToInt(req.getId(),0));
 		PagedResponse<Project> listData=projectService.queryProjectList(req);
 		view.addObject("listData", listData);
 		return view;
@@ -70,6 +72,7 @@ public class ProjectController {
 	@RequestMapping("waitlistdo")
 	public ModelAndView waitListDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/waitlistdo");
+		req.setId(ParseHelper.ToInt(req.getId(),0));
 		PagedResponse<Project> listData=projectService.queryProjectList(req);
 		view.addObject("listData", listData);
 		Map<Long,String> strategyMap=getStrategyMap(listData);
@@ -105,8 +108,8 @@ public class ProjectController {
 		view.addObject("currenttitle", "发布项目");
 		view.addObject("viewPath", "project/newproject");
 		view.addObject("provincelist", publicProvinceCityService.getOpenCityByJiBie(AreaLevel.Province));
-		view.addObject("pro_city", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
-		view.addObject("city_region", getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
+		view.addObject("pro_city",  publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.City)));
+		view.addObject("city_region", publicProvinceCityService.getCityStr(publicProvinceCityService.getOpenCityByJiBie(AreaLevel.District)));
 		return view;
 	}
 	/**
@@ -118,28 +121,5 @@ public class ProjectController {
 	public int saveproject(String data) {
 
 		return 1;
-	}
-	private String getCityStr(List<PublicProvinceCity> list){
-		Map<Integer, StringBuilder> resulMap=new HashMap<Integer, StringBuilder>();
-		for (PublicProvinceCity item : list) {
-			if (resulMap.containsKey(item.getParentCode())) {
-				resulMap.get(item.getParentCode()).append(";"+item.getCode()+"|"+item.getName());
-			}else {
-				StringBuilder builder=new StringBuilder();
-				builder.append(item.getCode()+"|"+item.getName());
-				resulMap.put(item.getParentCode(), builder);
-			}
-		}
-		StringBuilder resultBuilder=new StringBuilder();
-		for (Map.Entry<Integer, StringBuilder> entry : resulMap.entrySet()) {  
-			if (resultBuilder.toString().isEmpty()) {
-				resultBuilder.append(entry.getKey()+"="+entry.getValue().toString());
-			}else {
-				resultBuilder.append("#"+entry.getKey()+"="+entry.getValue().toString());
-			}
-			
-		}  
-
-		return resultBuilder.toString();
-	}
+	}	
 }

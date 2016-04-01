@@ -28,6 +28,7 @@ import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
+import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
@@ -453,7 +454,10 @@ public class MemberService implements IMemberService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+		@Override
+	public int modifyMember(ModifyMemberReq req) {
+		return memberDao.modifyMember(req);
+	}
 
 
 }

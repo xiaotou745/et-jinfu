@@ -59,6 +59,11 @@ import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiImplicitParam;
+import com.wordnik.swagger.annotations.ApiImplicitParams;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 
 /**
  * 用户相关
@@ -90,6 +95,9 @@ public class UserController {
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
+	@ApiOperation(value = "发送验证码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取验证码")
 	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
 		return memberService.sendCode(req);
 	}
@@ -100,6 +108,9 @@ public class UserController {
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
+	@ApiOperation(value = "注册", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "用户注册")
 	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) {
 		return  memberService.regist(req);			
 	}
@@ -112,6 +123,9 @@ public class UserController {
 	 */
 	@RequestMapping("login")
 	@ResponseBody
+	@ApiOperation(value = "登录", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "登录")
 	public  HttpResultModel<Member> login(@RequestBody LoginReq req) throws IOException {
 		HttpResultModel<Member> result=new HttpResultModel<Member>(); 
 		int cookieMaxAge = 60*60*24;//cookie时间 1天
@@ -169,6 +183,21 @@ public class UserController {
 
 	
 	/**
+	 * 会员实名认证
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月24日18:05:14
+	 * @return
+	 */
+	@RequestMapping("certification")
+	@ResponseBody
+	
+	public HttpResultModel<MemberResp> Certification(@RequestBody  Member record)
+	{
+		return  memberService.Certification(record);	
+	}	
+	
+	/**
 	 * 获取用户信息  
 	 * @param 
 	 * @author hulingbo
@@ -203,6 +232,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetpone")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第一步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第一步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(@RequestBody  ForgetPwdOneReq req)
 	{
 		HttpResultModel<ForgetPwdResp> res=new HttpResultModel<ForgetPwdResp>();
@@ -226,6 +258,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetptwo")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第二步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第二步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetptwo(@RequestBody  ForgetPwdTwoReq req)
 	{
 		return memberService.forgetpwdsetptwo(req);
@@ -239,6 +274,9 @@ public class UserController {
 	 */
 	@RequestMapping("forgetpwdsetpthree")
 	@ResponseBody
+	@ApiOperation(value = "忘记密码第三步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "忘记密码第三步")
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(@RequestBody  ForgetPwdThreeReq req)
 	{
 		return memberService.forgetpwdsetpthree(req);
@@ -252,16 +290,13 @@ public class UserController {
 	 */
 	@RequestMapping("modifypwd")
 	@ResponseBody
+	@RequireLogin
+	@ApiOperation(value = "修改密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "修改密码")
 	public HttpResultModel<Object> modifypwd(@RequestBody  ModifypwdReq req)
 	{
-		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
 		Member m=UserContext.getCurrentContext(request).getUserInfo();
-		if(m.equals(null))
-		{
-			resultModel.setCode(-1);
-			resultModel.setMsg("用户未登录,请先登录用户!");
-			return resultModel;
-		}
 		req.setUserId(m.getId());
 		return memberService.modifypwd(req);
 	}
@@ -275,16 +310,13 @@ public class UserController {
 	 */
 	@RequestMapping("createpaypwd")
 	@ResponseBody
+	@RequireLogin
+	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-//		Member m=UserContext.getCurrentContext(request).getUserInfo();
-//		if(m.equals(null))
-//		{
-//			resultModel.setCode(-1);
-//			resultModel.setMsg("用户未登录,请先登录用户!");
-//			return resultModel;
-//		}
 		long tempUserid=(long)(1);
 		record.setMemberid(tempUserid);
 		return memberOtherService.createPayPwd(record);
@@ -300,16 +332,13 @@ public class UserController {
 	 */
 	@RequestMapping("verificationpaypwd")
 	@ResponseBody
+	@RequireLogin
+	@ApiOperation(value = "验证支付密码", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "验证支付密码")
 	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
 	{
 		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-//		Member m=UserContext.getCurrentContext(request).getUserInfo();
-//		if(m.equals(null))
-//		{
-//			resultModel.setCode(-1);
-//			resultModel.setMsg("用户未登录,请先登录用户!");
-//			return resultModel;
-//		}
 		long tempUserid=(long)(1);
 		record.setMemberid(tempUserid);
 		return memberOtherService.verificationPayPwd(record);

@@ -179,4 +179,36 @@ where b.memberid = #{memberid,jdbcType=BIGINT}
       OptTime = #{opttime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getPageList"
+		resultType="com.etaofinance.entity.BalanceRecord"
+		parameterType="com.etaofinance.entity.req.PagedMemberBalanceRecordReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' b.Id desc ',
+		' b.Id,b.Amount,b.OptTime,b.TypeId,b.AfterAmount,b.MemberId,b.Remark ',
+		' balancerecord b ',
+		'
+		<include refid="queryMemberIncomeRecordListWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+	<sql id="queryMemberIncomeRecordListWhere">
+		1=1
+		<if test="id>=0">
+			and b.MemberId=${id}
+		</if>
+		<if test="typeId>0">
+			and b.typeId=${typeId}
+		</if>
+		<if test="createStartTime != null and createStartTime!=''">
+			and b.OptTime>=''${createStartTime}''
+		</if>
+		<if test="createEndTime != null and createEndTime!=''">
+			and ''${createEndTime}''>b.OptTime
+		</if>
+	</sql>
 </mapper>

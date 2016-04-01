@@ -27,6 +27,7 @@ import com.etaofinance.entity.req.SubProjectReq;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 
 @Controller
@@ -52,6 +53,9 @@ public class ProjectController {
 	 */
 	@RequestMapping("projectlist")
 	@ResponseBody
+	@ApiOperation(value = "项目接口;列表", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "项目接口列表")
 	public  PagedResponse<ProjectModel> projectlist(@RequestBody PagedProjectReq req) {
 		return projectService.getProjectList(req);
 	}
@@ -63,6 +67,9 @@ public class ProjectController {
 	@RequestMapping("subproject")
 	@ResponseBody
 	@RequireLogin
+	@ApiOperation(value = "认购项目", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "认购项目")
 	public   HttpResultModel<Object>  subproject(@RequestBody SubProjectReq req) {
 		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return projectService.subproject(req);
@@ -77,6 +84,9 @@ public class ProjectController {
 	 */
 	@RequestMapping("getinvestproject")
 	@ResponseBody
+	@ApiOperation(value = "我投资的项目", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "我投资的项目")
 	public List<ProjectSubscriptionDM> getInvestProject(@RequestBody ProjectSubscriptionDM record)
 	{
 		return projectSubscriptionService.getListMore(record);
@@ -91,6 +101,9 @@ public class ProjectController {
 	 */
 	@RequestMapping("getfavoriteproject")
 	@ResponseBody
+	@ApiOperation(value = "我关注的项目", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "我关注的项目")
 	public List<ProjectFavoriteDM> getFavoriteProject(@RequestBody ProjectFavoriteDM record)
 	{
 		return projectFavoriteService.getListMore(record);
@@ -105,6 +118,9 @@ public class ProjectController {
 	 */
 	@RequestMapping("getlaunchproject")
 	@ResponseBody
+	@ApiOperation(value = "我发起的项目", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "我发起的项目")
 	public List<Project> getLaunchProject(@RequestBody Project record)
 	{
 		return projectService.getList(record);
