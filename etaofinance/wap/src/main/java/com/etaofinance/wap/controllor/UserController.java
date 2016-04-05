@@ -190,6 +190,9 @@ public class UserController {
 	 */
 	@RequestMapping("getuserinfo")
 	@ResponseBody
+	@ApiOperation(value = "获取用户信息  ", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取用户信息  ")
 	public Member getUserInfo(@RequestBody  Member record)
 	{
 		return  memberService.getById(record.getId());	
@@ -201,6 +204,9 @@ public class UserController {
 	 * @date 2016年3月25日10:50:53 
 	 * @return
 	 */
+	@ApiOperation(value = "修改用户信息  ", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "修改用户信息  ")
 	@RequestMapping("modify")
 	@ResponseBody
 	public HttpResultModel<MemberResp> modify(@RequestBody Member record)
@@ -337,6 +343,9 @@ public class UserController {
 	 */
 	@RequestMapping("certification")
 	@ResponseBody
+	@ApiOperation(value = "会员实名认证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "会员实名认证")
 	public HttpResultModel<MemberResp> certification(@RequestBody  Member record)
 	{
 		return  memberService.Certification(record);	
@@ -351,6 +360,9 @@ public class UserController {
 	 */
 	@RequestMapping("certificationinvestor")
 	@ResponseBody
+	@ApiOperation(value = "领头人,投资人认证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "领头人,投资人认证")
 	public HttpResultModel<ResponseBase> certificationInvestor(@RequestBody  MemberApply record)
 	{
 		return  memberApplyService.create(record);	
