@@ -5,22 +5,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
+import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 /**
  * 项目管理
@@ -113,13 +118,15 @@ public class ProjectController {
 		return view;
 	}
 	/**
-	 * 保存项目
+	 * 保存项目  wangchao
 	 * @return
 	 */
 	@RequestMapping("saveproject")
 	@ResponseBody
-	public int saveproject(String data) {
-
-		return 1;
+	public int saveproject(HttpServletRequest request, String data) {
+		PublishProjectReq req=JsonUtil.str2obj(data,PublishProjectReq.class);
+		UserContext context=UserContext.getCurrentContext(request);
+		req.setPublishName(context.getUserName());
+		return projectService.publishProject(req);
 	}	
 }

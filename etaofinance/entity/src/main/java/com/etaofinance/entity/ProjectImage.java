@@ -12,7 +12,7 @@ public class ProjectImage {
     private Date createtime;
 
     private Boolean isdel;
-
+    private String url;
     public Long getId() {
         return id;
     }
@@ -52,4 +52,12 @@ public class ProjectImage {
     public void setIsdel(Boolean isdel) {
         this.isdel = isdel;
     }
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }
