@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,15 +54,19 @@ import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
- * ¹«¹²Ïà¹Ø
- * @author ofmyi_000
+ * å…¬å…±æ¨¡å—
+ * @author hulingbo
+ * @date 2016å¹´4æœˆ5æ—¥16:15:06
  *
  */
 @Controller
 @RequestMapping("common")
 public class CommonController {
+	@Autowired
+	IMemberService memberService;	
 	
 @RequestMapping("/swagger")
 	public ModelAndView suggAdd() {
@@ -70,10 +75,10 @@ public class CommonController {
 	}
 
 	/**
-	 * »ñÈ¡Í¼ĞÎÑéÖ¤Âë
+	 * è·å–å›¾ç‰‡éªŒè¯
 	 * @param 
-	 * @author ruhuaxiao
-	 * @date 2016Äê3ÔÂ25ÈÕ16:53:16
+	 * @author ruhuaxiao 
+	 * @date 2016å¹´3æœˆ25æ—¥16:53:16
 	 * @return
 	 */
 	@RequestMapping("code")
@@ -81,6 +86,20 @@ public class CommonController {
 		ModelAndView mv = new ModelAndView("user/code");
 		mv.addObject("CodeType", type);
 		return mv;
+	}
+	
+	/**
+	 * è·å–éªŒè¯ç æ¥å£
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("sendcode")
+	@ResponseBody
+	@ApiOperation(value = "å‘é€éªŒè¯ç ", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "è·å–éªŒè¯ç ")
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
+		return memberService.sendCode(req);
 	}
 	
 }
