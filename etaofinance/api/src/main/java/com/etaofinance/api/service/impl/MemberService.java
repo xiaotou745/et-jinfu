@@ -274,8 +274,9 @@ public class MemberService implements IMemberService{
 	 */
 	@Override
 	public Member getById(Long id) {
-		
-		return memberDao.selectByPrimaryKey(id);
+
+		 return memberDao.selectByPrimaryKey(id);
+	
 	}
 	/**
 	 * 忘记密码第一步

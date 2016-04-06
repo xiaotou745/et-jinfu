@@ -59,7 +59,7 @@ public class BankControllor {
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取银行列表")
 	public List<Bank> getBankList()
-	{		
+	{
 		return bankService.getList();
 	}	
 	
