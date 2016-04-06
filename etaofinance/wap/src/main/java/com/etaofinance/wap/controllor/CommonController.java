@@ -28,38 +28,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.etaofinance.api.redis.RedisService;
-import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
-import com.etaofinance.core.consts.RedissCacheKey;
-import com.etaofinance.core.security.MD5Util;
-import com.etaofinance.core.util.CookieUtils;
-import com.etaofinance.core.util.JsonUtil;
-import com.etaofinance.core.util.PropertyUtils;
-import com.etaofinance.core.util.RegexHelper;
-import com.etaofinance.entity.Member;
-import com.etaofinance.entity.MemberOther;
-import com.etaofinance.entity.req.ForgetPwdOneReq;
-import com.etaofinance.entity.req.ForgetPwdThreeReq;
-import com.etaofinance.entity.req.ForgetPwdTwoReq;
-import com.etaofinance.entity.req.LoginReq;
-import com.etaofinance.entity.req.ModifypwdReq;
-import com.etaofinance.entity.req.RegistReq;
-import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.resp.ForgetPwdResp;
-import com.etaofinance.entity.resp.MemberResp;
-import com.etaofinance.entity.resp.SendCodeResp;
-import com.etaofinance.wap.common.LoginUtil;
-import com.etaofinance.wap.common.NoRequireLogin;
-import com.etaofinance.wap.common.RequireLogin;
-import com.etaofinance.wap.common.UserContext;
+import com.etaofinance.entity.req.SendCodeReq;
+import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiOperation;
 
+
 /**
- * å…¬å…±æ¨¡å—
+ * ¹«¹²Ä£¿é
  * @author hulingbo
- * @date 2016å¹´4æœˆ5æ—¥16:15:06
+ * @date 2016Äê4ÔÂ5ÈÕ16:15:06
  *
  */
 @Controller
@@ -75,29 +54,45 @@ public class CommonController {
 	}
 
 	/**
-	 * è·å–å›¾ç‰‡éªŒè¯
+	 * »ñÈ¡Í¼Æ¬ÑéÖ¤
 	 * @param 
 	 * @author ruhuaxiao 
-	 * @date 2016å¹´3æœˆ25æ—¥16:53:16
+	 * @date 2016??3??25??16:53:16
 	 * @return
 	 */
 	@RequestMapping("code")
+	@ApiOperation(value = "Í¼Æ¬ÑéÖ¤Âë", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "Í¼Æ¬ÑéÖ¤Âë")
 	public ModelAndView code(int type) {
 		ModelAndView mv = new ModelAndView("user/code");
 		mv.addObject("CodeType", type);
 		return mv;
 	}
-	
 	/**
-	 * è·å–éªŒè¯ç æ¥å£
+	 * »ñÈ¡ÑéÖ¤Âë½Ó¿Ú
 	 * @param req
 	 * @return
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
-	@ApiOperation(value = "å‘é€éªŒè¯ç ", httpMethod = "POST", 
+	@ApiOperation(value = "·¢ËÍÑéÖ¤Âë", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "è·å–éªŒè¯ç ")
+	notes = "»ñÈ¡ÑéÖ¤Âë")
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
+		return memberService.sendCode(req);
+	}
+	
+	/**
+	 * »ñÈ¡ÑéÖ¤Âë½Ó¿Ú
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("sendcode")
+	@ResponseBody
+	@ApiOperation(value = "·¢ËÍÑéÖ¤Âë", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "»ñÈ¡ÑéÖ¤Âë")
 	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
 		return memberService.sendCode(req);
 	}

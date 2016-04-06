@@ -5,6 +5,7 @@ import java.util.List;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountInfo;
 import com.etaofinance.entity.Bank;
+import com.etaofinance.entity.ProjectFavorite;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -18,7 +19,19 @@ import com.etaofinance.entity.resp.*;
 
 public interface IProjectFavoriteService {
    
-
+	  // 插入一条记录
+    int insert(ProjectFavorite record);
+    
+    
     List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
 
+    int updateByPrimaryKeySelective(ProjectFavorite record);
+
+    int updateByPrimaryKey(ProjectFavorite record);
+    
+    HttpResultModel<Object> followProject(ProjectFavorite profavorite);
+    
+    HttpResultModel<Object>  followByPrimaryKeySelective(ProjectFavorite profavorite);
+    
+    int getFavoriteCntByProId(Long proId);
 }

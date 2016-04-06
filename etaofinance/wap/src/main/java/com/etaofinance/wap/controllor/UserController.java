@@ -90,6 +90,7 @@ public class UserController {
 	@Autowired
 	RedisService redisService;
 	
+	
 	/**
 	 * 注册
 	 * @param req

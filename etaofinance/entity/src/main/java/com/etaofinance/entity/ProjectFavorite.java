@@ -3,14 +3,20 @@ package com.etaofinance.entity;
 import java.util.Date;
 
 public class ProjectFavorite {
+	// 逻辑主键
     private Long id;
 
+    // 会员Id
     private Long memberid;
 
+    // 项目Id
     private Long projectid;
 
+    
+    // 关注时间
     private Date createtime;
 
+    // 是否关注
     private Integer isdel;
 
     public Long getId() {

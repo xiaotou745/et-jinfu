@@ -17,6 +17,15 @@
     from projectfavorite
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  
+  
+  <select id="getFavoriteCntByProId" resultType="java.lang.Integer"  parameterType="java.lang.Long" >
+    select 
+    count(1)
+    from projectfavorite
+    where ProjectId = #{proId,jdbcType=BIGINT}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectfavorite
     where Id = #{id,jdbcType=BIGINT}
@@ -27,6 +36,7 @@
     values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, 
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=INTEGER})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectFavorite" >
     insert into projectfavorite
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -46,6 +56,7 @@
         IsDel,
       </if>
     </trim>
+    
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
@@ -64,6 +75,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectFavorite" >
     update projectfavorite
     <set >
@@ -82,6 +94,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectFavorite" >
     update projectfavorite
     set MemberId = #{memberid,jdbcType=BIGINT},
