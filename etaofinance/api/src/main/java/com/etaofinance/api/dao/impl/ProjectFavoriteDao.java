@@ -44,9 +44,15 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 	
 	
 	@Override
-	public int insertSelective(ProjectFavorite record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertSelective(ProjectFavorite profavorite) {
+
+		int insertRes=0;
+		
+		insertRes= getMasterSqlSessionUtil()
+				.insert(
+						"IProjectFavoriteDao.insertSelective",profavorite);
+		 
+		return insertRes;
 	}
 
 	@Override

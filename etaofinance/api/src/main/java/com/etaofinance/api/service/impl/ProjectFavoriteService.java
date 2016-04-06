@@ -62,11 +62,11 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 		followRes.setCode(HttpReturnRnums.Fail.value());
 		followRes.setMsg(HttpReturnRnums.Fail.desc());
 		
-		int insertRes =this.insert(proFavorite);
+		int insertRes =this.insertSelective(proFavorite);
 		
-		int followedCnt = this.getFavoriteCntByProId(proFavorite.getProjectid());
+		//int followedCnt = this.getFavoriteCntByProId(proFavorite.getProjectid());
 		
-		followRes.setData(followRes);
+		//followRes.setData(followRes);
 		
 		if(0!=insertRes)
 		{	
@@ -88,9 +88,9 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 		followRes.setMsg(HttpReturnRnums.Fail.desc());
 		
 	
-		int followedCnt = this.getFavoriteCntByProId(profavorite.getProjectid());
+		//int followedCnt = this.getFavoriteCntByProId(profavorite.getProjectid());
 		
-		followRes.setData(followRes);
+		//followRes.setData(followRes);
 		
 		int updateRes =this.updateByPrimaryKeySelective(profavorite);
 		
@@ -119,6 +119,36 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 	public int getFavoriteCntByProId(Long proId) {
 		
 		return projectFavoriteDao.getFavoriteCntByProId(proId);
+	}
+
+	@Override
+	public HttpResultModel<Object> follow(ProjectFavorite profavorite) {
+		
+		
+		if (null == profavorite) {
+			
+			return null;
+		}
+
+		String id =String.valueOf(profavorite.getId());
+		HttpResultModel<Object> followRes = null;
+
+		if ("null" == id) {
+			// 首次关注
+			followRes = this.followProject(profavorite);
+
+		} else {
+			// 关注 或 取消关注
+			followRes = this.followByPrimaryKeySelective(profavorite);
+		}
+		return followRes;
+		
+	}
+
+	@Override
+	public int insertSelective(ProjectFavorite record) {
+		
+		return projectFavoriteDao.insertSelective(record);
 	}
 
 }
