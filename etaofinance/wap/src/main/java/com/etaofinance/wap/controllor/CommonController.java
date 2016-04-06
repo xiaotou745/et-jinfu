@@ -8,8 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.req.SendCodeReq;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiOperation;
 
 
 /**
