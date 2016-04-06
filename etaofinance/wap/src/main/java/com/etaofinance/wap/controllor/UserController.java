@@ -73,8 +73,10 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("user")
 public class UserController {
+
 	@Autowired
 	IMemberService memberService;	
+	
 	@Autowired
 	IMemberOtherService memberOtherService;	
 	

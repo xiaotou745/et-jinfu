@@ -9,6 +9,7 @@ import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 public interface IProjectFavoriteDao {
     int deleteByPrimaryKey(Long id);
 
+    // 插入一条记录
     int insert(ProjectFavorite record);
 
     int insertSelective(ProjectFavorite record);
@@ -20,4 +21,8 @@ public interface IProjectFavoriteDao {
     int updateByPrimaryKey(ProjectFavorite record);
     
     List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
+    
+    
+    int getFavoriteCntByProId(Long proId);
+    
 }

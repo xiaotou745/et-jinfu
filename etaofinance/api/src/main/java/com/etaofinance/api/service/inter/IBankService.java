@@ -16,6 +16,6 @@ import com.etaofinance.entity.resp.*;
 public interface IBankService {
    
 
-    List<Bank> getList();
+	List<Bank> getList();
 
 }
