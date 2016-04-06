@@ -27,8 +27,6 @@ import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
-import com.etaofinance.entity.req.MemberIdReq;
-import com.etaofinance.entity.resp.FeedBackResp;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
@@ -54,7 +52,7 @@ public class BankControllor {
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取银行列表")
 	public List<Bank> getBankList()
-	{		
+	{
 		return bankService.getList();
 	}	
 	
@@ -87,7 +85,7 @@ public class BankControllor {
 	@ApiOperation(value = "解绑银行卡", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "解绑银行卡")
-	public int UnBindBankCard(@RequestBody  BankCard record)
+	int UnBindBankCard(@RequestBody  BankCard record)
 	{
 		return bankCardService.remove(record.getId());
 	}
@@ -104,9 +102,9 @@ public class BankControllor {
 	@ApiOperation(value = "获取银行卡列表", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取银行卡列表")
-	public List<BankCard> getBankCardList(@RequestBody  MemberIdReq record)
+	public List<BankCard> getBankCardList(@RequestBody  BankCard record)
 	{
-		return bankCardService.getListByMemberId(record.getMemberId());
+		return bankCardService.getListByMemberId(record.getMemberid());
 	}		
 
 
