@@ -37,7 +37,7 @@
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=INTEGER})
   </insert>
   
-  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectFavorite" >
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectFavorite" useGeneratedKeys="true" keyProperty="Id">
     insert into projectfavorite
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -56,7 +56,6 @@
         IsDel,
       </if>
     </trim>
-    
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},

@@ -20,18 +20,18 @@ import com.etaofinance.entity.resp.*;
 public interface IProjectFavoriteService {
    
 	  // 插入一条记录
-    int insert(ProjectFavorite record);
-    
-    
-    List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
+	int insert(ProjectFavorite record);
 
-    int updateByPrimaryKeySelective(ProjectFavorite record);
+	List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
 
-    int updateByPrimaryKey(ProjectFavorite record);
-    
-    HttpResultModel<Object> followProject(ProjectFavorite profavorite);
-    
-    HttpResultModel<Object>  followByPrimaryKeySelective(ProjectFavorite profavorite);
-    
-    int getFavoriteCntByProId(Long proId);
+	int updateByPrimaryKeySelective(ProjectFavorite record);
+
+	int updateByPrimaryKey(ProjectFavorite record);
+
+	HttpResultModel<Object> followProject(ProjectFavorite profavorite);
+
+	HttpResultModel<Object> followByPrimaryKeySelective(
+			ProjectFavorite profavorite);
+
+	int getFavoriteCntByProId(Long proId);
 }
