@@ -126,7 +126,7 @@ public class UserController {
 		if(LoginUtil.checkIsLogin(request, response))//已经登录
 		{
 			Member member=UserContext.getCurrentContext(request).getUserInfo();
-			result.setCode(-1);
+			result.setCode(1);
 			result.setData(member);
 			return result;	
 		}
@@ -160,8 +160,8 @@ public class UserController {
 		redisService.set(rediskey, redisValue,cookieMaxAge,TimeUnit.SECONDS);
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
-		if(req.getReUrl()==null||req.getReUrl().equals(""))
-		{
+		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
+		{//要跳转的URL不为空 进行跳转
 			String basePath =PropertyUtils.getProperty("java.wap.url");
 			response.sendRedirect(basePath + "/"+req.getReUrl());
 		}
@@ -183,9 +183,19 @@ public class UserController {
 	@ApiOperation(value = "获取用户信息  ", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取用户信息  ")
-	public Member getUserInfo(@RequestBody  Member record)
+	@RequireLogin
+	public HttpResultModel<Member> getUserInfo()
 	{
-		return  memberService.getById(record.getId());	
+		 HttpResultModel<Member> model=new HttpResultModel<Member>();
+		 model.setCode(-1);
+		 model.setMsg("获取用户信息失败");
+		 Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());	
+		 if(member!=null)
+		 {
+			 model.setCode(1);
+			 model.setData(member);
+		 }
+		 return model;
 	}
 	/**
 	 * 修改用户信息  
@@ -199,6 +209,7 @@ public class UserController {
 	notes = "修改用户信息  ")
 	@RequestMapping("modify")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<MemberResp> modify(@RequestBody Member record)
 	{
 		return  memberService.modify(record);	
