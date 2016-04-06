@@ -96,8 +96,20 @@ public class MemberOtherService implements IMemberOtherService{
 	@Override
 	public HttpResultModel<Object> verificationPayPwd(MemberOther record) {
 		HttpResultModel<Object> resp=new HttpResultModel<Object>();
-		MemberOther oldMemberOther=memberOtherDao.selectByPrimaryKey(record.getMemberid());
+		if(record.getMemberid() ==null && record.getMemberid().equals(""))
+		{	
+			resp.setCode(MemberOtherVerificationPayPwdEnum.MemberIdIsNull.value());
+			resp.setMsg(MemberOtherVerificationPayPwdEnum.MemberIdIsNull.desc());
+			return resp;			
+		}
 		
+		MemberOther oldMemberOther=memberOtherDao.selectByPrimaryKey(record.getMemberid());
+		if(oldMemberOther==null)
+		{
+			resp.setCode(MemberOtherVerificationPayPwdEnum.Err.value());
+			resp.setMsg(MemberOtherVerificationPayPwdEnum.Err.desc());
+			return resp;
+		}
 		String opwd=MD5Util.MD5(record.getPaypassword());	
 		if(!oldMemberOther.getPaypassword().equals(opwd))
 		{

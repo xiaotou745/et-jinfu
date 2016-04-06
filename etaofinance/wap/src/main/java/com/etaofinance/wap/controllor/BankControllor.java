@@ -72,6 +72,7 @@ public class BankControllor {
 	 */
 	@RequestMapping("/bindbankcard")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "绑定银行卡", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "绑定银行卡")
