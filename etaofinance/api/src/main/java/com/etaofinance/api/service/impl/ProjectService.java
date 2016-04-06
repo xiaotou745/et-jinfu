@@ -1,6 +1,8 @@
 package com.etaofinance.api.service.impl;
 
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import com.etaofinance.core.enums.ProjectStatus;
 import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
@@ -26,6 +29,7 @@ import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
@@ -242,6 +246,20 @@ return projectDao.queryProjectList(req);
 	public List<Project> getList(Project record)
 	{
 		return projectDao.getList(record);
+	}
+
+	/*
+	 * 发布项目 wangchao
+	 */
+	@Override
+	public int publishProject(PublishProjectReq req) {
+		//1.项目主表project 
+		req.getProject().setCreatename(req.getPublishName());
+		String projectimage =req.getProject().getProjectimage();
+		projectimage=PropertyUtils.getProperty("ImgShowUrl")+projectimage;		
+		int projectId=projectDao.insert(req.getProject());
+		
+		return 0;
 	}
 
 }
