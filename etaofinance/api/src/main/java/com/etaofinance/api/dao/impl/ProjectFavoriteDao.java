@@ -29,11 +29,20 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 	}
 
 	@Override
-	public int insert(ProjectFavorite record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insert(ProjectFavorite profavorite) {
+		
+		int insertRes=0;
+		
+		insertRes= getMasterSqlSessionUtil()
+				.insert(
+						"IProjectFavoriteDao.insert",profavorite);
+		 
+		return insertRes;
 	}
 
+	
+	
+	
 	@Override
 	public int insertSelective(ProjectFavorite record) {
 		// TODO Auto-generated method stub
@@ -47,15 +56,28 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(ProjectFavorite record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateByPrimaryKeySelective(ProjectFavorite profavorite) {
+
+		int updateRes=0;
+		
+		updateRes= getMasterSqlSessionUtil()
+				.update(
+						"IProjectFavoriteDao.updateByPrimaryKeySelective",profavorite);
+		 
+		return updateRes;
 	}
 
 	@Override
-	public int updateByPrimaryKey(ProjectFavorite record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateByPrimaryKey(ProjectFavorite profavorite) {
+	
+
+		int updateRes=0;
+		
+		updateRes= getMasterSqlSessionUtil()
+				.update(
+						"IProjectFavoriteDao.updateByPrimaryKey",profavorite);
+		 
+		return updateRes;
 	}
 
 	@Override
@@ -66,6 +88,18 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 						"IProjectFavoriteDao.getListMore",record);
 		 
 		 return list;
+	}
+
+	@Override
+	public int getFavoriteCntByProId(Long proId) {
+		
+		int getCntRes=0;
+		
+		getCntRes= getReadOnlySqlSessionUtil()
+				.selectOne(
+						"IProjectFavoriteDao.getFavoriteCntByProId",proId);
+		 
+		return getCntRes;
 	}
 	
 

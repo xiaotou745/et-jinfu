@@ -16,6 +16,7 @@ import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectFavorite;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -125,5 +126,42 @@ public class ProjectController {
 	{
 		return projectService.getList(record);
 	}
+	
+	/**
+	 * 
+	 * @param profavorite
+	 * @return
+	 */
+	@RequestMapping("follow")
+	@ResponseBody
+	@ApiOperation(value = "关注或取消关注项目", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "关注或取消关注项目")
+	public HttpResultModel<Object> follow(@RequestBody ProjectFavorite profavorite)
+	{
+		
+		if (null == profavorite) {
+			return null;
+		}
+
+		String id = profavorite.getId().toString();
+
+		HttpResultModel<Object> followRes = null;
+
+		if (null == id || id.length() <= 0) {
+			// 首次关注
+			followRes = projectFavoriteService.followProject(profavorite);
+
+		} else {
+			// 关注 或 取消关注
+			followRes = projectFavoriteService
+					.followByPrimaryKeySelective(profavorite);
+		}
+		return followRes;
+	}
+	
+	
+	
+	
 	
 }
