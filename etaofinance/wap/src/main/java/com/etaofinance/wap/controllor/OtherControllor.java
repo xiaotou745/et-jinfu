@@ -85,7 +85,7 @@ public class OtherControllor {
 	
 	
 	/**
-	 * 创建意见反馈
+	 * 意见反馈
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年3月24日18:05:14

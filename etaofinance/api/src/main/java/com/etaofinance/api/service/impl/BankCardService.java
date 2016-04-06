@@ -30,6 +30,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.RemoveReq;
 import com.etaofinance.entity.resp.ADVertResp;
 import com.etaofinance.entity.resp.MemberResp;
 
@@ -42,9 +43,9 @@ public class BankCardService implements IBankCardService{
 	private IBankCardDao bankCardDao;
 
 	@Override
-	public HttpResultModel<ResponseBase> create(BankCard record) {
+	public HttpResultModel<Object> create(BankCard record) {
 		
-		HttpResultModel<ResponseBase> resp = new HttpResultModel<ResponseBase>();		
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();		
 	
 		if(record.getMemberid() ==null && record.getMemberid().equals(""))
 		{	
@@ -59,11 +60,22 @@ public class BankCardService implements IBankCardService{
 			resp.setMsg(BankCardEnum.BankIdIsNull.desc());
 			return resp;			
 		}
-		
+		if(record.getBankname() ==null && record.getBankname().equals(""))
+		{	
+			resp.setCode(BankCardEnum.BankNameIsNull.value());
+			resp.setMsg(BankCardEnum.BankNameIsNull.desc());
+			return resp;			
+		}
 		if(record.getCardno() ==null && record.getCardno().equals(""))
 		{	
 			resp.setCode(BankCardEnum.CardNoIsNull.value());
 			resp.setMsg(BankCardEnum.CardNoIsNull.desc());
+			return resp;			
+		}
+		if(record.getCardno().length()>19)
+		{	
+			resp.setCode(BankCardEnum.CardNoIsErr.value());
+			resp.setMsg(BankCardEnum.CardNoIsErr.desc());
 			return resp;			
 		}
 		if(record.getCardname() ==null && record.getCardname().equals(""))
@@ -89,8 +101,32 @@ public class BankCardService implements IBankCardService{
 	}
 
 	@Override
-	public int remove(Integer id) {
-		return bankCardDao.deleteByPrimaryKey(id);
+	public HttpResultModel<Object> remove(RemoveReq record) {
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
+		if(record.getMemberId() ==null && record.getMemberId().equals(""))
+		{	
+			resp.setCode(BankCardEnum.MemberIdIsNull.value());
+			resp.setMsg(BankCardEnum.MemberIdIsNull.desc());
+			return resp;			
+		}
+		if(record.getCurrId() ==null && record.getCurrId().equals(""))
+		{	
+			resp.setCode(BankCardEnum.IdIsNull.value());
+			resp.setMsg(BankCardEnum.IdIsNull.desc());
+			return resp;			
+		}
+		
+		int row= bankCardDao.deleteByPrimaryKey(record.getCurrId().intValue());		
+		if(row<=0)
+		{
+			resp.setCode(BankCardEnum.Err.value());
+			resp.setMsg(BankCardEnum.Err.desc());
+			return resp;	
+		}
+		
+		resp.setCode(BankCardEnum.Success.value());
+		resp.setMsg(BankCardEnum.Success.desc());		
+		return resp;		
 	}
 
 	@Override

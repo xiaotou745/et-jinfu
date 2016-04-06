@@ -23,14 +23,28 @@ public enum BankCardEnum {
 	BankIdIsNull(-3,"银行为空"),
 	
 	/**
+	 * 银行名称为空
+	 */
+	BankNameIsNull(-4,"银行名称为空"),
+	/**
 	 * 卡号为空"
 	 */
-	CardNoIsNull(-4,"卡号为空"),
+	CardNoIsNull(-5,"卡号为空"),
 	
 	/**
 	 * 持卡人为空
 	 */
-	CardNameIsNull(-5,"持卡人为空");
+	CardNameIsNull(-6,"持卡人为空"),
+	
+	/**
+	 * 卡号校验失败
+	 * 不能超过19位数字
+	 */
+	CardNoIsErr(-7,"卡号校验失败"),
+	/**
+	 * Id为空
+	 */
+	IdIsNull(-100,"Id为空");
 
 	private int value = 0;
 	private String desc;
