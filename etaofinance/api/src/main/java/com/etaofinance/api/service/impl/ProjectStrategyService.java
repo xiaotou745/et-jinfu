@@ -39,4 +39,9 @@ return projectStrategyDao.updateByPrimaryKey(record);
 return projectStrategyDao.getByProjectIds(projectids);
 	}
 
+	@Override
+	public List<ProjectStrategy> getByProjectId(long projectid) {
+		return projectStrategyDao.getByProjectId(projectid);
+	}
+
 }

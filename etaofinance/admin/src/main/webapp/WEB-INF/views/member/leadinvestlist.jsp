@@ -131,7 +131,8 @@
 			        </fieldset>
 				</div>
 				<div class="modal-footer">
-					<button id="btnConfirm" class="btn btn-white" type="button" data-dismiss="modal">确定</button>
+				<button class="btn btn-white" type="button" data-dismiss="modal">返回</button>
+					<button id="btnConfirm" class="btn btn-primary" type="button" >确定</button>
 				</div>
 			</small>
 		</div> 
@@ -201,28 +202,28 @@
 		var auditStaus= $('input[name="rAuditOpt"]:checked').val();
 		var refuseReason=$("#txtRefuseReason").val();
 		if(auditStaus==0){
-			if(refuseReason.trim().length == 0){
+			if(refuseReason.trim().length == 2){
 				alert("请输入拒绝原因！")
-				return;
 			}
+		}else{
+			var url="<%=basePath%>/member/auditconfirm";
+			var paramaters = { 
+					 	"memberApplyId":$("#memberApplyId").val(),
+					 	"auditStatus":auditStaus,
+					 	"refuseReason":refuseReason
+					 };  
+			$.ajax({
+				type:"POST",
+				url:url,
+				data:paramaters,
+				success:function(result){
+					alert("成功！");
+					jss.search(1);
+				},
+				error:function(e){
+					alert("失败！");
+				}
+			});
 		}
-		var url="<%=basePath%>/member/auditconfirm";
-		var paramaters = { 
-				 	"memberApplyId":$("#memberApplyId").val(),
-				 	"auditStatus":auditStaus,
-				 	"refuseReason":refuseReason
-				 };  
-		$.ajax({
-			type:"POST",
-			url:url,
-			data:paramaters,
-			success:function(result){
-				alert("成功！");
-				jss.search(1);
-			},
-			error:function(e){
-				alert("失败！");
-			}
-		});	 
 	});
 </script>

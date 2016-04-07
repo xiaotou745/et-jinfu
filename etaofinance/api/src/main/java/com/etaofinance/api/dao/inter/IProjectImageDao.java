@@ -1,5 +1,7 @@
 package com.etaofinance.api.dao.inter;
 
+import java.util.List;
+
 import com.etaofinance.entity.ProjectImage;
 
 public interface IProjectImageDao {
@@ -14,4 +16,6 @@ public interface IProjectImageDao {
     int updateByPrimaryKeySelective(ProjectImage record);
 
     int updateByPrimaryKey(ProjectImage record);
+
+	int insertList(List<ProjectImage> projectImageList);
 }

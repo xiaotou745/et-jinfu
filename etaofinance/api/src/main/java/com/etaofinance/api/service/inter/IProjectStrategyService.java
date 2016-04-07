@@ -11,4 +11,7 @@ public interface IProjectStrategyService {
 
     int updateByPrimaryKey(ProjectStrategy record);
     List<ProjectStrategy> getByProjectIds(List<Long> projectids);
+    
+    List<ProjectStrategy> getByProjectId(long projectid);
+    
 }

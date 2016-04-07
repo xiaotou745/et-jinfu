@@ -1,93 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.etaofinance.api.dao.inter.IProjectImageDao" >
-  <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectImage" >
-    <id column="Id" property="id" jdbcType="BIGINT" />
-    <result column="ProjectId" property="projectid" jdbcType="BIGINT" />
-    <result column="TypeId" property="typeid" jdbcType="SMALLINT" />
-    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="IsDel" property="isdel" jdbcType="BIT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    Id, ProjectId, TypeId, CreateTime, IsDel
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from projectimage
-    where Id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from projectimage
-    where Id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.etaofinance.entity.ProjectImage" >
-    insert into projectimage (Id, ProjectId, TypeId, 
-      CreateTime, IsDel)
-    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, #{typeid,jdbcType=SMALLINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectImage" >
-    insert into projectimage
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        Id,
-      </if>
-      <if test="projectid != null" >
-        ProjectId,
-      </if>
-      <if test="typeid != null" >
-        TypeId,
-      </if>
-      <if test="createtime != null" >
-        CreateTime,
-      </if>
-      <if test="isdel != null" >
-        IsDel,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="projectid != null" >
-        #{projectid,jdbcType=BIGINT},
-      </if>
-      <if test="typeid != null" >
-        #{typeid,jdbcType=SMALLINT},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isdel != null" >
-        #{isdel,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectImage" >
-    update projectimage
-    <set >
-      <if test="projectid != null" >
-        ProjectId = #{projectid,jdbcType=BIGINT},
-      </if>
-      <if test="typeid != null" >
-        TypeId = #{typeid,jdbcType=SMALLINT},
-      </if>
-      <if test="createtime != null" >
-        CreateTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isdel != null" >
-        IsDel = #{isdel,jdbcType=BIT},
-      </if>
-    </set>
-    where Id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectImage" >
-    update projectimage
-    set ProjectId = #{projectid,jdbcType=BIGINT},
-      TypeId = #{typeid,jdbcType=SMALLINT},
-      CreateTime = #{createtime,jdbcType=TIMESTAMP},
-      IsDel = #{isdel,jdbcType=BIT}
-    where Id = #{id,jdbcType=BIGINT}
-  </update>
+	<resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectImage" >
+		<id column="Id" property="id" jdbcType="BIGINT" />
+		<result column="ProjectId" property="projectid" jdbcType="BIGINT" />
+		<result column="TypeId" property="typeid" jdbcType="SMALLINT" />
+		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="IsDel" property="isdel" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List" >Id, ProjectId, TypeId, CreateTime, IsDel</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select
+		<include refid="Base_Column_List" />
+		from projectimage
+		where Id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >delete from projectimage
+		where Id = #{id,jdbcType=BIGINT}</delete>
+	<insert id="insert" parameterType="com.etaofinance.entity.ProjectImage" >insert into projectimage (Id, ProjectId, TypeId,
+		CreateTime, IsDel)
+		values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, #{typeid,jdbcType=SMALLINT},
+		#{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})</insert>
+	<insert id="insertList" parameterType="java.util.List" >
+		<foreach collection="list" index="index" item="item">insert into projectimage (ProjectId, TypeId,Url)
+			values (#{item.projectid,jdbcType=BIGINT}, #{item.typeid,jdbcType=INTEGER},
+			#{item.url,jdbcType=VARCHAR});</foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectImage" >
+		insert into projectimage
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >Id,</if>
+			<if test="projectid != null" >ProjectId,</if>
+			<if test="typeid != null" >TypeId,</if>
+			<if test="createtime != null" >CreateTime,</if>
+			<if test="isdel != null" >IsDel,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null" >#{id,jdbcType=BIGINT},</if>
+			<if test="projectid != null" >#{projectid,jdbcType=BIGINT},</if>
+			<if test="typeid != null" >#{typeid,jdbcType=SMALLINT},</if>
+			<if test="createtime != null" >#{createtime,jdbcType=TIMESTAMP},</if>
+			<if test="isdel != null" >#{isdel,jdbcType=BIT},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectImage" >
+		update projectimage
+		<set >
+			<if test="projectid != null" >ProjectId = #{projectid,jdbcType=BIGINT},</if>
+			<if test="typeid != null" >TypeId = #{typeid,jdbcType=SMALLINT},</if>
+			<if test="createtime != null" >CreateTime = #{createtime,jdbcType=TIMESTAMP},</if>
+			<if test="isdel != null" >IsDel = #{isdel,jdbcType=BIT},</if>
+		</set>
+		where Id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectImage" >update projectimage
+		set ProjectId = #{projectid,jdbcType=BIGINT},
+		TypeId = #{typeid,jdbcType=SMALLINT},
+		CreateTime = #{createtime,jdbcType=TIMESTAMP},
+		IsDel = #{isdel,jdbcType=BIT}
+		where Id = #{id,jdbcType=BIGINT}</update>
 </mapper>

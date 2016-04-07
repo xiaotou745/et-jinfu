@@ -7,12 +7,13 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProjectAuditReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
 public interface IProjectService {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Project record);
+    long insert(Project record);
 
     Project selectByPrimaryKey(Long id);
 
@@ -39,6 +40,12 @@ public interface IProjectService {
 	 * @return
 	 */	
 	List<Project> getList(Project record);
-
+	/*
+	 * 后台发布项目 wangchao
+	 */
 	int publishProject(PublishProjectReq req);
+	/*
+	 * 后台审核项目 wangchao
+	 */
+	int audit(ProjectAuditReq req);
 }

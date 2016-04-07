@@ -41,6 +41,7 @@ function SaveChek() {
             return false;
         }
         var p1b = $('#projectType1B').val();
+        alert(p1b.length);
         if (p1b.length != 0 && !IsDouble(p1b)) {
             alert('请输入正确的收益比例!');
             $('#projectType1B').focus();
@@ -176,7 +177,7 @@ function CreateStrategylist() {
         var item2 = new Object();
         item2.key = 'SteadyB';
         item2.value = 0;
-        if (p1b.length != 0 && !IsDouble(p1b)) {
+        if (p1b.length != 0 && IsDouble(p1b)) {
             item2.value = p1b;
         }
         item2.description = "稳健型第二个值";
@@ -195,7 +196,7 @@ function CreateStrategylist() {
         item2.key = 'SteadyB';
         item2.value = 0;
         item2.description = "风险共担型第二个值";
-        if (p1b.length != 0 && !IsDouble(p2b)) {
+        if (p1b.length != 0 && IsDouble(p2b)) {
             item2.value = p2b;
         }
         strategylist.push(item2);

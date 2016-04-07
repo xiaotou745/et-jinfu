@@ -8,12 +8,13 @@
 		<result column="Description" property="description" jdbcType="VARCHAR" />
 		<result column="Amount" property="amount" jdbcType="REAL" />
 		<result column="FenShu" property="fenshu" jdbcType="INTEGER" />
-		<result column="RedidueFenshu" property="redidueFenshu" jdbcType="INTEGER" />
+		<result column="RedidueFenshu" property="redidueFenshu"
+			jdbcType="INTEGER" />
 		<result column="LeadMinFenShu" property="leadminfenshu"
 			jdbcType="INTEGER" />
 		<result column="PreheatMaxFenShu" property="preheatmaxfenshu"
 			jdbcType="INTEGER" />
-			<result column="RediduePreheatMaxFenShu" property="rediduePreheatMaxFenShu"
+		<result column="RediduePreheatMaxFenShu" property="rediduePreheatMaxFenShu"
 			jdbcType="INTEGER" />
 		<result column="UnitPrice" property="unitprice" jdbcType="REAL" />
 		<result column="ProvinceCode" property="provincecode" jdbcType="INTEGER" />
@@ -39,12 +40,16 @@
 		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		Id, ProjectName, TypeId, Description, Amount, FenShu, LeadMinFenShu,
+		Id, ProjectName, TypeId, Description, Amount, FenShu,
+		LeadMinFenShu,
 		PreheatMaxFenShu,
-		UnitPrice, ProvinceCode, CityCode, AreaCode, Address, ProjectImage, AuditStatus,
-		ProjectStatus, IsShelve, MemberId, PreheatTime, StartTime, EndTime,
+		UnitPrice, ProvinceCode, CityCode,
+		AreaCode, Address, ProjectImage, AuditStatus,
+		ProjectStatus, IsShelve,
+		MemberId, PreheatTime, StartTime, EndTime,
 		Schedule, InvestmentNumber,
-		FollowNumber, AuditName, AuditTime, CreateName, CreateTime,Refusereasion,RedidueFenshu,RediduePreheatMaxFenShu
+		FollowNumber, AuditName, AuditTime, CreateName,
+		CreateTime,Refusereasion,RedidueFenshu,RediduePreheatMaxFenShu
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
@@ -54,32 +59,40 @@
 		where Id = #{id,jdbcType=BIGINT}
 	</select>
 	<!-- 获取预热或跟头中的项目 -->
-	<select id="getFinceingProject" resultType="com.etaofinance.entity.Project" parameterType="java.lang.Long">
+	<select id="getFinceingProject" resultType="com.etaofinance.entity.Project"
+		parameterType="java.lang.Long">
 		select
 		*
 		from project
 		where Id = #{id,jdbcType=BIGINT}
-		AND (ProjectStatus=2 OR ProjectStatus=3)
-    	AND IsShelve=1
-    	AND AuditStatus=2
-  		AND NOW()>PreheatTime
-  		AND EndTime>NOW()
+		AND
+		(ProjectStatus=2 OR ProjectStatus=3)
+		AND IsShelve=1
+		AND AuditStatus=2
+		AND NOW()>PreheatTime
+		AND EndTime>NOW()
 	</select>
-	 <select id="getList" resultType="com.etaofinance.entity.Project"  parameterType="com.etaofinance.entity.Project" >
- select 
-<include refid="Base_Column_List" />
-from project  
-where memberid = #{memberid,jdbcType=BIGINT}
-	<if test="projectstatus != null">
-		and	projectstatus=#{projectstatus,jdbcType=SMALLINT}
-	</if>
-  </select>
+	<select id="getList" resultType="com.etaofinance.entity.Project"
+		parameterType="com.etaofinance.entity.Project">
+		select
+		<include refid="Base_Column_List" />
+		from project
+		where memberid = #{memberid,jdbcType=BIGINT}
+		<if test="projectstatus != null">
+			and projectstatus=#{projectstatus,jdbcType=SMALLINT}
+		</if>
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from project
+		delete from
+		project
 		where Id = #{id,jdbcType=BIGINT}
 	</delete>
-	<!-- 新增项目 茹化肖 -->
+	<!-- 新增项目 茹化肖 王超修改返回主键id -->
 	<insert id="insert" parameterType="com.etaofinance.entity.Project">
+		<selectKey resultType="java.lang.Long" keyProperty="id"
+			order="AFTER">
+			select @@IDENTITY as id
+		</selectKey>
 		insert into project (ProjectName,
 		TypeId,
 		Description,
@@ -381,38 +394,57 @@ where memberid = #{memberid,jdbcType=BIGINT}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Project">
 		update project
-		set ProjectName = #{projectname,jdbcType=VARCHAR},
-		TypeId = #{typeid,jdbcType=SMALLINT},
-		Description = #{description,jdbcType=VARCHAR},
+		set
+		ProjectName = #{projectname,jdbcType=VARCHAR},
+		TypeId =
+		#{typeid,jdbcType=SMALLINT},
+		Description =
+		#{description,jdbcType=VARCHAR},
 		Amount = #{amount,jdbcType=REAL},
 		FenShu = #{fenshu,jdbcType=INTEGER},
-		LeadMinFenShu = #{leadminfenshu,jdbcType=INTEGER},
-		PreheatMaxFenShu = #{preheatmaxfenshu,jdbcType=INTEGER},
-		UnitPrice = #{unitprice,jdbcType=REAL},
-		ProvinceCode = #{provincecode,jdbcType=INTEGER},
-		CityCode = #{citycode,jdbcType=INTEGER},
+		LeadMinFenShu =
+		#{leadminfenshu,jdbcType=INTEGER},
+		PreheatMaxFenShu =
+		#{preheatmaxfenshu,jdbcType=INTEGER},
+		UnitPrice =
+		#{unitprice,jdbcType=REAL},
+		ProvinceCode =
+		#{provincecode,jdbcType=INTEGER},
+		CityCode =
+		#{citycode,jdbcType=INTEGER},
 		AreaCode = #{areacode,jdbcType=INTEGER},
 		Address = #{address,jdbcType=VARCHAR},
-		ProjectImage = #{projectimage,jdbcType=VARCHAR},
-		AuditStatus = #{auditstatus,jdbcType=SMALLINT},
-		ProjectStatus = #{projectstatus,jdbcType=SMALLINT},
-		IsShelve = #{isshelve,jdbcType=BIT},
+		ProjectImage =
+		#{projectimage,jdbcType=VARCHAR},
+		AuditStatus =
+		#{auditstatus,jdbcType=SMALLINT},
+		ProjectStatus =
+		#{projectstatus,jdbcType=SMALLINT},
+		IsShelve =
+		#{isshelve,jdbcType=BIT},
 		MemberId = #{memberid,jdbcType=BIGINT},
 		PreheatTime = #{preheattime,jdbcType=TIMESTAMP},
-		StartTime = #{starttime,jdbcType=TIMESTAMP},
-		EndTime = #{endtime,jdbcType=TIMESTAMP},
+		StartTime =
+		#{starttime,jdbcType=TIMESTAMP},
+		EndTime =
+		#{endtime,jdbcType=TIMESTAMP},
 		Schedule = #{schedule,jdbcType=INTEGER},
 		InvestmentNumber = #{investmentnumber,jdbcType=INTEGER},
-		FollowNumber = #{follownumber,jdbcType=INTEGER},
-		AuditName = #{auditname,jdbcType=VARCHAR},
-		AuditTime = #{audittime,jdbcType=TIMESTAMP},
-		CreateName = #{createname,jdbcType=VARCHAR},
-		CreateTime = #{createtime,jdbcType=TIMESTAMP}
+		FollowNumber =
+		#{follownumber,jdbcType=INTEGER},
+		AuditName =
+		#{auditname,jdbcType=VARCHAR},
+		AuditTime =
+		#{audittime,jdbcType=TIMESTAMP},
+		CreateName =
+		#{createname,jdbcType=VARCHAR},
+		CreateTime =
+		#{createtime,jdbcType=TIMESTAMP}
 		where Id = #{id,jdbcType=BIGINT}
 	</update>
 	<sql id="queryProjectListWhere">
 		1=1
-	    <if test="id>0">
+		<if test="id>0">
 			and id=${id}
 		</if>
 		<if test="typeId>0">
@@ -437,7 +469,8 @@ where memberid = #{memberid,jdbcType=BIGINT}
 			and createTime>=''${startCreateTime}''
 		</if>
 		<if test="endCreateTime != null and endCreateTime!=''">
-			and date_add(''${endCreateTime}'', INTERVAL 1 day)>createTime
+			and date_add(''${endCreateTime}'', INTERVAL 1
+			day)>createTime
 		</if>
 	</sql>
 	<select id="queryProjectList" resultType="com.etaofinance.entity.Project"
@@ -447,7 +480,9 @@ where memberid = #{memberid,jdbcType=BIGINT}
 		' Id desc ',
 		' a.* ',
 		' project as a ',
-		'<include refid="queryProjectListWhere" />',
+		'
+		<include refid="queryProjectListWhere" />
+		',
 		#{pageSize,mode=IN,jdbcType=INTEGER},
 		#{currentPage,mode=IN,jdbcType=INTEGER},
 		#{totalRecord,mode=OUT,jdbcType=INTEGER},
@@ -460,40 +495,44 @@ where memberid = #{memberid,jdbcType=BIGINT}
 		<if test="projectStatus>0">
 			and projectStatus=${projectStatus>0}
 		</if>
-		  AND p.IsShelve = 1 
-		  AND p.ProjectStatus != 1
-		  AND p.ProjectStatus != 5 
-		  AND p.ProjectStatus != 4
-		  AND P.IsNovice!=1
-		  AND p.AuditStatus = 2 
-		  AND NOW() >= p.PreheatTime 
-		  AND p.EndTime >= NOW()
+		AND p.IsShelve = 1
+		AND p.ProjectStatus != 1
+		AND p.ProjectStatus != 5
+		AND p.ProjectStatus != 4
+		AND P.IsNovice!=1
+		AND p.AuditStatus = 2
+		AND NOW() >= p.PreheatTime
+		AND p.EndTime >= NOW()
 	</sql>
 	<select id="getProjectList" resultType="com.etaofinance.entity.domain.ProjectModel"
 		parameterType="com.etaofinance.entity.req.PagedProjectReq"
 		statementType="CALLABLE">
 		{call Sp_CustomPage2015_V1(
 		' p.ProjectStatus ASC ,p.EndTime ASC ',
-		' p.Id,
-  p.ProjectName,
-  p.TypeId,
-  p.Amount,
-  p.FenShu,
-  p.UnitPrice,
-  p.ProjectImage,
-  p.Schedule,
-  p.ProjectStatus,
-  p.StartTime,
-  IFNULL((SELECT
-      p2.Value
-    FROM projectstrategy p2
-    WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
-  IFNULL((SELECT
-      p2.Value
-    FROM projectstrategy p2
-    WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
-		'  project p ',
-		'<include refid="getProjectListWhere" />',
+		'
+		p.Id,
+		p.ProjectName,
+		p.TypeId,
+		p.Amount,
+		p.FenShu,
+		p.UnitPrice,
+		p.ProjectImage,
+		p.Schedule,
+		p.ProjectStatus,
+		p.StartTime,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
+		'
+		project p ',
+		'
+		<include refid="getProjectListWhere" />
+		',
 		#{pageSize,mode=IN,jdbcType=INTEGER},
 		#{currentPage,mode=IN,jdbcType=INTEGER},
 		#{totalRecord,mode=OUT,jdbcType=INTEGER},
@@ -501,4 +540,17 @@ where memberid = #{memberid,jdbcType=BIGINT}
 		)}
 	</select>
 	<!-- Wap获取项目列表 end -->
+	<update id="audit" parameterType="com.etaofinance.entity.req.ProjectAuditReq">
+		update project
+		set
+		AuditStatus = #{auditStatus,jdbcType=SMALLINT},
+		<if test="auditStatus==2">
+			PreheatTime = #{onlinePreheatDate,jdbcType=TIMESTAMP},
+			StartTime = #{openFinancingDate,jdbcType=TIMESTAMP},
+			EndTime = #{endFinancingDate,jdbcType=TIMESTAMP},
+		</if>
+		AuditName = #{auditName,jdbcType=VARCHAR},
+		AuditTime = now()
+		where Id = #{projectId,jdbcType=BIGINT}
+	</update>
 </mapper>

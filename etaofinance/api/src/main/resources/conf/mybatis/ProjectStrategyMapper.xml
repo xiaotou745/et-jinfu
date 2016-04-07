@@ -45,4 +45,12 @@
 	           ${item}
 	     </foreach> ;
   </select>
+  
+  <select id="getByProjectId"  resultType="com.etaofinance.entity.ProjectStrategy" 
+    parameterType="java.lang.Long" >
+	select 
+    <include refid="Base_Column_List" />
+    from projectstrategy where ProjectId =${projectid,jdbcType=VARCHAR}
+  </select>
+  
 </mapper>

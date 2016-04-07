@@ -27,6 +27,7 @@ import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProjectAuditReq;
 /**
  * 项目管理
  * @author ofmyi_000
@@ -39,6 +40,7 @@ public class ProjectController {
 	private IProjectService projectService;
 	@Autowired
 	private IProjectStrategyService projectStrategyService;
+	 
 	@Autowired
 	private IPublicProvinceCityService publicProvinceCityService;
 	/**
@@ -103,7 +105,7 @@ public class ProjectController {
 		return resultMap;
 		}
 	/**
-	 * 新建项目
+	 * 新建项目  wangchao modify
 	 * @return
 	 */
 	@RequestMapping("newproject")
@@ -128,5 +130,29 @@ public class ProjectController {
 		UserContext context=UserContext.getCurrentContext(request);
 		req.setPublishName(context.getUserName());
 		return projectService.publishProject(req);
-	}	
+	}
+	/*
+	 * 项目审核 wangchao 
+	 */
+	@RequestMapping("audit")
+	@ResponseBody
+	public int audit(HttpServletRequest request,ProjectAuditReq req) {
+		UserContext context=UserContext.getCurrentContext(request);
+		req.setAuditName(context.getUserName());
+		return projectService.audit(req);
+	}
+	/*
+	 * 项目预览 wangchao
+	 */
+	@RequestMapping("previewproject")
+	public ModelAndView previewProject(long id){
+		ModelAndView view = new ModelAndView("adminView");
+		view.addObject("subtitle", "项目管理");
+		view.addObject("currenttitle", "项目预览");
+		view.addObject("viewPath", "project/previewproject");
+		Project project= projectService.selectByPrimaryKey(id);
+		List<ProjectStrategy> proStrList= projectStrategyService.getByProjectId(id);
+		
+		return view;
+	}
 }

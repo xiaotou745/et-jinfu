@@ -45,16 +45,23 @@
 		<tr>
 			<td><%=(i+1)%></td>
 			<td><%=list.get(i).getProjectname()%></td>
-			<td><%=list.get(i).getAmount()%>%</td>
+			<td><%=list.get(i).getAmount()%></td>
 			<td><%=ProjectType.getEnum(list.get(i).getTypeid()).desc()%></td>
 			<td><%=cityMap.get(list.get(i).getCitycode())%></td>
 			<td><%=strategyMap.get(list.get(i).getId())%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
 			<td><%=ProjectAuditStatus.getEnum(list.get(i).getAuditstatus()).desc()%></td>
 			<td><%=list.get(i).getRefusereasion()%></td>
-			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">预览</a>
-			<a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">修改</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">审核</a>
+			<td><a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">预览</a>
+			<% if(list.get(i).getAuditstatus()!=ProjectAuditStatus.AuditPass.value()){ %>
+				<a href="<%=basePath%>/?id=<%=list.get(i).getId()%>">修改</a>
+			<% } %>			
+			<% if(list.get(i).getAuditstatus()==ProjectAuditStatus.WaitAudit.value()){ %>
+				<a href="javascript:void(0)" onclick="showProjectAudit(<%=list.get(i).getId()%>)">审核</a>
+			<% } else if(list.get(i).getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
+				<a href="javascript:void(0)" onclick="showProjectAudit(<%=list.get(i).getId()%>)">重审</a>
+			<% } else {%>
+			<% } %>
 			</td>
 		</tr>
 		<%
