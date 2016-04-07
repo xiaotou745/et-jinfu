@@ -19,6 +19,12 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String basePath =PropertyUtils.getProperty("java.wap.url");
+		String IsOpenSwagger=PropertyUtils.getProperty("IsOpenSwagger");
+		if(request.getServletPath().equals("/common/swagger")&&IsOpenSwagger.equals("0"))
+		{//验证是否开启Swagger  1 开启 0未开启 不允许访问
+			response.sendRedirect(basePath);
+			return false;
+		}
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod myHandlerMethod = (HandlerMethod) handler;
 	        Object bean = myHandlerMethod.getBean();
@@ -45,6 +51,7 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 	        	        return false;
 	        		}
 	        		response.sendRedirect(basePath);
+	        		return false;
 	        		
 	        	}//IF LOGIN END
 	        }//if Annotation end

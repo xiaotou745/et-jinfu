@@ -20,7 +20,7 @@ public enum SendCodeType {
 	/**
 	 * 更换手机号
 	 */
-	ChangePhone(5, "找回支付密码"),
+	ChangePhone(5, "更换手机号"),
 	/**
 	 * 绑定新手机
 	 */

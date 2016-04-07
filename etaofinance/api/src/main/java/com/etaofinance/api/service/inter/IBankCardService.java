@@ -12,15 +12,16 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
+import com.etaofinance.entity.req.RemoveReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
 
 public interface IBankCardService {
    
-	HttpResultModel<ResponseBase> create(BankCard record);
+	HttpResultModel<Object> create(BankCard record);
 	
-	int remove(Integer id) ;
+	HttpResultModel<Object> remove(RemoveReq record) ;
 	
 	List<BankCard> getListByMemberId(Long memberId);
 

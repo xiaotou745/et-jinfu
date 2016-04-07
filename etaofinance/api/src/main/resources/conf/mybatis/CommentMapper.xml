@@ -25,12 +25,10 @@
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.Comment" >
-    insert into comment (Id, ProjectId, MemberId, 
-      Content, IsReply, ReCommentId, 
-      CreateTime, IsDel)
-    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, 
-      #{content,jdbcType=VARCHAR}, #{isreply,jdbcType=TINYINT}, #{recommentid,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=TINYINT})
+    insert into comment (ProjectId, MemberId, 
+      Content, IsReply, ReCommentId)
+    values (#{projectid,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, 
+      #{content,jdbcType=VARCHAR}, #{isreply,jdbcType=TINYINT}, #{recommentid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Comment" >
     insert into comment
@@ -124,5 +122,10 @@
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       IsDel = #{isdel,jdbcType=TINYINT}
     where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyAndMem" parameterType="com.etaofinance.entity.Comment" >
+    update comment
+    set  IsDel = #{isdel,jdbcType=TINYINT}
+    where Id = #{id,jdbcType=BIGINT} And MemberId = #{memberid,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -27,7 +27,7 @@
     from projectsubscription
     where Id = #{id,jdbcType=BIGINT}
   </select>
- <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectSubscriptionDM"  parameterType="com.etaofinance.entity.domain.ProjectSubscriptionDM" >
+ <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectSubscriptionDM"  parameterType="com.etaofinance.entity.req.ProSubInvestReq" >
  select 
  ps.Id, ps.MemberId, ps.ProjectId, ps.IsLead, ps.CreateTime, ps.Amount, ps.FenShu, ps.Name, ps.PhoneNo, ps.Email, 
     ps.IdCard, ps.RefundStatus, ps.RefundName, ps.RefundTime,
@@ -35,9 +35,10 @@ p.ProjectName, p.projectStatus
     from projectsubscription ps
 left join project  p on ps.ProjectId=p.Id
 where ps.memberid = #{memberid,jdbcType=BIGINT}
-	<if test="projectStatus != null">
+	<if test="projectStatus>0">
 		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
 	</if>
+	order by ps.CreateTime desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectsubscription

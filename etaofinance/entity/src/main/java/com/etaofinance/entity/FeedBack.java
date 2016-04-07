@@ -7,7 +7,7 @@ public class FeedBack {
 
     private String description;
 
-    private Integer memberid;
+    private Long memberid;
 
     private String createname;
 
@@ -37,11 +37,11 @@ public class FeedBack {
         this.description = description == null ? null : description.trim();
     }
 
-    public Integer getMemberid() {
+    public Long getMemberid() {
         return memberid;
     }
 
-    public void setMemberid(Integer memberid) {
+    public void setMemberid(Long memberid) {
         this.memberid = memberid;
     }
 

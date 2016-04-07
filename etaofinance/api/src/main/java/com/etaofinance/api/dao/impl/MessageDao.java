@@ -54,11 +54,11 @@ public class MessageDao extends DaoBase implements IMessageDao{
 	}
 
 	@Override
-	public List<Message> getList(Message record) {
+	public List<Message> getList(Long memberid) {
 		 List<Message> list=null;
 		 list=getReadOnlySqlSessionUtil()
 				.selectList(
-						"IMessageDao.getList",record.getMemberid());
+						"IMessageDao.getList",memberid);
 		 
 		 return list;
 	}

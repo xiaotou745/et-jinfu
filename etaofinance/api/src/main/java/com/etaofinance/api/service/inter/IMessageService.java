@@ -17,5 +17,5 @@ import com.etaofinance.entity.resp.*;
 public interface IMessageService {
    
 
-    List<Message> getList(Message record);	
+    List<Message> getList(Long memberid);	
 }
