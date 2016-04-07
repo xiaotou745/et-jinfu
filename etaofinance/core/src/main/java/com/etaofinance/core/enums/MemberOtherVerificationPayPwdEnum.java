@@ -13,9 +13,14 @@ public enum MemberOtherVerificationPayPwdEnum {
 	Err(-1,"错误"),
 	
 	/**
+	 * 会员Id不存在
+	 */
+	MemberIdIsNull(-2,"会员Id不存在"),
+	
+	/**
 	 * 支付密码错误,请重试
 	 */
-	PayPassWordErr(-2,"支付密码错误,请重试");
+	PayPassWordErr(-3,"支付密码错误,请重试");
 
 	private int value = 0;
 	private String desc;

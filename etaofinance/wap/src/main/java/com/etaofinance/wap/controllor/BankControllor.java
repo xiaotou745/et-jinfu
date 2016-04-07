@@ -27,13 +27,18 @@ import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
-import com.etaofinance.entity.req.MemberIdReq;
+import com.etaofinance.entity.req.RemoveReq;
 import com.etaofinance.entity.resp.FeedBackResp;
+import com.etaofinance.wap.common.RequireLogin;
+import com.etaofinance.wap.common.UserContext;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("bank")
 public class BankControllor {
+	@Autowired
+	HttpServletRequest request;
+	
 	@Autowired
 	private IBankService bankService;
 	
@@ -54,7 +59,7 @@ public class BankControllor {
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取银行列表")
 	public List<Bank> getBankList()
-	{		
+	{
 		return bankService.getList();
 	}	
 	
@@ -67,11 +72,14 @@ public class BankControllor {
 	 */
 	@RequestMapping("/bindbankcard")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "绑定银行卡", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "绑定银行卡")
-	HttpResultModel<ResponseBase> BindBankCard(@RequestBody  BankCard record)
+	HttpResultModel<Object> BindBankCard(@RequestBody  BankCard record)
 	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+		record.setMemberid(memberid);		
 		return bankCardService.create(record);
 	}
 	
@@ -84,12 +92,15 @@ public class BankControllor {
 	 */
 	@RequestMapping("/unbindbankcard")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "解绑银行卡", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "解绑银行卡")
-	public int UnBindBankCard(@RequestBody  BankCard record)
+	HttpResultModel<Object> UnBindBankCard(@RequestBody RemoveReq record)
 	{
-		return bankCardService.remove(record.getId());
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+		record.setMemberId(memberid);	
+		return bankCardService.remove(record);
 	}
 	
 	/**
@@ -101,12 +112,14 @@ public class BankControllor {
 	 */
 	@RequestMapping("/getbankcardlist")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "获取银行卡列表", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取银行卡列表")
-	public List<BankCard> getBankCardList(@RequestBody  MemberIdReq record)
+	public List<BankCard> getBankCardList()
 	{
-		return bankCardService.getListByMemberId(record.getMemberId());
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		return bankCardService.getListByMemberId(memberid);
 	}		
 
 

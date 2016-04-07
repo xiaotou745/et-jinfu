@@ -1,8 +1,9 @@
 package com.etaofinance.entity.req;
 
-public class MemberIdReq {
+public class RemoveReq {
 	 private Long memberId;
-
+	 private Long currId;
+	
 	public Long getMemberId() {
 		return memberId;
 	}
@@ -11,5 +12,11 @@ public class MemberIdReq {
 		this.memberId = memberId;
 	}
 
+	public Long getCurrId() {
+		return currId;
+	}
 
+	public void setCurrId(Long currId) {
+		this.currId = currId;
+	}
 }

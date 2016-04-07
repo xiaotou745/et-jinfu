@@ -12,6 +12,7 @@ import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberCertificationEnum;
 import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.enums.MemberTypeEnum;
@@ -50,10 +51,17 @@ public class MemberService implements IMemberService{
 	private RedisService redisService;	
 	
 	@Override
-	public HttpResultModel<MemberResp> modify(Member record)
+	public HttpResultModel<Object> modify(Member record)
 	{
-		HttpResultModel<MemberResp> resp = new HttpResultModel<MemberResp>();
-		if(record.getUsername()!=null && !record.getUsername().equals(""))
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();
+		
+		if(record.getId() ==null || record.getId().equals(""))
+		{	
+			resp.setCode(MemberEnum.MemberIdIsNull.value());
+			resp.setMsg(MemberEnum.MemberIdIsNull.desc());
+			return resp;			
+		}
+		if(record.getUsername()!=null || !record.getUsername().equals(""))
 		{
 			//验证用户名是否已存在		
 			Member memberModel=memberDao.selectByUserName(record.getUsername());
@@ -235,14 +243,14 @@ public class MemberService implements IMemberService{
 	 * @return
 	 */
 	@Override
-	public HttpResultModel<MemberResp> Certification(Member record) {
-		HttpResultModel<MemberResp> resp = new HttpResultModel<MemberResp>();
+	public HttpResultModel<Object> Certification(Member record) {
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();
 	
 		//验证
 		if(record.getId()==null || record.getId().equals(""))
 		{
-			resp.setCode(MemberCertificationEnum.IdIsNULL.value());
-			resp.setMsg(MemberCertificationEnum.IdIsNULL.desc());
+			resp.setCode(MemberCertificationEnum.MemberIdIsNull.value());
+			resp.setMsg(MemberCertificationEnum.MemberIdIsNull.desc());
 			return resp;			
 		}
 		if(record.getTruename()==null || record.getTruename().equals(""))
@@ -269,13 +277,14 @@ public class MemberService implements IMemberService{
 		resp.setMsg(MemberCertificationEnum.Success.desc());		
 		return resp;
 	}
+	
 	/**
 	 * 通过ID获取会员信息
 	 */
 	@Override
-	public Member getById(Long id) {
+	public Member  getById(Long id) {
 		
-		return memberDao.selectByPrimaryKey(id);
+	   return  memberDao.selectByPrimaryKey(id);
 	}
 	/**
 	 * 忘记密码第一步

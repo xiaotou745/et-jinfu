@@ -13,9 +13,19 @@ public enum MemberEnum {
 	Err(-1,"错误"),
 	
 	/**
+	 * 用户不存在
+	 */
+	MemberIdIsNull(-2,"用户不存在"),
+	
+	/**
+	 * 获取用户信息失败
+	 */
+	GetUserErr(-3,"获取用户信息失败"),
+	
+	/**
 	 * 用户名已存在
 	 */
-	UserNameIsExist(-2,"此用户名已存在");
+	UserNameIsExist(-4,"此用户名已存在");
 
 	private int value = 0;
 	private String desc;

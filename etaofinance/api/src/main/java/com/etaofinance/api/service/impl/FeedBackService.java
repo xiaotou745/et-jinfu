@@ -18,6 +18,8 @@ import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IFeedBackService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
+import com.etaofinance.core.enums.FeedBackEnum;
+import com.etaofinance.core.enums.ProjectEnrollEnum;
 import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.entity.ADVert;
@@ -41,14 +43,52 @@ public class FeedBackService implements IFeedBackService{
 	private IFeedBackDao feedBackDao;
 
 	@Override
-	public HttpResultModel<FeedBackResp> create(FeedBack record) {	
+	public HttpResultModel<Object> create(FeedBack record) {	
 
-		HttpResultModel<FeedBackResp> resp = new HttpResultModel<FeedBackResp>();			
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();		
+		if(record.getDescription() ==null || record.getDescription().equals(""))
+		{	
+			resp.setCode(FeedBackEnum.DescriptionIsNull.value());
+			resp.setMsg(FeedBackEnum.DescriptionIsNull.desc());
+			return resp;	
+		}
+		if(record.getDescription().length()>500)
+		{	
+			resp.setCode(FeedBackEnum.DescriptionIsErr.value());
+			resp.setMsg(FeedBackEnum.DescriptionIsErr.desc());
+			return resp;	
+		}
+		if(record.getContacts() !=null &&  record.getContacts().length()>10)
+		{	
+			resp.setCode(FeedBackEnum.ContactsIsErr.value());
+			resp.setMsg(FeedBackEnum.ContactsIsErr.desc());
+			return resp;	
+		}
+		if(record.getPhoneno() !=null &&  record.getPhoneno().length()>12)
+		{	
+			resp.setCode(FeedBackEnum.PhoneNoIsErr.value());
+			resp.setMsg(FeedBackEnum.PhoneNoIsErr.desc());
+			return resp;	
+		}
+		if(record.getEmail() !=null &&  record.getEmail().length()>30)
+		{	
+			resp.setCode(FeedBackEnum.EMailIsErr.value());
+			resp.setMsg(FeedBackEnum.EMailIsErr.desc());
+			return resp;	
+		}
+		
 		record.setCreatetime(new Date());
 		record.setIsdel(false);	      
-		feedBackDao.insert(record);
-		resp.setCode(PublicEnum.Success.value());
-		resp.setMsg(PublicEnum.Success.desc());		
+		record.setCreatename("admin");	 
+		int row= feedBackDao.insertSelective(record);		
+		if(row<=0)
+		{
+			resp.setCode(FeedBackEnum.Err.value());
+			resp.setMsg(FeedBackEnum.Err.desc());
+			return resp;	
+		}		
+		resp.setCode(FeedBackEnum.Success.value());
+		resp.setMsg(FeedBackEnum.Success.desc());		
 		return resp;
 	}
 

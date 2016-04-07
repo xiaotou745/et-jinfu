@@ -22,7 +22,7 @@ public class CommonController {
 	@Autowired
 	IMemberService memberService;	
 	
-@RequestMapping("/swagger")
+	@RequestMapping("/swagger")
 	public ModelAndView suggAdd() {
 		ModelAndView model = new ModelAndView("common/swagger");
 		return model;

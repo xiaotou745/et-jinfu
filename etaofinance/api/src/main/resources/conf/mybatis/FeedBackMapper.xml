@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.FeedBack" >
     <id column="Id" property="id" jdbcType="INTEGER" />
     <result column="Description" property="description" jdbcType="VARCHAR" />
-    <result column="MemberId" property="memberid" jdbcType="INTEGER" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="PhoneNo" property="phoneno" jdbcType="VARCHAR" />
     <result column="EMail" property="email" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     insert into feedback ( Description, MemberId, 
       CreateName, PhoneNo, EMail, Contacts,
       CreateTime, IsDel)
-    values ( #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=INTEGER}, 
+    values ( #{description,jdbcType=VARCHAR}, #{memberid,jdbcType=BIGINT}, 
       #{createname,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=BIT})
   </insert>
@@ -66,7 +66,7 @@
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="memberid != null" >
-        #{memberid,jdbcType=INTEGER},
+        #{memberid,jdbcType=BIGINT},
       </if>
       <if test="createname != null" >
         #{createname,jdbcType=VARCHAR},
@@ -96,7 +96,7 @@
         Description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="memberid != null" >
-        MemberId = #{memberid,jdbcType=INTEGER},
+        MemberId = #{memberid,jdbcType=BIGINT},
       </if>
       <if test="createname != null" >
         CreateName = #{createname,jdbcType=VARCHAR},
@@ -122,7 +122,7 @@
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.FeedBack" >
     update feedback
     set Description = #{description,jdbcType=VARCHAR},
-      MemberId = #{memberid,jdbcType=INTEGER},
+      MemberId = #{memberid,jdbcType=BIGINT},
       CreateName = #{createname,jdbcType=VARCHAR},
       PhoneNo = #{phoneno,jdbcType=VARCHAR},
       EMail = #{email,jdbcType=VARCHAR},

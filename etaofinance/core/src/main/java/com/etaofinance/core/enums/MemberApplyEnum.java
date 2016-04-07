@@ -10,7 +10,11 @@ public enum MemberApplyEnum {
 	/**
 	 * 错误
 	 */
-	Err(-1,"错误");
+	Err(-1,"错误"),
+		/**
+	 * 用户不存在
+	 */
+	MemberIdIsNull(-2,"用户不存在");
 
 	private int value = 0;
 	private String desc;

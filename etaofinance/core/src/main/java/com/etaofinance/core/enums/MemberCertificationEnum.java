@@ -11,10 +11,11 @@ public enum MemberCertificationEnum {
 	 * 错误
 	 */
 	Err(-1,"错误"), 
+	
 	/**
-	 * 用户账号为空值
+	 * 用户不存在
 	 */
-	IdIsNULL(-2,"用户账号为空"), 
+	MemberIdIsNull(-2,"用户不存在"), 
 	/**
 	 * 真实姓名为空
 	 */

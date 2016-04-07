@@ -27,7 +27,7 @@ import com.etaofinance.entity.resp.SendCodeResp;
 public interface IMemberService {
   
     
-    HttpResultModel<MemberResp> modify(Member record);
+    HttpResultModel<Object> modify(Member record);
     
 	 /**
      * 通过手机号获取会员信息
@@ -53,7 +53,7 @@ public interface IMemberService {
      * @param 会员id
      * @return
      */
-    Member getById(Long  id);
+    Member  getById(Long  id);
     /**
      * 获取验证码
      * @param req
@@ -79,7 +79,7 @@ public interface IMemberService {
 	 * @date 2016年3月24日18:05:14
 	 * @return
 	 */
-    HttpResultModel<MemberResp> Certification(Member record);
+    HttpResultModel<Object> Certification(Member record);
     /**
      * 忘记密码第一步
      * @param req

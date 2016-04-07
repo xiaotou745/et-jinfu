@@ -21,7 +21,7 @@ public interface IProjectFavoriteService {
    
 	  // 插入一条记录
 	int insert(ProjectFavorite record);
-
+	   int insertSelective(ProjectFavorite record);
 	List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
 
 	int updateByPrimaryKeySelective(ProjectFavorite record);
@@ -33,5 +33,8 @@ public interface IProjectFavoriteService {
 	HttpResultModel<Object> followByPrimaryKeySelective(
 			ProjectFavorite profavorite);
 
+	HttpResultModel<Object> follow(ProjectFavorite profavorite);
+
+	
 	int getFavoriteCntByProId(Long proId);
 }

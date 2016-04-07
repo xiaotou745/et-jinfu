@@ -140,28 +140,8 @@ public class ProjectController {
 	public HttpResultModel<Object> follow(@RequestBody ProjectFavorite profavorite)
 	{
 		
-		if (null == profavorite) {
-			return null;
-		}
-
-		String id = profavorite.getId().toString();
-
-		HttpResultModel<Object> followRes = null;
-
-		if (null == id || id.length() <= 0) {
-			// 首次关注
-			followRes = projectFavoriteService.followProject(profavorite);
-
-		} else {
-			// 关注 或 取消关注
-			followRes = projectFavoriteService
-					.followByPrimaryKeySelective(profavorite);
-		}
-		return followRes;
+		return projectFavoriteService.follow(profavorite);
 	}
-	
-	
-	
 	
 	
 }

@@ -21,5 +21,5 @@ public interface IMemberApplyService {
 
 	List<MemberApply> getMemberApplyInfoByMemberId(long memberId);
 
-	HttpResultModel<ResponseBase> create(MemberApply record);
+	HttpResultModel<Object> create(MemberApply record);
 }

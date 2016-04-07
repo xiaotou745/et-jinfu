@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +37,7 @@ import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
@@ -126,7 +129,7 @@ public class UserController {
 		if(LoginUtil.checkIsLogin(request, response))//已经登录
 		{
 			Member member=UserContext.getCurrentContext(request).getUserInfo();
-			result.setCode(-1);
+			result.setCode(1);
 			result.setData(member);
 			return result;	
 		}
@@ -160,8 +163,8 @@ public class UserController {
 		redisService.set(rediskey, redisValue,cookieMaxAge,TimeUnit.SECONDS);
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
-		if(req.getReUrl()==null||req.getReUrl().equals(""))
-		{
+		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
+		{//要跳转的URL不为空 进行跳转
 			String basePath =PropertyUtils.getProperty("java.wap.url");
 			response.sendRedirect(basePath + "/"+req.getReUrl());
 		}
@@ -180,12 +183,25 @@ public class UserController {
 	 */
 	@RequestMapping("getuserinfo")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "获取用户信息  ", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取用户信息  ")
-	public Member getUserInfo(@RequestBody  Member record)
+	public HttpResultModel<Member> getUserInfo()
 	{
-		return  memberService.getById(record.getId());	
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		HttpResultModel<Member> resp = new HttpResultModel<Member>();		
+		Member member=memberService.getById(memberid);	 
+		if(member==null)
+		{
+			resp.setCode(MemberEnum.GetUserErr.value());
+			resp.setMsg(MemberEnum.GetUserErr.desc());
+			return resp;	
+		}
+		resp.setData(member);
+		resp.setCode(MemberEnum.Success.value());
+		resp.setMsg(MemberEnum.Success.desc());	
+		return resp;
 	}
 	/**
 	 * 修改用户信息  
@@ -199,8 +215,11 @@ public class UserController {
 	notes = "修改用户信息  ")
 	@RequestMapping("modify")
 	@ResponseBody
-	public HttpResultModel<MemberResp> modify(@RequestBody Member record)
+	@RequireLogin
+	public HttpResultModel<Object> modify(@RequestBody Member record)
 	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		record.setId(memberid);
 		return  memberService.modify(record);	
 	}
 	/**
@@ -296,9 +315,8 @@ public class UserController {
 	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
-		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-		long tempUserid=(long)(1);
-		record.setMemberid(tempUserid);
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		record.setMemberid(memberid);
 		return memberOtherService.createPayPwd(record);
 	}
 	
@@ -318,9 +336,8 @@ public class UserController {
 	notes = "验证支付密码")
 	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
 	{
-		HttpResultModel<Object> resultModel=new HttpResultModel<Object>();
-		long tempUserid=(long)(1);
-		record.setMemberid(tempUserid);
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+		record.setMemberid(memberid);
 		return memberOtherService.verificationPayPwd(record);
 	}
 	
@@ -333,11 +350,14 @@ public class UserController {
 	 */
 	@RequestMapping("certification")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "会员实名认证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "会员实名认证")
-	public HttpResultModel<MemberResp> certification(@RequestBody  Member record)
+	public HttpResultModel<Object> certification(@RequestBody  Member record)
 	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+		record.setId(memberid);
 		return  memberService.Certification(record);	
 	}	
 	
@@ -350,11 +370,14 @@ public class UserController {
 	 */
 	@RequestMapping("certificationinvestor")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "领头人,投资人认证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "领头人,投资人认证")
-	public HttpResultModel<ResponseBase> certificationInvestor(@RequestBody  MemberApply record)
+	public HttpResultModel<Object> certificationInvestor(@RequestBody  MemberApply record)
 	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+		record.setMemberid(memberid);
 		return  memberApplyService.create(record);	
 	}	
 }
