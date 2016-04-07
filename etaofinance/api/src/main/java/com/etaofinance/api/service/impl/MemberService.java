@@ -282,26 +282,9 @@ public class MemberService implements IMemberService{
 	 * 通过ID获取会员信息
 	 */
 	@Override
-	public HttpResultModel<Member>  getById(Long id) {
-		HttpResultModel<Member> resp = new HttpResultModel<Member>();		
-		if(id ==null && id.equals(""))
-		{	
-			resp.setCode(MemberEnum.MemberIdIsNull.value());
-			resp.setMsg(MemberEnum.MemberIdIsNull.desc());
-			return resp;			
-		}
-		Member member=memberDao.selectByPrimaryKey(id);
-		if(member==null)
-		{
-			resp.setCode(MemberEnum.GetUserErr.value());
-			resp.setMsg(MemberEnum.GetUserErr.desc());
-			return resp;	
-		}
-		resp.setCode(MemberEnum.Success.value());
-		resp.setMsg(MemberEnum.Success.desc());	
+	public Member  getById(Long id) {
 		
-		return resp;
-	
+	   return  memberDao.selectByPrimaryKey(id);
 	}
 	/**
 	 * 忘记密码第一步

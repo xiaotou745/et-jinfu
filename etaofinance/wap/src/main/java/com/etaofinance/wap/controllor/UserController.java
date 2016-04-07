@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,6 +37,7 @@ import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
@@ -188,7 +190,17 @@ public class UserController {
 	public HttpResultModel<Member> getUserInfo()
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		return memberService.getById(memberid);	 
+		HttpResultModel<Member> resp = new HttpResultModel<Member>();		
+		Member member=memberService.getById(memberid);	 
+		if(member==null)
+		{
+			resp.setCode(MemberEnum.GetUserErr.value());
+			resp.setMsg(MemberEnum.GetUserErr.desc());
+			return resp;	
+		}
+		resp.setCode(MemberEnum.Success.value());
+		resp.setMsg(MemberEnum.Success.desc());	
+		return resp;
 	}
 	/**
 	 * 修改用户信息  

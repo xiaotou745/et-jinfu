@@ -53,7 +53,7 @@ public interface IMemberService {
      * @param 会员id
      * @return
      */
-    HttpResultModel<Member>  getById(Long  id);
+    Member  getById(Long  id);
     /**
      * 获取验证码
      * @param req
