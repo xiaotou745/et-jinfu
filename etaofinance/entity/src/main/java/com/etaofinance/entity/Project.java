@@ -2,6 +2,8 @@ package com.etaofinance.entity;
 
 import java.util.Date;
 
+import com.etaofinance.core.enums.ProjectType;
+
 public class Project {
     private Long id;
 
@@ -104,6 +106,16 @@ public class Project {
 
     public Short getTypeid() {
         return typeid;
+    }
+    
+    public String getTypeIdString(){
+    	if(ProjectType.getEnum(typeid)!=null)
+		{
+			return ProjectType.getEnum(typeid).desc();
+		}
+		else {
+			return "";
+		}
     }
 
     public void setTypeid(Short typeid) {

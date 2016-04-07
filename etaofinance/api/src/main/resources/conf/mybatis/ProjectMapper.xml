@@ -540,6 +540,7 @@
 		)}
 	</select>
 	<!-- Wap获取项目列表 end -->
+	<!-- 项目审核 wangchao 待增加操作日志 -->
 	<update id="audit" parameterType="com.etaofinance.entity.req.ProjectAuditReq">
 		update project
 		set

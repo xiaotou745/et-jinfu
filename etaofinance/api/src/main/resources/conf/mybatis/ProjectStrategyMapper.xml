@@ -26,8 +26,7 @@
     values (#{item.projectid,jdbcType=BIGINT}, #{item.key,jdbcType=VARCHAR}, 
       #{item.value,jdbcType=REAL}, #{item.description,jdbcType=VARCHAR});
 	</foreach>
-  </insert>
-  
+  </insert>  
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectStrategy" >
     update projectstrategy
     set ProjectId = #{projectid,jdbcType=BIGINT},
@@ -45,12 +44,12 @@
 	           ${item}
 	     </foreach> ;
   </select>
-  
+  <!-- 根据项目id获取项目类型  wangchao -->
   <select id="getByProjectId"  resultType="com.etaofinance.entity.ProjectStrategy" 
     parameterType="java.lang.Long" >
 	select 
     <include refid="Base_Column_List" />
-    from projectstrategy where ProjectId =${projectid,jdbcType=VARCHAR}
+    from projectstrategy where ProjectId =#{projectid,jdbcType=BIGINT}
   </select>
   
 </mapper>

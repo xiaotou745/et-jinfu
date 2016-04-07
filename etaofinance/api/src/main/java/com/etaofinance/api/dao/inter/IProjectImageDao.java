@@ -18,4 +18,6 @@ public interface IProjectImageDao {
     int updateByPrimaryKey(ProjectImage record);
 
 	int insertList(List<ProjectImage> projectImageList);
+
+	List<ProjectImage> getByProjectId(long projectId);
 }

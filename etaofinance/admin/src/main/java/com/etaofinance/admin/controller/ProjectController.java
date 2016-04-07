@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.admin.common.UserContext;
+import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
@@ -22,6 +23,7 @@ import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
@@ -40,7 +42,8 @@ public class ProjectController {
 	private IProjectService projectService;
 	@Autowired
 	private IProjectStrategyService projectStrategyService;
-	 
+	@Autowired
+	private IProjectImageService projectImageService; 
 	@Autowired
 	private IPublicProvinceCityService publicProvinceCityService;
 	/**
@@ -152,7 +155,10 @@ public class ProjectController {
 		view.addObject("viewPath", "project/previewproject");
 		Project project= projectService.selectByPrimaryKey(id);
 		List<ProjectStrategy> proStrList= projectStrategyService.getByProjectId(id);
-		
+		List<ProjectImage> proImgList=projectImageService.getByProjectId(id);
+		view.addObject("project",project);
+		view.addObject("proStrList",proStrList);
+		view.addObject("proImgList",proImgList);
 		return view;
 	}
 }
