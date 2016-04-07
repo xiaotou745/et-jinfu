@@ -23,15 +23,27 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	public HttpResultModel<ResponseBase> insert(Comment record) {
+	public HttpResultModel<Object> insert(Comment record) {
 		
-		HttpResultModel<ResponseBase> resp = new HttpResultModel<ResponseBase>();	
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
 		
 		if(record.getMemberid() ==null && record.getMemberid().equals(""))
 		{	
 			resp.setCode(WithdrawformEnum.MemberIdIsNull.value());
 			resp.setMsg(WithdrawformEnum.MemberIdIsNull.desc());
 			return resp;			
+		}
+		
+		//recommentid is null：commnent;
+		//recommentid not null:reply;
+		if(record.getRecommentid() !=null && !record.getRecommentid().equals(""))
+		{
+			record.setIsreply((byte)1);
+		}
+		else
+		{
+			record.setIsreply((byte)0);
+			record.setRecommentid((long)0);
 		}
 		int row = commentDao.insert(record);
 		
@@ -59,13 +71,41 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(Comment record) {
-		// TODO Auto-generated method stub
-		return 0;
+	public HttpResultModel<Object> updateByPrimaryKeyAndMem(Comment record) {
+		
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
+		
+		if((record.getMemberid() ==null && record.getMemberid().equals("")) 
+				||
+		   (record.getId() ==null && record.getId().equals(""))
+		  )
+		{	
+			resp.setCode(WithdrawformEnum.MemberIdIsNull.value());
+			resp.setMsg(WithdrawformEnum.MemberIdIsNull.desc());
+			return resp;			
+		}
+		record.setIsdel((byte)1);
+		int row = commentDao.updateByPrimaryKeyAndMem(record);
+		
+		if(row<=0)
+		{
+			resp.setCode(WithdrawformEnum.Err.value());
+			resp.setMsg(WithdrawformEnum.Err.desc());
+			return resp;	
+		}
+		resp.setCode(WithdrawformEnum.Success.value());
+		resp.setMsg(WithdrawformEnum.Success.desc());		
+		return resp;
 	}
 
 	@Override
 	public int updateByPrimaryKey(Comment record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public int updateByPrimaryKeySelective(Comment record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
