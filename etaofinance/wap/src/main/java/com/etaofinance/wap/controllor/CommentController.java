@@ -41,13 +41,42 @@ public class CommentController {
 	@Autowired
 	private ICommentService commentService;
 	
+	/**
+	 * 发布、回复评论
+	 * post参数:{
+     *          "projectid": "1",
+  	 *		    "memberid":"2322323",
+  	 *		    "content":"nihaodkjdljf",
+  	 *		    "recommentid":"1232" //不带此参数或者参数为空为发布评论、此参数有值为恢复对应ID评论
+	 *		   }
+	 * LIN
+	 */
 	@RequestMapping("/add")
 	@ResponseBody
 	@ApiOperation(value = "评论", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "用户评论")
-	public HttpResultModel<ResponseBase> addComment(@RequestBody Comment req)
+	public HttpResultModel<Object> addComment(@RequestBody Comment req)
 	{
 		return  commentService.insert(req);
+	}
+	
+	
+	/**
+	 * 删除评论
+	 * post参数:{
+     *          "id": "7",
+  	 *		    "memberid":"2322323"
+	 *		   }
+	 * LIN
+	 */
+	@RequestMapping("/del")
+	@ResponseBody
+	@ApiOperation(value = "删除评论", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "删除评论")
+	public HttpResultModel<Object> updateCommentIsDel(@RequestBody Comment req)
+	{
+		return  commentService.updateByPrimaryKeyAndMem(req);
 	}
 }

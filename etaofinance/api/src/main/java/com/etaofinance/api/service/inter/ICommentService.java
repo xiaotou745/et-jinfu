@@ -7,7 +7,7 @@ import com.etaofinance.entity.common.ResponseBase;
 public interface ICommentService {
 	int deleteByPrimaryKey(Long id);
 
-	HttpResultModel<ResponseBase> insert(Comment record);
+	HttpResultModel<Object> insert(Comment record);
 
     int insertSelective(Comment record);
 
@@ -16,4 +16,6 @@ public interface ICommentService {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+    
+    HttpResultModel<Object> updateByPrimaryKeyAndMem(Comment record);
 }
