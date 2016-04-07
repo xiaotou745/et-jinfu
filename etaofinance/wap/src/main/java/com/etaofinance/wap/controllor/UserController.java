@@ -198,6 +198,7 @@ public class UserController {
 			resp.setMsg(MemberEnum.GetUserErr.desc());
 			return resp;	
 		}
+		resp.setData(member);
 		resp.setCode(MemberEnum.Success.value());
 		resp.setMsg(MemberEnum.Success.desc());	
 		return resp;
