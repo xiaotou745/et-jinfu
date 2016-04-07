@@ -59,13 +59,13 @@ public class MemberOtherService implements IMemberOtherService{
 	@Override
 	public HttpResultModel<Object> createPayPwd(MemberOther record) {
 		HttpResultModel<Object> resp=new HttpResultModel<Object>();
-		if(record.getMemberid() ==null && record.getMemberid().equals(""))
+		if(record.getMemberid() ==null || record.getMemberid().equals(""))
 		{	
 			resp.setCode(MemberOtherCreatePayPwdEnum.MemberIdIsNull.value());
 			resp.setMsg(MemberOtherCreatePayPwdEnum.MemberIdIsNull.desc());
 			return resp;			
 		}
-		if(record.getPaypassword() ==null && record.getPaypassword().equals(""))
+		if(record.getPaypassword() ==null || record.getPaypassword().equals(""))
 		{	
 			resp.setCode(MemberOtherCreatePayPwdEnum.PayPassWordIsNull.value());
 			resp.setMsg(MemberOtherCreatePayPwdEnum.PayPassWordIsNull.desc());
@@ -96,7 +96,7 @@ public class MemberOtherService implements IMemberOtherService{
 	@Override
 	public HttpResultModel<Object> verificationPayPwd(MemberOther record) {
 		HttpResultModel<Object> resp=new HttpResultModel<Object>();
-		if(record.getMemberid() ==null && record.getMemberid().equals(""))
+		if(record.getMemberid() ==null || record.getMemberid().equals(""))
 		{	
 			resp.setCode(MemberOtherVerificationPayPwdEnum.MemberIdIsNull.value());
 			resp.setMsg(MemberOtherVerificationPayPwdEnum.MemberIdIsNull.desc());

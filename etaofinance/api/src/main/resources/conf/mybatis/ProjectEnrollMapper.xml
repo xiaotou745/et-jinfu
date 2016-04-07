@@ -3,6 +3,7 @@
 <mapper namespace="com.etaofinance.api.dao.inter.IProjectEnrollDao" >
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectEnroll" >
     <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" jdbcType="BIGINT" property="memberid" />
     <result column="Title" property="title" jdbcType="VARCHAR" />
     <result column="OwnedIndustry" property="ownedindustry" jdbcType="VARCHAR" />
     <result column="BusinessPlanName" property="businessplanname" jdbcType="VARCHAR" />
@@ -14,8 +15,8 @@
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, Contacts, 
-    CreateName, CreateTime
+     Id, MemberId, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, 
+    Contacts, CreateName, CreateTime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -28,18 +29,21 @@
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.ProjectEnroll" >
-    insert into projectenroll (Id, Title, OwnedIndustry, 
-      BusinessPlanName, BusinessPlanUrl, PhoneNo, 
-      EMail, Contacts, CreateName, 
-      CreateTime)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{ownedindustry,jdbcType=VARCHAR}, 
-      #{businessplanname,jdbcType=VARCHAR}, #{businessplanurl,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP})
+    insert into projectenroll (Id, MemberId, Title, 
+      OwnedIndustry, BusinessPlanName, BusinessPlanUrl, 
+      PhoneNo, EMail, Contacts, 
+      CreateName, CreateTime)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{ownedindustry,jdbcType=VARCHAR}, #{businessplanname,jdbcType=VARCHAR}, #{businessplanurl,jdbcType=VARCHAR}, 
+      #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
+      #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
     insert into projectenroll
     <trim prefix="(" suffix=")" suffixOverrides="," > 
+       <if test="memberid != null">
+        MemberId,
+      </if>
       <if test="title != null" >
         Title,
       </if>
@@ -69,6 +73,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," > 
+          <if test="memberid != null">
+        #{memberid,jdbcType=BIGINT},
+      </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
@@ -101,6 +108,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
     update projectenroll
     <set >
+       <if test="memberid != null">
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
       <if test="title != null" >
         Title = #{title,jdbcType=VARCHAR},
       </if>
@@ -133,7 +143,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectEnroll" >
     update projectenroll
-    set Title = #{title,jdbcType=VARCHAR},
+    set MemberId = #{memberid,jdbcType=BIGINT},
+     Title = #{title,jdbcType=VARCHAR},
       OwnedIndustry = #{ownedindustry,jdbcType=VARCHAR},
       BusinessPlanName = #{businessplanname,jdbcType=VARCHAR},
       BusinessPlanUrl = #{businessplanurl,jdbcType=VARCHAR},

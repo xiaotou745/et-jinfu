@@ -33,8 +33,8 @@ public class FeedBackDao extends DaoBase implements IFeedBackDao{
 
 	@Override
 	public int insertSelective(FeedBack record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().insert(
+				"IFeedBackDao.insertSelective", record);
 	}
 
 	@Override

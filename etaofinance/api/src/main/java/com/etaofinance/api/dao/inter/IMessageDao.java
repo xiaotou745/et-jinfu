@@ -17,5 +17,5 @@ public interface IMessageDao {
 
     int updateByPrimaryKey(Message record);
     
-    List<Message> getList(Message record);
+    List<Message> getList(Long memberid);
 }
