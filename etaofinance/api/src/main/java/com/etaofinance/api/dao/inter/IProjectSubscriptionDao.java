@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.ProSubInvestReq;
 
 public interface IProjectSubscriptionDao {
     int deleteByPrimaryKey(Long id);
@@ -18,5 +19,5 @@ public interface IProjectSubscriptionDao {
 
     int updateByPrimaryKey(ProjectSubscription record);
     
-    List<ProjectSubscriptionDM> getListMore(ProjectSubscriptionDM record);
+    List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record);
 }

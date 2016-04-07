@@ -31,6 +31,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.ProFavoriteReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
 
@@ -42,7 +43,7 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 	private IProjectFavoriteDao projectFavoriteDao;
 
 	@Override
-	public List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record) {
+	public List<ProjectFavoriteDM> getListMore(ProFavoriteReq record) {
 		return projectFavoriteDao.getListMore(record);
 	}
 

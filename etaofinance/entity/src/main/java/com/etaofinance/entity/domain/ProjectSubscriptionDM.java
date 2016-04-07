@@ -8,7 +8,7 @@ import com.etaofinance.entity.ProjectSubscription;
 public class ProjectSubscriptionDM  extends ProjectSubscription{
 
     private String projectName;
-    private String projectStatus;
+    private String projectStatus;	
 
 	public String getProjectName() {
 		return projectName;

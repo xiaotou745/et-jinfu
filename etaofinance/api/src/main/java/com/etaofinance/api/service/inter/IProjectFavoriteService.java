@@ -13,6 +13,7 @@ import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
+import com.etaofinance.entity.req.ProFavoriteReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
@@ -22,7 +23,7 @@ public interface IProjectFavoriteService {
 	  // 插入一条记录
 	int insert(ProjectFavorite record);
 	   int insertSelective(ProjectFavorite record);
-	List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
+	List<ProjectFavoriteDM> getListMore(ProFavoriteReq record);
 
 	int updateByPrimaryKeySelective(ProjectFavorite record);
 

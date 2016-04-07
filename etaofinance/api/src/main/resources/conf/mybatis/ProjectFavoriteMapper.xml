@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.etaofinance.api.dao.inter.ProjectFavoriteMapper" >
+<mapper namespace="com.etaofinance.api.dao.inter.IProjectFavoriteDao"  >
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectFavorite" >
     <id column="Id" property="id" jdbcType="BIGINT" />
     <result column="MemberId" property="memberid" jdbcType="BIGINT" />
@@ -24,6 +24,19 @@
     count(1)
     from projectfavorite
     where ProjectId = #{proId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectFavoriteDM"  parameterType="com.etaofinance.entity.req.ProFavoriteReq" >
+ select 
+ ps.Id, ps.MemberId, ps.ProjectId,  ps.CreateTime, ps.IsDel, 
+p.ProjectName, p.projectStatus
+    from projectfavorite ps
+left join project  p on ps.ProjectId=p.Id
+where ps.memberid = #{memberid,jdbcType=BIGINT}
+	<if test="projectStatus>0">
+		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
+	</if>
+	order by ps.CreateTime desc
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
