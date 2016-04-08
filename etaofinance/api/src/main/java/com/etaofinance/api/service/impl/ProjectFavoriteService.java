@@ -124,7 +124,6 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 	@Override
 	public HttpResultModel<Object> follow(ProjectFavorite profavorite) {
 		
-		
 		if (null == profavorite) {
 			
 			return null;

@@ -36,6 +36,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.WithdrawformDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedWithdrawReq;
 import com.etaofinance.entity.resp.ADVertResp;
 import com.etaofinance.entity.resp.MemberResp;
 
@@ -84,6 +85,11 @@ public class WithdrawformService implements IWithdrawformService{
 	@Override
 	public WithdrawformDM selectDMByPrimaryKey(Long id) {
 		return withdrawformDao.selectDMByPrimaryKey(id);
+	}
+
+	@Override
+	public PagedResponse<Withdrawform> getWithdrawList(PagedWithdrawReq req) {
+		return withdrawformDao.getWithdrawList(req);
 	}	
 
 

@@ -12,19 +12,46 @@ public class Message {
     private String pushway;
 
     private String content;
+    private String msghead;
+    private Integer msgtype;
+    private String msgdes;
 
     private Short status;
+    private Boolean isdel;
+    private Boolean isread;
 
     private Date createtime;
 
     private String createname;
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    } 
+    
+    public Integer getMsgtype() {
+        return msgtype;
+    }
+
+    public void setMsgtype(Integer msgtype) {
+        this.msgtype = msgtype;
+    } 
+    
+    public String getMsghead() {
+        return msghead;
+    }
+
+    public void setMsghead(String msghead) {
+        this.msghead = msghead;
+    }
+    public String getMsgdes() {
+        return msgdes;
+    }
+
+    public void String(String msgdes) {
+        this.msgdes = msgdes;
     }
 
     public Long getMemberid() {
@@ -81,5 +108,20 @@ public class Message {
 
     public void setCreatename(String createname) {
         this.createname = createname == null ? null : createname.trim();
+    }
+    public Boolean getIsdel() {
+        return isdel;
+    }
+
+    public void setIsdel(Boolean isdel) {
+        this.isdel = isdel;
+    }
+    
+    public Boolean getIsread() {
+        return isread;
+    }
+
+    public void setIsread(Boolean isread) {
+        this.isread = isread;
     }
 }

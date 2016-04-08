@@ -16,6 +16,7 @@ import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.MenuEntity;
+import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PagedADVertReq;
 @Repository
@@ -76,6 +77,12 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 	@Override
 	public PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IBalanceRecordDao.getPageList",req);
+	}
+
+	@Override
+	public PagedResponse<BalanceRecord> getBalanceRecordList(
+			PagedBalancerecordReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IBalanceRecordDao.getBalanceRecordList", req);
 	}
 	
 

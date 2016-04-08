@@ -18,4 +18,13 @@ public interface IMessageService {
    
 
     List<Message> getList(Message record);	
+    
+    
+    HttpResultModel<Object> readMsg(Message msg);
+    
+    HttpResultModel<Object> delMsg(Message msg);
+    
+    HttpResultModel<Object> addMsg(Message record);
+
+    HttpResultModel<Object> addMsgSelective(Message record);
 }
