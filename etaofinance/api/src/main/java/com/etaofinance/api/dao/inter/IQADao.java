@@ -23,4 +23,6 @@ public interface IQADao {
     PagedResponse<QA>  query(PagedQAReq req);
     
     List<QA> getList();
+    
+    List<QA> getListForWap();
 }

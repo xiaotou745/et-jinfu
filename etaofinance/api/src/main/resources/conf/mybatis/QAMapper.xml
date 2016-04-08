@@ -46,6 +46,13 @@
     <include refid="Base_Column_List" />
     from qa
   </select>
+  <!-- Qawap页面 茹化肖 -->
+  <select id="getListForWap" resultType="com.etaofinance.entity.QA" >
+   SELECT * FROM qa q
+  WHERE q.IsDel=0
+  ORDER
+   BY q.SortNo ASC 
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from qa
