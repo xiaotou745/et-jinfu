@@ -4,8 +4,11 @@ package com.etaofinance.wap.common;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fusesource.hawtbuf.codec.VariableCodec;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.etaofinance.api.redis.RedisService;
+import com.etaofinance.api.service.impl.MemberService;
+import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.security.AES;
 import com.etaofinance.core.util.CookieUtils;
@@ -18,9 +21,14 @@ import com.etaofinance.entity.domain.SimpleUserInfoModel;
 public class UserContext {
 	private Member account;
 	private String host="";
-	private final static RedisService redisService;
+	private Member newEstUserInfo;
+	
+	private final static RedisService redisService;	
+	
+	private final static  MemberService memberService;	
 	static {
 		redisService = SpringBeanHelper.getCustomBeanByType(RedisService.class);
+		memberService = SpringBeanHelper.getCustomBeanByType(MemberService.class);	
 	}
 
 
@@ -34,6 +42,10 @@ public class UserContext {
 	}
 	public String getHost(){
 		return this.host;
+	}
+
+	public Member getNewEstUserInfo() {
+		return memberService.getById(this.account.getId());	
 	}
 
 	public static  UserContext getCurrentContext(HttpServletRequest request) {
