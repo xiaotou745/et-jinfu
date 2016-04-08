@@ -15,6 +15,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.WithdrawformDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedWithdrawReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 @Repository
 public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
