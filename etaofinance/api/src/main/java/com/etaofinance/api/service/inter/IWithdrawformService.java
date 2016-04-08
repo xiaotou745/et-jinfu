@@ -20,7 +20,7 @@ import com.etaofinance.entity.resp.*;
 public interface IWithdrawformService { 
 
 	
-	HttpResultModel<ResponseBase> create(Withdrawform record);
+	HttpResultModel<Object> create(Withdrawform record);
 
 	List<WithdrawformDM> getListMore(Withdrawform record);	
 	

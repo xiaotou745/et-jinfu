@@ -6,6 +6,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 
 public interface IBalanceRecordDao {
     int deleteByPrimaryKey(Long id);
@@ -20,7 +21,7 @@ public interface IBalanceRecordDao {
 
     int updateByPrimaryKey(BalanceRecord record);
     
-    List<BalanceRecordDM> getListMore(BalanceRecord record);
+    List<BalanceRecordDM> getListMore(PublicMemberReq record);
     
     BalanceRecordDM selectDMByPrimaryKey(Long id);
 

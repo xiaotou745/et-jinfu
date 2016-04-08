@@ -8,6 +8,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 
 public interface IProjectDao {
@@ -43,7 +44,7 @@ public interface IProjectDao {
 	 * @date time2016年3月31日11:46:29
 	 * @return
 	 */
-    List<Project> getList(Project record);
+    List<Project> getListMore(ProLaunchReq record);
 
 	int audit(ProjectAuditReq req);
     

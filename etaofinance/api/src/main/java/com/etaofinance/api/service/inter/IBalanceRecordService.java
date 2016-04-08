@@ -12,6 +12,7 @@ import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
@@ -19,9 +20,9 @@ import com.etaofinance.entity.resp.*;
 public interface IBalanceRecordService {
    
 
-	List<BalanceRecordDM> getListMore(BalanceRecord record);	
+	List<BalanceRecordDM> getListMore(PublicMemberReq record);	
 	
-	BalanceRecordDM selectDMByPrimaryKey(Long id);
+	HttpResultModel<BalanceRecordDM> selectBRDetail(PublicMemberReq record);
 
 	PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req);
 }

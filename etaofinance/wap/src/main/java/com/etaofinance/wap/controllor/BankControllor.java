@@ -27,7 +27,7 @@ import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
-import com.etaofinance.entity.req.RemoveReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.resp.FeedBackResp;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
@@ -96,7 +96,7 @@ public class BankControllor {
 	@ApiOperation(value = "解绑银行卡", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "解绑银行卡")
-	HttpResultModel<Object> UnBindBankCard(@RequestBody RemoveReq record)
+	HttpResultModel<Object> UnBindBankCard(@RequestBody PublicMemberReq record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
 		record.setMemberId(memberid);	
