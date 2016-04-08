@@ -5,38 +5,22 @@ import java.sql.Date;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedBalancerecordReq extends PagedRequestBase{
-	private int id;
-	private int typeId;
-	private int auditStatus;
-	private int projectStatus;
-	private String projectName;
+	private int proId;
+	private String createName;
 	private Date startTime;
 	private Date endTime;
-	private String startCreateTime;
-	private String endCreateTime;
-	public int getTypeId() {
-		return typeId;
+	
+	public int getProId() {
+		return proId;
 	}
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setProId(int proId) {
+		this.proId = proId;
 	}
-	public int getAuditStatus() {
-		return auditStatus;
+	public String getCreateName() {
+		return createName;
 	}
-	public void setAuditStatus(int auditStatus) {
-		this.auditStatus = auditStatus;
-	}
-	public int getProjectStatus() {
-		return projectStatus;
-	}
-	public void setProjectStatus(int projectStatus) {
-		this.projectStatus = projectStatus;
-	}
-	public String getProjectName() {
-		return projectName;
-	}
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setCreateName(String createName) {
+		this.createName = createName;
 	}
 	public Date getStartTime() {
 		return startTime;
@@ -49,23 +33,5 @@ public class PagedBalancerecordReq extends PagedRequestBase{
 	}
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
-	}
-	public String getStartCreateTime() {
-		return startCreateTime;
-	}
-	public void setStartCreateTime(String startCreateTime) {
-		this.startCreateTime = startCreateTime;
-	}
-	public String getEndCreateTime() {
-		return endCreateTime;
-	}
-	public void setEndCreateTime(String endCreateTime) {
-		this.endCreateTime = endCreateTime;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 }

@@ -10,6 +10,8 @@ import com.etaofinance.api.dao.inter.IADVertDao;
 import com.etaofinance.api.dao.inter.IAccountAuthDao;
 import com.etaofinance.api.dao.inter.IBankDao;
 import com.etaofinance.api.dao.inter.IMessageDao;
+import com.etaofinance.api.dao.inter.IProjectDao;
+import com.etaofinance.api.dao.inter.IRechargeDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.IAccountAuthService;
@@ -28,12 +30,17 @@ import com.etaofinance.entity.Recharge;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedRechargeReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
 
 @Service
 public class RechargeService implements IRechargeService{
 
+	
+	@Autowired
+	private IRechargeDao rechargeDao;
+	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		// TODO Auto-generated method stub
@@ -68,6 +75,11 @@ public class RechargeService implements IRechargeService{
 	public int updateByPrimaryKey(Recharge record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PagedResponse<Recharge> getRechargeList(PagedRechargeReq req) {
+		return rechargeDao.getRechargeList(req);
 	}
 
 

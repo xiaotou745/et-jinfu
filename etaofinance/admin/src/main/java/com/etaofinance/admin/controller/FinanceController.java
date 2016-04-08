@@ -7,15 +7,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IProjectService;
+import com.etaofinance.api.service.inter.IRechargeService;
 import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.Recharge;
 import com.etaofinance.entity.Withdrawform;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.PagedRechargeReq;
 import com.etaofinance.entity.req.PagedWithdrawReq;
 
 
@@ -24,8 +27,8 @@ import com.etaofinance.entity.req.PagedWithdrawReq;
 public class FinanceController {
 
 	
-	//@Autowired
-	//private IRechargeService rechargeService;
+	@Autowired
+	private IRechargeService rechargeService;
 	
 	@Autowired
 	private  IWithdrawformService withdrawformService;
@@ -33,6 +36,10 @@ public class FinanceController {
 	@Autowired
 	private IBalanceRecordService balanceRecordService;
 	
+	/**
+	 * 付款
+	 * @return
+	 */
 	@RequestMapping("buylist")
 	public ModelAndView buyList() {
 		
@@ -42,7 +49,7 @@ public class FinanceController {
 		
 		view.addObject("currenttitle", "付款列表");
 		
-		view.addObject("viewPath", "balance/buylist");
+		view.addObject("viewPath", "finance/buylist");
 		
 		return view;
 	}
@@ -50,17 +57,19 @@ public class FinanceController {
 	@RequestMapping("buylistdo")
 	public ModelAndView payListDo(PagedBalancerecordReq req) {
 		
-		ModelAndView view = new ModelAndView("balance/buylistdo");
-		
-		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
-		
-		req.setId(ParseHelper.ToInt(req.getId(),0));
+		ModelAndView view = new ModelAndView("finance/buylistdo");
 		
 		PagedResponse<BalanceRecord> listData=balanceRecordService.getBalanceRecordList(req);
 		
 		view.addObject("listData", listData);
 		return view;
 	}
+	
+	
+	/**
+	 *提现
+	 * @return
+	 */
 	@RequestMapping("withdrawlist")
 	public ModelAndView withdrawList() {
 		
@@ -70,19 +79,16 @@ public class FinanceController {
 		
 		view.addObject("currenttitle", "提现列表");
 		
-		view.addObject("viewPath", "withdraw/withdrawlist");
+		view.addObject("viewPath", "finance/withdrawlist");
 		
 		return view;
 	}
 	
+	
 	@RequestMapping("withdrawlistdo")
 	public ModelAndView withdrawListDo(PagedWithdrawReq req) {
 		
-		ModelAndView view = new ModelAndView("withdraw/withdrawlistdo");
-		
-		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
-		
-		req.setId(ParseHelper.ToInt(req.getId(),0));
+		ModelAndView view = new ModelAndView("finance/withdrawlistdo");
 		
 		PagedResponse<Withdrawform> listData=withdrawformService.getWithdrawList(req);
 		
@@ -90,6 +96,11 @@ public class FinanceController {
 		return view;
 	}
 	
+	
+	/**
+	 * 充值
+	 * @return
+	 */
 	@RequestMapping("rechargelist")
 	public ModelAndView rechargeList() {
 		
@@ -99,23 +110,20 @@ public class FinanceController {
 		
 		view.addObject("currenttitle", "充值列表");
 		
-		view.addObject("viewPath", "recharge/rechargelist");
+		view.addObject("viewPath", "finance/rechargelist");
 		
 		return view;
 	}
 	
+	
 	@RequestMapping("rechargelistdo")
-	public ModelAndView rechargeListDo(PagedProjectReq req) {
+	public ModelAndView rechargeListDo(PagedRechargeReq req) {
 		
-		ModelAndView view = new ModelAndView("recharge/rechargelistdo");
+		ModelAndView view = new ModelAndView("finance/rechargelistdo");
 		
-		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
+		PagedResponse<Recharge> listData=rechargeService.getRechargeList(req);
 		
-		req.setId(ParseHelper.ToInt(req.getId(),0));
-		
-	//	PagedResponse<Project> listData=rechargeService.getChargeList(req);
-		
-	//	view.addObject("listData", listData);
+		view.addObject("listData", listData);
 		
 		return view;
 	}
