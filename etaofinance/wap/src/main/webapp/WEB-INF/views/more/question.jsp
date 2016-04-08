@@ -1,17 +1,20 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page isErrorPage="true"%>
+<%@page import="com.etaofinance.entity.QA"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@page import="com.etaofinance.entity.PublicProvinceCity" %>
+<%@page import="java.util.List" %>
 <%
+	//网站跟地址
 	String basePath = PropertyUtils.getProperty("java.wap.url");
-    response.setStatus(HttpServletResponse.SC_OK);
-  //静态资源跟地址
-  	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	//静态资源跟地址
+	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	List<QA> qaliList=(List<QA>)request.getAttribute("qalist");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>404页面</title>
+    <title>常见问题</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta charset="UTF-8">
@@ -33,7 +36,7 @@
     <meta name="screen-orientation" content="portrait">
     <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible_css.debug.js"></script>
     <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible.debug.js"></script>
-    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/other/404.css">
+    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/more/question.css">
     <script src="<%=staticResPath%>/etao-crowdfunding/js/mo.1.0.0.js"></script>
 </head>
 
@@ -41,23 +44,30 @@
     <div class="g-wrap">
         <div class="g-views">
             
-	<section class="container">
-		<div class="error-image"></div>
-		<div class="error-text"></div>
-	</section>
-	<seciton class="container">
-		<div class="tips">很遗憾您访问的页面不存在！</div>
-	</seciton>
-	<section class="container">
-		<div class="btn-toggle">
-			<button>返回首页</button>
-		</div>
-	</section>
-
+    <section class="container">
+      <%for(int i=0;i<qaliList.size();i++) 
+      {
+    	  %>
+    	  	<div class="text">
+            <div class="title active">
+                <div><%=qaliList.get(i).getQuestion() %></div>
+                <span>
+					<i class="m-icon icon-arrow-r"></i>
+				</span>
+            </div>
+            <div class="content">
+             <%=qaliList.get(i).getAnswer()%>
+            </div>
+        	</div>
+    	  
+    	  <%
+      }%>
+    </section>
+    
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/other/404.js"></script>
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/more/question.js"></script>
 </body>
 
 </html>
