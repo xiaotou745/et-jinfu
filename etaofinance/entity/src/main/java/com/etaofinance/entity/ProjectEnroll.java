@@ -4,8 +4,10 @@ import java.util.Date;
 
 public class ProjectEnroll {
     private Long id;
+    
+    private Long memberid;
 
-    private String title;
+	private String title;
 
     private String ownedindustry;
 
@@ -30,6 +32,14 @@ public class ProjectEnroll {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public Long getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(Long memberid) {
+		this.memberid = memberid;
+	}
 
     public String getTitle() {
         return title;

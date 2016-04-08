@@ -13,5 +13,7 @@ public interface ICommentDao {
 
     int updateByPrimaryKeySelective(Comment record);
 
+    int updateByPrimaryKeyAndMem(Comment record);
+    
     int updateByPrimaryKey(Comment record);
 }

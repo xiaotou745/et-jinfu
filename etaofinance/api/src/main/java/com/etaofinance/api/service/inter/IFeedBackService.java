@@ -18,7 +18,7 @@ import com.etaofinance.entity.resp.*;
 
 public interface IFeedBackService {   
 
-	HttpResultModel<FeedBackResp> create(FeedBack record);
+	HttpResultModel<Object> create(FeedBack record);
 	
 
 }

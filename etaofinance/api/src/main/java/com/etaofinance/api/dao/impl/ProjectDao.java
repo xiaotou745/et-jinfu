@@ -11,6 +11,8 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProLaunchReq;
+import com.etaofinance.entity.req.ProjectAuditReq;
 @Repository
 public class ProjectDao extends DaoBase implements IProjectDao{
 
@@ -20,7 +22,7 @@ public class ProjectDao extends DaoBase implements IProjectDao{
 	}
 
 	@Override
-	public int insert(Project record) {
+	public long insert(Project record) {
 		return getMasterSqlSessionUtil().insert("IProjectDao.insert", record);
 	}
 
@@ -71,13 +73,18 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	 * @return
 	 */	
 	@Override
-	public List<Project> getList(Project record) {
+	public List<Project> getListMore(ProLaunchReq record) {
 		 List<Project> list=null;
 		 list=getReadOnlySqlSessionUtil()
 				.selectList(
-						"IProjectDao.getList",record);
+						"IProjectDao.getListMore",record);
 		 
 		 return list;
+	}
+
+	@Override
+	public int audit(ProjectAuditReq req) {
+		return getMasterSqlSessionUtil().update("IProjectDao.audit",req);
 	}
 	
 }

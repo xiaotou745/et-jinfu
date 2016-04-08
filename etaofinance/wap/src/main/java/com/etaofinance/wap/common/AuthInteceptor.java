@@ -51,6 +51,7 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 	        	        return false;
 	        		}
 	        		response.sendRedirect(basePath);
+	        		return false;
 	        		
 	        	}//IF LOGIN END
 	        }//if Annotation end

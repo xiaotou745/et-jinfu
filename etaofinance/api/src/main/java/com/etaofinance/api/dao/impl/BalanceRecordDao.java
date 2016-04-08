@@ -19,6 +19,7 @@ import com.etaofinance.entity.domain.MenuEntity;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 @Repository
 public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 
@@ -59,11 +60,11 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 	}
 
 	@Override
-	public List<BalanceRecordDM> getListMore(BalanceRecord record) {
+	public List<BalanceRecordDM> getListMore(PublicMemberReq record) {
 		 List<BalanceRecordDM> list=null;
 		 list=getReadOnlySqlSessionUtil()
 				.selectList(
-						"IBalanceRecordDao.getListMore",record.getMemberid());
+						"IBalanceRecordDao.getListMore",record.getMemberId());
 		 
 		 return list;
 	}

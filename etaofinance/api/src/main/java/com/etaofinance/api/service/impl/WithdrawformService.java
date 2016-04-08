@@ -49,10 +49,10 @@ public class WithdrawformService implements IWithdrawformService{
 	private IWithdrawformDao withdrawformDao;
 
 	@Override
-	public HttpResultModel<ResponseBase> create(Withdrawform record) {
+	public HttpResultModel<Object> create(Withdrawform record) {
 		//问题，对接银行， 提现验证，提现后金额
 		
-		HttpResultModel<ResponseBase> resp = new HttpResultModel<ResponseBase>();		
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();		
 		
 		if(record.getMemberid() ==null && record.getMemberid().equals(""))
 		{	

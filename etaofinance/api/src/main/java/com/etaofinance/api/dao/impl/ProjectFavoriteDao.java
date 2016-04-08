@@ -19,6 +19,7 @@ import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.ProFavoriteReq;
 @Repository
 public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 
@@ -87,7 +88,7 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 	}
 
 	@Override
-	public List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record) {
+	public List<ProjectFavoriteDM> getListMore(ProFavoriteReq record) {
 		 List<ProjectFavoriteDM> list=null;
 		 list=getReadOnlySqlSessionUtil()
 				.selectList(

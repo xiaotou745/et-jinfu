@@ -23,6 +23,9 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.ProFavoriteReq;
+import com.etaofinance.entity.req.ProLaunchReq;
+import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
 import com.etaofinance.wap.common.LoginUtil;
@@ -83,13 +86,16 @@ public class ProjectController {
 	 * @date 2016年3月29日19:59:34
 	 * @return
 	 */
-	@RequestMapping("getinvestproject")
+	@RequestMapping("investproject")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "我投资的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我投资的项目")
-	public List<ProjectSubscriptionDM> getInvestProject(@RequestBody ProjectSubscriptionDM record)
-	{
+	public List<ProjectSubscriptionDM> investProject(@RequestBody ProSubInvestReq record)
+	{	
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
 		return projectSubscriptionService.getListMore(record);
 	}
 	
@@ -100,13 +106,16 @@ public class ProjectController {
 	 * @date 2016年3月29日20:37:42
 	 * @return
 	 */
-	@RequestMapping("getfavoriteproject")
+	@RequestMapping("favoriteproject")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "我关注的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我关注的项目")
-	public List<ProjectFavoriteDM> getFavoriteProject(@RequestBody ProjectFavoriteDM record)
+	public List<ProjectFavoriteDM> favoriteProject(@RequestBody ProFavoriteReq record)
 	{
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
 		return projectFavoriteService.getListMore(record);
 	}	
 	
@@ -117,18 +126,21 @@ public class ProjectController {
 	 * @date 2016年3月31日11:53:25
 	 * @return
 	 */
-	@RequestMapping("getlaunchproject")
+	@RequestMapping("launchproject")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "我发起的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我发起的项目")
-	public List<Project> getLaunchProject(@RequestBody Project record)
+	public List<Project> launchProject(@RequestBody ProLaunchReq record)
 	{
-		return projectService.getList(record);
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
+		return projectService.getListMore(record);
 	}
 	
 	/**
-	 * 
+	 * 关注或取消关注项目
 	 * @param profavorite
 	 * @return
 	 */

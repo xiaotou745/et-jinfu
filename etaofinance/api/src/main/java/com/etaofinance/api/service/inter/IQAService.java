@@ -30,5 +30,5 @@ public interface IQAService {
 
 	List<QA> getList();
 	
-
+	List<QA> getListForWap();
 }

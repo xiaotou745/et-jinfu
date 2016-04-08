@@ -33,11 +33,16 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedQAReq;
 import com.etaofinance.entity.resp.FeedBackResp;
+import com.etaofinance.wap.common.UserContext;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("other")
 public class OtherControllor {
+	
+	@Autowired
+	HttpServletRequest request;
+	
 	@Autowired
 	private IQAService qAService;
 	
@@ -78,8 +83,13 @@ public class OtherControllor {
 	@ApiOperation(value = "项目报名", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "项目报名")
-	public HttpResultModel<ResponseBase> createProjectEnroll(@RequestBody  ProjectEnroll record) 
+	public HttpResultModel<Object> createProjectEnroll(@RequestBody  ProjectEnroll record) 
 	{		
+		if(UserContext.class!=null && UserContext.getCurrentContext(request)!=null)
+		{
+			Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+			record.setMemberid(memberid);	
+		}
 		return	projectEnrollService.create(record);
 	}
 	
@@ -96,8 +106,13 @@ public class OtherControllor {
 	@ApiOperation(value = "创建意见反馈", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "创建意见反馈")
-	public HttpResultModel<FeedBackResp> createFeedBack(@RequestBody  FeedBack record) 
+	public HttpResultModel<Object> createFeedBack(@RequestBody  FeedBack record) 
 	{		
+		if(UserContext.class!=null && UserContext.getCurrentContext(request)!=null)
+		{
+			Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+			record.setMemberid(memberid);	
+		}
 		return	feedBackService.create(record);
 	}
 	
@@ -114,8 +129,9 @@ public class OtherControllor {
 	@ApiOperation(value = "获取我的消息列表", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取我的消息列表")
-	public  List<Message> getMessagelist(@RequestBody  Message record) {
-		return messageService.getList(record);
+	public  List<Message> getMessagelist() {
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		return messageService.getList(memberid);
 	}
 	
 }

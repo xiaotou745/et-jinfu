@@ -17,6 +17,7 @@ import com.etaofinance.entity.resp.*;
 public interface IMessageService {
    
 
+<<<<<<< HEAD
     List<Message> getList(Message record);	
     
     
@@ -27,4 +28,7 @@ public interface IMessageService {
     HttpResultModel<Object> addMsg(Message record);
 
     HttpResultModel<Object> addMsgSelective(Message record);
+=======
+    List<Message> getList(Long memberid);	
+>>>>>>> 6b07be8fa724d13c4c8756650c6f6e9618343dd2
 }

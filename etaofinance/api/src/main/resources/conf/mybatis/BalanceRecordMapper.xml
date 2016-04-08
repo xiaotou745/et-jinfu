@@ -50,7 +50,7 @@ else '其它'
 p.ProjectName
     from balancerecord b
 left join project  p on b.ProjectId=p.Id
-where b.memberid = #{memberid,jdbcType=BIGINT}
+where b.memberid = #{memberId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from balancerecord

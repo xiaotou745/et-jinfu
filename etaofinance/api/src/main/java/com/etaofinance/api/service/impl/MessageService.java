@@ -37,8 +37,8 @@ public class MessageService implements IMessageService{
 	private IMessageDao messageDao;
 
 	@Override
-	public List<Message> getList(Message record) {
-		return messageDao.getList(record);
+	public List<Message> getList(Long memberid) {
+		return messageDao.getList(memberid);
 	}
 
 	@Override

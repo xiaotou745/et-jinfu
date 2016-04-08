@@ -11,6 +11,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
+import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
@@ -18,6 +19,6 @@ import com.etaofinance.entity.resp.*;
 public interface IProjectSubscriptionService {
    
 
-	List<ProjectSubscriptionDM> getListMore(ProjectSubscriptionDM record);
+	List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record);
 
 }

@@ -18,7 +18,7 @@ import com.etaofinance.entity.resp.*;
 public interface IProjectEnrollService {
    
 
-	HttpResultModel<ResponseBase> create(ProjectEnroll record);
+	HttpResultModel<Object> create(ProjectEnroll record);
 	
 
 }

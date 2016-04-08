@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.admin.common.UserContext;
+import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
@@ -22,11 +23,13 @@ import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProjectAuditReq;
 /**
  * 项目管理
  * @author ofmyi_000
@@ -39,6 +42,8 @@ public class ProjectController {
 	private IProjectService projectService;
 	@Autowired
 	private IProjectStrategyService projectStrategyService;
+	@Autowired
+	private IProjectImageService projectImageService; 
 	@Autowired
 	private IPublicProvinceCityService publicProvinceCityService;
 	
@@ -108,7 +113,7 @@ public class ProjectController {
 		return resultMap;
 		}
 	/**
-	 * 新建项目
+	 * 新建项目  wangchao modify
 	 * @return
 	 */
 	@RequestMapping("newproject")
@@ -133,5 +138,32 @@ public class ProjectController {
 		UserContext context=UserContext.getCurrentContext(request);
 		req.setPublishName(context.getUserName());
 		return projectService.publishProject(req);
-	}	
+	}
+	/*
+	 * 项目审核 wangchao 
+	 */
+	@RequestMapping("audit")
+	@ResponseBody
+	public int audit(HttpServletRequest request,ProjectAuditReq req) {
+		UserContext context=UserContext.getCurrentContext(request);
+		req.setAuditName(context.getUserName());
+		return projectService.audit(req);
+	}
+	/*
+	 * 项目预览 wangchao
+	 */
+	@RequestMapping("previewproject")
+	public ModelAndView previewProject(long id){
+		ModelAndView view = new ModelAndView("adminView");
+		view.addObject("subtitle", "项目管理");
+		view.addObject("currenttitle", "项目预览");
+		view.addObject("viewPath", "project/previewproject");
+		Project project= projectService.selectByPrimaryKey(id);
+		List<ProjectStrategy> proStrList= projectStrategyService.getByProjectId(id);
+		List<ProjectImage> proImgList=projectImageService.getByProjectId(id);
+		view.addObject("project",project);
+		view.addObject("proStrList",proStrList);
+		view.addObject("proImgList",proImgList);
+		return view;
+	}
 }

@@ -17,6 +17,8 @@ import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
+import com.etaofinance.core.enums.BalanceRecordEnum;
+import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -28,6 +30,7 @@ import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
 
@@ -39,14 +42,34 @@ public class BalanceRecordService implements IBalanceRecordService{
 	private IBalanceRecordDao balanceRecordDao;
 
 	@Override
-	public List<BalanceRecordDM> getListMore(BalanceRecord record) {
+	public List<BalanceRecordDM> getListMore(PublicMemberReq record) {
 		return balanceRecordDao.getListMore(record);
 	}
 
 	@Override
-	public BalanceRecordDM selectDMByPrimaryKey(Long id)
+	public HttpResultModel<BalanceRecordDM> selectBRDetail(PublicMemberReq record)
 	{
-		return balanceRecordDao.selectDMByPrimaryKey(id);
+		HttpResultModel<BalanceRecordDM> resp = new HttpResultModel<BalanceRecordDM>();		
+		
+		if(record.getMemberId() ==null || record.getMemberId().equals(""))
+		{	
+			resp.setCode(BalanceRecordEnum.MemberIdIsNull.value());
+			resp.setMsg(BalanceRecordEnum.MemberIdIsNull.desc());
+			return resp;			
+		}		
+		
+		BalanceRecordDM BRModel= balanceRecordDao.selectDMByPrimaryKey(record.getCurrId());		
+		if(BRModel==null)
+		{
+			resp.setCode(BalanceRecordEnum.Err.value());
+			resp.setMsg(BalanceRecordEnum.Err.desc());
+			return resp;	
+		}
+		resp.setData(BRModel);
+		resp.setCode(BalanceRecordEnum.Success.value());
+		resp.setMsg(BalanceRecordEnum.Success.desc());		
+		return resp;		
+		
 	}
 
 	@Override

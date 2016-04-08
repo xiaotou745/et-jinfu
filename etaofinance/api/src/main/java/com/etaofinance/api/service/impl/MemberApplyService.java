@@ -52,7 +52,7 @@ public class MemberApplyService implements IMemberApplyService{
 	public HttpResultModel<Object> create(MemberApply record) {		
 		
 		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
-		if(record.getMemberid() ==null && record.getMemberid().equals(""))
+		if(record.getMemberid() ==null || record.getMemberid().equals(""))
 		{	
 			resp.setCode(MemberApplyEnum.MemberIdIsNull.value());
 			resp.setMsg(MemberApplyEnum.MemberIdIsNull.desc());
