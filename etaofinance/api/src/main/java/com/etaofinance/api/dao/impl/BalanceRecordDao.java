@@ -83,7 +83,7 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 	@Override
 	public PagedResponse<BalanceRecord> getBalanceRecordList(
 			PagedBalancerecordReq req) {
-		return getReadOnlySqlSessionUtil().selectPageList("IBalanceRecordDao.getBalanceRecordList", req);
+		return getReadOnlySqlSessionUtil().selectPageList("IBalanceRecordDao.getBuyList", req);
 	}
 	
 

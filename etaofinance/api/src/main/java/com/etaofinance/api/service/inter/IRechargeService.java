@@ -1,6 +1,8 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Recharge;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.req.PagedRechargeReq;
 
 public interface IRechargeService {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +16,6 @@ public interface IRechargeService {
     int updateByPrimaryKeySelective(Recharge record);
 
     int updateByPrimaryKey(Recharge record);
+    
+	PagedResponse<Recharge> getRechargeList(PagedRechargeReq req);
 }

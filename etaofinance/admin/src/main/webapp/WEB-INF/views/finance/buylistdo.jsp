@@ -5,7 +5,7 @@
 <%@page import="com.etaofinance.core.util.PageHelper"%>
 <%@page import="java.util.ArrayList"%>
     <%@page import="com.etaofinance.core.util.PropertyUtils"%>
-<%@page import="com.etaofinance.entity.Project"%>
+<%@page import="com.etaofinance.entity.BalanceRecord"%>
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
 <%@page import="java.util.List"%>
 <%
@@ -16,38 +16,32 @@
 	<thead>
 		<tr>
 			<th width="5%">编号</th>
-			<th>项目名称</th>
-			<th>融资进度</th>
-			<th>投资人数</th>
-			<th>关注人数</th>
-			<th>状态</th>
-			<th>融资开始时间</th>
-			<th>融资结束时间</th>
-			<th>操作</th>
+			<th>订单号</th>
+			<th>姓名</th>
+			<th>金额</th>
+			<th>创建时间</th>
+			<th>所属项目</th>
+			<th>是否支付</th>
 		</tr>
 	</thead>
 	<tbody>
 
 		<%
-			PagedResponse<Project> data = (PagedResponse<Project>) request.getAttribute("listData");
-			List<Project> list = data.getResultList();
+			PagedResponse<BalanceRecord> data = (PagedResponse<BalanceRecord>) request.getAttribute("listData");
+			List<BalanceRecord> list = data.getResultList();
 			if (list == null) {
-				list = new ArrayList<Project>();
+				list = new ArrayList<BalanceRecord>();
 			}
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
 			<td><%=(i+1)%></td>
-			<td><%=list.get(i).getProjectname()%></td>
-			<td><%=list.get(i).getSchedule()%>%</td>
-			<td><%=list.get(i).getInvestmentnumber()%></td>
-			<td><%=list.get(i).getFollownumber()%></td>
-			<td><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getStarttime(), "") %></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getEndtime(), "") %></td>
-			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
-			</td>
+			<td><%=list.get(i).getRelationno()%></td>
+			<td><%=list.get(i).getOptname()%></td>
+			<td><%=list.get(i).getAmount()%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(),"") %></td>
+			<td><%=list.get(i).getProjectid()%></td>
+			<td><%="是"%></td>
 		</tr>
 		<%
 			}
