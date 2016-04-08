@@ -17,6 +17,7 @@ import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IMessageService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
+import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -39,6 +40,103 @@ public class MessageService implements IMessageService{
 	public List<Message> getList(Long memberid) {
 		return messageDao.getList(memberid);
 	}
-	
 
+	@Override
+	public HttpResultModel<Object> readMsg(Message msg) {
+	
+		HttpResultModel<Object> res = new HttpResultModel<Object>();
+		
+		res.setCode(HttpReturnRnums.Fail.value());
+		
+		res.setMsg(HttpReturnRnums.Fail.desc());
+
+		if(null==msg || "null" == String.valueOf(msg.getId())){
+			return res;
+		}
+		
+		msg.setIsread(true);
+		int  updateRes = this.messageDao.updateByPrimaryKeySelective(msg);
+		
+		if(0!=updateRes){
+			res.setCode(HttpReturnRnums.Success.value());
+			res.setMsg(HttpReturnRnums.Success.desc());
+		}
+		res.setData(updateRes);
+		return res;
+		
+	}
+
+	@Override
+	public HttpResultModel<Object> delMsg(Message msg) {
+		HttpResultModel<Object> delRes =new HttpResultModel<Object>();
+		
+		delRes.setCode(HttpReturnRnums.Fail.value());
+		
+		delRes.setMsg(HttpReturnRnums.Fail.desc());
+
+		if(null==msg || "null" == String.valueOf(msg.getId())){
+			return delRes;
+		}
+		msg.setIsdel(true);
+		int  updateRes = this.messageDao.updateByPrimaryKeySelective(msg);
+		
+		if(0!=updateRes){
+			delRes.setCode(HttpReturnRnums.Success.value());
+			delRes.setMsg(HttpReturnRnums.Success.desc());
+		}
+		delRes.setData(updateRes);
+		return delRes;
+	}
+
+	@Override
+	public HttpResultModel<Object> addMsg(Message msg) {
+		
+		HttpResultModel<Object> res = new HttpResultModel<Object>();
+		
+		res.setCode(HttpReturnRnums.Fail.value());
+		
+		res.setMsg(HttpReturnRnums.Fail.desc());
+
+		if(null==msg){
+			return res;
+		}
+		
+		int  insertRes = this.messageDao.insert(msg);;
+		
+		if(0!=insertRes){
+			res.setCode(HttpReturnRnums.Success.value());
+			res.setMsg(HttpReturnRnums.Success.desc());
+		}
+		res.setData(insertRes);
+		return res;
+	}
+
+	@Override
+	public HttpResultModel<Object> addMsgSelective(Message msg) {
+	HttpResultModel<Object> res = new HttpResultModel<Object>();
+		
+		res.setCode(HttpReturnRnums.Fail.value());
+		
+		res.setMsg(HttpReturnRnums.Fail.desc());
+
+		if(null==msg){
+			return res;
+		}
+		
+		int  insertRes = this.messageDao.insertSelective(msg);
+		
+		if(0!=insertRes){
+			res.setCode(HttpReturnRnums.Success.value());
+			res.setMsg(HttpReturnRnums.Success.desc());
+		}
+		res.setData(insertRes);
+		return res;
+	}
+
+	@Override
+	public List<Message> getList(Message record) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

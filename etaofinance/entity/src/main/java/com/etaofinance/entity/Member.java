@@ -34,7 +34,8 @@ public class Member {
     private Date createtime;
 
     private String headimage;
-
+    private Boolean isdel;
+    private Boolean isread;
     public Long getId() {
         return id;
     }
@@ -119,10 +120,24 @@ public class Member {
         return islock;
     }
 
-    public void setIslock(Boolean islock) {
+    public void setIslock(Boolean isread) {
         this.islock = islock;
     }
+    public Boolean getIsread() {
+        return isread;
+    }
 
+    public void setIsread(Boolean isread) {
+        this.isread = isread;
+        
+    } 
+    public Boolean getIsdel() {
+        return isdel;
+    }
+
+    public void setIsdel(Boolean isdel) {
+        this.isdel = isdel;
+    }
     public String getTruename() {
         return truename;
     }
