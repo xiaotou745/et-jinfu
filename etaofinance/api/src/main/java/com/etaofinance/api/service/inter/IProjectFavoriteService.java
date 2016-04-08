@@ -23,6 +23,8 @@ public interface IProjectFavoriteService {
 	  // 插入一条记录
 	int insert(ProjectFavorite record);
 	   int insertSelective(ProjectFavorite record);
+
+	List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record);
 	List<ProjectFavoriteDM> getListMore(ProFavoriteReq record);
 
 	int updateByPrimaryKeySelective(ProjectFavorite record);

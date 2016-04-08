@@ -68,6 +68,11 @@ public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 		return getReadOnlySqlSessionUtil().selectOne("IWithdrawformDao.selectDMByPrimaryKey",id);
 	}
 
+	@Override
+	public PagedResponse<Withdrawform> getWithdrawList(PagedWithdrawReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IWithdrawformDao.getWithdrawList", req);
+	}
+
 
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 
@@ -26,4 +27,6 @@ public interface IBalanceRecordDao {
     BalanceRecordDM selectDMByPrimaryKey(Long id);
 
 	PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req);
+
+	PagedResponse<BalanceRecord> getBalanceRecordList(PagedBalancerecordReq req);
 }

@@ -53,5 +53,13 @@ public class ADVertDao extends DaoBase implements IADVertDao{
 		return getReadOnlySqlSessionUtil().selectPageList(
 				"IADVertDao.query", req);
 	}
+	/**
+	 * 获取轮播图列表
+	 */
+	@Override
+	public List<ADVert> getListForWap() {
+		return getReadOnlySqlSessionUtil().selectList(
+				"IADVertDao.getListForWap");
+	}
 
 }

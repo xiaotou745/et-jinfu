@@ -25,14 +25,21 @@ public class MessageDao extends DaoBase implements IMessageDao{
 
 	@Override
 	public int insert(Message record) {
-		// TODO Auto-generated method stub
-		return 0;
+		int insertRes =0;
+		
+		insertRes =  getMasterSqlSessionUtil().insert("IMessageDao.insert",record);
+		
+		return insertRes;
 	}
 
 	@Override
 	public int insertSelective(Message record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int insertRes =0;
+		
+		insertRes =  getMasterSqlSessionUtil().insert("IMessageDao.insertSelective",record);
+		
+		return insertRes;
 	}
 
 	@Override
@@ -43,14 +50,21 @@ public class MessageDao extends DaoBase implements IMessageDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(Message record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int updateRes =0;
+		
+		updateRes =  getMasterSqlSessionUtil().update("IMessageDao.updateByPrimaryKeySelective",record);
+		
+		return updateRes;
 	}
 
 	@Override
 	public int updateByPrimaryKey(Message record) {
-		// TODO Auto-generated method stub
-		return 0;
+		int updateRes =0;
+		
+		updateRes =  getMasterSqlSessionUtil().update("IMessageDao.updateByPrimaryKey",record);
+		
+		return updateRes;
 	}
 
 	@Override

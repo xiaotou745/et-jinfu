@@ -151,7 +151,6 @@ public class ProjectController {
 	notes = "关注或取消关注项目")
 	public HttpResultModel<Object> follow(@RequestBody ProjectFavorite profavorite)
 	{
-		
 		return projectFavoriteService.follow(profavorite);
 	}
 	
