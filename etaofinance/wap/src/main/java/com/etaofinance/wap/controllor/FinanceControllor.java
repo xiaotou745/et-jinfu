@@ -109,8 +109,8 @@ public class FinanceControllor {
 	@ApiOperation(value = "获取可提现记录", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取可提现记录")
-	public List<WithdrawformDM> getWithdrawformList(@RequestBody Withdrawform record)
-	{
+	public List<WithdrawformDM> getWithdrawformList(@RequestBody PublicMemberReq record)
+	{		
 		return withdrawformService.getListMore(record);
 	}
 	
@@ -123,12 +123,15 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getWithdrawformdetail")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "获取可提现记录详情", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取可提现记录详情")
-	public WithdrawformDM getWithdrawformDetail(@RequestBody Withdrawform record)
+	public HttpResultModel<WithdrawformDM> getWithdrawformDetail(@RequestBody PublicMemberReq record)
 	{
-		return withdrawformService.selectDMByPrimaryKey(record.getId());
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
+		return withdrawformService.selectWFDetail(record);
 	}
 	
 	
