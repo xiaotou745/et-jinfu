@@ -16,6 +16,7 @@ import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.PagedWithdrawReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
@@ -25,9 +26,9 @@ public interface IWithdrawformService {
 	
 	HttpResultModel<Object> create(Withdrawform record);
 
-	List<WithdrawformDM> getListMore(Withdrawform record);	
+	List<WithdrawformDM> getListMore(PublicMemberReq record);	
 	
-	WithdrawformDM selectDMByPrimaryKey(Long id);
+	HttpResultModel<WithdrawformDM>  selectWFDetail(PublicMemberReq record);
 	
 	PagedResponse<Withdrawform>  getWithdrawList(PagedWithdrawReq req);
 }

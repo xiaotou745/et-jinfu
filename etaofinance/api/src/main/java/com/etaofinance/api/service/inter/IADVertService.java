@@ -26,6 +26,10 @@ public interface IADVertService {
 		
 
 	HttpResultModel<ADVertResp> modify(ADVert record);
-	
+	/**
+	 * 获取首页轮播图
+	 * @return
+	 */
+	List<ADVert> getListForWap();
 
 }

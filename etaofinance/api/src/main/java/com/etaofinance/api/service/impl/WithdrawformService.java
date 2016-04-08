@@ -20,6 +20,7 @@ import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
+import com.etaofinance.core.enums.BalanceRecordEnum;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.enums.WithdrawformEnum;
@@ -34,9 +35,11 @@ import com.etaofinance.entity.Withdrawform;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
+import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.WithdrawformDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedWithdrawReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.resp.ADVertResp;
 import com.etaofinance.entity.resp.MemberResp;
 
@@ -78,13 +81,34 @@ public class WithdrawformService implements IWithdrawformService{
 	}
 
 	@Override
-	public List<WithdrawformDM> getListMore(Withdrawform record) {
+	public List<WithdrawformDM> getListMore(PublicMemberReq record) {
 		return withdrawformDao.getListMore(record);
 	}
 
 	@Override
-	public WithdrawformDM selectDMByPrimaryKey(Long id) {
-		return withdrawformDao.selectDMByPrimaryKey(id);
+	public  HttpResultModel<WithdrawformDM>  selectWFDetail(PublicMemberReq record) {
+		
+		HttpResultModel<WithdrawformDM> resp = new HttpResultModel<WithdrawformDM>();		
+		
+		if(record.getMemberId() ==null || record.getMemberId().equals(""))
+		{	
+			resp.setCode(WithdrawformEnum.MemberIdIsNull.value());
+			resp.setMsg(WithdrawformEnum.MemberIdIsNull.desc());
+			return resp;			
+		}		
+		
+		WithdrawformDM WFModel= withdrawformDao.selectDMByPrimaryKey(record.getCurrId());		
+		if(WFModel==null)
+		{
+			resp.setCode(WithdrawformEnum.Err.value());
+			resp.setMsg(WithdrawformEnum.Err.desc());
+			return resp;	
+		}
+		resp.setData(WFModel);
+		resp.setCode(WithdrawformEnum.Success.value());
+		resp.setMsg(WithdrawformEnum.Success.desc());		
+		return resp;				
+
 	}
 
 	@Override

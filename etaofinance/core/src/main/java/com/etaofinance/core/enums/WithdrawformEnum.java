@@ -15,7 +15,11 @@ public enum WithdrawformEnum {
 	/**
 	 * 用户不存在
 	 */
-	MemberIdIsNull(-2,"用户不存在"),;
+	MemberIdIsNull(-2,"用户不存在"),	
+	/**
+	 * Id为空
+	 */
+	IdIsNull(-100,"Id为空");
 
 	private int value = 0;
 	private String desc;
