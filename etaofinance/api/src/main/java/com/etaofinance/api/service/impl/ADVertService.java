@@ -13,6 +13,7 @@ import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.IAccountAuthService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
+import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -26,9 +27,12 @@ import com.etaofinance.entity.resp.ADVertResp;
 public class ADVertService implements IADVertService{
 
 
+	private static final int ArrayList = 0;
+	private static final int ADVert = 0;
 	@Autowired
 	private IADVertDao aDVertDao;
-
+	@Autowired
+	RedisService redisservice;
 
 	
 	
@@ -69,6 +73,26 @@ public class ADVertService implements IADVertService{
 		resp.setCode(ADVertEnum.Success.value());
 		resp.setMsg(ADVertEnum.Success.desc());		
 		return resp;
+	}
+
+	/**
+	 * 获取轮播图
+	 */
+	@Override
+	public List<ADVert> getListForWap() {
+		String json=redisservice.get(RedissCacheKey.JF_ADvertList, String.class);
+		List<ADVert> list=null;
+		if(json==null||json.equals(""))
+		{
+			list=aDVertDao.getListForWap();
+			json=JsonUtil.obj2string(list);
+			redisservice.set(RedissCacheKey.JF_ADvertList, json,60*60*24*3);
+		}
+		else
+		{
+			list=JsonUtil.str2list(json, ADVert.class);
+		}
+		return list;
 	}
 	
 

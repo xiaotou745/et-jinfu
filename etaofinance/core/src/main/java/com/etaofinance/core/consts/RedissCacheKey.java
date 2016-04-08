@@ -31,7 +31,10 @@ public class RedissCacheKey {
     //找回密码第一步缓存UUID
     public static final String JF_Member_FindPassWordSetpOne= "JF_Member_FindPassWordSetpOne_%s";
     public static final String JF_Member_FindPassWordSetpTwo= "JF_Member_FindPassWordSetpTwo_%s";
- 
+    /**
+     * 广告轮播图
+     */
+    public static final String JF_ADvertList= "JF_ADvertList";
  
     /**
      *  商家端找回密码缓存KEY
