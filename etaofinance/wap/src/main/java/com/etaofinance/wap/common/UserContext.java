@@ -51,7 +51,7 @@ public class UserContext {
 				return new UserContext(account,request.getHeader("host"));
 			}
 		}
-		return null;
+	    return new UserContext(null,request.getHeader("host"));
 	}
 	/**
 	 * 用户是否在线
