@@ -151,4 +151,10 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 		return projectFavoriteDao.insertSelective(record);
 	}
 
+	@Override
+	public List<ProjectFavoriteDM> getListMore(ProjectFavoriteDM record) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

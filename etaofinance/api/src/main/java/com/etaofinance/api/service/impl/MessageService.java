@@ -132,5 +132,11 @@ public class MessageService implements IMessageService{
 		res.setData(insertRes);
 		return res;
 	}
+
+	@Override
+	public List<Message> getList(Message record) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
