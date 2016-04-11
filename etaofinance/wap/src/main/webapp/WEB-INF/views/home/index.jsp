@@ -7,6 +7,7 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	//List
 %>
 <!DOCTYPE html>
 <html>

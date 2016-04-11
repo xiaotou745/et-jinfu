@@ -158,4 +158,9 @@
       CreateTime = #{createtime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 查询首页所需的广告列表 -->
+  <select id="getListForWap" resultType="com.etaofinance.entity.ADVert">
+  SELECT  * FROM advert a  WHERE a.IsShelve=1 AND a.TypeId=1 ORDER
+   BY a.SortNo ASC
+  </select>
 </mapper>

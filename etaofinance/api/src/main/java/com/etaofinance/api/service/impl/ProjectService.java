@@ -288,4 +288,11 @@ public class ProjectService implements IProjectService {
 	public int audit(ProjectAuditReq req) {
 		return projectDao.audit(req);
 	}
+	/**
+	 * 新手专享项目列表
+	 */
+	@Override
+	public List<ProjectModel> getNoviceProject() {
+		return projectDao.getNoviceProject();
+	}
 }
