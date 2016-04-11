@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.Recharge" >
     <id column="Id" property="id" jdbcType="BIGINT" />
     <result column="MemberId" property="memberid" jdbcType="BIGINT" />
-    <result column="AccountType" property="accounttype" jdbcType="VARCHAR" />
+    <result column="AccountType" property="accounttype" jdbcType="INTEGER" />
     <result column="No" property="no" jdbcType="VARCHAR" />
     <result column="Amount" property="amount" jdbcType="REAL" />
     <result column="Status" property="status" jdbcType="SMALLINT" />
@@ -33,7 +33,7 @@
       No, Amount, Status, Remark, 
       CreateName, CreateTime, OptName, 
       OptTime)
-    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{accounttype,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{accounttype,jdbcType=INTEGER}, 
       #{no,jdbcType=VARCHAR}, #{amount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, #{remark,jdbcType=VARCHAR}, 
       #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{optname,jdbcType=VARCHAR}, 
       #{opttime,jdbcType=TIMESTAMP})
@@ -83,7 +83,7 @@
         #{memberid,jdbcType=BIGINT},
       </if>
       <if test="accounttype != null" >
-        #{accounttype,jdbcType=VARCHAR},
+        #{accounttype,jdbcType=INTEGER},
       </if>
       <if test="no != null" >
         #{no,jdbcType=VARCHAR},
@@ -118,7 +118,7 @@
         MemberId = #{memberid,jdbcType=BIGINT},
       </if>
       <if test="accounttype != null" >
-        AccountType = #{accounttype,jdbcType=VARCHAR},
+        AccountType = #{accounttype,jdbcType=INTEGER},
       </if>
       <if test="no != null" >
         No = #{no,jdbcType=VARCHAR},
@@ -183,7 +183,7 @@
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Recharge" >
     update recharge
     set MemberId = #{memberid,jdbcType=BIGINT},
-      AccountType = #{accounttype,jdbcType=VARCHAR},
+      AccountType = #{accounttype,jdbcType=INTEGER},
       No = #{no,jdbcType=VARCHAR},
       Amount = #{amount,jdbcType=REAL},
       Status = #{status,jdbcType=SMALLINT},

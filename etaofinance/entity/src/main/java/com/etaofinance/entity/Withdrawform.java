@@ -18,9 +18,12 @@ public class Withdrawform {
     private String remark;
 
     private String createname;
-
+    private String bankname;
     private Date createtime;
-
+    
+    private Date    successtime;
+    
+    
     private String optname;
 
     private Date opttime;
@@ -92,15 +95,27 @@ public class Withdrawform {
     public void setCreatename(String createname) {
         this.createname = createname == null ? null : createname.trim();
     }
+    public String getBankname() {
+        return bankname;
+    }
 
+    public void setBankname(String bankname) {
+        this.bankname = bankname == null ? null : bankname.trim();
+    }
     public Date getCreatetime() {
         return createtime;
+    }
+
+    public void setSuccesstime(Date successtime) {
+        this.successtime = successtime;
+    }
+    public Date getSuccesstime() {
+        return successtime;
     }
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
-
     public String getOptname() {
         return optname;
     }

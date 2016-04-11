@@ -34,15 +34,17 @@
 			}
 			for (int i = 0; i < list.size(); i++) {
 		%>
+		
 		<tr>
 			<td><%=(i+1)%></td>
 			<td><%=list.get(i).getRelationno()%></td>
 			<td><%=list.get(i).getOptname()%></td>
 			<td><%=list.get(i).getAmount()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(),"") %></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(),"")%></td>
 			<td><%=list.get(i).getProjectid()%></td>
 			<td><%="是"%></td>
 		</tr>
+		
 		<%
 			}
 		%>

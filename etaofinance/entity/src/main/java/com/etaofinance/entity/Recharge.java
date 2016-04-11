@@ -7,7 +7,7 @@ public class Recharge {
 
     private Long memberid;
 
-    private String accounttype;
+    private Integer accounttype;
 
     private String no;
 
@@ -41,12 +41,12 @@ public class Recharge {
         this.memberid = memberid;
     }
 
-    public String getAccounttype() {
+    public Integer getAccounttype() {
         return accounttype;
     }
 
-    public void setAccounttype(String accounttype) {
-        this.accounttype = accounttype == null ? null : accounttype.trim();
+    public void setAccounttype(Integer accounttype) {
+        this.accounttype =accounttype;
     }
 
     public String getNo() {
