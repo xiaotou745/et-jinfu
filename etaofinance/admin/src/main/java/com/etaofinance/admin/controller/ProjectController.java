@@ -17,6 +17,7 @@ import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
 import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
@@ -46,6 +47,8 @@ public class ProjectController {
 	private IProjectImageService projectImageService; 
 	@Autowired
 	private IPublicProvinceCityService publicProvinceCityService;
+	@Autowired
+	private IProjectSubscriptionService projectSubscriptionService;
 	/**
 	 * 项目列表查询页
 	 * @return
@@ -142,10 +145,11 @@ public class ProjectController {
 	public int audit(HttpServletRequest request,ProjectAuditReq req) {
 		UserContext context=UserContext.getCurrentContext(request);
 		req.setAuditName(context.getUserName());
-		return projectService.audit(req);
+		int r=projectService.audit(req);
+		return r;
 	}
 	/*
-	 * 项目预览 wangchao
+	 * 项目预览 wangchao  不是这个页面  ，，类似于wap中的 项目详情页面 
 	 */
 	@RequestMapping("previewproject")
 	public ModelAndView previewProject(long id){
@@ -153,12 +157,40 @@ public class ProjectController {
 		view.addObject("subtitle", "项目管理");
 		view.addObject("currenttitle", "项目预览");
 		view.addObject("viewPath", "project/previewproject");
+		//项目信息
 		Project project= projectService.selectByPrimaryKey(id);
+		//项目 类型 信息
 		List<ProjectStrategy> proStrList= projectStrategyService.getByProjectId(id);
+		//项目图片 信息
 		List<ProjectImage> proImgList=projectImageService.getByProjectId(id);
+		//省市区
+		Map<Integer,String> cityMap=publicProvinceCityService.getOpenCityMap(); 
+		view.addObject("cityMap", cityMap);
 		view.addObject("project",project);
 		view.addObject("proStrList",proStrList);
 		view.addObject("proImgList",proImgList);
+		return view;
+	}
+	
+	@RequestMapping("projectaudit")
+	public ModelAndView projectAudit(long id){
+		ModelAndView view = new ModelAndView("adminView");
+		view.addObject("subtitle", "项目管理");
+		view.addObject("currenttitle", "项目审核");
+		view.addObject("viewPath", "project/projectaudit");	
+		//项目信息
+		Project project= projectService.selectByPrimaryKey(id);	
+		//项目 类型 信息
+		List<ProjectStrategy> proStrList= projectStrategyService.getByProjectId(id);
+		//项目图片 信息
+		List<ProjectImage> proImgList=projectImageService.getByProjectId(id);
+		//省市区
+		Map<Integer,String> cityMap=publicProvinceCityService.getOpenCityMap(); 
+		view.addObject("cityMap", cityMap);
+		view.addObject("project",project);
+		view.addObject("proStrList",proStrList);
+		view.addObject("proImgList",proImgList);
+		view.addObject("projectId",id);
 		return view;
 	}
 }

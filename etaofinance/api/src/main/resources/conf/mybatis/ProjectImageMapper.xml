@@ -7,6 +7,7 @@
 		<result column="TypeId" property="typeid" jdbcType="SMALLINT" />
 		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
 		<result column="IsDel" property="isdel" jdbcType="BIT" />
+		<result column="Url" property="url" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">Id, ProjectId, TypeId, CreateTime, IsDel
 	</sql>
@@ -79,7 +80,7 @@
 		= #{id,jdbcType=BIGINT}
 	</update>
 	<!-- 根据项目id获取项目图片信息  wangchao -->
-	<select id="getByProjectId" resultType="com.etaofinance.entity.ProjectStrategy"
+	<select id="getByProjectId" resultType="com.etaofinance.entity.ProjectImage"
 		parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
