@@ -5,10 +5,15 @@ import java.sql.Date;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedBalancerecordReq extends PagedRequestBase{
+	
 	private int proId;
+	
 	private String createName;
-	private Date startTime;
-	private Date endTime;
+	
+	private String startTime;
+	
+	private String endTime;
+	
 	
 	public int getProId() {
 		return proId;
@@ -22,16 +27,16 @@ public class PagedBalancerecordReq extends PagedRequestBase{
 	public void setCreateName(String createName) {
 		this.createName = createName;
 	}
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 }

@@ -58,8 +58,7 @@ public class MemberApplyService implements IMemberApplyService{
 			resp.setMsg(MemberApplyEnum.MemberIdIsNull.desc());
 			return resp;			
 		}
-		//验证是否属于会员
-		
+		//验证是否属于会员		
 		record.setCreatetime(new Date());		
 		int row= memberApplyDao.insertSelective(record);		
 		if(row<=0)

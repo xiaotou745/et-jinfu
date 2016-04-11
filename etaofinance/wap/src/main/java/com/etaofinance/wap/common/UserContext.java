@@ -21,7 +21,6 @@ import com.etaofinance.entity.domain.SimpleUserInfoModel;
 public class UserContext {
 	private Member account;
 	private String host="";
-	private Member newEstUserInfo;
 	
 	private final static RedisService redisService;	
 	
@@ -42,10 +41,6 @@ public class UserContext {
 	}
 	public String getHost(){
 		return this.host;
-	}
-
-	public Member getNewEstUserInfo() {
-		return memberService.getById(this.account.getId());	
 	}
 
 	public static  UserContext getCurrentContext(HttpServletRequest request) {

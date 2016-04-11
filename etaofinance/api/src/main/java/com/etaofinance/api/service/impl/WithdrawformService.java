@@ -114,7 +114,12 @@ public class WithdrawformService implements IWithdrawformService{
 	@Override
 	public PagedResponse<Withdrawform> getWithdrawList(PagedWithdrawReq req) {
 		return withdrawformDao.getWithdrawList(req);
-	}	
+	}
 
+	@Override
+	public int updateByPrimaryKeySelective(Withdrawform record) {
+		
+		return withdrawformDao.updateByPrimaryKeySelective(record);
+	}
 
 }

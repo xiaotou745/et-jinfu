@@ -22,6 +22,8 @@ public interface IMemberApplyDao {
 
     int updateByPrimaryKey(MemberApply record);
 
+    MemberApply selectPending(long memberId);
+    
 	PagedResponse<MemberApplyInvestModel> getMemberApplyList(PagedMemberReq req);
 
 	MemberApplyAuditModel getMemberApplyInfo(long memberApplyId);

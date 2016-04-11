@@ -1,5 +1,6 @@
 package com.etaofinance.api.service.impl;
 
+import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.common.LoginHelper;
+import com.etaofinance.api.dao.inter.IMemberApplyDao;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.redis.RedisService;
@@ -16,6 +18,7 @@ import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberCertificationEnum;
 import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.enums.MemberTypeEnum;
+import com.etaofinance.core.enums.ProjectEnrollEnum;
 import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
@@ -26,6 +29,7 @@ import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
@@ -37,6 +41,7 @@ import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
@@ -48,6 +53,10 @@ public class MemberService implements IMemberService{
 	private IMemberDao memberDao;
 	@Autowired
 	private IMemberOtherDao memberOtherDao;
+	
+	@Autowired
+	private IMemberApplyDao memberApplyDao;	
+	
 	@Autowired
 	private RedisService redisService;	
 	
@@ -260,12 +269,19 @@ public class MemberService implements IMemberService{
 			resp.setMsg(MemberCertificationEnum.TrueNameIsNULL.desc());
 			return resp;			
 		}
+		if(record.getTruename().length()<2 ||record.getTruename().length()>10)
+		{	
+			resp.setCode(MemberCertificationEnum.TrueNameIsErr.value());
+			resp.setMsg(MemberCertificationEnum.TrueNameIsErr.desc());
+			return resp;	
+		}				
 		if(record.getIdcard()==null || record.getIdcard().equals(""))
 		{
 			resp.setCode(MemberCertificationEnum.IdCardIsNULL.value());
 			resp.setMsg(MemberCertificationEnum.IdCardIsNULL.desc());
 			return resp;			
-		}		
+		}	
+		//验证身份证号是否合法
 		record.setLevel(ParseHelper.ToShort(MemberTypeEnum.CertificationUser.value()));
 		int row=memberDao.updateByPrimaryKeySelective(record);
 		if(row<=0)
@@ -287,6 +303,47 @@ public class MemberService implements IMemberService{
 		
 	   return  memberDao.selectByPrimaryKey(id);
 	}
+	
+	/**
+	 * 通过ID获取会员信息
+	 * 包含审核记录
+	 */
+	@Override
+	public MemberDM  getUserInfo(Long id) { 
+
+		MemberDM memberDM=new MemberDM();
+		Member member= memberDao.selectByPrimaryKey(id);
+		memberDM.setId(member.getId());
+		memberDM.setUsername(member.getUsername());
+		memberDM.setPhoneno(member.getPhoneno());
+		memberDM.setEmail(member.getEmail());
+		memberDM.setLoginpwd(member.getLoginpwd());
+		memberDM.setProvincecode(member.getProvincecode());
+		memberDM.setCitycode(member.getCitycode());
+		memberDM.setAreacode(member.getAreacode());
+		memberDM.setSex(member.getSex());
+		memberDM.setRemark(member.getRemark());
+		memberDM.setIslock(member.getIslock());
+		memberDM.setTruename(member.getTruename());
+		memberDM.setIdcard(member.getIdcard());
+		memberDM.setLevel(member.getLevel());
+		memberDM.setCreatetime(member.getCreatetime());
+		
+		MemberApply memberApply= memberApplyDao.selectPending(id);
+		if(memberApply==null || memberApply.equals("") )
+		  memberDM.setIsExistPending(false);
+		else
+			memberDM.setIsExistPending(true);		
+		
+		MemberOther memberOther= memberOtherDao.selectByMemberId(id);
+		if(memberOther==null || memberOther.getPaypassword()==null ||memberOther.getPaypassword().equals("") )
+			  memberDM.setIsSetPayPassWord(false);
+		else
+			memberDM.setIsSetPayPassWord(true);	
+	    return memberDM;
+	}
+	
+	
 	/**
 	 * 忘记密码第一步
 	 */
