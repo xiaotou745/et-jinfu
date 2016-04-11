@@ -82,7 +82,7 @@ public class ADVertService implements IADVertService{
 	public List<ADVert> getListForWap() {
 		String json=redisservice.get(RedissCacheKey.JF_ADvertList, String.class);
 		List<ADVert> list=null;
-		if(json==null||json.equals(""))
+		if(json==null||json.length()<10)
 		{
 			list=aDVertDao.getListForWap();
 			json=JsonUtil.obj2string(list);
