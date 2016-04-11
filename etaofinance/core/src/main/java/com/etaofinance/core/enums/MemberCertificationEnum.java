@@ -17,13 +17,21 @@ public enum MemberCertificationEnum {
 	 */
 	MemberIdIsNull(-2,"用户不存在"), 
 	/**
-	 * 真实姓名为空
+	 * 姓名不能为空
 	 */
-	TrueNameIsNULL(-3,"真实姓名为空"), 
+	TrueNameIsNULL(-3,"姓名不能为空"), 
+	/**
+	 * 联系人长度必须在2-10个字符
+	 */
+	TrueNameIsErr(-7,"姓名长度必须在2-10个字符"), 
 	/**
 	 * 身份证号为空
 	 */
-	IdCardIsNULL(-4,"身份证号为空")	;
+	IdCardIsNULL(-4,"身份证号为空"), 	
+	/**
+	 * 身份证号不合法
+	 */
+	ContactsIsErr(-7,"身份证号不合法");
 
 	private int value = 0;
 	private String desc;
