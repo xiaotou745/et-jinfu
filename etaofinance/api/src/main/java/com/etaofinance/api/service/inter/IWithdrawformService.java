@@ -31,4 +31,8 @@ public interface IWithdrawformService {
 	HttpResultModel<WithdrawformDM>  selectWFDetail(PublicMemberReq record);
 	
 	PagedResponse<Withdrawform>  getWithdrawList(PagedWithdrawReq req);
+	
+	
+    int updateByPrimaryKeySelective(Withdrawform record);
+    
 }

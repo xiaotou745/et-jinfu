@@ -40,8 +40,8 @@
 			<td><%=list.get(i).getNo()%></td>
 			<td><%=list.get(i).getCreatename()%></td>
 			<td><%=list.get(i).getAmount()%></td>
-	<td><%=PayType.getEnum(list.get(i).getAccounttype()).desc()%></td>
-		<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(),"") %></td>
+			<td><%=PayType.getEnum(list.get(i).getAccounttype()).desc()%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(),"") %></td>
 			<td><%=RechargeStatus.getEnum(list.get(i).getStatus()).desc()%></td>
 		</tr>
 		<%

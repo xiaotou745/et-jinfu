@@ -5,10 +5,15 @@ import java.sql.Date;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedBalancerecordReq extends PagedRequestBase{
+	
 	private int proId;
+	
 	private String createName;
+	
 	private Date startTime;
+	
 	private Date endTime;
+	
 	
 	public int getProId() {
 		return proId;

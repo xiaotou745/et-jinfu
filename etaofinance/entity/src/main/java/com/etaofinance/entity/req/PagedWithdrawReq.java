@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedWithdrawReq extends PagedRequestBase{
+	
 	private int status;
 	private String createName;
 	private Date startTime;

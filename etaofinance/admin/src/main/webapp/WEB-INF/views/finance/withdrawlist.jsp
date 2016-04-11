@@ -28,7 +28,13 @@
 							<input type="text" class="form-control" value="" name="beginDate"
 								id="beginDate"
 								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\',{d:-1})||\'2030-10-01\'}'})" />
-								~
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">~</label>
+						<div class="col-sm-8">
 									<input type="text" class="form-control" value="" name="endDate"
 								id="endDate"
 								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\',{d:1})}',maxDate:'2030-10-01'})" />
@@ -37,14 +43,14 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">状态:</label>
+						<label class="col-sm-3 control-label">状态:</label>
 						<div class="col-sm-7">
-							<%=HtmlHelper.getSelect("withdrawStatus", EnumHelper.GetEnumItems(WithdrawStatus.class), "desc", "value",null,"-1","全部") %>
+							<%=HtmlHelper.getSelect("withdrawStatus", EnumHelper.GetEnumItems(WithdrawStatus.class), "desc", "value",null,"-3","全部") %>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3">
-					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 3px;">搜索</button>
+					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 90px;">搜索</button>
 				</div>
 			</div>
 		</div>
@@ -61,8 +67,8 @@
 				var data={currentPage:currentPage,
 								"createName":$("#createName").val(),
 								"startTime":$("#beginDate").val(),
-									"endTime":$("#endDate").val(),
-									"status":$("#withdrawStatus").val()
+							    "endTime":$("#endDate").val(),
+								"status":$("#withdrawStatus").val()
 				};
 				$.post("<%=basePath%>/finance/withdrawlistdo",data,function(d){
 					$("#content").html(d);
@@ -75,8 +81,4 @@
 	$("#btnSearch").click(function(){
 		jss.search(1);
 	});
-	
-	function setstatus(id,status){
-		
-	}
-</script>
+	</script>

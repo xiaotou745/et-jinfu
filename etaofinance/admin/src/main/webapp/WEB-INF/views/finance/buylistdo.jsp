@@ -41,7 +41,7 @@
 			<td><%=list.get(i).getOptname()%></td>
 			<td><%=list.get(i).getAmount()%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(),"")%></td>
-			<td><%=list.get(i).getProjectid()%></td>
+			<td><%=list.get(i).getRemark()%></td>
 			<td><%="是"%></td>
 		</tr>
 		

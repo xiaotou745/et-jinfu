@@ -233,7 +233,7 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
   
   <sql id="getWithdrawListWhere">
 		1=1
-		<if test="status>0">
+		<if test="status>-3">
 			and Status=${status}
 		</if>
 		<if test="createName!= null and createName!=''">
