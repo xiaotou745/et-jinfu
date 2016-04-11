@@ -327,11 +327,18 @@ public class MemberService implements IMemberService{
 		memberDM.setIdcard(member.getIdcard());
 		memberDM.setLevel(member.getLevel());
 		memberDM.setCreatetime(member.getCreatetime());
+		
 		MemberApply memberApply= memberApplyDao.selectPending(id);
-		if(memberApply==null)
+		if(memberApply==null || memberApply.equals("") )
 		  memberDM.setIsExistPending(false);
 		else
-			memberDM.setIsExistPending(true);
+			memberDM.setIsExistPending(true);		
+		
+		MemberOther memberOther= memberOtherDao.selectByMemberId(id);
+		if(memberOther==null || memberOther.getPaypassword()==null ||memberOther.getPaypassword().equals("") )
+			  memberDM.setIsSetPayPassWord(false);
+		else
+			memberDM.setIsSetPayPassWord(true);	
 	    return memberDM;
 	}
 	

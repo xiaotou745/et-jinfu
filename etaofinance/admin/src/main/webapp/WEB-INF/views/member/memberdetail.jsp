@@ -240,8 +240,10 @@
 					</tr>
 					<tr>
 						<td>证明材料：</td>
-						<td><%=leadMemberApply.getCertifyMaterialName()%><a
-							href="<%=leadMemberApply.getCertifyMaterialUrl()%>">下载</a></td>
+						<td>
+<%-- 						<%=leadMemberApply.getCertifyMaterialName()%><a --%>
+<%-- 							href="<%=leadMemberApply.getCertifyMaterialUrl()%>">下载</a> --%>
+							</td>
 					</tr>
 					<tr>
 						<td>状态：</td>

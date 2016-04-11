@@ -46,6 +46,9 @@ public class MemberOtherService implements IMemberOtherService{
 	private IMemberOtherDao memberOtherDao;
 	
 	@Autowired
+	private IMemberDao memberDao;
+	
+	@Autowired
 	private RedisService redisService;
 
 	/**
@@ -65,6 +68,15 @@ public class MemberOtherService implements IMemberOtherService{
 			resp.setMsg(MemberOtherCreatePayPwdEnum.MemberIdIsNull.desc());
 			return resp;			
 		}
+		
+		Member member=memberDao.selectByPrimaryKey(record.getMemberid());	
+		if(member.getLevel() ==null || member.getLevel().equals("0"))
+		{	
+			resp.setCode(MemberOtherCreatePayPwdEnum.LevelIsErr.value());
+			resp.setMsg(MemberOtherCreatePayPwdEnum.LevelIsErr.desc());
+			return resp;			
+		}
+		
 		if(record.getPaypassword() ==null || record.getPaypassword().equals(""))
 		{	
 			resp.setCode(MemberOtherCreatePayPwdEnum.PayPassWordIsNull.value());
