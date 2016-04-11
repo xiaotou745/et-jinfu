@@ -10,7 +10,7 @@
 	//List
 %>
 
-	<link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/index.css">
+ <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/index.css">
     <div class="g-wrap">
         <div class="g-views">
             
@@ -134,10 +134,10 @@
     </section>
     <div class="footer top-line">
     <ul>
-        <li class="on"><i class="m-icon icon-home"></i><span>首页</span></li>
-        <li><i class="m-icon icon-instruction"></i><span>指南</span></li>
-        <li><i class="m-icon icon-me"></i><span>我</span></li>
-        <li><i class="m-icon icon-more"></i><span>更多</span></li>
+        <li class="on"><a href="#"><i class="m-icon icon-home"></i><span>首页</span></a></li>
+        <li><a href="#"><i class="m-icon icon-instruction"></i><span>指南</span></a></li>
+        <li><a href="#"><i class="m-icon icon-me"></i><span>我</span></a></li>
+        <li><a href="#"><i class="m-icon icon-more"></i><span>更多</span></a></li>
     </ul>
 </div>
     
@@ -145,4 +145,6 @@
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
     <script src="<%=staticResPath%>/etao-crowdfunding/js/p/home/index.js"></script>
+
+
 

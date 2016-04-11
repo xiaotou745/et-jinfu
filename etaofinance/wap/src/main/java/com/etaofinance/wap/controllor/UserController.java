@@ -100,11 +100,11 @@ public class UserController {
 			CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, 60*60*24,true);
 			if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
 			{
-				response.sendRedirect(req.getReUrl());
+				resultModel.setUrl(req.getReUrl());
 			}
 			else {
-				String basePath = PropertyUtils.getProperty("java.wap.url");
-				response.sendRedirect(basePath);
+				String basePath = PropertyUtils.getProperty("java.wap.url")+"/home/index";
+				resultModel.setUrl(basePath);
 			}
 		}
 		return resultModel;
@@ -166,13 +166,13 @@ public class UserController {
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
 		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
-		{//要跳转的URL不为空 进行跳转
-			response.sendRedirect(req.getReUrl());
-		}else {
-			String basePath = PropertyUtils.getProperty("java.wap.url");
-			response.sendRedirect(basePath);
+		{
+			result.setUrl(req.getReUrl());	
 		}
-		result.setCode(1);
+		else {
+			String basePath = PropertyUtils.getProperty("java.wap.url")+"/home/index";
+			result.setUrl(basePath);
+		}
 		result.setMsg("登录成功");
 		result.setData(member);
 		return result;				
