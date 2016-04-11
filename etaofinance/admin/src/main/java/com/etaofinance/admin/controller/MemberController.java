@@ -66,7 +66,26 @@ public class MemberController {
 		model.addObject("listData",memberModelList);
 		return model;
 	}
-	
+	/*
+	 * 用户反馈 LIN
+	 */
+	@RequestMapping("feedbacklist")
+	public ModelAndView feedbacklist() {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "会员管理");
+		model.addObject("currenttitle", "用户反馈");
+		model.addObject("viewPath", "member/feedbacklist");
+		return model;
+	}
+
+	@RequestMapping("feedbacklistdo")
+	public ModelAndView feedbacklistdo(PagedMemberReq req) { 
+		ModelAndView model = new ModelAndView("member/feedbacklistdo");
+		PagedResponse<MemberModel> memberModelList = new PagedResponse<MemberModel>();
+		memberModelList=memberService.getMemberList(req);
+		model.addObject("listData",memberModelList);
+		return model;
+	}
 	/*
 	 * 跟投人列表 wangchao
 	 */
