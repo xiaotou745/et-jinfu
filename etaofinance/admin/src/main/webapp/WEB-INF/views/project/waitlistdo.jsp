@@ -54,12 +54,12 @@
 			<td><%=list.get(i).getRefusereasion()%></td>
 			<td><a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">预览</a>
 			<% if(list.get(i).getAuditstatus()!=ProjectAuditStatus.AuditPass.value()){ %>
-				<a href="<%=basePath%>/?id=<%=list.get(i).getId()%>">修改</a>
+				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改</a>
 			<% } %>			
 			<% if(list.get(i).getAuditstatus()==ProjectAuditStatus.WaitAudit.value()){ %>
-				<a href="javascript:void(0)" onclick="showProjectAudit(<%=list.get(i).getId()%>)">审核</a>
+				<a href="<%=basePath%>/project/projectaudit?id=<%=list.get(i).getId()%>">审核</a>
 			<% } else if(list.get(i).getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
-				<a href="javascript:void(0)" onclick="showProjectAudit(<%=list.get(i).getId()%>)">重审</a>
+				<a href="<%=basePath%>/project/projectaudit?id=<%=list.get(i).getId()%>">重审</a>
 			<% } else {%>
 			<% } %>
 			</td>

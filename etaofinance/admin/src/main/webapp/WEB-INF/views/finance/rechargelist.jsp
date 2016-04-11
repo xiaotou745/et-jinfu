@@ -23,12 +23,18 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">时间:</label>
-						<div class="col-sm-8">
+						<label class="col-sm-4 control-label">创建时间:</label>
+						<div class="col-sm-7">
 							<input type="text" class="form-control" value="" name="beginDate"
 								id="beginDate"
 								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\',{d:-1})||\'2030-10-01\'}'})" />
-								~
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">~</label>
+						<div class="col-sm-7">
 									<input type="text" class="form-control" value="" name="endDate"
 								id="endDate"
 								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\',{d:1})}',maxDate:'2030-10-01'})" />
@@ -37,14 +43,14 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">是否支付:</label>
-						<div class="col-sm-7">
-							<%=HtmlHelper.getSelect("rechargeStatus", EnumHelper.GetEnumItems(RechargeStatus.class), "desc", "value",null,"-1","全部") %>
+						<label class="col-sm-3 control-label">是否支付:</label>
+						<div class="col-sm-5">
+							<%=HtmlHelper.getSelect("rechargeStatus", EnumHelper.GetEnumItems(RechargeStatus.class), "desc", "value",null,"-2","全部") %>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3">
-					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 3px;">搜索</button>
+					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 90px;">搜索</button>
 				</div>
 			</div>
 		</div>

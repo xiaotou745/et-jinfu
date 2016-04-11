@@ -46,8 +46,8 @@ public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(Withdrawform record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().update(
+				"IWithdrawformDao.updateByPrimaryKeySelective", record);
 	}
 
 	@Override

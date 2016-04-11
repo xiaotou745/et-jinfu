@@ -10,9 +10,9 @@ public enum WithdrawStatus {
 	
 	Completed(3,"打款完成"),
 	
-	Refuse(4,"审核拒绝"),
+	Refuse(-1,"审核拒绝"),
 	
-	Failured(5,"打款失败");
+	Failured(-2,"打款失败");
 
 	
 	private int value = 0;

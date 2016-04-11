@@ -3,6 +3,7 @@ package com.etaofinance.admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IBalanceRecordService;
@@ -10,6 +11,7 @@ import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IRechargeService;
 import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.enums.ProjectAuditStatus;
+import com.etaofinance.core.enums.WithdrawStatus;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Project;
@@ -126,5 +128,34 @@ public class FinanceController {
 		view.addObject("listData", listData);
 		
 		return view;
+	}
+	
+	
+	
+	
+	@RequestMapping("refusewithdraw")
+	@ResponseBody
+	public int refuse(Long id) {
+		
+		Withdrawform wdfm = new Withdrawform();
+		
+		wdfm.setId(id);
+		
+		wdfm.setStatus((short)WithdrawStatus.Refuse.value());
+		
+		return withdrawformService.updateByPrimaryKeySelective(wdfm);
+		
+	}
+	
+	
+	@RequestMapping("agreewithdraw")
+	@ResponseBody
+	public int agree(Long id) {
+		
+		Withdrawform wdfm = new Withdrawform();
+		wdfm.setId(id);
+		wdfm.setStatus((short)WithdrawStatus.Pass.value());
+		
+		return withdrawformService.updateByPrimaryKeySelective(wdfm);
 	}
 }
