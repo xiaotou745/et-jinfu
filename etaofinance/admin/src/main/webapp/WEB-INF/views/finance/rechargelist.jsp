@@ -23,7 +23,7 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">时间:</label>
+						<label class="col-sm-4 control-label">创建时间:</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" value="" name="beginDate"
 								id="beginDate"

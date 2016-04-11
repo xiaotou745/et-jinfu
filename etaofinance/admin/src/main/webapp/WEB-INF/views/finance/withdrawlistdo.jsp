@@ -1,10 +1,10 @@
 <%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-	<%@page import="com.etaofinance.entity.common.PagedResponse"%>
+<%@page import="com.etaofinance.entity.common.PagedResponse"%>
 <%@page import="com.etaofinance.core.util.PageHelper"%>
 <%@page import="java.util.ArrayList"%>
-    <%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="com.etaofinance.entity.Withdrawform"%>
 <%@page import="com.etaofinance.core.enums.WithdrawStatus"%>
 <%@page import="java.util.List"%>
@@ -26,7 +26,7 @@
 			<th>到账时间</th>
 			<th>拒绝理由</th>
 			<th>状态</th>
-		<th>操作</th>
+			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -45,24 +45,25 @@
 			<td>¥<%=list.get(i).getAmount()%></td>
 			<td><%=list.get(i).getBankname()%></td>
 			<td><%=list.get(i).getAccountno()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(), "") %></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getSuccesstime(), "") %></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "")%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(), "")%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getSuccesstime(), "")%></td>
 			<td><%=list.get(i).getRemark()%></td>
 			<td><%=WithdrawStatus.getEnum(list.get(i).getStatus()).desc()%></td>
 			<%
-			if(WithdrawStatus.Cking.value()==list.get(i).getStatus()){
+				if(WithdrawStatus.Cking.value()==list.get(i).getStatus()){
 			%>
-			<td><a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,2)">通过</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,-1)">拒绝</a>
-			</td>
-				<%
-			}else{
-		%>
-		<td>--</td>
-		<%
-			}
-		%>
+			<td><a href="javascript:void(0)"
+				onclick="setstatus(<%=list.get(i).getId()%>,2)">通过</a> <a
+				href="javascript:void(0)"
+				onclick="setstatus(<%=list.get(i).getId()%>,-1)">拒绝</a></td>
+			<%
+				}else{
+			%>
+			<td>--</td>
+			<%
+				}
+			%>
 		</tr>
 		<%
 			}
@@ -74,9 +75,9 @@
 <%=PageHelper.getPage(data.getPageSize(),
 					data.getCurrentPage(), data.getTotalRecord(),
 					data.getTotalPage())%>
-					
-					
-		<script>			
+
+
+<script>			
 					function setstatus(id,status){		
 	    var paramaters = {
                 "id": id

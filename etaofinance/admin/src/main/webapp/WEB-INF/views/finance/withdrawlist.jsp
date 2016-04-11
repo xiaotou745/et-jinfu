@@ -23,7 +23,7 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">时间:</label>
+						<label class="col-sm-4 control-label">申请时间:</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" value="" name="beginDate"
 								id="beginDate"
@@ -35,7 +35,7 @@
 					<div class="form-group">
 						<label class="col-sm-1 control-label">~</label>
 						<div class="col-sm-8">
-									<input type="text" class="form-control" value="" name="endDate"
+							<input type="text" class="form-control" value="" name="endDate"
 								id="endDate"
 								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginDate\',{d:1})}',maxDate:'2030-10-01'})" />
 						</div>
