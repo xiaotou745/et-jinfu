@@ -146,11 +146,14 @@ public class ProjectController {
 	 */
 	@RequestMapping("follow")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "关注或取消关注项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "关注或取消关注项目")
 	public HttpResultModel<Object> follow(@RequestBody ProjectFavorite profavorite)
 	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		profavorite.setMemberid(memberid);	
 		return projectFavoriteService.follow(profavorite);
 	}
 	

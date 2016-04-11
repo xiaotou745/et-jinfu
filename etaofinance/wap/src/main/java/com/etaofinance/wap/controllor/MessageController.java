@@ -1,5 +1,7 @@
 package com.etaofinance.wap.controllor;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +16,7 @@ import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.entity.Message;
 import com.etaofinance.entity.ProjectFavorite;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.wap.common.UserContext;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
@@ -28,6 +31,23 @@ public class MessageController {
 	
 	@Autowired
 	IMessageService  messageService;
+	
+	/**
+	 * 获取我的消息列表
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月29日17:25:51
+	 * @return
+	 */
+	@RequestMapping("/getmessagelist")
+	@ResponseBody
+	@ApiOperation(value = "获取我的消息列表", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "获取我的消息列表")
+	public  List<Message> getMessagelist() {
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		return messageService.getList(memberid);
+	}
 	
 	
 	/**
