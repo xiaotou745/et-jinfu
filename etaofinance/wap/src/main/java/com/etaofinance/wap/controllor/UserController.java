@@ -315,8 +315,9 @@ public class UserController {
 	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		record.setMemberid(memberid);
+		Member currMember=UserContext.getCurrentContext(request).getNewEstUserInfo();		
+		record.setMemberid(currMember.getId());
+		
 		return memberOtherService.createPayPwd(record);
 	}
 	

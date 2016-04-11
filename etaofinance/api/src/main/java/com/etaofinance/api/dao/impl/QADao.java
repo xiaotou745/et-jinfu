@@ -64,4 +64,13 @@ public class QADao extends DaoBase implements IQADao{
 				.selectList(
 						"IQADao.getList");	 
 	}
+	/**
+	 * Qawap页面
+	 */
+	@Override
+	public List<QA> getListForWap() {
+		return getReadOnlySqlSessionUtil()
+				.selectList(
+						"IQADao.getListForWap");	 
+	}
 }

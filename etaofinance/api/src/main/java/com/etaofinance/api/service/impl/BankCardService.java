@@ -30,7 +30,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedADVertReq;
-import com.etaofinance.entity.req.RemoveReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.resp.ADVertResp;
 import com.etaofinance.entity.resp.MemberResp;
 
@@ -101,7 +101,7 @@ public class BankCardService implements IBankCardService{
 	}
 
 	@Override
-	public HttpResultModel<Object> remove(RemoveReq record) {
+	public HttpResultModel<Object> remove(PublicMemberReq record) {
 		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
 		if(record.getMemberId() ==null || record.getMemberId().equals(""))
 		{	

@@ -18,6 +18,7 @@ public class Project {
     private Integer fenshu;
     private Integer redidueFenshu;
     private Integer rediduePreheatMaxFenShu;
+    
     public Integer getRediduePreheatMaxFenShu() {
 		return rediduePreheatMaxFenShu;
 	}

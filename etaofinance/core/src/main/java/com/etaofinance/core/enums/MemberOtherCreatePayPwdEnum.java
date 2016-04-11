@@ -20,7 +20,11 @@ public enum MemberOtherCreatePayPwdEnum {
 	/**
 	 * 支付密码为空
 	 */
-	PayPassWordIsNull(-3,"支付密码为空");
+	PayPassWordIsNull(-3,"支付密码为空"),	
+	/**
+	 * 实名认证后才可能设置支付密码
+	 */
+	LevelIsErr(-4,"实名认证后才可能设置支付密码"),;
 
 	private int value = 0;
 	private String desc;

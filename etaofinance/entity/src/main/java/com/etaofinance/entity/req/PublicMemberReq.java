@@ -1,6 +1,6 @@
 package com.etaofinance.entity.req;
 
-public class RemoveReq {
+public class PublicMemberReq {
 	 private Long memberId;
 	 private Long currId;
 	

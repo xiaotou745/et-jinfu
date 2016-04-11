@@ -15,6 +15,8 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.WithdrawformDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedWithdrawReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 @Repository
 public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 
@@ -55,16 +57,21 @@ public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 	}
 
 	@Override
-	public List<WithdrawformDM> getListMore(Withdrawform record) {	
+	public List<WithdrawformDM> getListMore(PublicMemberReq record) {	
 		 return getReadOnlySqlSessionUtil()
 				.selectList(
-						"IWithdrawformDao.getListMore",record.getMemberid());		 
+						"IWithdrawformDao.getListMore",record.getMemberId());		 
 
 	}
 
 	@Override
 	public WithdrawformDM selectDMByPrimaryKey(Long id) {
 		return getReadOnlySqlSessionUtil().selectOne("IWithdrawformDao.selectDMByPrimaryKey",id);
+	}
+
+	@Override
+	public PagedResponse<Withdrawform> getWithdrawList(PagedWithdrawReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IWithdrawformDao.getWithdrawList", req);
 	}
 
 
