@@ -38,7 +38,9 @@ public class HomeController {
 	@RequestMapping("/index")
 	public ModelAndView index()
 	{
-		ModelAndView view= new ModelAndView("home/index");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "网站主页---");
+		view.addObject("viewPath", "home/index");
 		//1.获取轮播图.
 		List<ADVert> list=adService.getListForWap();
 		//2.获取新手专享

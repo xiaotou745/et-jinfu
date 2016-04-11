@@ -8,12 +8,13 @@ public class ForgetPwdTwoReq {
 
 	private String phoneNo;
 	private String veriCode;
-	private String cacheKey;
-	public String getCacheKey() {
-		return cacheKey;
+	private String checkKey;
+
+	public String getCheckKey() {
+		return checkKey;
 	}
-	public void setCacheKey(String cacheKey) {
-		this.cacheKey = cacheKey;
+	public void setCheckKey(String checkKey) {
+		this.checkKey = checkKey;
 	}
 	public String getPhoneNo() {
 		return phoneNo;

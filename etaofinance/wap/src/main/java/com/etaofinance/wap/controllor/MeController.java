@@ -41,9 +41,12 @@ public class MeController {
 	 * @return
 	 */
 	@RequestMapping("login")
-	public ModelAndView login()
+	public ModelAndView login(String reUrl)
 	{
-		ModelAndView view= new ModelAndView("me/login");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "注册");
+		view.addObject("viewPath", "me/login");
+		view.addObject("reUrl",reUrl==null?"":reUrl);
 		return view;
 	}
 	/**
@@ -51,9 +54,12 @@ public class MeController {
 	 * @return
 	 */
 	@RequestMapping("register")
-	public ModelAndView register()
+	public ModelAndView register(String reUrl)
 	{
-		ModelAndView view= new ModelAndView("me/register");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "注册");
+		view.addObject("viewPath", "me/register");
+		view.addObject("reUrl",reUrl==null?"":reUrl);
 		return view;
 	}
 	/**
@@ -63,7 +69,9 @@ public class MeController {
 	@RequestMapping("retrievepasswordstep1")
 	public ModelAndView retrievepasswordstep1()
 	{
-		ModelAndView view= new ModelAndView("me/retrievepasswordstep1");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "找回密码");
+		view.addObject("viewPath", "me/retrievepasswordstep1");
 		return view;
 	}
 	/**
@@ -76,15 +84,23 @@ public class MeController {
 	{
 		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,checkKey);
 		String value=redisService.get(key, String.class);
-		ModelAndView view= new ModelAndView("me/retrievepasswordstep2");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "找回密码");
+		view.addObject("viewPath", "me/retrievepasswordstep2");
 		if(value==null||value.equals("")||!value.equals(checkKey))
 		{
-			ModelAndView view2= new ModelAndView("me/retrievepasswordstep1");
+			ModelAndView view2 = new ModelAndView("wapView");
+			view2.addObject("currenttitle", "找回密码");
+			view2.addObject("viewPath", "me/retrievepasswordstep1");
 			return view2;
 		}
 		Member member=memberService.getById(userId);
-		String phone=member.getPhoneno().substring(0,3)+"****"+member.getPhoneno().substring(7,4);
+		String phone=member.getPhoneno();
+		
+		String sString=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
+		view.addObject("phoneString", sString);
 		view.addObject("phone", phone);
+		view.addObject("checkKey", checkKey);
 		return view;
 	}
 	/**
@@ -93,16 +109,22 @@ public class MeController {
 	 * @throws IOException 
 	 */
 	@RequestMapping("retrievepasswordstep3")
-	public ModelAndView retrievepasswordstep3(String checkKey) throws IOException
+	public ModelAndView retrievepasswordstep3(String checkKey,Long userId) throws IOException
 	{
 		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,checkKey);
 		String value=redisService.get(key, String.class);
-		ModelAndView view= new ModelAndView("me/retrievepasswordstep3");
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "找回密码");
+		view.addObject("viewPath", "me/retrievepasswordstep3");
 		if(value==null||value.equals("")||!value.equals(checkKey))
 		{
-			ModelAndView view2= new ModelAndView("me/retrievepasswordstep1");
+			ModelAndView view2= new ModelAndView("wapView");
+			view2.addObject("currenttitle", "找回密码");
+			view2.addObject("viewPath", "me/retrievepasswordstep1");
 			return view2;
 		}
+		view.addObject("checkKey", checkKey);
+		view.addObject("userId", userId);
 		return view;
 	}
 }

@@ -1,5 +1,6 @@
 package com.etaofinance.api.service.impl;
 
+import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.etaofinance.api.common.LoginHelper;
+import com.etaofinance.api.dao.inter.IMemberApplyDao;
 import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.redis.RedisService;
@@ -16,15 +18,18 @@ import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberCertificationEnum;
 import com.etaofinance.core.enums.MemberEnum;
 import com.etaofinance.core.enums.MemberTypeEnum;
+import com.etaofinance.core.enums.ProjectEnrollEnum;
 import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.core.util.RandomCodeStrGenerator;
 import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
@@ -36,6 +41,7 @@ import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
@@ -47,6 +53,10 @@ public class MemberService implements IMemberService{
 	private IMemberDao memberDao;
 	@Autowired
 	private IMemberOtherDao memberOtherDao;
+	
+	@Autowired
+	private IMemberApplyDao memberApplyDao;	
+	
 	@Autowired
 	private RedisService redisService;	
 	
@@ -259,12 +269,19 @@ public class MemberService implements IMemberService{
 			resp.setMsg(MemberCertificationEnum.TrueNameIsNULL.desc());
 			return resp;			
 		}
+		if(record.getTruename().length()<2 ||record.getTruename().length()>10)
+		{	
+			resp.setCode(MemberCertificationEnum.TrueNameIsErr.value());
+			resp.setMsg(MemberCertificationEnum.TrueNameIsErr.desc());
+			return resp;	
+		}				
 		if(record.getIdcard()==null || record.getIdcard().equals(""))
 		{
 			resp.setCode(MemberCertificationEnum.IdCardIsNULL.value());
 			resp.setMsg(MemberCertificationEnum.IdCardIsNULL.desc());
 			return resp;			
-		}		
+		}	
+		//验证身份证号是否合法
 		record.setLevel(ParseHelper.ToShort(MemberTypeEnum.CertificationUser.value()));
 		int row=memberDao.updateByPrimaryKeySelective(record);
 		if(row<=0)
@@ -286,6 +303,47 @@ public class MemberService implements IMemberService{
 		
 	   return  memberDao.selectByPrimaryKey(id);
 	}
+	
+	/**
+	 * 通过ID获取会员信息
+	 * 包含审核记录
+	 */
+	@Override
+	public MemberDM  getUserInfo(Long id) { 
+
+		MemberDM memberDM=new MemberDM();
+		Member member= memberDao.selectByPrimaryKey(id);
+		memberDM.setId(member.getId());
+		memberDM.setUsername(member.getUsername());
+		memberDM.setPhoneno(member.getPhoneno());
+		memberDM.setEmail(member.getEmail());
+		memberDM.setLoginpwd(member.getLoginpwd());
+		memberDM.setProvincecode(member.getProvincecode());
+		memberDM.setCitycode(member.getCitycode());
+		memberDM.setAreacode(member.getAreacode());
+		memberDM.setSex(member.getSex());
+		memberDM.setRemark(member.getRemark());
+		memberDM.setIslock(member.getIslock());
+		memberDM.setTruename(member.getTruename());
+		memberDM.setIdcard(member.getIdcard());
+		memberDM.setLevel(member.getLevel());
+		memberDM.setCreatetime(member.getCreatetime());
+		
+		MemberApply memberApply= memberApplyDao.selectPending(id);
+		if(memberApply==null || memberApply.equals("") )
+		  memberDM.setIsExistPending(false);
+		else
+			memberDM.setIsExistPending(true);		
+		
+		MemberOther memberOther= memberOtherDao.selectByMemberId(id);
+		if(memberOther==null || memberOther.getPaypassword()==null ||memberOther.getPaypassword().equals("") )
+			  memberDM.setIsSetPayPassWord(false);
+		else
+			memberDM.setIsSetPayPassWord(true);	
+	    return memberDM;
+	}
+	
+	
 	/**
 	 * 忘记密码第一步
 	 */
@@ -293,7 +351,7 @@ public class MemberService implements IMemberService{
 	public HttpResultModel<ForgetPwdResp> forgetpwdsetpone(ForgetPwdOneReq req) {
 		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
 		String redisImgCode=redisService.get(req.getCookieKey(), String.class);
-		if(redisImgCode==null||redisImgCode.equals("")||!redisImgCode.equals(req.getImgCode()))
+		if(redisImgCode==null||redisImgCode.equals("")||!redisImgCode.toLowerCase().equals(req.getImgCode().toLowerCase()))
 		{
 			//验证码错误
 			resultModel.setCode(-1);
@@ -333,6 +391,7 @@ public class MemberService implements IMemberService{
 		ForgetPwdResp resp=new ForgetPwdResp();
 		resp.setUserID(member.getId());
 		resp.setCheckKey(value);
+		resultModel.setData(resp);
 		return resultModel;
 	}
 	/**
@@ -346,12 +405,12 @@ public class MemberService implements IMemberService{
 		String key= String.format(RedissCacheKey.JF_Member_ForgetPassword ,req.getPhoneNo());
 		String value=redisService.get(key, String.class);
 		//第一步给返回的UUID
-		String key2=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,req.getCacheKey());
+		String key2=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,req.getCheckKey());
 		String value2=redisService.get(key2, String.class);
-		if(req.getPhoneNo()==null||req.getVeriCode()==null||value==null||req.getCacheKey()==null||value2==null
+		if(req.getPhoneNo()==null||req.getVeriCode()==null||value==null||req.getCheckKey()==null||value2==null
 				||req.getPhoneNo().equals("")||req.getVeriCode().equals("")||value.equals("")
-				||req.getCacheKey().equals("")||value2.equals("")
-				||!req.getVeriCode().equals(value)||!req.getCacheKey().equals(value2))
+				||req.getCheckKey().equals("")||value2.equals("")
+				||!req.getVeriCode().equals(value)||!req.getCheckKey().equals(value2))
 		{
 			resultModel.setCode(-1);
 			resultModel.setMsg("验证码错误,请重试!");
@@ -370,13 +429,14 @@ public class MemberService implements IMemberService{
 		}
 		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
 		String UUIDvalue=UUID.randomUUID().toString();
-		String UUIDkey=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,value);
+		String UUIDkey=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,UUIDvalue);
 		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
 		ForgetPwdResp resp=new ForgetPwdResp();
 		resp.setUserID(member.getId());
 		resp.setCheckKey(UUIDvalue);
+		resultModel.setData(resp);
 		return resultModel;
 	}
 	/**
@@ -387,9 +447,9 @@ public class MemberService implements IMemberService{
 			ForgetPwdThreeReq req) {
 		HttpResultModel<ForgetPwdResp> resultModel=new HttpResultModel<ForgetPwdResp>();
 		//第二步给返回的UUID
-		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,req.getCacheKey());
+		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpTwo,req.getCheckKey());
 		String value=redisService.get(key, String.class);
-		if(req.getCacheKey()==null||req.getCacheKey().equals("")||value==null||value.equals(""))
+		if(req.getCheckKey()==null||req.getCheckKey().equals("")||value==null||value.equals(""))
 		{
 			resultModel.setCode(-1);
 			resultModel.setMsg("验证信息有误,请重新找回密码!");
@@ -414,6 +474,8 @@ public class MemberService implements IMemberService{
 		{
 			resultModel.setCode(1);
 			resultModel.setMsg("新密码设置成功,请重新登录!");
+			String basePath= PropertyUtils.getProperty("java.wap.url");
+			resultModel.setUrl(basePath+"/me/login");
 			return resultModel;
 		}
 		resultModel.setCode(-1);
