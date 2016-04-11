@@ -94,7 +94,7 @@ public class MemberApply {
 	}
 
 	public void setAuditname(String auditname) {
-		this.auditname = auditname == null ? null : auditname.trim();
+		this.auditname = auditname == null ? "" : auditname.trim();
 	}
 
 	public String getRefusereasion() {
@@ -102,7 +102,7 @@ public class MemberApply {
 	}
 
 	public void setRefusereasion(String refusereasion) {
-		this.refusereasion = refusereasion == null ? null : refusereasion
+		this.refusereasion = refusereasion == null ? "" : refusereasion
 				.trim();
 	}
 
@@ -111,7 +111,7 @@ public class MemberApply {
 	}
 
 	public void setApplyinfo(String applyinfo) {
-		this.applyinfo = applyinfo == null ? null : applyinfo.trim();
+		this.applyinfo = applyinfo == null ? "" : applyinfo.trim();
 	}
 
 	public String getCompanyname() {
@@ -119,7 +119,7 @@ public class MemberApply {
 	}
 
 	public void setCompanyname(String companyname) {
-		this.companyname = companyname == null ? null : companyname.trim();
+		this.companyname = companyname == null ? "" : companyname.trim();
 	}
 
 	public String getCompanytitle() {
@@ -127,11 +127,11 @@ public class MemberApply {
 	}
 
 	public void setCompanytitle(String companytitle) {
-		this.companytitle = companytitle == null ? null : companytitle.trim();
+		this.companytitle = companytitle == null ? "" : companytitle.trim();
 	}
 
 	public String getCertifyMaterialName() {
-		return certifyMaterialName;
+		return certifyMaterialName==null?"":certifyMaterialName;
 	}
 
 	public void setCertifyMaterialName(String certifyMaterialName) {
@@ -139,7 +139,7 @@ public class MemberApply {
 	}
 
 	public String getCertifyMaterialUrl() {
-		return certifyMaterialUrl;
+		return certifyMaterialUrl==null?"":certifyMaterialUrl;
 	}
 
 	public void setCertifyMaterialUrl(String certifyMaterialUrl) {
