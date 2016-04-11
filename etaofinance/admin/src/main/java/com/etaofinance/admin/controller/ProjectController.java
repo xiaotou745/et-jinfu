@@ -61,6 +61,7 @@ public class ProjectController {
 		view.addObject("viewPath", "project/list");
 		return view;
 	}
+	
 	@RequestMapping("listdo")
 	public ModelAndView listDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/listdo");
@@ -70,6 +71,7 @@ public class ProjectController {
 		view.addObject("listData", listData);
 		return view;
 	}
+	
 	/**
 	 * 待审核项目列表查询页
 	 * @return
@@ -82,6 +84,7 @@ public class ProjectController {
 		view.addObject("viewPath", "project/waitlist");
 		return view;
 	}
+	
 	@RequestMapping("waitlistdo")
 	public ModelAndView waitListDo(PagedProjectReq req) {
 		ModelAndView view = new ModelAndView("project/waitlistdo");
@@ -94,6 +97,7 @@ public class ProjectController {
 		view.addObject("cityMap", cityMap);
 		return view;
 	}
+	
 	private Map<Long,String> getStrategyMap(PagedResponse<Project> listData){
 		Map<Long,String> resultMap=new HashMap<Long, String>();
 		List<Long> projectIds=listData.getResultList().stream().map(k->k.getId()).collect(Collectors.toList());

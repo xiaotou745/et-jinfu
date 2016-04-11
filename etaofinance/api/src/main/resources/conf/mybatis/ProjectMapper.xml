@@ -72,14 +72,14 @@
 		AND NOW()>PreheatTime
 		AND EndTime>NOW()
 	</select>
-	<select id="getList" resultType="com.etaofinance.entity.Project"
-		parameterType="com.etaofinance.entity.Project">
+	<select id="getListMore" resultType="com.etaofinance.entity.Project"
+		parameterType="com.etaofinance.entity.req.ProLaunchReq">
 		select
 		<include refid="Base_Column_List" />
 		from project
 		where memberid = #{memberid,jdbcType=BIGINT}
-		<if test="projectstatus != null">
-			and projectstatus=#{projectstatus,jdbcType=SMALLINT}
+		<if test="projectStatus != null">
+			and projectstatus=#{projectStatus,jdbcType=SMALLINT}
 		</if>
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -554,4 +554,34 @@
 		AuditTime = now()
 		where Id = #{projectId,jdbcType=BIGINT}
 	</update>
+	<select id="getNoviceProject" resultType="com.etaofinance.entity.domain.ProjectModel">
+	
+  SELECT p.Id,
+		p.ProjectName,
+		p.TypeId,
+		p.Amount,
+		p.FenShu,
+		p.UnitPrice,
+		p.ProjectImage,
+		p.Schedule,
+		p.ProjectStatus,
+		p.StartTime,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyA'), '0') AS AValue,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyB'), '0') AS BValue
+    FROM    project p  WHERE 
+    p.IsShelve = 1
+		AND p.ProjectStatus != 1
+		AND p.ProjectStatus != 5
+		AND p.ProjectStatus != 4
+		AND p.IsNovice=1
+		AND p.AuditStatus = 2
+		AND NOW() >= p.PreheatTime
+		AND p.EndTime >= NOW()
+	</select>
 </mapper>

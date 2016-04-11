@@ -77,6 +77,13 @@ public class QAService implements IQAService{
 	{
 		return qADao.getList();
 	}
+	/**
+	 * Wap常见问题页面
+	 */
+	@Override
+	public List<QA> getListForWap() {
+		return qADao.getListForWap();
+	}
 	
 
 

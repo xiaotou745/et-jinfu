@@ -241,7 +241,7 @@ public class CookieUtils {
      */
     public static void deleteCookie(HttpServletRequest request,
             HttpServletResponse response, String cookieName) {
-    	setCookie(request,response,cookieName,  "",  0);
+    	setCookie(request,response,cookieName,  "",  -1);
     }
     
     /**

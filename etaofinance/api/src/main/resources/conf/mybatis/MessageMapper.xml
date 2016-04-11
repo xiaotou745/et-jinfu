@@ -10,9 +10,14 @@
     <result column="Status" property="status" jdbcType="SMALLINT" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+       <result column="IsRead" property="isread" jdbcType="BIT" />
+          <result column="IsDel" property="isdel" jdbcType="BIT" />
+            <result column="MsgType" property="msgtype" jdbcType="INTEGER" />
+              <result column="MsgHead" property="msghead" jdbcType="VARCHAR" />
+                <result column="MsgDes" property="msgdes" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, MemberId, Phone, PushWay, Content, Status, CreateTime, CreateName
+    Id, MemberId, Phone, PushWay, Content, Status, CreateTime, CreateName,IsRead,IsDel,MsgType,MsgHead,MsgDes
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,18 +36,35 @@ where memberid = #{memberid,jdbcType=BIGINT}
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.etaofinance.entity.Message" >
-    insert into message (Id, MemberId, Phone, 
-      PushWay, Content, Status, 
-      CreateTime, CreateName)
-    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 
-      #{pushway,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{createname,jdbcType=VARCHAR})
+    insert into message 
+    (MemberId, 
+    	Phone, 
+      PushWay, 
+      Content, 
+      Status, 
+      MsgType,
+      MsgHead,
+      MsgDes,
+    CreateName,IsRead,IsDel)
+    values (#{memberid,jdbcType=BIGINT}, 
+    #{phone,jdbcType=VARCHAR}, 
+      #{pushway,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{status,jdbcType=SMALLINT},
+       #{msgtype,jdbcType=INTEGER}, 
+       #{msghead,jdbcType=VARCHAR}, 
+       #{msgdes,jdbcType=VARCHAR}, 
+     #{createname,jdbcType=VARCHAR},
+     #{isread,jdbcType=BIT}, 
+     #{isdel,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Message" >
     insert into message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        Id,
+        <if test="msghead != null" >
+        MsgHead,
+      </if>
+        <if test="msgdes != null" >
+        MsgDes,
       </if>
       <if test="memberid != null" >
         MemberId,
@@ -59,16 +81,22 @@ where memberid = #{memberid,jdbcType=BIGINT}
       <if test="status != null" >
         Status,
       </if>
-      <if test="createtime != null" >
-        CreateTime,
-      </if>
       <if test="createname != null" >
         CreateName,
       </if>
+        <if test="isread != null" >
+        IsRead,
+      </if>
+        <if test="isdel != null" >
+        IsDel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+           <if test="msghead != null" >
+        #{msghead,jdbcType=VARCHAR},
+      </if>
+         <if test="msgdes != null" >
+        #{msgdes,jdbcType=VARCHAR},
       </if>
       <if test="memberid != null" >
         #{memberid,jdbcType=BIGINT},
@@ -85,11 +113,14 @@ where memberid = #{memberid,jdbcType=BIGINT}
       <if test="status != null" >
         #{status,jdbcType=SMALLINT},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
       <if test="createname != null" >
         #{createname,jdbcType=VARCHAR},
+      </if>
+         <if test="isread != null" >
+        #{isread,jdbcType=BIT},
+      </if>
+         <if test="isdel != null" >
+        #{isdel,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -98,6 +129,15 @@ where memberid = #{memberid,jdbcType=BIGINT}
     <set >
       <if test="memberid != null" >
         MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+       <if test="msgtype != null" >
+        MsgType = #{msgtype,jdbcType=INTEGER},
+      </if>
+       <if test="msghead != null" >
+        MsgHead = #{msghead,jdbcType=VARCHAR},
+      </if>
+       <if test="msgdes != null" >
+        MsgDes = #{msgdes,jdbcType=VARCHAR},
       </if>
       <if test="phone != null" >
         Phone = #{phone,jdbcType=VARCHAR},
@@ -117,6 +157,12 @@ where memberid = #{memberid,jdbcType=BIGINT}
       <if test="createname != null" >
         CreateName = #{createname,jdbcType=VARCHAR},
       </if>
+        <if test="isread != null" >
+        IsRead = #{isread,jdbcType=BIT},
+      </if>
+        <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=BIT},
+      </if>
     </set>
     where Id = #{id,jdbcType=INTEGER}
   </update>
@@ -128,7 +174,12 @@ where memberid = #{memberid,jdbcType=BIGINT}
       Content = #{content,jdbcType=VARCHAR},
       Status = #{status,jdbcType=SMALLINT},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
-      CreateName = #{createname,jdbcType=VARCHAR}
+      CreateName = #{createname,jdbcType=VARCHAR},
+     IsRead = #{isread,jdbcType=BIT},
+       IsDel = #{isdel,jdbcType=BIT},
+          MsgHead = #{msghead,jdbcType=VARCHAR},
+            MsgType = #{msgtype,jdbcType=INTEGER},
+               MsgDes = #{msgdes,jdbcType=VARCHAR},
     where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

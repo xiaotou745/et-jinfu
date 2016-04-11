@@ -11,14 +11,16 @@
     <result column="Remark" property="remark" jdbcType="VARCHAR" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="SuccessTime" property="successtime" jdbcType="TIMESTAMP" />
     <result column="OptName" property="optname" jdbcType="VARCHAR" />
+     <result column="BankName" property="bankname" jdbcType="VARCHAR" />
     <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
     <result column="AccountType" property="accounttype" jdbcType="VARCHAR" />
     <result column="AccountNo" property="accountno" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, MemberId, WithwardNo, Amount, AfterAmount, Status, Remark, CreateName, CreateTime, 
-    OptName, OptTime, AccountType, AccountNo
+    Id, MemberId, WithwardNo, Amount, AfterAmount, Status, Remark, CreateName, CreateTime, SuccessTime,
+    OptName, OptTime, AccountType, AccountNo,BankName,
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -28,8 +30,8 @@
   </select>
   <select id="selectDMByPrimaryKey" resultType="com.etaofinance.entity.domain.WithdrawformDM"  parameterType="java.lang.Long" >
  select 
-     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, 
-    w.OptName, w.OptTime, w.AccountType, w.AccountNo,
+     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, w.SuccessTime,  
+    w.OptName, w.OptTime, w.AccountType, w.AccountNo,,w.BankName,
     
 CASE WHEN w.Status = 1 THEN '待审核'	
 WHEN w.Status = 2 THEN '审核通过'	
@@ -44,8 +46,8 @@ else '其它'
   </select>
    <select id="getListMore" resultType="com.etaofinance.entity.domain.WithdrawformDM"  parameterType="java.lang.Long" >
  select 
-     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, 
-    w.OptName, w.OptTime, w.AccountType, w.AccountNo,
+     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime , w.SuccessTime,  
+    w.OptName, w.OptTime, w.AccountType, w.AccountNo,w.BankName,
     
 CASE WHEN w.AccountType = 1 THEN '网银'	
 WHEN w.AccountType = 2 THEN '支付宝'	
@@ -62,13 +64,13 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
   <insert id="insert" parameterType="com.etaofinance.entity.Withdrawform" >
     insert into withdrawform ( MemberId, WithwardNo, 
       Amount, AfterAmount, Status, 
-      Remark, CreateName, CreateTime, 
-      OptName, OptTime, AccountType, 
+      Remark, CreateName, CreateTime, SuccessTime,
+      OptName, OptTime, AccountType, BankName,
       AccountNo)
     values ( #{memberid,jdbcType=BIGINT}, #{withwardno,jdbcType=VARCHAR}, 
       #{amount,jdbcType=REAL}, #{afteramount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, 
-      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{optname,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{successtime,jdbcType=TIMESTAMP}, 
+      #{optname,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=VARCHAR}, #{bankname,jdbcType=VARCHAR}, 
       #{accountno,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Withdrawform" >
@@ -98,8 +100,14 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       <if test="createtime != null" >
         CreateTime,
       </if>
+        <if test="successtime != null" >
+        SuccessTime,
+      </if>
       <if test="optname != null" >
         OptName,
+      </if>
+         <if test="bankname != null" >
+        BankName,
       </if>
       <if test="opttime != null" >
         OptTime,
@@ -136,8 +144,14 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
+        <if test="successtime != null" >
+        #{successtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="optname != null" >
         #{optname,jdbcType=VARCHAR},
+      </if>
+       <if test="bankname != null" >
+        #{bankname,jdbcType=VARCHAR},
       </if>
       <if test="opttime != null" >
         #{opttime,jdbcType=TIMESTAMP},
@@ -177,8 +191,14 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       <if test="createtime != null" >
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+         <if test="successtime != null" >
+        SuccessTime = #{successtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="optname != null" >
         OptName = #{optname,jdbcType=VARCHAR},
+      </if>
+        <if test="bankname != null" >
+        BankName = #{bankname,jdbcType=VARCHAR},
       </if>
       <if test="opttime != null" >
         OptTime = #{opttime,jdbcType=TIMESTAMP},
@@ -202,10 +222,44 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       Remark = #{remark,jdbcType=VARCHAR},
       CreateName = #{createname,jdbcType=VARCHAR},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      SuccessTime = #{successtime,jdbcType=TIMESTAMP},
       OptName = #{optname,jdbcType=VARCHAR},
       OptTime = #{opttime,jdbcType=TIMESTAMP},
       AccountType = #{accounttype,jdbcType=VARCHAR},
-      AccountNo = #{accountno,jdbcType=VARCHAR}
+      AccountNo = #{accountno,jdbcType=VARCHAR},
+      BankName = #{bankname,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <sql id="getWithdrawListWhere">
+		1=1
+		<if test="status>-3">
+			and Status=${status}
+		</if>
+		<if test="createName!= null and createName!=''">
+			and CreateName like ''%${createName}%''
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and CreateTime>=''${startTime}''
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and date_add(''${endTime}'', INTERVAL 1 day)>CreateTime
+		</if>
+	</sql>
+	<select id="getWithdrawList" resultType="com.etaofinance.entity.Withdrawform"
+		parameterType="com.etaofinance.entity.req.PagedWithdrawReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' withdrawform as a ',
+		'
+		<include refid="getWithdrawListWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
 </mapper>

@@ -5,6 +5,8 @@ import java.sql.Date;
 import com.etaofinance.entity.common.PagedRequestBase;
 
 public class PagedProjectReq extends PagedRequestBase{
+
+	
 	private int id;
 	private int typeId;
 	private int auditStatus;

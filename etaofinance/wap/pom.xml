@@ -107,6 +107,18 @@
             <version>${jackson.version}</version>
         </dependency>
         <!-- Swagger -->
+        <!-- Tiles -->
+        <dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- Tiles end -->
 	</dependencies>
 	<build>
 		<finalName>wap</finalName>

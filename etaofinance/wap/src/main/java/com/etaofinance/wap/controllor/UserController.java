@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +40,7 @@ import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.enums.MemberOtherCreatePayPwdEnum;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
@@ -55,6 +58,7 @@ import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
+import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -98,14 +102,34 @@ public class UserController {
 	 * 注册
 	 * @param req
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
 	@ApiOperation(value = "注册", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "用户注册")
-	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) {
-		return  memberService.regist(req);			
+	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) throws IOException {
+		HttpResultModel<Member> resultModel=  memberService.regist(req);
+		if(resultModel.getCode()>0)//注册成功,进行登录
+		{
+			//登录成功 设置缓存
+			String uuid=UUID.randomUUID().toString();//生成该次登录的UUID
+			String rediskey=String.format(RedissCacheKey.LOGIN_COOKIE, uuid);
+			String redisValue=JsonUtil.obj2string(resultModel.getData());
+			redisService.set(rediskey, redisValue,60*60*24,TimeUnit.SECONDS);
+			//设置COOKIE
+			CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, 60*60*24,true);
+			if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
+			{
+				response.sendRedirect(req.getReUrl());
+			}
+			else {
+				String basePath = PropertyUtils.getProperty("java.wap.url");
+				response.sendRedirect(basePath);
+			}
+		}
+		return resultModel;
 	}
 	
 	/**
@@ -165,8 +189,10 @@ public class UserController {
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
 		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
 		{//要跳转的URL不为空 进行跳转
-			String basePath =PropertyUtils.getProperty("java.wap.url");
-			response.sendRedirect(basePath + "/"+req.getReUrl());
+			response.sendRedirect(req.getReUrl());
+		}else {
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			response.sendRedirect(basePath);
 		}
 		result.setCode(1);
 		result.setMsg("登录成功");
@@ -187,18 +213,19 @@ public class UserController {
 	@ApiOperation(value = "获取用户信息  ", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取用户信息  ")
-	public HttpResultModel<Member> getUserInfo()
+	public HttpResultModel<MemberDM> getUserInfo()
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		HttpResultModel<Member> resp = new HttpResultModel<Member>();		
-		Member member=memberService.getById(memberid);	 
-		if(member==null)
+		HttpResultModel<MemberDM> resp = new HttpResultModel<MemberDM>();		
+		MemberDM memberDM=memberService.getUserInfo(memberid);	 		
+		if(memberDM==null)
 		{
 			resp.setCode(MemberEnum.GetUserErr.value());
 			resp.setMsg(MemberEnum.GetUserErr.desc());
 			return resp;	
-		}
-		resp.setData(member);
+		}		
+	
+		resp.setData(memberDM);
 		resp.setCode(MemberEnum.Success.value());
 		resp.setMsg(MemberEnum.Success.desc());	
 		return resp;
@@ -315,8 +342,17 @@ public class UserController {
 	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		record.setMemberid(memberid);
+		Member currMember=UserContext.getCurrentContext(request).getNewEstUserInfo();		
+		record.setMemberid(currMember.getId());		
+		
+		HttpResultModel<Object> resp=new HttpResultModel<Object>();
+		if(currMember.getLevel() ==null || currMember.getLevel().equals("0"))
+		{	
+			resp.setCode(MemberOtherCreatePayPwdEnum.LevelIsErr.value());
+			resp.setMsg(MemberOtherCreatePayPwdEnum.LevelIsErr.desc());
+			return resp;			
+		}
+		
 		return memberOtherService.createPayPwd(record);
 	}
 	

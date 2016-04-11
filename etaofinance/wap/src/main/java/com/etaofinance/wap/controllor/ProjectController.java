@@ -24,6 +24,7 @@ import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.ProFavoriteReq;
+import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.SubProjectReq;
@@ -127,12 +128,15 @@ public class ProjectController {
 	 */
 	@RequestMapping("launchproject")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "我发起的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我发起的项目")
-	public List<Project> launchProject(@RequestBody Project record)
+	public List<Project> launchProject(@RequestBody ProLaunchReq record)
 	{
-		return projectService.getList(record);
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
+		return projectService.getListMore(record);
 	}
 	
 	/**
@@ -147,7 +151,6 @@ public class ProjectController {
 	notes = "关注或取消关注项目")
 	public HttpResultModel<Object> follow(@RequestBody ProjectFavorite profavorite)
 	{
-		
 		return projectFavoriteService.follow(profavorite);
 	}
 	

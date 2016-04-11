@@ -16,6 +16,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.resp.SendCodeResp;
 
@@ -54,6 +55,13 @@ public interface IMemberService {
      * @return
      */
     Member  getById(Long  id);
+    
+    /**
+     * 通过ID获取会员信息
+     * @param 会员id
+     * @return
+     */
+    MemberDM  getUserInfo(Long id);
     /**
      * 获取验证码
      * @param req

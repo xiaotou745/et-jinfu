@@ -7,6 +7,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
@@ -18,6 +19,7 @@ public interface IProjectService {
     Project selectByPrimaryKey(Long id);
 
     int updateByPrimaryKey(Project record);
+    
     PagedResponse<Project>  queryProjectList(PagedProjectReq req);
     /**
      * WAp获取项目列表
@@ -39,7 +41,7 @@ public interface IProjectService {
 	 * @date time2016年3月31日11:46:29
 	 * @return
 	 */	
-	List<Project> getList(Project record);
+	List<Project> getListMore(ProLaunchReq record);
 	/*
 	 * 后台发布项目 wangchao
 	 */
@@ -48,4 +50,9 @@ public interface IProjectService {
 	 * 后台审核项目 wangchao
 	 */
 	int audit(ProjectAuditReq req);
+	/**
+	 * 获取新手专享项目列表
+	 * @return
+	 */
+	List<ProjectModel>getNoviceProject();
 }

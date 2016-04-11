@@ -50,7 +50,7 @@ else '其它'
 p.ProjectName
     from balancerecord b
 left join project  p on b.ProjectId=p.Id
-where b.memberid = #{memberid,jdbcType=BIGINT}
+where b.memberid = #{memberId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from balancerecord
@@ -211,4 +211,36 @@ where b.memberid = #{memberid,jdbcType=BIGINT}
 			and ''${createEndTime}''>b.OptTime
 		</if>
 	</sql>
+	
+	  <sql id="getBuyListWhere">
+		TypeId = 1
+		<if test="proId>0">
+			and ProjectId=${proId}
+		</if>
+		<if test="createName!= null and createName!=''">
+			and OptName like ''%${createName}%''
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and OptTime>=''${startTime}''
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and date_add(''${endTime}'', INTERVAL 1 day)>OptTime
+		</if>
+	</sql>
+	<select id="getBuyList" resultType="com.etaofinance.entity.BalanceRecord"
+		parameterType="com.etaofinance.entity.req.PagedBalancerecordReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' balancerecord as a ',
+		'
+		<include refid="getBuyListWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
 </mapper>

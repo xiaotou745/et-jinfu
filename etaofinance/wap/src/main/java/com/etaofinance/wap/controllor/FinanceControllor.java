@@ -31,6 +31,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.WithdrawformDM;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller
@@ -51,11 +52,14 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getbalancerecordlist")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "获取账户流水", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取账户流水")
-	public List<BalanceRecordDM> getBalanceRecordList(@RequestBody BalanceRecord record)
+	public List<BalanceRecordDM> getBalanceRecordList(@RequestBody PublicMemberReq record)
 	{
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
 		return balanceRecordService.getListMore(record);
 	}
 	
@@ -71,9 +75,9 @@ public class FinanceControllor {
 	@ApiOperation(value = "获取账户流水详情", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取账户流水详情")
-	public BalanceRecordDM getBalanceRecordDetail(@RequestBody BalanceRecord record)
+	public HttpResultModel<BalanceRecordDM> getBalanceRecordDetail(@RequestBody PublicMemberReq record)
 	{
-		return balanceRecordService.selectDMByPrimaryKey(record.getId());
+		return balanceRecordService.selectBRDetail(record);
 	}
 	
 	/**
@@ -88,7 +92,7 @@ public class FinanceControllor {
 	@ApiOperation(value = "提现", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "提现")
-	public HttpResultModel<ResponseBase> createWithdrawform(@RequestBody Withdrawform record)
+	public HttpResultModel<Object> createWithdrawform(@RequestBody Withdrawform record)
 	{
 		return withdrawformService.create(record);
 	}
@@ -105,8 +109,8 @@ public class FinanceControllor {
 	@ApiOperation(value = "获取可提现记录", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取可提现记录")
-	public List<WithdrawformDM> getWithdrawformList(@RequestBody Withdrawform record)
-	{
+	public List<WithdrawformDM> getWithdrawformList(@RequestBody PublicMemberReq record)
+	{		
 		return withdrawformService.getListMore(record);
 	}
 	
@@ -119,12 +123,15 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("/getWithdrawformdetail")
 	@ResponseBody
+	//@RequireLogin
 	@ApiOperation(value = "获取可提现记录详情", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "获取可提现记录详情")
-	public WithdrawformDM getWithdrawformDetail(@RequestBody Withdrawform record)
+	public HttpResultModel<WithdrawformDM> getWithdrawformDetail(@RequestBody PublicMemberReq record)
 	{
-		return withdrawformService.selectDMByPrimaryKey(record.getId());
+		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		//record.setMemberid(memberid);	
+		return withdrawformService.selectWFDetail(record);
 	}
 	
 	

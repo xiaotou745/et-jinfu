@@ -10,9 +10,13 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.WithdrawformDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedAccountInfoReq;
+import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.PagedWithdrawReq;
+import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.entity.req.UpdatePwdReq;
 import com.etaofinance.entity.resp.*;
 
@@ -20,9 +24,15 @@ import com.etaofinance.entity.resp.*;
 public interface IWithdrawformService { 
 
 	
-	HttpResultModel<ResponseBase> create(Withdrawform record);
+	HttpResultModel<Object> create(Withdrawform record);
 
-	List<WithdrawformDM> getListMore(Withdrawform record);	
+	List<WithdrawformDM> getListMore(PublicMemberReq record);	
 	
-	WithdrawformDM selectDMByPrimaryKey(Long id);
+	HttpResultModel<WithdrawformDM>  selectWFDetail(PublicMemberReq record);
+	
+	PagedResponse<Withdrawform>  getWithdrawList(PagedWithdrawReq req);
+	
+	
+    int updateByPrimaryKeySelective(Withdrawform record);
+    
 }

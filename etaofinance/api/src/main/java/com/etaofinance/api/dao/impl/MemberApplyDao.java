@@ -35,7 +35,7 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 
 	@Override
 	public MemberApply selectByPrimaryKey(Long id) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
@@ -51,6 +51,11 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 		return 0;
 	}
 
+	@Override
+	public MemberApply selectPending(long memberId) {
+		return getMasterSqlSessionUtil().selectOne("IMemberApplyDao.selectPending", memberId);
+	}
+	
 	@Override
 	public PagedResponse<MemberApplyInvestModel> getMemberApplyList(
 			PagedMemberReq req) {

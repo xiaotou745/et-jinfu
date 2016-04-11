@@ -33,6 +33,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
@@ -249,8 +250,8 @@ public class ProjectService implements IProjectService {
 	 * @date 2016年3月31日11:46:29
 	 * @return
 	 */
-	public List<Project> getList(Project record) {
-		return projectDao.getList(record);
+	public List<Project> getListMore(ProLaunchReq record) {
+		return projectDao.getListMore(record);
 	}
 
 	/*
@@ -286,5 +287,12 @@ public class ProjectService implements IProjectService {
 	@Override
 	public int audit(ProjectAuditReq req) {
 		return projectDao.audit(req);
+	}
+	/**
+	 * 新手专享项目列表
+	 */
+	@Override
+	public List<ProjectModel> getNoviceProject() {
+		return projectDao.getNoviceProject();
 	}
 }

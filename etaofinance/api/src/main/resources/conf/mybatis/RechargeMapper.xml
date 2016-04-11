@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.etaofinance.api.dao.inter.IRechargeDao" >
+  <resultMap id="BaseResultMap" type="com.etaofinance.entity.Recharge" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
+    <result column="AccountType" property="accounttype" jdbcType="INTEGER" />
+    <result column="No" property="no" jdbcType="VARCHAR" />
+    <result column="Amount" property="amount" jdbcType="REAL" />
+    <result column="Status" property="status" jdbcType="SMALLINT" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="CreateName" property="createname" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="OptName" property="optname" jdbcType="VARCHAR" />
+    <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, MemberId, AccountType, No, Amount, Status, Remark, CreateName, CreateTime, OptName, 
+    OptTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from recharge
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.etaofinance.entity.Recharge" >
+    insert into recharge (Id, MemberId, AccountType, 
+      No, Amount, Status, Remark, 
+      CreateName, CreateTime, OptName, 
+      OptTime)
+    values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{accounttype,jdbcType=INTEGER}, 
+      #{no,jdbcType=VARCHAR}, #{amount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, #{remark,jdbcType=VARCHAR}, 
+      #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{optname,jdbcType=VARCHAR}, 
+      #{opttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etaofinance.entity.Recharge" >
+    insert into recharge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
+        MemberId,
+      </if>
+      <if test="accounttype != null" >
+        AccountType,
+      </if>
+      <if test="no != null" >
+        No,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="createname != null" >
+        CreateName,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="optname != null" >
+        OptName,
+      </if>
+      <if test="opttime != null" >
+        OptTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
+        #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="accounttype != null" >
+        #{accounttype,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        #{opttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Recharge" >
+    update recharge
+    <set >
+      <if test="memberid != null" >
+        MemberId = #{memberid,jdbcType=BIGINT},
+      </if>
+      <if test="accounttype != null" >
+        AccountType = #{accounttype,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        No = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null" >
+        CreateName = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        OptName = #{optname,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        OptTime = #{opttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <sql id="getRechargeListWhere">
+		1=1
+		<if test="status>=-1">
+			and Status = ${status}
+		</if>
+		<if test="createName!= null and createName!=''">
+			and CreateName like ''%${createName}%''
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and CreateTime>=''${startTime}''
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and date_add(''${endTime}'', INTERVAL 1 day)>CreateTime
+		</if>
+	</sql>
+	<select id="getRechargeList" resultType="com.etaofinance.entity.Recharge"
+		parameterType="com.etaofinance.entity.req.PagedRechargeReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		' recharge as a ',
+		'
+		<include refid="getRechargeListWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.Recharge" >
+    update recharge
+    set MemberId = #{memberid,jdbcType=BIGINT},
+      AccountType = #{accounttype,jdbcType=INTEGER},
+      No = #{no,jdbcType=VARCHAR},
+      Amount = #{amount,jdbcType=REAL},
+      Status = #{status,jdbcType=SMALLINT},
+      Remark = #{remark,jdbcType=VARCHAR},
+      CreateName = #{createname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      OptName = #{optname,jdbcType=VARCHAR},
+      OptTime = #{opttime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
