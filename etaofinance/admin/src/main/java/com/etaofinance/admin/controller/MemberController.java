@@ -15,12 +15,14 @@ import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.BankCard;
+import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.impl.BalanceRecordService;
 import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IBankCardService;
+import com.etaofinance.api.service.inter.IFeedBackService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
@@ -29,6 +31,7 @@ import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.req.MemberApplyAuditReq;
+import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.PagedMemberReq;
@@ -46,6 +49,8 @@ public class MemberController {
 	private IPublicProvinceCityService publicProvinceCityService;
 	@Autowired
 	private IBalanceRecordService balanceRecordService;
+	@Autowired
+	private IFeedBackService feedBackService;
 	/*
 	 * 会员列表 wangchao
 	 */
@@ -79,12 +84,17 @@ public class MemberController {
 	}
 
 	@RequestMapping("feedbacklistdo")
-	public ModelAndView feedbacklistdo(PagedMemberReq req) { 
+	public ModelAndView feedbacklistdo(PagedFeedBackReq req) { 
 		ModelAndView model = new ModelAndView("member/feedbacklistdo");
-		PagedResponse<MemberModel> memberModelList = new PagedResponse<MemberModel>();
-		memberModelList=memberService.getMemberList(req);
-		model.addObject("listData",memberModelList);
+		PagedResponse<FeedBack> feedList = new PagedResponse<FeedBack>();
+		feedList=feedBackService.getFeedBackList(req);
+		model.addObject("listData",feedList);
 		return model;
+	}
+	@RequestMapping("feedbackdel")
+	@ResponseBody
+	public int feedbackdel(Integer id) {
+		return feedBackService.remove(id);
 	}
 	/*
 	 * 跟投人列表 wangchao

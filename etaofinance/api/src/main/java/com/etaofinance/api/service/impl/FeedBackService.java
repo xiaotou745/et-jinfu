@@ -30,6 +30,7 @@ import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.resp.ADVertResp;
 import com.etaofinance.entity.resp.FeedBackResp;
 import com.etaofinance.entity.resp.QAResp;
@@ -90,6 +91,19 @@ public class FeedBackService implements IFeedBackService{
 		resp.setCode(FeedBackEnum.Success.value());
 		resp.setMsg(FeedBackEnum.Success.desc());		
 		return resp;
+	}
+
+	@Override
+	public PagedResponse<FeedBack> getFeedBackList(PagedFeedBackReq req) {
+		return feedBackDao.getFeedBackList(req);
+	}
+
+	@Override
+	public int remove(Integer id) {
+		FeedBack record = new FeedBack();
+		record.setId(id);
+		record.setIsdel(true);
+		return feedBackDao.updateByPrimaryKeySelective(record);
 	}
 
 

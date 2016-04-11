@@ -88,14 +88,14 @@ public class ProjectController {
 	 */
 	@RequestMapping("investproject")
 	@ResponseBody
-	//@RequireLogin
+	@RequireLogin
 	@ApiOperation(value = "我投资的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我投资的项目")
 	public List<ProjectSubscriptionDM> investProject(@RequestBody ProSubInvestReq record)
 	{	
-		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		//record.setMemberid(memberid);	
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		record.setMemberid(memberid);	
 		return projectSubscriptionService.getListMore(record);
 	}
 	
@@ -108,14 +108,14 @@ public class ProjectController {
 	 */
 	@RequestMapping("favoriteproject")
 	@ResponseBody
-	//@RequireLogin
+	@RequireLogin
 	@ApiOperation(value = "我关注的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我关注的项目")
 	public List<ProjectFavoriteDM> favoriteProject(@RequestBody ProFavoriteReq record)
 	{
-		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		//record.setMemberid(memberid);	
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		record.setMemberid(memberid);	
 		return projectFavoriteService.getListMore(record);
 	}	
 	
@@ -128,14 +128,14 @@ public class ProjectController {
 	 */
 	@RequestMapping("launchproject")
 	@ResponseBody
-	//@RequireLogin
+	@RequireLogin
 	@ApiOperation(value = "我发起的项目", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "我发起的项目")
 	public List<Project> launchProject(@RequestBody ProLaunchReq record)
 	{
-		//Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		//record.setMemberid(memberid);	
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		record.setMemberid(memberid);	
 		return projectService.getListMore(record);
 	}
 	
