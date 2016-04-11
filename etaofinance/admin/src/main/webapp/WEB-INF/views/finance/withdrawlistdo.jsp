@@ -5,8 +5,8 @@
 <%@page import="com.etaofinance.core.util.PageHelper"%>
 <%@page import="java.util.ArrayList"%>
     <%@page import="com.etaofinance.core.util.PropertyUtils"%>
-<%@page import="com.etaofinance.entity.Project"%>
-<%@page import="com.etaofinance.core.enums.ProjectStatus"%>
+<%@page import="com.etaofinance.entity.Withdrawform"%>
+<%@page import="com.etaofinance.core.enums.WithdrawStatus"%>
 <%@page import="java.util.List"%>
 <%
 	String basePath =PropertyUtils.getProperty("java.admin.url");
@@ -17,37 +17,41 @@
 	<thead>
 		<tr>
 			<th width="5%">编号</th>
-			<th>项目名称</th>
-			<th>融资进度</th>
-			<th>投资人数</th>
-			<th>关注人数</th>
+			<th>姓名</th>
+			<th>提现金额</th>
+			<th>提现银行</th>
+			<th>银行卡号</th>
+			<th>申请时间</th>
+			<th>操作时间</th>
+			<th>到账时间</th>
+			<th>拒绝理由</th>
 			<th>状态</th>
-			<th>融资开始时间</th>
-			<th>融资结束时间</th>
-			<th>操作</th>
+		<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
 
 		<%
-			PagedResponse<Project> data = (PagedResponse<Project>) request.getAttribute("listData");
-			List<Project> list = data.getResultList();
+			PagedResponse<Withdrawform> data = (PagedResponse<Withdrawform>) request.getAttribute("listData");
+			List<Withdrawform> list = data.getResultList();
 			if (list == null) {
-				list = new ArrayList<Project>();
+				list = new ArrayList<Withdrawform>();
 			}
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
 			<td><%=(i+1)%></td>
-			<td><%=list.get(i).getProjectname()%></td>
-			<td><%=list.get(i).getSchedule()%>%</td>
-			<td><%=list.get(i).getInvestmentnumber()%></td>
-			<td><%=list.get(i).getFollownumber()%></td>
-			<td><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getStarttime(), "") %></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getEndtime(), "") %></td>
-			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
+			<td><%=list.get(i).getCreatename()%></td>
+			<td><%=list.get(i).getAmount()%></td>
+					<td><%=list.get(i).getBankname()%></td>
+			<td><%=list.get(i).getAccountno()%></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(), "") %></td>
+		<td><%=ParseHelper.ToDateString(list.get(i).getSuccesstime(), "") %></td>
+			<td><%=list.get(i).getRemark()%></td>
+			<td><%=WithdrawStatus.getEnum(list.get(i).getStatus()).desc()%></td>
+			<td><a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,2)">通过</a>
+			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,4)">拒绝</a>
 			</td>
 		</tr>
 		<%

@@ -11,6 +11,7 @@
     <result column="Remark" property="remark" jdbcType="VARCHAR" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="SuccessTime" property="successtime" jdbcType="TIMESTAMP" />
     <result column="OptName" property="optname" jdbcType="VARCHAR" />
     <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
     <result column="AccountType" property="accounttype" jdbcType="VARCHAR" />
@@ -28,7 +29,7 @@
   </select>
   <select id="selectDMByPrimaryKey" resultType="com.etaofinance.entity.domain.WithdrawformDM"  parameterType="java.lang.Long" >
  select 
-     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, 
+     w.Id, w.MemberId, w.WithwardNo, w.Amount, w.AfterAmount, w.Status, w.Remark, w.CreateName, w.CreateTime, w.SuccessTime,  
     w.OptName, w.OptTime, w.AccountType, w.AccountNo,
     
 CASE WHEN w.Status = 1 THEN '待审核'	
@@ -62,12 +63,12 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
   <insert id="insert" parameterType="com.etaofinance.entity.Withdrawform" >
     insert into withdrawform ( MemberId, WithwardNo, 
       Amount, AfterAmount, Status, 
-      Remark, CreateName, CreateTime, 
+      Remark, CreateName, CreateTime, SuccessTime,
       OptName, OptTime, AccountType, 
       AccountNo)
     values ( #{memberid,jdbcType=BIGINT}, #{withwardno,jdbcType=VARCHAR}, 
       #{amount,jdbcType=REAL}, #{afteramount,jdbcType=REAL}, #{status,jdbcType=SMALLINT}, 
-      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{successtime,jdbcType=TIMESTAMP}, 
       #{optname,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{accounttype,jdbcType=VARCHAR}, 
       #{accountno,jdbcType=VARCHAR})
   </insert>
@@ -97,6 +98,9 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       </if>
       <if test="createtime != null" >
         CreateTime,
+      </if>
+        <if test="successtime != null" >
+        SuccessTime,
       </if>
       <if test="optname != null" >
         OptName,
@@ -135,6 +139,9 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="successtime != null" >
+        #{successtime,jdbcType=TIMESTAMP},
       </if>
       <if test="optname != null" >
         #{optname,jdbcType=VARCHAR},
@@ -177,6 +184,9 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       <if test="createtime != null" >
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+         <if test="successtime != null" >
+        SuccessTime = #{successtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="optname != null" >
         OptName = #{optname,jdbcType=VARCHAR},
       </if>
@@ -202,6 +212,7 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       Remark = #{remark,jdbcType=VARCHAR},
       CreateName = #{createname,jdbcType=VARCHAR},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
+            SuccessTime = #{successtime,jdbcType=TIMESTAMP},
       OptName = #{optname,jdbcType=VARCHAR},
       OptTime = #{opttime,jdbcType=TIMESTAMP},
       AccountType = #{accounttype,jdbcType=VARCHAR},

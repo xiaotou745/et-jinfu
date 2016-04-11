@@ -86,5 +86,12 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	public int audit(ProjectAuditReq req) {
 		return getMasterSqlSessionUtil().update("IProjectDao.audit",req);
 	}
+	/**
+	 * 获取新手专享列表
+	 */
+	@Override
+	public List<ProjectModel> getNoviceProject() {
+		return getReadOnlySqlSessionUtil().selectList("IProjectDao.getNoviceProject");
+	}
 	
 }

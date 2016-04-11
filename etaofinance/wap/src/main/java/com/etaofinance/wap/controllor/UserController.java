@@ -102,14 +102,34 @@ public class UserController {
 	 * 注册
 	 * @param req
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
 	@ApiOperation(value = "注册", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "用户注册")
-	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) {
-		return  memberService.regist(req);			
+	public  HttpResultModel<Member> regist(@RequestBody RegistReq req) throws IOException {
+		HttpResultModel<Member> resultModel=  memberService.regist(req);
+		if(resultModel.getCode()>0)//注册成功,进行登录
+		{
+			//登录成功 设置缓存
+			String uuid=UUID.randomUUID().toString();//生成该次登录的UUID
+			String rediskey=String.format(RedissCacheKey.LOGIN_COOKIE, uuid);
+			String redisValue=JsonUtil.obj2string(resultModel.getData());
+			redisService.set(rediskey, redisValue,60*60*24,TimeUnit.SECONDS);
+			//设置COOKIE
+			CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, 60*60*24,true);
+			if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
+			{
+				response.sendRedirect(req.getReUrl());
+			}
+			else {
+				String basePath = PropertyUtils.getProperty("java.wap.url");
+				response.sendRedirect(basePath);
+			}
+		}
+		return resultModel;
 	}
 	
 	/**
@@ -169,8 +189,10 @@ public class UserController {
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
 		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
 		{//要跳转的URL不为空 进行跳转
-			String basePath =PropertyUtils.getProperty("java.wap.url");
-			response.sendRedirect(basePath + "/"+req.getReUrl());
+			response.sendRedirect(req.getReUrl());
+		}else {
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			response.sendRedirect(basePath);
 		}
 		result.setCode(1);
 		result.setMsg("登录成功");
