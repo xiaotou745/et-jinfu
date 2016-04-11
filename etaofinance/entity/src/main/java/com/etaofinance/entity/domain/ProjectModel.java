@@ -2,12 +2,23 @@ package com.etaofinance.entity.domain;
 
 import com.etaofinance.core.enums.ProjectType;
 import com.etaofinance.core.util.Convert;
+import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.entity.Project;
+import com.etaofinance.core.enums.ProjectStatus;;
 
 public class ProjectModel extends Project{
 
 	private Float aValue;
 	private Float bValue;
+	private String projectStatusStr;
+	public String getProjectStatusStr() {
+		return ProjectStatus.getEnum(ParseHelper.ToInt(getProjectstatus())).desc();
+	}
+
+	public void setProjectStatusStr(String projectStatusStr) {
+		this.projectStatusStr = projectStatusStr;
+	}
+
 	public Float getAValue() {
 		return aValue;
 	}
