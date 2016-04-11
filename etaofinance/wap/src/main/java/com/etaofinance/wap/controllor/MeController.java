@@ -51,9 +51,12 @@ public class MeController {
 	 * @return
 	 */
 	@RequestMapping("register")
-	public ModelAndView register()
+	public ModelAndView register(String reUrl)
 	{
-		ModelAndView view= new ModelAndView("me/register");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "注册");
+		view.addObject("viewPath", "me/register");
+		view.addObject("reUrl",reUrl);
 		return view;
 	}
 	/**

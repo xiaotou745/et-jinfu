@@ -47,6 +47,9 @@ public interface IProjectDao {
     List<Project> getListMore(ProLaunchReq record);
 
 	int audit(ProjectAuditReq req);
-    
-   
+    /**
+     * 获取新手专享项目列表
+     * @return
+     */
+	List<ProjectModel> getNoviceProject();
 }
