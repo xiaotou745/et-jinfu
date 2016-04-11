@@ -11,6 +11,10 @@ public class MemberDM extends Member{
 	
 	//是否存在待审
 	private Boolean isExistPending;
+	
+	//是否设置支付密码
+	private Boolean isSetPayPassWord;	
+
 
 	public Boolean getIsExistPending() {
 		return isExistPending;
@@ -19,6 +23,15 @@ public class MemberDM extends Member{
 	public void setIsExistPending(Boolean isExistPending) {
 		this.isExistPending = isExistPending;
 	}	
+	
+	public Boolean getIsSetPayPassWord() {
+		return isSetPayPassWord;
+	}
+
+	public void setIsSetPayPassWord(Boolean isSetPayPassWord) {
+		this.isSetPayPassWord = isSetPayPassWord;
+	}
+
 	
 
 }
