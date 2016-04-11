@@ -31,6 +31,14 @@
 		from memberapply
 		where Id = #{id,jdbcType=BIGINT}
 	</select>
+	<!-- 获取待审核数据 -->
+	<select id="selectPending" resultType="com.etaofinance.entity.MemberApply"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM memberapply
+		WHERE  Status=0 and   MemberId=#{memberId,jdbcType=BIGINT}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from memberapply
 		where Id = #{id,jdbcType=BIGINT}
