@@ -46,7 +46,7 @@
 	<section class="container">
 		<div class="link">
 			<span class="txt-normal">已有账号，</span>
-			<a href="#"><span class="txt-highlight">点此登录</span></a>
+			<a href="<%=basePath%>/me/login"><span class="txt-highlight">点此登录</span></a>
 		</div>
 	</section>
 		

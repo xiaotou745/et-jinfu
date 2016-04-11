@@ -120,6 +120,10 @@ public class UserController {
 			{
 				response.sendRedirect(req.getReUrl());
 			}
+			else {
+				String basePath = PropertyUtils.getProperty("java.wap.url");
+				response.sendRedirect(basePath);
+			}
 		}
 		return resultModel;
 	}
@@ -182,6 +186,9 @@ public class UserController {
 		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
 		{//要跳转的URL不为空 进行跳转
 			response.sendRedirect(req.getReUrl());
+		}else {
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			response.sendRedirect(basePath);
 		}
 		result.setCode(1);
 		result.setMsg("登录成功");
