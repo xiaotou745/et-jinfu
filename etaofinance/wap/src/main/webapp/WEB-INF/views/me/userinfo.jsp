@@ -24,7 +24,7 @@
         </div>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/setusername">
             <div class="text">
                 <div>用户名</div>
                 <span><%=member.getUsername()%></span>

@@ -249,4 +249,20 @@ public class MeController {
 		view.addObject("member",member);
 		return view;
 	}
+	/**
+	 * 用户信息
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("setusername")
+	@RequireLogin
+	public ModelAndView setusername() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改用户名");
+		view.addObject("viewPath", "me/setusername");
+		return view;
+	}
 }
