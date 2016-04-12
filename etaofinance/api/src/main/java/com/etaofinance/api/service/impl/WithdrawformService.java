@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.etaofinance.api.common.TransactionalRuntimeException;
 import com.etaofinance.api.dao.inter.IADVertDao;
 import com.etaofinance.api.dao.inter.IAccountAuthDao;
+import com.etaofinance.api.dao.inter.IBalanceRecordDao;
 import com.etaofinance.api.dao.inter.IBankCardDao;
 import com.etaofinance.api.dao.inter.IBankDao;
+import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.dao.inter.IWithdrawformDao;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IADVertService;
@@ -21,13 +24,17 @@ import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
 import com.etaofinance.core.enums.BalanceRecordEnum;
+import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.enums.WithdrawStatus;
 import com.etaofinance.core.enums.WithdrawformEnum;
+import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
 import com.etaofinance.core.util.OrderNoHelper;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
+import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
@@ -51,6 +58,12 @@ public class WithdrawformService implements IWithdrawformService{
 	@Autowired
 	private IWithdrawformDao withdrawformDao;
 
+	@Autowired
+	private IBalanceRecordDao balanceRecordDao;
+	
+	@Autowired
+	private IMemberOtherDao memberOtherDao;
+	
 	@Override
 	public HttpResultModel<Object> create(Withdrawform record) {
 		//问题，对接银行， 提现验证，提现后金额
@@ -120,6 +133,79 @@ public class WithdrawformService implements IWithdrawformService{
 	public int updateByPrimaryKeySelective(Withdrawform record) {
 		
 		return withdrawformDao.updateByPrimaryKeySelective(record);
+	}
+
+	/**
+	 *  提现审核
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	public int Audit(long id, short status) {
+		
+			
+		// 1 拒绝
+		// 1.1 update withdrawform	
+		int updateWithdrawRes =0;
+		
+		Withdrawform withdraw = new Withdrawform();
+		withdraw.setId(id);
+		withdraw.setStatus(status);
+		
+		updateWithdrawRes = this.updateByPrimaryKeySelective(withdraw);
+		
+		if(0==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
+
+			throw new TransactionalRuntimeException("拒绝失败");
+		}
+		else if(1==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
+			
+			return 1;	
+		}
+		
+		// 2 通过
+		// 2.1 update withdrawform
+	
+		if(0==updateWithdrawRes){
+
+			throw new TransactionalRuntimeException("通过失败");
+		}
+		// 2.2 insert balancerecord
+		 // 获取 withdraw
+		Withdrawform withdrawMd = this.getWithdrawMdById(id);
+		
+		BalanceRecord balance = balanceRecordDao
+				.GetLatestedModelByMbId(withdrawMd.getMemberid());
+
+		balance.setId(null);
+		balance.setAmount(balance.getAfteramount());
+		balance.setAfteramount(balance.getAfteramount() +(- withdrawMd.getAmount()));
+
+		balance.setRemark("提现审核");
+		balance.setTypeid((short) BalanceRecordType.Apply.value());
+		balance.setRelationno(withdrawMd.getWithwardno());
+		balance.setOptname("optName");
+		
+		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
+		if (0 == insertBalanceRes) {
+
+			throw new TransactionalRuntimeException("流水表异常");
+		}
+
+		// 2.3 update memberother
+		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdrawMd.getMemberid(),
+				-withdrawMd.getAmount(),withdrawMd.getAmount());
+		if (0 == updateMemberOterRes) {
+
+			throw new TransactionalRuntimeException("余额表异常");
+		}
+		
+		return 1;
+	}
+
+	private Withdrawform getWithdrawMdById(long id) {
+		
+		return withdrawformDao.selectByPrimaryKey(id);
+		
 	}
 
 }

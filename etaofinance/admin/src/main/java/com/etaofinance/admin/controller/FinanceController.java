@@ -17,6 +17,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.Recharge;
 import com.etaofinance.entity.Withdrawform;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -137,13 +138,10 @@ public class FinanceController {
 	@ResponseBody
 	public int refuse(Long id) {
 		
-		Withdrawform wdfm = new Withdrawform();
 		
-		wdfm.setId(id);
+		int ires= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
 		
-		wdfm.setStatus((short)WithdrawStatus.Refuse.value());
-		
-		return withdrawformService.updateByPrimaryKeySelective(wdfm);
+		return ires;
 		
 	}
 	
@@ -152,10 +150,9 @@ public class FinanceController {
 	@ResponseBody
 	public int agree(Long id) {
 		
-		Withdrawform wdfm = new Withdrawform();
-		wdfm.setId(id);
-		wdfm.setStatus((short)WithdrawStatus.Pass.value());
-		
-		return withdrawformService.updateByPrimaryKeySelective(wdfm);
+
+		int ires = withdrawformService.Audit(id,	(short) WithdrawStatus.Pass.value());
+
+		return ires;
 	}
 }

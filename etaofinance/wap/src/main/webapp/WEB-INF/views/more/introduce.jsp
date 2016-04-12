@@ -11,36 +11,9 @@
 	int flag=(int)request.getAttribute("flag");
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>新手指引</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no, email=no" />
-    <meta name="360-fullscreen" content="true" />
-    <!-- QQ强制竖屏 -->
-    <meta name="x5-orientation" content="portrait">
-    <!-- QQ强制全屏 -->
-    <meta name="x5-fullscreen" content="true">
-    <!-- QQ应用模式 -->
-    <meta name="x5-page-mode" content="app">
-    <!-- UC强制全屏 -->
-    <meta name="full-screen" content="yes">
-    <!-- UC应用模式 -->
-    <meta name="browsermode" content="application">
-    <!-- uc强制竖屏 -->
-    <meta name="screen-orientation" content="portrait">
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible_css.debug.js"></script>
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible.debug.js"></script>
-    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/instruction/introduce.css">
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/mo.1.0.0.js"></script>
-</head>
 
-<body>
+
+ <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/instruction/introduce.css">
     <div class="g-wrap">
         <div class="g-views">
             
@@ -67,7 +40,6 @@
 				<% 
 			}
 			%>
-			
 		</div>
 	</section>
 	<section class="introduce-size">
@@ -82,11 +54,15 @@
 			<p><img src="<%=staticResPath%>/etao-crowdfunding/img/p/instruction/introduce/introduce_3.png"></p>
 		</div>
 	</section>
-
+	<div class="footer top-line">
+    <ul>
+        <li ><a href="<%=basePath%>/home/index"><i class="m-icon icon-home"></i><span>首页</span></a></li>
+        <li class="on"><a href="#"><i class="m-icon icon-instruction"></i><span>指南</span></a></li>
+        <li><a href="<%=basePath%>/me/usercenter"><i class="m-icon icon-me"></i><span>我</span></a></li>
+        <li><a href="<%=basePath%>/more/index"><i class="m-icon icon-more"></i><span>更多</span></a></li>
+    </ul>
+</div>
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
     <script src="<%=staticResPath%>/etao-crowdfunding/js/p/instruction/introduce.js"></script>
-</body>
-
-</html>

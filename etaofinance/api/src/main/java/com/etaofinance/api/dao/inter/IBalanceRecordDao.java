@@ -29,4 +29,7 @@ public interface IBalanceRecordDao {
 	PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req);
 
 	PagedResponse<BalanceRecord> getBalanceRecordList(PagedBalancerecordReq req);
+
+
+	BalanceRecord GetLatestedModelByMbId(Long memberId);
 }

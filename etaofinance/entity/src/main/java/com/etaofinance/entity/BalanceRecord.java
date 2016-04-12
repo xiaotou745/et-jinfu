@@ -2,8 +2,7 @@ package com.etaofinance.entity;
 
 import java.util.Date;
 
-import com.etaofinance.core.enums.MemberApplyInvestStatusEnum;
-import com.etaofinance.core.enums.MemberIncomeRecordEnum;
+import com.etaofinance.core.enums.RecordType;
 
 public class BalanceRecord {
     private Long id;
@@ -63,9 +62,9 @@ public class BalanceRecord {
     }
     
     public String getTypeidString(){
-    	if(MemberIncomeRecordEnum.getEnum(typeid)!=null)
+    	if(RecordType.getEnum(typeid)!=null)
 		{
-			return MemberIncomeRecordEnum.getEnum(typeid).desc();
+			return RecordType.getEnum(typeid).desc();
 		}
 		else {
 			return "";

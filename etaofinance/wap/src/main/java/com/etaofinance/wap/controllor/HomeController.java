@@ -47,8 +47,15 @@ public class HomeController {
 		List<ADVert> list=adService.getListForWap();
 		//2.获取新手专享
 		List<ProjectModel> projectList=projectService.getNoviceProject();
+		//3.首页15条项目数据
+		PagedProjectReq req=new PagedProjectReq();
+		req.setTypeId(0);
+		req.setCurrentPage(1);
+		req.setAuditStatus(0);
+		List<ProjectModel> itemList=projectService.getProjectList(req).getResultList();
 		view.addObject("ADLIST", list);
 		view.addObject("proList", projectList);
+		view.addObject("itemList", itemList);
 		return view;
 	}
 	/**

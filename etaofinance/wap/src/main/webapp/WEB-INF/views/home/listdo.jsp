@@ -24,7 +24,7 @@ if(list!=null&&list.size()>0)
     <div class="one-list container">
         <h3><b><%=list.get(i).getProjectname()%></b><span><%=list.get(i).getProjectStatusStr()%></span></h3>
         <p><span><img src="<%=list.get(i).getProjectimage()%>"></span>
-        <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_6.png"></b>
+        <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_<%=list.get(i).getTypeid()==1?"6":"7"%>.png"></b>
             <div class="progress">
                 <span class="bar" style="width:<%=list.get(i).getSchedule()%>%">
                     		<span class="triangle-bottom"></span>

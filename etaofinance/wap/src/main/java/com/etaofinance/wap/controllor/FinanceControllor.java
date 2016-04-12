@@ -17,6 +17,7 @@ import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IBankService;
 import com.etaofinance.api.service.inter.IPublicProviceCityService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
+import com.etaofinance.api.service.inter.IRechargeService;
 import com.etaofinance.api.service.inter.ISuggestionService;
 import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.util.SystemUtils;
@@ -25,6 +26,7 @@ import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.PublicProvinceCity;
+import com.etaofinance.entity.Recharge;
 import com.etaofinance.entity.Withdrawform;
 import com.etaofinance.entity.ZcSuggestion;
 import com.etaofinance.entity.common.HttpResultModel;
@@ -44,6 +46,12 @@ public class FinanceControllor {
 
 	@Autowired
 	private IWithdrawformService withdrawformService;	
+	
+
+	@Autowired
+	private IRechargeService rechargeService;	
+	
+	
 	
 	@Autowired
 	HttpServletRequest request;
@@ -147,6 +155,27 @@ public class FinanceControllor {
 		record.setMemberId(memberid);	
 		return withdrawformService.selectWFDetail(record);
 	}
+	
+	
+	/**
+	 * 充值
+	 * @param recharge
+	 * @return
+	 */
+	@RequestMapping("recharge")
+	@ResponseBody
+//	@RequireLogin
+	@ApiOperation(value = "充值", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "充值")
+	public HttpResultModel<Object> recharge(@RequestBody Recharge recharge)
+	{
+		
+		return	rechargeService.recharge(recharge);
+		
+	}
+	
+
 	
 	
 
