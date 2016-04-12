@@ -35,10 +35,24 @@ public class MoreController {
 	 * 常见问题
 	 * @return
 	 */
+	@RequestMapping("index")
+	public ModelAndView index()
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "更多");
+		view.addObject("viewPath", "more/index");
+		return view;
+	}
+	/**
+	 * 常见问题
+	 * @return
+	 */
 	@RequestMapping("question")
 	public ModelAndView question()
 	{
-		ModelAndView view= new ModelAndView("more/question");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "常见问题");
+		view.addObject("viewPath", "more/question");
 		List<QA> list=qaService.getListForWap();
 		view.addObject("qalist", list);
 		return view;
@@ -50,7 +64,9 @@ public class MoreController {
 	@RequestMapping("introduce")
 	public ModelAndView introduce()
 	{
-		ModelAndView view= new ModelAndView("more/introduce");
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "新手指引");
+		view.addObject("viewPath", "more/introduce");
 		int flag=1;
 		Member member=UserContext.getCurrentContext(request).getUserInfo();
 		if(member!=null)

@@ -91,9 +91,9 @@
     <div class="footer top-line">
     <ul>
         <li class="on"><a href="#"><i class="m-icon icon-home"></i><span>首页</span></a></li>
-        <li><a href="#"><i class="m-icon icon-instruction"></i><span>指南</span></a></li>
+        <li><a href="<%=basePath%>/more/introduce"><i class="m-icon icon-instruction"></i><span>指南</span></a></li>
         <li><a href="<%=basePath%>/me/usercenter"><i class="m-icon icon-me"></i><span>我</span></a></li>
-        <li><a href="#"><i class="m-icon icon-more"></i><span>更多</span></a></li>
+        <li><a href="<%=basePath%>/more/index"><i class="m-icon icon-more"></i><span>更多</span></a></li>
     </ul>
 </div>
     
