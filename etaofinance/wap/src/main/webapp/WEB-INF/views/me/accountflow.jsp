@@ -3,6 +3,7 @@
 <%@page import="com.etaofinance.entity.MemberOther"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.entity.PublicProvinceCity" %>
 <%@page import="java.util.List" %>
 <%
@@ -19,46 +20,24 @@
         <div class="g-views">
             
 	<section class="container bg">
-		<div class="text">
+	<%if(list!=null&&list.size()>0)
+		{
+		for(int i=0;i<list.size();i++)
+		{
+			%>
+			<div class="text">
 			<div class="summary">
-				<div>提现</div>
-				<span>2015-06-29</span>
+				<div><%=list.get(i).getTypeName() %></div>
+				<span><%=ParseHelper.ToDateString(list.get(i).getOpttime())%></span>
 			</div>
 			<div class="detail">
-				<div>余额：<b>0</b></div>
-				<span><b>-</b>50</span>
+				<div>余额：<b><%=ParseHelper.digitsNum(list.get(i).getAfteramount(), 2)%> </b></div>
+				<span><%=ParseHelper.digitsNum(list.get(i).getAmount(), 2)%> </span>
 			</div>			
-		</div>
-		<div class="text">
-			<div class="summary">
-				<div>充值</div>
-				<span>2015-06-29</span>
 			</div>
-			<div class="detail">
-				<div>余额：<b>0</b></div>
-				<span><b>+</b>50</span>
-			</div>			
-		</div>
-		<div class="text">
-			<div class="summary">
-				<div>投资</div>
-				<span>2015-06-29</span>
-			</div>
-			<div class="detail">
-				<div>余额：<b>0</b></div>
-				<span><b>+</b>50</span>
-			</div>			
-		</div>
-		<div class="text">
-			<div class="summary">
-				<div>退款至余额</div>
-				<span>2015-06-29</span>
-			</div>
-			<div class="detail">
-				<div>余额：<b>0</b></div>
-				<span><b>+</b>50</span>
-			</div>			
-		</div>
+			<%
+		}
+		}%>
 	</section>
 
         </div>
