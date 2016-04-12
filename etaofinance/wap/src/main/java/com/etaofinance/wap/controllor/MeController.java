@@ -306,5 +306,41 @@ public class MeController {
 		view.addObject("member", member);
 		view.addObject("isHas", isHas);
 		return view;
+	}	/**
+	 * 跟投人认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("transfer")
+	@RequireLogin
+	public ModelAndView transfer(int type) 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "提示");
+		view.addObject("viewPath", "me/transfer");
+		String tip= "";
+		String url="";
+		String button="";
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		switch (type) {
+		case 1:{tip="您尚未实名认证,请先进行实名认证";url=basePath+"/me/certification";button="去认证";}break;//实名认证
+		case 2:{tip="您当前有未审核通过的认证申请,请等待审核";url=basePath+"/me/userinfo";button="返回";}break;
+//		case 3:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 4:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 5:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 6:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 7:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 8:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 9:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 10:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+		default:
+			break;
+		}
+		view.addObject("tip", tip);
+		view.addObject("url", url);
+		view.addObject("button", button);
+		return view;
 	}
 }

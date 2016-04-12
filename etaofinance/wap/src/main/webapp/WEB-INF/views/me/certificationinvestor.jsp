@@ -19,18 +19,24 @@
 	//没有实名认证
 	if(!isReal)
 	{%>
-		console.log('没有实名认证');
+	<script>
+	console.log('没有实名认证');
+	window.location.href='<%=basePath%>/me/transfer?type=1';
+	</script>
 	<%}
 	if(isHas)//已经有在认证的信息
 	{%>
+		<script>
 		console.log('已经有待审核的认证信息');
+		window.location.href='<%=basePath%>/me/transfer?type=2';
+		</script>
 	<%}
 %>
 
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/certification-investor.css">
     <div class="g-wrap">
         <div class="g-views">
-            
+        <form data-role="form">
         <section class="container bg">
             <div class="lead">
                 <p>您是符合以下条件之一的自然人投资者</p>
@@ -47,23 +53,25 @@
         <section class="container bg">
             <div class="label-input">
                 <label>所在公司</label>
-                <input type="text" placeholder="请填写您所在的公司" data-role="company"/>
+                <input type="text" placeholder="请填写您所在的公司" name="companyname" data-role="company"/>
             </div>
             <div class="label-input">
                 <label>职位头衔</label>
-                <input type="text" placeholder="请填写您的职位/头衔" data-role="position"/>
+                <input type="text" placeholder="请填写您的职位/头衔" name="companytitle" data-role="position"/>
             </div>
         </section>
         <section class="container bg">
             <div class="pledge">
-                <i></i>
+                <i class="m-icon icon-approval"></i>
                 <p>我承诺以上登记的所有信息属实，并对虚假信息产生的一切后果负责。我同意签署<span>《用户服务协议》</span>和<span>《风险揭示书》</span></p>
             </div>
             <div class="btn-toggle">
                 <button disabled data-role="submit">提交</button>
             </div>
         </section>
-    
+        <input type="hidden" name="typeid" value="2" data-role="level"/>
+        <input type="hidden" name="applyinfo" value="我最近三年年均收入不低于50万人民币" data-role="applyinfo"/>
+    	</form>
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->

@@ -51,15 +51,7 @@ public class MemberApplyService implements IMemberApplyService{
 	@Override
 	public HttpResultModel<Object> create(MemberApply record) {		
 		
-		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
-		if(record.getMemberid() ==null || record.getMemberid().equals(""))
-		{	
-			resp.setCode(MemberApplyEnum.MemberIdIsNull.value());
-			resp.setMsg(MemberApplyEnum.MemberIdIsNull.desc());
-			return resp;			
-		}
-		//验证是否属于会员		
-		record.setCreatetime(new Date());		
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();				
 		int row= memberApplyDao.insertSelective(record);		
 		if(row<=0)
 		{
