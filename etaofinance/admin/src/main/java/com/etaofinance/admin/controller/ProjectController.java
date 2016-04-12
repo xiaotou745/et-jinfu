@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.admin.common.UserContext;
+import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectStrategyService;
@@ -23,12 +24,16 @@ import com.etaofinance.core.enums.AreaLevel;
 import com.etaofinance.core.enums.ProjectAuditStatus;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.req.PagedFeedBackReq;
+import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 /**
@@ -49,6 +54,8 @@ public class ProjectController {
 	private IPublicProvinceCityService publicProvinceCityService;
 	@Autowired
 	private IProjectSubscriptionService projectSubscriptionService;
+	@Autowired
+	private IProjectFavoriteService projectFavoriteService;
 	/**
 	 * 项目列表查询页
 	 * @return
@@ -196,5 +203,28 @@ public class ProjectController {
 		view.addObject("proImgList",proImgList);
 		view.addObject("projectId",id);
 		return view;
+	}
+	
+	
+	
+	/*
+	 * 用户反馈 LIN
+	 */
+	@RequestMapping("favorite")
+	public ModelAndView favoritelist() {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "项目管理");
+		model.addObject("currenttitle", "关注列表");
+		model.addObject("viewPath", "project/favorite");
+		return model;
+	}
+
+	@RequestMapping("favoritedo")
+	public ModelAndView favoritelistdo(PagedProjectFavReq req) { 
+		ModelAndView model = new ModelAndView("project/favoritedo");
+		PagedResponse<ProjectFavoriteInvestModel> favoriteList = new PagedResponse<ProjectFavoriteInvestModel>();
+		favoriteList=projectFavoriteService.getFavoritePageList(req);
+		model.addObject("listData",favoriteList);
+		return model;
 	}
 }
