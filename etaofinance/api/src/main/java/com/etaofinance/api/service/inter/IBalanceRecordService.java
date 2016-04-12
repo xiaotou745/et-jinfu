@@ -32,4 +32,7 @@ public interface IBalanceRecordService {
 	
 	PagedResponse<BalanceRecord>  getBalanceRecordList(PagedBalancerecordReq req);
 	
+	
+    int insertSelective(BalanceRecord record);
+	
 }

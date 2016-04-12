@@ -34,8 +34,13 @@ public class RechargeDao extends DaoBase implements IRechargeDao{
 
 	@Override
 	public int insertSelective(Recharge record) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		
+		int insertRes =0;
+		
+		insertRes = this.getMasterSqlSessionUtil().insert("IRechargeDao.insertSelective",record);
+		
+		return insertRes;
 	}
 
 	@Override
