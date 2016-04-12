@@ -76,5 +76,13 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 	public List<MemberApply> getMemberApplyInfoByMemberId(long memberId) {
 		return getReadOnlySqlSessionUtil().selectList("IMemberApplyDao.getMemberApplyInfoByMemberId",memberId);
 	}
+	/**
+	 * 是否存在未审核的申请
+	 */
+	@Override
+	public boolean IsHasApply(Long uid) {
+		int res =getReadOnlySqlSessionUtil().selectOne("IMemberApplyDao.IsHasApply",uid);
+		return res>0;
+	}
 
 }

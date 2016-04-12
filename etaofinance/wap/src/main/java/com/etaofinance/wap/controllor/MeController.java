@@ -19,6 +19,7 @@ import com.etaofinance.api.service.impl.MemberOtherService;
 import com.etaofinance.api.service.impl.MemberService;
 import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IBankCardService;
+import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.core.consts.RedissCacheKey;
@@ -56,7 +57,9 @@ public class MeController {
 	@Autowired
 	IBankCardService bankService;
 	@Autowired
-	private IBalanceRecordService balanceRecordService;	
+	private IBalanceRecordService balanceRecordService;
+	@Autowired
+	IMemberApplyService memberApplyService;
 	/**
 	 * 登录页面
 	 * @return
@@ -250,7 +253,7 @@ public class MeController {
 		return view;
 	}
 	/**
-	 * 用户信息
+	 * 修改用户名
 	 * @param checkKey
 	 * @param userId
 	 * @return
@@ -263,6 +266,45 @@ public class MeController {
 		ModelAndView view= new ModelAndView("wapView");
 		view.addObject("currenttitle", "修改用户名");
 		view.addObject("viewPath", "me/setusername");
+		return view;
+	}
+	/**
+	 * 实名认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("certification")
+	@RequireLogin
+	public ModelAndView certification() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "实名认证");
+		view.addObject("viewPath", "me/certification");
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
+		return view;
+	}
+	/**
+	 * 跟投人认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("certificationinvestor")
+	@RequireLogin
+	public ModelAndView certificationinvestor() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "跟投人认证");
+		view.addObject("viewPath", "me/certificationinvestor");
+		Long idLong=UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(idLong);
+		boolean isHas=memberApplyService.IsHasApply(idLong);
+		view.addObject("member", member);
+		view.addObject("isHas", isHas);
 		return view;
 	}
 }

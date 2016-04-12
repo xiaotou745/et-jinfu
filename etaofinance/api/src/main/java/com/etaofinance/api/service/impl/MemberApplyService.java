@@ -72,5 +72,11 @@ public class MemberApplyService implements IMemberApplyService{
 		return resp;
 	}
 
+	@Override
+	public boolean IsHasApply(Long uid) {
+		
+		return memberApplyDao.IsHasApply(uid);
+	}
+
 	
 }

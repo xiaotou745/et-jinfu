@@ -31,4 +31,10 @@ public interface IMemberApplyDao {
 	int auditConfirm(MemberApplyAuditReq req);
 
 	List<MemberApply> getMemberApplyInfoByMemberId(long memberId);
+	/**
+	 * 是否存在未审核的申请
+	 * @param uid
+	 * @return
+	 */
+	boolean IsHasApply(Long uid);
 }
