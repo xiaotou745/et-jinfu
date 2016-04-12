@@ -21,7 +21,7 @@
             <div class="amount">￥<span><%=other.getBalanceprice()%></span></div>
             <div class="instruction">现金余额</div>
             <div class="btn-toggle">
-                <a href="#"><button>查看详情</button></a>
+                <a href="<%=basePath%>/me/accountflow"><button>查看详情</button></a>
             </div>
         </div>
     </section>
