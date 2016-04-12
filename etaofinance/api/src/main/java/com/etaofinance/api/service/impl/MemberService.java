@@ -64,14 +64,7 @@ public class MemberService implements IMemberService{
 	public HttpResultModel<Object> modify(Member record)
 	{
 		HttpResultModel<Object> resp = new HttpResultModel<Object>();
-		
-		if(record.getId() ==null || record.getId().equals(""))
-		{	
-			resp.setCode(MemberEnum.MemberIdIsNull.value());
-			resp.setMsg(MemberEnum.MemberIdIsNull.desc());
-			return resp;			
-		}
-		if(record.getUsername()!=null || !record.getUsername().equals(""))
+		if(record.getUsername()!=null &&!record.getUsername().equals(""))
 		{
 			//验证用户名是否已存在		
 			Member memberModel=memberDao.selectByUserName(record.getUsername());

@@ -230,4 +230,23 @@ public class MeController {
 		view.addObject("list", list);
 		return view;
 	}
+	/**
+	 * 用户信息
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("userinfo")
+	@RequireLogin
+	public ModelAndView userinfo() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "用户信息");
+		view.addObject("viewPath", "me/userinfo");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		member=memberService.getById(member.getId());
+		view.addObject("member",member);
+		return view;
+	}
 }
