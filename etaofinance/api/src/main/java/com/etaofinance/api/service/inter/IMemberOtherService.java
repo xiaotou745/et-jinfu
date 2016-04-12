@@ -44,4 +44,11 @@ public interface IMemberOtherService {
 	 * @return
      */
     HttpResultModel<Object> verificationPayPwd(MemberOther req);
+    
+    /**
+     * 根据ID获取用户信息
+     * @param id
+     * @return
+     */
+    MemberOther getByMemberId(Long id);
  }

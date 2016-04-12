@@ -133,10 +133,12 @@ public class MemberOtherService implements IMemberOtherService{
 		resp.setCode(MemberOtherVerificationPayPwdEnum.Success.value());
 		resp.setMsg(MemberOtherVerificationPayPwdEnum.Success.desc());
 		return resp;
+	}
+	/**
+	 * 获取用户信息
+	 */
+	@Override
+	public MemberOther getByMemberId(Long id) {
+		return memberOtherDao.selectByMemberId(id);
 	}	
-	
-	
-	
-
-
 }
