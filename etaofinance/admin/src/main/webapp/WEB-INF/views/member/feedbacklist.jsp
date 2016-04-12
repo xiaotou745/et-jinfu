@@ -4,9 +4,6 @@
 <%@ page import="com.etaofinance.core.util.EnumHelper"%>
 <%@ page import="com.etaofinance.core.enums.MemberTypeEnum"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
-<%
-	String basePath =PropertyUtils.getProperty("java.admin.url");
-%>
 <div class="wrapper wrapper-content animated fadeInRight form-horizontal">
 	<div class="row">
 		<div class="col-lg-12">
@@ -101,7 +98,7 @@
 						 "endCreatetime":enddate,
 						 "currentPage":currentPage
 						 };        
-			        var url = "<%=basePath%>/member/feedbacklistdo";
+			        var url = "../member/feedbacklistdo";
 			        $.ajax({
 			            type: 'POST',
 			            url: url,
