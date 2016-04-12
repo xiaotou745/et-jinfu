@@ -82,6 +82,19 @@ public class BalanceRecordService implements IBalanceRecordService{
 			PagedBalancerecordReq req) {
 		return balanceRecordDao.getBalanceRecordList(req);
 	}
+
+	@Override
+	public int insertSelective(BalanceRecord record) {
+	
+		
+		
+		int insertRes = 0;
+		
+		
+		insertRes = balanceRecordDao.insertSelective(record);
+		
+		return insertRes;
+	}
 	
 
 }

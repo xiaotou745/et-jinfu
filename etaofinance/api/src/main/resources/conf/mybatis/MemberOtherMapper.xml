@@ -9,15 +9,18 @@
     <result column="HasWithdrawPrice" property="haswithdrawprice" jdbcType="DOUBLE" />
     <result column="PayPassWord" property="paypassword" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     Id, MemberId, BalancePrice, AllowWithdrawPrice, HasWithdrawPrice, PayPassWord
   </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from memberother
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  
   <!-- 根据用户ID查询信息 -->
    <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,10 +28,12 @@
     from memberother
     where MemberId = #{id,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from memberother
     where Id = #{id,jdbcType=BIGINT}
   </delete>
+  
   <insert id="insert" parameterType="com.etaofinance.entity.MemberOther" >
     insert into memberother (Id, MemberId, BalancePrice, 
       AllowWithdrawPrice, HasWithdrawPrice, PayPassWord
@@ -37,6 +42,7 @@
       #{allowwithdrawprice,jdbcType=DOUBLE}, #{haswithdrawprice,jdbcType=DOUBLE}, #{paypassword,jdbcType=VARCHAR}
       )
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.MemberOther" >
     insert into memberother
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -80,6 +86,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.MemberOther" >
     update memberother
     <set >
@@ -101,6 +108,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
     <update id="updateByMemberIdSelective" parameterType="com.etaofinance.entity.MemberOther" >
     update memberother
     <set >
@@ -132,4 +140,16 @@
       PayPassWord = #{paypassword,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+    <update id="updateMemberOther" parameterType="com.etaofinance.entity.MemberOther" >
+    update memberother
+    set 
+    BalancePrice =BalancePrice +  #{allowwithdrawprice,jdbcType=DOUBLE} ,
+    AllowWithdrawPrice =AllowWithdrawPrice+  #{allowwithdrawprice,jdbcType=DOUBLE}
+    where MemberId = #{memberid,jdbcType=BIGINT}
+  </update>
+  
+  
+  
 </mapper>

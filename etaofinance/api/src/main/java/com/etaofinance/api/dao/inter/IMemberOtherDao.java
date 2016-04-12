@@ -18,11 +18,16 @@ public interface IMemberOtherDao {
      * @return
      */
     MemberOther selectByMemberId(Long id);
+    
     int updateByPrimaryKeySelective(MemberOther record);
 
     int updateByPrimaryKey(MemberOther record);
     
     
     int updateByMemberIdSelective(MemberOther record);
+
+	int updateMemberOther(Long memberId, Float amount);
+
+
 
 }

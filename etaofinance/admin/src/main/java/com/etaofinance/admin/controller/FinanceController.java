@@ -17,6 +17,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.Recharge;
 import com.etaofinance.entity.Withdrawform;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -137,13 +138,15 @@ public class FinanceController {
 	@ResponseBody
 	public int refuse(Long id) {
 		
-		Withdrawform wdfm = new Withdrawform();
+		// Withdrawform wdfm = new Withdrawform();
+		// wdfm.setId(id);
+		// wdfm.setStatus((short)WithdrawStatus.Refuse.value());
+
+		// return withdrawformService.updateByPrimaryKeySelective(wdfm);
 		
-		wdfm.setId(id);
+		HttpResultModel<Object> res= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
 		
-		wdfm.setStatus((short)WithdrawStatus.Refuse.value());
-		
-		return withdrawformService.updateByPrimaryKeySelective(wdfm);
+		return Integer.parseInt(res.getData().toString());
 		
 	}
 	
@@ -152,10 +155,14 @@ public class FinanceController {
 	@ResponseBody
 	public int agree(Long id) {
 		
-		Withdrawform wdfm = new Withdrawform();
-		wdfm.setId(id);
-		wdfm.setStatus((short)WithdrawStatus.Pass.value());
-		
-		return withdrawformService.updateByPrimaryKeySelective(wdfm);
+		// Withdrawform wdfm = new Withdrawform();
+		// wdfm.setId(id);
+		// wdfm.setStatus((short)WithdrawStatus.Pass.value());
+
+		// return withdrawformService.updateByPrimaryKeySelective(wdfm);
+
+		HttpResultModel<Object> res = withdrawformService.Audit(id,	(short) WithdrawStatus.Pass.value());
+
+		return Integer.parseInt(res.getData().toString());
 	}
 }

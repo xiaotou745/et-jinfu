@@ -13,10 +13,12 @@
     <result column="OptName" property="optname" jdbcType="VARCHAR" />
     <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     Id, MemberId, Amount, AfterAmount, TypeId, ProjectId, RelationNo, Remark, OptName, 
     OptTime
   </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -38,6 +40,7 @@ p.ProjectName
 left join project  p on b.ProjectId=p.Id
     where b.Id = #{id,jdbcType=BIGINT}
   </select>
+  
    <select id="getListMore" resultType="com.etaofinance.entity.domain.BalanceRecordDM"  parameterType="java.lang.Long" >
  select 
     b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.ProjectId, b.RelationNo, b.Remark, b.OptName, 
@@ -52,10 +55,12 @@ p.ProjectName
 left join project  p on b.ProjectId=p.Id
 where b.memberid = #{memberId,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from balancerecord
     where Id = #{id,jdbcType=BIGINT}
   </delete>
+  
   <insert id="insert" parameterType="com.etaofinance.entity.BalanceRecord" >
     insert into balancerecord (Id, MemberId, Amount, 
       AfterAmount, TypeId, ProjectId, 
@@ -66,6 +71,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
       #{relationno,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{optname,jdbcType=VARCHAR}, 
       #{opttime,jdbcType=TIMESTAMP})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.BalanceRecord" >
     insert into balancerecord
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -100,6 +106,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
         OptTime,
       </if>
     </trim>
+    
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
@@ -166,6 +173,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.BalanceRecord" >
     update balancerecord
     set MemberId = #{memberid,jdbcType=BIGINT},
@@ -179,6 +187,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
       OptTime = #{opttime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
   <select id="getPageList"
 		resultType="com.etaofinance.entity.BalanceRecord"
 		parameterType="com.etaofinance.entity.req.PagedMemberBalanceRecordReq"
@@ -196,6 +205,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
 		#{totalPage,mode=OUT,jdbcType=INTEGER}
 		)}
 	</select>
+	
 	<sql id="queryMemberIncomeRecordListWhere">
 		1=1
 		<if test="id>=0">
@@ -227,6 +237,7 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
 			and date_add(''${endTime}'', INTERVAL 1 day)>OptTime
 		</if>
 	</sql>
+	
 	<select id="getBuyList" resultType="com.etaofinance.entity.BalanceRecord"
 		parameterType="com.etaofinance.entity.req.PagedBalancerecordReq"
 		statementType="CALLABLE">
@@ -243,4 +254,12 @@ where b.memberid = #{memberId,jdbcType=BIGINT}
 		#{totalPage,mode=OUT,jdbcType=INTEGER}
 		)}
 	</select>
+	
+	 <select id="GetLatestedModelByMbId" resultType="com.etaofinance.entity.BalanceRecord"  parameterType="java.lang.Long" >
+	 	select *
+	 	from balancerecord
+	    where MemberId = #{memberId,jdbcType=BIGINT}
+	    order by OptTime desc
+	     limit 1
+  </select>
 </mapper>
