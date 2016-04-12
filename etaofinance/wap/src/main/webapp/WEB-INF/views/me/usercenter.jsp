@@ -37,7 +37,7 @@
         </div>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/accountblance">
         <div class="text">
             <div><i class="m-icon icon-money"></i>账户余额</div>
             <span>￥<%=other.getBalanceprice() %></span>
