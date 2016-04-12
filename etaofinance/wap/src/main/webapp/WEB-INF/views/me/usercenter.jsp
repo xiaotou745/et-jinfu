@@ -22,7 +22,7 @@
 		<section class="container bgEm">
         <div class="name">
             <div class="name_left">
-                <img src="<%=member.getHeadimage()%>" alt="">
+                <a href="<%=basePath%>/me/userinfo"><img src="<%=member.getHeadimage()%>" alt=""></a>
                 <div>
                     <div><%=member.getUsername()%></div>
                     <i class="<%=member.getLevel()>1?"on":""%>"></i>

@@ -1,19 +1,17 @@
 package com.etaofinance.entity.domain;
 
-import java.util.Date;
-
+import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.entity.BalanceRecord;
-import com.etaofinance.entity.MenuInfo;
+
 
 public class BalanceRecordDM extends BalanceRecord{
-	private String typeName;
 	private String projectName; 
 	
 	public String getTypeName() {
-		return typeName;
+		return RecordType.getEnum(getTypeid()).desc();
 	}
 	public void setTypeName(String typeName) {
-		this.typeName = typeName;
+	
 	}
 	public String getProjectName() {
 		return projectName;
