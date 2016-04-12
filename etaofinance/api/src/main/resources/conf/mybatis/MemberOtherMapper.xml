@@ -145,8 +145,17 @@
     <update id="updateMemberOther" parameterType="com.etaofinance.entity.MemberOther" >
     update memberother
     set 
-    BalancePrice =BalancePrice +  #{allowwithdrawprice,jdbcType=DOUBLE} ,
-    AllowWithdrawPrice =AllowWithdrawPrice+  #{allowwithdrawprice,jdbcType=DOUBLE}
+      <trim suffixOverrides="," >
+     <if test="allowwithdrawprice != null" >
+          BalancePrice =BalancePrice +  #{allowwithdrawprice,jdbcType=DOUBLE} ,
+      </if>
+ 		<if test="allowwithdrawprice != null" >
+       AllowWithdrawPrice =AllowWithdrawPrice+  #{allowwithdrawprice,jdbcType=DOUBLE},
+      </if>
+       <if test="haswithdrawprice != null" >
+        HasWithdrawPrice =HasWithdrawPrice+ #{haswithdrawprice,jdbcType=DOUBLE},
+      </if>
+      </trim>
     where MemberId = #{memberid,jdbcType=BIGINT}
   </update>
   

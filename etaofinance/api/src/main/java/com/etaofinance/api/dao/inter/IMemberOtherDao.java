@@ -28,6 +28,6 @@ public interface IMemberOtherDao {
 
 	int updateMemberOther(Long memberId, Float amount);
 
-
+	int updateMemberOther(Long memberId, Float amount,Float applyMount);
 
 }

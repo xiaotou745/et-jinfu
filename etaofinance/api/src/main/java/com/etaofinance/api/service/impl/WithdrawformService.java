@@ -140,12 +140,8 @@ public class WithdrawformService implements IWithdrawformService{
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
-	public HttpResultModel<Object> Audit(long id, short status) {
+	public int Audit(long id, short status) {
 		
-		HttpResultModel<Object> res = new HttpResultModel<Object>();
-
-		res.setCode(HttpReturnRnums.Fail.value());
-		res.setMsg(HttpReturnRnums.Fail.desc());
 			
 		// 1 拒绝
 		// 1.1 update withdrawform	
@@ -158,21 +154,19 @@ public class WithdrawformService implements IWithdrawformService{
 		updateWithdrawRes = this.updateByPrimaryKeySelective(withdraw);
 		
 		if(0==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-//			res.setData("拒绝失败");
-//			return res;
+
 			throw new TransactionalRuntimeException("拒绝失败");
 		}
 		else if(1==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-			res.setData("拒绝成功");
-			return res;	
+			
+			return 1;	
 		}
 		
 		// 2 通过
 		// 2.1 update withdrawform
 	
 		if(0==updateWithdrawRes){
-//			res.setData("通过失败");
-//			return res;	
+
 			throw new TransactionalRuntimeException("通过失败");
 		}
 		// 2.2 insert balancerecord
@@ -184,7 +178,7 @@ public class WithdrawformService implements IWithdrawformService{
 
 		balance.setId(null);
 		balance.setAmount(balance.getAfteramount());
-		balance.setAfteramount(balance.getAmount() + withdrawMd.getAmount());
+		balance.setAfteramount(balance.getAfteramount() +(- withdrawMd.getAmount()));
 
 		balance.setRemark("提现审核");
 		balance.setTypeid((short) BalanceRecordType.Apply.value());
@@ -193,25 +187,19 @@ public class WithdrawformService implements IWithdrawformService{
 		
 		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
 		if (0 == insertBalanceRes) {
-//			res.setData("流水表异常");
-//			return res;
+
 			throw new TransactionalRuntimeException("流水表异常");
 		}
 
 		// 2.3 update memberother
-		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdraw.getMemberid(),
-				withdraw.getAmount());
+		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdrawMd.getMemberid(),
+				-withdrawMd.getAmount(),withdrawMd.getAmount());
 		if (0 == updateMemberOterRes) {
-//			res.setData("余额表异常");
-//			return res;
+
 			throw new TransactionalRuntimeException("余额表异常");
 		}
 		
-		res.setCode(HttpReturnRnums.Success.value());
-		res.setMsg(HttpReturnRnums.Success.desc());
-		res.setData("提现审核通过成功");
-
-		return res;
+		return 1;
 	}
 
 	private Withdrawform getWithdrawMdById(long id) {

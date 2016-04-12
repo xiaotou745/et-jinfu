@@ -159,24 +159,20 @@ public class RechargeService implements IRechargeService {
 		// 3 update memberother
 		int insertRechargeRes = this.insertSelective(charge);
 		if (0 == insertRechargeRes) {
-//			res.setData("充值表异常");
-//			return res;
+
 			throw new TransactionalRuntimeException("充值表异常");
 			
-
 		}
 
 		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
 		if (0 == insertBalanceRes) {
-//			res.setData("流水表异常");
-//			return res;
+
 			throw new TransactionalRuntimeException("流水表异常");
 		}
 		int updateMemberOterRes = memberOtherDao.updateMemberOther(memberId,
-				amount);
+				amount,null);
 		if (0 == updateMemberOterRes) {
-//			res.setData("余额表异常");
-//			return res;
+
 			throw new TransactionalRuntimeException("余额表异常");
 		}
 

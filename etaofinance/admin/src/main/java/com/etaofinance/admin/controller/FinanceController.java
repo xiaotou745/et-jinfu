@@ -138,15 +138,10 @@ public class FinanceController {
 	@ResponseBody
 	public int refuse(Long id) {
 		
-		// Withdrawform wdfm = new Withdrawform();
-		// wdfm.setId(id);
-		// wdfm.setStatus((short)WithdrawStatus.Refuse.value());
-
-		// return withdrawformService.updateByPrimaryKeySelective(wdfm);
 		
-		HttpResultModel<Object> res= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
+		int ires= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
 		
-		return Integer.parseInt(res.getData().toString());
+		return ires;
 		
 	}
 	
@@ -155,14 +150,9 @@ public class FinanceController {
 	@ResponseBody
 	public int agree(Long id) {
 		
-		// Withdrawform wdfm = new Withdrawform();
-		// wdfm.setId(id);
-		// wdfm.setStatus((short)WithdrawStatus.Pass.value());
 
-		// return withdrawformService.updateByPrimaryKeySelective(wdfm);
+		int ires = withdrawformService.Audit(id,	(short) WithdrawStatus.Pass.value());
 
-		HttpResultModel<Object> res = withdrawformService.Audit(id,	(short) WithdrawStatus.Pass.value());
-
-		return Integer.parseInt(res.getData().toString());
+		return ires;
 	}
 }

@@ -20,7 +20,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     Id, MemberId, WithwardNo, Amount, AfterAmount, Status, Remark, CreateName, CreateTime, SuccessTime,
-    OptName, OptTime, AccountType, AccountNo,BankName,
+    OptName, OptTime, AccountType, AccountNo,BankName 
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

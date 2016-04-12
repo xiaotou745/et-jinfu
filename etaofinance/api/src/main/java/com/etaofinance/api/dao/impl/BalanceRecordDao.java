@@ -38,7 +38,6 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 	@Override
 	public int insertSelective(BalanceRecord record) {
 	
-		
 		return this.getMasterSqlSessionUtil().insert("IBalanceRecordDao.insertSelective",record);
 	}
 
