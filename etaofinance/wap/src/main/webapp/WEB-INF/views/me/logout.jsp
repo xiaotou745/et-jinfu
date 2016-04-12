@@ -9,16 +9,6 @@
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 %>
 
-<html>
-<script src="<%=basePath%>/js/jquery-2.1.1.js"></script>
-<body>
-<body>
-hello
-<a href="javascript:void(0)" id="login">点击进入主页</a>
-</body>
 <script>
-$('#login').click(function(){
-	window.location.href=window.location.href+'home/index';
-});
+window.location.href='<%=basePath%>';
 </script>
-</html>

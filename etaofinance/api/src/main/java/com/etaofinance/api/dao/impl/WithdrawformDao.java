@@ -40,8 +40,13 @@ public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 
 	@Override
 	public Withdrawform selectByPrimaryKey(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Withdrawform withdraw = null;
+		
+		withdraw = this.getReadOnlySqlSessionUtil().selectOne("IWithdrawformDao.selectByPrimaryKey", id);
+		
+		return withdraw;
+		
 	}
 
 	@Override

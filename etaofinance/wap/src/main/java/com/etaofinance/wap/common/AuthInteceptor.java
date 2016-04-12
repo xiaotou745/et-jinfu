@@ -50,7 +50,7 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 	        	        out.write(data.getBytes("UTF-8"));
 	        	        return false;
 	        		}
-	        		response.sendRedirect(basePath);
+	        		response.sendRedirect(basePath+"/me/login");
 	        		return false;
 	        		
 	        	}//IF LOGIN END

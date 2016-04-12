@@ -17,8 +17,10 @@ import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
+import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.ProFavoriteReq;
 @Repository
 public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
@@ -107,6 +109,12 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 						"IProjectFavoriteDao.getFavoriteCntByProId",proId);
 		 
 		return getCntRes;
+	}
+
+	@Override
+	public PagedResponse<ProjectFavoriteInvestModel> getFavoritePageList(
+			PagedProjectFavReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IProjectFavoriteDao.getProjectFavList",req);
 	}
 	
 
