@@ -4,6 +4,8 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+//网站跟地址
+	String basePath = PropertyUtils.getProperty("java.wap.url");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +31,9 @@
     <meta name="browsermode" content="application">
     <!-- uc强制竖屏 -->
     <meta name="screen-orientation" content="portrait">
+    <script>
+    var apiBasePath='<%=basePath%>';
+    </script>
     <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible_css.debug.js"></script>
     <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible.debug.js"></script>
     <script src="<%=staticResPath%>/etao-crowdfunding/js/mo.1.0.0.js"></script>

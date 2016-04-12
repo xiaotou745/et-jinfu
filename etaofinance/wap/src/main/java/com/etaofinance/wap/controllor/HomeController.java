@@ -12,7 +12,9 @@ import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.req.PagedProjectReq;
 
 
 
@@ -42,9 +44,24 @@ public class HomeController {
 		view.addObject("currenttitle", "网站主页---");
 		view.addObject("viewPath", "home/index");
 		//1.获取轮播图.
-		//List<ADVert> list=adService.getListForWap();
+		List<ADVert> list=adService.getListForWap();
 		//2.获取新手专享
-		//List<ProjectModel> projectList=projectService.getNoviceProject();
+		List<ProjectModel> projectList=projectService.getNoviceProject();
+		view.addObject("ADLIST", list);
+		view.addObject("proList", projectList);
+		return view;
+	}
+	/**
+	 * 项目列表异步分页
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/listdo")
+	public ModelAndView listdo(PagedProjectReq req)
+	{
+		ModelAndView view = new ModelAndView("home/listdo");
+		PagedResponse<ProjectModel> result=projectService.getProjectList(req);
+		view.addObject("result", result);
 		return view;
 	}
 }

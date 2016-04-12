@@ -1,39 +1,17 @@
 package com.etaofinance.wap.controllor;
 
 
-
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
@@ -122,11 +100,11 @@ public class UserController {
 			CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, 60*60*24,true);
 			if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
 			{
-				response.sendRedirect(req.getReUrl());
+				resultModel.setUrl(req.getReUrl());
 			}
 			else {
-				String basePath = PropertyUtils.getProperty("java.wap.url");
-				response.sendRedirect(basePath);
+				String basePath = PropertyUtils.getProperty("java.wap.url")+"/home/index";
+				resultModel.setUrl(basePath);
 			}
 		}
 		return resultModel;
@@ -188,13 +166,13 @@ public class UserController {
 		//设置COOKIE
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, uuid, cookieMaxAge,true);
 		if(req.getReUrl()!=null&&!req.getReUrl().equals(""))
-		{//要跳转的URL不为空 进行跳转
-			response.sendRedirect(req.getReUrl());
-		}else {
-			String basePath = PropertyUtils.getProperty("java.wap.url");
-			response.sendRedirect(basePath);
+		{
+			result.setUrl(req.getReUrl());	
 		}
-		result.setCode(1);
+		else {
+			String basePath = PropertyUtils.getProperty("java.wap.url")+"/home/index";
+			result.setUrl(basePath);
+		}
 		result.setMsg("登录成功");
 		result.setData(member);
 		return result;				
@@ -329,6 +307,7 @@ public class UserController {
 	
 	/**
 	 * 创建支付密码
+	 * 修改，找回
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年3月28日16:31:15
@@ -342,17 +321,9 @@ public class UserController {
 	notes = "创建支付密码")
 	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
 	{
-		Member currMember=UserContext.getCurrentContext(request).getNewEstUserInfo();		
-		record.setMemberid(currMember.getId());		
-		
-		HttpResultModel<Object> resp=new HttpResultModel<Object>();
-		if(currMember.getLevel() ==null || currMember.getLevel().equals("0"))
-		{	
-			resp.setCode(MemberOtherCreatePayPwdEnum.LevelIsErr.value());
-			resp.setMsg(MemberOtherCreatePayPwdEnum.LevelIsErr.desc());
-			return resp;			
-		}
-		
+		Member member=UserContext.getCurrentContext(request).getUserInfo();		
+		record.setMemberid(member.getId());			
+
 		return memberOtherService.createPayPwd(record);
 	}
 	

@@ -131,4 +131,32 @@
       IsDel = #{isdel,jdbcType=BIT}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getFeedBackList" parameterType="com.etaofinance.entity.req.PagedFeedBackReq" resultType="com.etaofinance.entity.FeedBack" statementType="CALLABLE"> 
+		{call Sp_CustomPage2015_V1(
+		' f.CreateTime desc ',
+		' f.Id,f.MemberId,f.Description,f.PhoneNo,f.Email,f.Contacts,f.CreateTime,f.CreateName ',
+		' feedback f ',
+		'<include refid="queryFeedBackModelListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+	<sql id="queryFeedBackModelListWhere">
+		IsDel = 0
+		<if test="createname != null and createname !=''">
+			and f.CreateName =''${createname}''
+		</if>
+		<if test="description != null and description !=''">
+			and f.Description like ''%${description}%''
+		</if>
+		<if test="beginCreatetime != null and beginCreatetime !=''">
+			and f.CreateTime>=''${beginCreatetime}''
+		</if>
+		<if test="endCreatetime != null and endCreatetime !=''">
+			and ''${endCreatetime}''>f.createTime
+		</if>
+	</sql>
 </mapper>
