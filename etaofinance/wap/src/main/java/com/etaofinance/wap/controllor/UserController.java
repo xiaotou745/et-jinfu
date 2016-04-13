@@ -4,14 +4,17 @@ package com.etaofinance.wap.controllor;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
@@ -387,4 +390,45 @@ public class UserController {
 		record.setMemberid(memberid);
 		return  memberApplyService.create(record);	
 	}	
+	
+	
+	/**
+	 * 发起邮箱绑定请求
+	 * @param member  {"id":"1","phoneno":"110","email":"110@qq.com"}
+	 * @return
+	 */
+	@RequestMapping("bindemail")
+	@ResponseBody
+	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "发送邮箱绑定验证")
+	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmail(member);
+		
+		return res;
+	}
+	
+	/**
+	 * 邮箱绑定回调
+	 * 
+	 * @param idAndEmail 
+	 * @return
+	 */
+	@RequestMapping("emailbindcallback")
+	@ResponseBody
+	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "邮箱绑定回调")
+	public HttpResultModel<Object> bindEmailcallback(String idAndEmail)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmailCallBk(idAndEmail);
+		
+		return res;
+	}
+	
 }

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.common.LoginHelper;
@@ -30,6 +32,7 @@ import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
@@ -39,6 +42,7 @@ import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * 登录页面
@@ -403,5 +407,44 @@ public class MeController {
 		//List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
 		//view.addObject("list", list);
 		return view;
+	}
+	
+	/**
+	 * 发起邮箱绑定请求
+	 * @param member  {"id":"1","phoneno":"110","email":"110@qq.com"}
+	 * @return
+	 */
+	@RequestMapping("bindemail")
+	@ResponseBody
+	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "发送邮箱绑定验证")
+	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmail(member);
+		
+		return res;
+	}
+	
+	/**
+	 * 邮箱绑定回调
+	 * 
+	 * @param idAndEmail 
+	 * @return
+	 */
+	@RequestMapping("emailbindcallback")
+	@ResponseBody
+	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "邮箱绑定回调")
+	public HttpResultModel<Object> bindEmailcallback(String idAndEmail)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmailCallBk(idAndEmail);
+		
+		return res;
 	}
 }
