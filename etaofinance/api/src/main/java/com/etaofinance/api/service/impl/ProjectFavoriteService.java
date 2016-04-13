@@ -43,7 +43,9 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 
 	@Autowired
 	private IProjectFavoriteDao projectFavoriteDao;
-
+	/**
+	 * 我关注的项目列表
+	 */
 	@Override
 	public List<ProjectFavoriteDM> getListMore(ProFavoriteReq record) {
 		return projectFavoriteDao.getListMore(record);

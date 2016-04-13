@@ -52,7 +52,7 @@
             <i class="m-icon icon-arrow-r"></i>
         </div>
         </a>
-        <a href="#">
+        <a href="<%=basePath%>/me/projectconcern">
         <div class="text  top-line">
             <div><i class="m-icon icon-concern"></i>关注的项目</div>
             <i class="m-icon icon-arrow-r"></i>

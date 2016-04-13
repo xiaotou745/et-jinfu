@@ -88,13 +88,14 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 		 
 		return updateRes;
 	}
-
+	/**
+	 * 我关注的项目列表
+	 */
 	@Override
 	public List<ProjectFavoriteDM> getListMore(ProFavoriteReq record) {
 		 List<ProjectFavoriteDM> list=null;
 		 list=getReadOnlySqlSessionUtil()
-				.selectList(
-						"IProjectFavoriteDao.getListMore",record);
+				.selectList("IProjectFavoriteDao.getListMore",record);
 		 
 		 return list;
 	}
