@@ -24,7 +24,7 @@
         </div>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/setusername">
             <div class="text">
                 <div>用户名</div>
                 <span><%=member.getUsername()%></span>
@@ -40,14 +40,14 @@
         </a>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/certification">
             <div class="text">
                 <div>实名认证</div>
                 <span><%=member.getLevel()==0?"未认证":"已认证"%></span>
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>
-        <a href="#">
+        <a href="<%=basePath%>/me/certificationinvestor">
             <div class="text  top-line">
                 <div>跟投人认证</div>
                 <span><%=member.getLevel()>1?"已认证":"未认证"%></span>
@@ -68,7 +68,7 @@
     	</div>
     	<div class="popup-content">
     		<div>性别</div>
-    		<div class="modify-gender" data-gender="1" ><span>男 </span><i class="select <%=member.getSex()==1?"active":""%>"></i></div>
+    		<div class="modify-gender" data-gender="1" ><span>男</span><i class="select <%=member.getSex()==1?"active":""%>"></i></div>
     		<div class="modify-gender" data-gender="2" ><span>女</span><i class="select <%=member.getSex()==2?"active":""%>"></i></div>
     		<div class="modify-gender" data-gender="0" ><span>保密</span><i class="select <%=member.getSex()==0?"active":""%>"></i></div>
     	</div>

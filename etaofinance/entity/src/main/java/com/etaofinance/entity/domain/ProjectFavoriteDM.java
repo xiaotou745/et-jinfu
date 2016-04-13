@@ -1,15 +1,31 @@
 package com.etaofinance.entity.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
-import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectFavorite;
-import com.etaofinance.entity.ProjectSubscription;
 
 public class ProjectFavoriteDM  extends ProjectFavorite{
 
     private String projectName;
-    private String projectStatus;
+    private int projectStatus;
+    private String projectImage;
+    private Date projectBeginDate;
+
+	public Date getProjectBeginDate() {
+		return projectBeginDate;
+	}
+
+	public void setProjectBeginDate(Date projectBeginDate) {
+		this.projectBeginDate = projectBeginDate;
+	}
+
+	public String getProjectImage() {
+		return projectImage;
+	}
+
+	public void setProjectImage(String projectImage) {
+		this.projectImage = projectImage;
+	}
 
 	public String getProjectName() {
 		return projectName;
@@ -19,11 +35,11 @@ public class ProjectFavoriteDM  extends ProjectFavorite{
 		this.projectName = projectName;
 	}
 
-	public String getProjectStatus() {
+	public int getProjectStatus() {
 		return projectStatus;
 	}
 
-	public void setProjectStatus(String projectStatus) {
+	public void setProjectStatus(int projectStatus) {
 		this.projectStatus = projectStatus;
 	}
 

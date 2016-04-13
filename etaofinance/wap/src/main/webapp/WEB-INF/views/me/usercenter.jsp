@@ -46,7 +46,7 @@
         </a>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/projectinvest">
         <div class="text">
             <div><i class="m-icon icon-invest"></i>投资的项目</div>
             <i class="m-icon icon-arrow-r"></i>

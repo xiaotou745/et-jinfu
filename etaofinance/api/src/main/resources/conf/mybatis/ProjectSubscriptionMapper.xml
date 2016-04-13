@@ -31,7 +31,7 @@
  select 
  ps.Id, ps.MemberId, ps.ProjectId, ps.IsLead, ps.CreateTime, ps.Amount, ps.FenShu, ps.Name, ps.PhoneNo, ps.Email, 
     ps.IdCard, ps.RefundStatus, ps.RefundName, ps.RefundTime,
-p.ProjectName, p.projectStatus
+p.ProjectName, p.projectStatus,p.ProjectImage
     from projectsubscription ps
 left join project  p on ps.ProjectId=p.Id
 where ps.memberid = #{memberid,jdbcType=BIGINT}

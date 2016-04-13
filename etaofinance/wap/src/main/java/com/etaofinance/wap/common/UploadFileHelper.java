@@ -65,8 +65,7 @@ public class UploadFileHelper {
 		extMap.put("flash", "swf,flv");
 		extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 		extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
-		List<String> ext = Arrays.<String> asList(extMap.get("image")
-				.split(","));
+		List<String> ext = Arrays.<String> asList(extMap.get("image").split(","));
 		if (fileType > 0) {
 			ext = Arrays.<String> asList(extMap.get("file").split(","));
 			List<String> mediaExt = Arrays.<String> asList(extMap.get("media")
@@ -82,10 +81,14 @@ public class UploadFileHelper {
 		ServletFileUpload sfu = new ServletFileUpload(dff);
 		sfu.setHeaderEncoding("UTF-8");
 		Iterator fii = sfu.parseRequest(request).iterator();
-		regionPath = PropertyUtils
-				.getProperty("FileUploadFolderNameCustomerIcon");
-		rootPath = PropertyUtils.getProperty("FileUploadPath") + "/"
-				+ regionPath;
+		if(fileType>0)
+		{	//附件
+			regionPath = PropertyUtils.getProperty("UserFile");//UserFile
+		}else
+		{	//用户头像
+			regionPath = PropertyUtils.getProperty("UserIcon");//UserIcon 用户头像
+		}
+		rootPath = PropertyUtils.getProperty("ImageSavePath") + "/"+ regionPath;//=/data/img/UserIcon
 		FileUtil.createDirectory(rootPath);// 创建目录
 
 		while (fii.hasNext()) {

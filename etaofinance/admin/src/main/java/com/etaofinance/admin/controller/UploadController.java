@@ -11,10 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("upload")
 public class UploadController {
 	
-	
+	/**
+	 * 图像上传
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("img")
 	@ResponseBody
 	public String img(HttpServletRequest request) throws Exception {
+	return UploadFileHelper.UploadImg(request);
+	}
+	/**
+	 * 文件上传
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("file")
+	@ResponseBody
+	public String file(HttpServletRequest request) throws Exception {
 	return UploadFileHelper.UploadImg(request);
 	}
 

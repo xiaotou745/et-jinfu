@@ -117,21 +117,5 @@ public class OtherControllor {
 	}
 	
 
-	/**
-	 * 获取我的消息列表
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年3月29日17:25:51
-	 * @return
-	 */
-	@RequestMapping("/getmessagelist")
-	@ResponseBody
-	@ApiOperation(value = "获取我的消息列表", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取我的消息列表")
-	public  List<Message> getMessagelist() {
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		return messageService.getList(memberid);
-	}
-	
+
 }

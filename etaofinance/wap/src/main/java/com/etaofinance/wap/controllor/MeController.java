@@ -19,8 +19,11 @@ import com.etaofinance.api.service.impl.MemberOtherService;
 import com.etaofinance.api.service.impl.MemberService;
 import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IBankCardService;
+import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IProjectFavoriteService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.PropertyUtils;
@@ -28,6 +31,10 @@ import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.ProjectFavoriteDM;
+import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.ProFavoriteReq;
+import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.RequireLogin;
@@ -56,7 +63,13 @@ public class MeController {
 	@Autowired
 	IBankCardService bankService;
 	@Autowired
-	private IBalanceRecordService balanceRecordService;	
+	private IBalanceRecordService balanceRecordService;
+	@Autowired
+	IMemberApplyService memberApplyService;
+	@Autowired
+	IProjectSubscriptionService  projectSubscriptionService;
+	@Autowired
+	IProjectFavoriteService  projectFavoriteService;
 	/**
 	 * 登录页面
 	 * @return
@@ -247,6 +260,131 @@ public class MeController {
 		Member member=UserContext.getCurrentContext(request).getUserInfo();
 		member=memberService.getById(member.getId());
 		view.addObject("member",member);
+		return view;
+	}
+	/**
+	 * 修改用户名
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("setusername")
+	@RequireLogin
+	public ModelAndView setusername() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改用户名");
+		view.addObject("viewPath", "me/setusername");
+		return view;
+	}
+	/**
+	 * 实名认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("certification")
+	@RequireLogin
+	public ModelAndView certification() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "实名认证");
+		view.addObject("viewPath", "me/certification");
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
+		return view;
+	}
+	/**
+	 * 跟投人认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("certificationinvestor")
+	@RequireLogin
+	public ModelAndView certificationinvestor() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "跟投人认证");
+		view.addObject("viewPath", "me/certificationinvestor");
+		Long idLong=UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(idLong);
+		boolean isHas=memberApplyService.IsHasApply(idLong);
+		view.addObject("member", member);
+		view.addObject("isHas", isHas);
+		return view;
+	}	/**
+	 * 提示跳转页
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("transfer")
+	@RequireLogin
+	public ModelAndView transfer(int type) 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "提示");
+		view.addObject("viewPath", "me/transfer");
+		String tip= "";
+		String url="";
+		String button="";
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		switch (type) {
+		case 1:{tip="您尚未实名认证,请先进行实名认证";url=basePath+"/me/certification";button="去认证";}break;//实名认证
+		case 2:{tip="您当前有未审核通过的认证申请,请等待审核";url=basePath+"/me/userinfo";button="返回";}break;
+//		case 3:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 4:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 5:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 6:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 7:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 8:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 9:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+//		case 10:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
+		default:
+			break;
+		}
+		view.addObject("tip", tip);
+		view.addObject("url", url);
+		view.addObject("button", button);
+		return view;
+	}
+	/**
+	 * 投资的项目
+	 * @return
+	 */
+	@RequestMapping("projectinvest")
+	@RequireLogin
+	public  ModelAndView projectinvest()
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "投资的项目");
+		view.addObject("viewPath", "me/projectinvest");
+		ProSubInvestReq req=new ProSubInvestReq();
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
+		List<ProjectSubscriptionDM> list=projectSubscriptionService.getListMore(req);
+		view.addObject("list", list);
+		return view;
+	}
+	/**
+	 * 关注的项目
+	 * @return
+	 */
+	@RequestMapping("projectconcern")
+	@RequireLogin
+	public  ModelAndView projectconcern()
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "关注的项目");
+		view.addObject("viewPath", "me/projectconcern");
+		ProFavoriteReq req=new ProFavoriteReq();
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
+		List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
+		view.addObject("list", list);
 		return view;
 	}
 }
