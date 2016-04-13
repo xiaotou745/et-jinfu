@@ -27,7 +27,6 @@
 		</tr>
 	</thead>
 	<tbody>
-
 		<%
 			PagedResponse<Project> data = (PagedResponse<Project>) request.getAttribute("listData");
 			List<Project> list = data.getResultList();
@@ -47,6 +46,9 @@
 			<td><%=ParseHelper.ToDateString(list.get(i).getEndtime(), "") %></td>
 			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
 			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
+			<% if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
+				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改详情</a>
+			<% } %>	
 			</td>
 		</tr>
 		<%

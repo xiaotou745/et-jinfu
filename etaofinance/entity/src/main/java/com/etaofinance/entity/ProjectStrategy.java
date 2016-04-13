@@ -11,6 +11,8 @@ public class ProjectStrategy {
 
     private String description;
 
+    private Integer isdel;
+    
     public Long getId() {
         return id;
     }
