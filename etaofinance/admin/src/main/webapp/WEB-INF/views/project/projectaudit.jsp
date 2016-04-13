@@ -9,6 +9,7 @@
 <%@page import="com.etaofinance.core.enums.ProjectImageTypeEnum"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.etaofinance.core.util.Config"%>
 <%
 	String basePath = PropertyUtils.getProperty("java.admin.url");
 	long projectId = (long) request.getAttribute("projectId");
@@ -128,13 +129,13 @@
 		</tr>	
 		<tr>
 			<td>项目图</td>
-			<td colspan="5"><img src='<%=basePath+"/"+project.getProjectimage() %>' alt="项目图"></td>
+			<td colspan="5"><img src='<%=Config.ImgShowUrl+project.getProjectimage() %>' alt="项目图"></td>
 		</tr>
 		<tr>
 			<td>项目概况</td>
 			<td colspan="5">
 			<% for(int i=0;i<proImgList.size();i++){ if(proImgList.get(i).getTypeid()==ProjectImageTypeEnum.ProjectBasicDesWap.value()){ %>
-				<img src='<%=basePath+"/"+proImgList.get(i).getUrl() %>' alt="项目概况Wap图">
+				<img src='<%=Config.ImgShowUrl+proImgList.get(i).getUrl() %>' alt="项目概况Wap图">
 			<%} }%>
 			</td>
 		</tr>
@@ -142,7 +143,7 @@
 			<td>回报说明</td>
 			<td colspan="5">
 			<% for(int i=0;i<proImgList.size();i++){ if(proImgList.get(i).getTypeid()==ProjectImageTypeEnum.ProjectRtnDesWap.value()){ %>
-				<img src='<%=basePath+"/"+proImgList.get(i).getUrl() %>' alt="项目回报说明Wap图">
+				<img src='<%=Config.ImgShowUrl+proImgList.get(i).getUrl() %>' alt="项目回报说明Wap图">
 			<%} }%>
 			</td>
 		</tr>

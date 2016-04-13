@@ -9,7 +9,7 @@
 <%@page import="com.etaofinance.entity.Member"%>
 <%@page import="com.etaofinance.entity.ProjectStrategy"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
-
+<%@page import="com.etaofinance.core.util.Config"%>
 <%@page import="java.util.Map"%>
 <%
 	String basePath =PropertyUtils.getProperty("java.admin.url");
@@ -368,21 +368,6 @@ String city_region = (String) request.getAttribute("city_region");
 								<div class="col-sm-6">
 									<!-- 文件上传部分 -->
 									<div id="ProjectDescImgPc">选择图片</div>
-									<%
-										for (int i = 0; i < proImgList.size(); i++) {
-									%>
-									<li id="WU_FILE_"+<%=i+50%>>
-											<p class="imgWrap">
-												<img id="WU_FILE_100" style="height: 80px; width: 100px;"
-													src="<%=basePath + "/" + project.getProjectimage()%>">
-											</p>
-											<div class="file-panel">
-												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
-											</div>
-										</li>
-									<%
-										}
-									%>
 									<!-- 文件上传部分 -->
 								</div>
 							</div>
@@ -391,6 +376,21 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<div class="col-sm-9 uploader">
 									<ul id="ProjectDescImgPcBox" class="filelist">
+									<%
+										for (int i = 0; i < proImgList.size(); i++) {
+									%>
+									<li id="WU_FILE_"+<%=i+"50"%>>
+											<p class="imgWrap">
+												<img id="WU_FILE_100" style="height: 80px; width: 100px;"
+													src="<%=Config.ImgShowUrl+project.getProjectimage()%>">
+											</p>
+											<div class="file-panel">
+												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
+											</div>
+										</li>
+									<%
+										}
+									%>
 									</ul>
 								</div>
 							</div>
