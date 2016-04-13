@@ -387,4 +387,21 @@ public class MeController {
 		view.addObject("list", list);
 		return view;
 	}
+	/**
+	 * 发起的项目
+	 * @return
+	 */
+	@RequestMapping("projectlanuch")
+	@RequireLogin
+	public  ModelAndView projectlanuch()
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "发起的项目");
+		view.addObject("viewPath", "me/projectlanuch");
+		ProFavoriteReq req=new ProFavoriteReq();
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
+		//List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
+		//view.addObject("list", list);
+		return view;
+	}
 }

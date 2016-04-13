@@ -58,7 +58,7 @@
             <i class="m-icon icon-arrow-r"></i>
         </div>
         </a>
-        <a href="#">
+        <a href="<%=basePath%>/me/projectlanuch">
         <div class="text  top-line">
             <div><i class="m-icon icon-lanuch"></i>发起的项目</div>
             <i class="m-icon icon-arrow-r"></i>
