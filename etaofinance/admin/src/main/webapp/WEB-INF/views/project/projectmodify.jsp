@@ -382,7 +382,7 @@ String city_region = (String) request.getAttribute("city_region");
 									<li id="WU_FILE_"+<%=i+"50"%>>
 											<p class="imgWrap">
 												<img id="WU_FILE_100" style="height: 80px; width: 100px;"
-													src="<%=Config.ImgShowUrl+project.getProjectimage()%>">
+													src="<%=Config.ImgShowUrl+"/"+project.getProjectimage()%>">
 											</p>
 											<div class="file-panel">
 												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
