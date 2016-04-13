@@ -37,6 +37,7 @@ public class MemberDao  extends DaoBase implements IMemberDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(Member record) {
+		
 		return getMasterSqlSessionUtil().update("IMemberDao.updateByPrimaryKeySelective", record);		
 	
 	}

@@ -118,4 +118,10 @@ public interface IMemberService {
      * 后台用户 修改会员基本信息 wangchao
      */
 	int modifyMember(ModifyMemberReq req);
+	
+	HttpResultModel<Object> bindEmail(long id,String phoneNo,String Email);
+
+	HttpResultModel<Object> bindEmail(Member member);
+
+	HttpResultModel<Object> bindEmailCallBk(String idAndEmail);
  }

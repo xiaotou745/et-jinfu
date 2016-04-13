@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.admin.common.UserContext;
+import com.etaofinance.api.service.inter.ICommentService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
@@ -27,6 +28,7 @@ import com.etaofinance.core.enums.ProjectType;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectImage;
@@ -36,6 +38,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.ModifyProjectReq;
+import com.etaofinance.entity.req.PagedCommentReq;
 import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -64,6 +67,8 @@ public class ProjectController {
 	private IMemberService memberService; 
 	@Autowired
 	private IProjectFavoriteService projectFavoriteService;
+	@Autowired
+	private ICommentService commentService;
 	/**
 	 * 项目列表查询页
 	 * 
@@ -280,7 +285,7 @@ public class ProjectController {
 		return view;
 	}	
 	/*
-	 * 用户反馈 LIN
+	 * 项目收藏 LIN
 	 */
 	@RequestMapping("favorite")
 	public ModelAndView favoritelist() {
@@ -297,6 +302,27 @@ public class ProjectController {
 		PagedResponse<ProjectFavoriteInvestModel> favoriteList = new PagedResponse<ProjectFavoriteInvestModel>();
 		favoriteList=projectFavoriteService.getFavoritePageList(req);
 		model.addObject("listData",favoriteList);
+		return model;
+	}
+	
+	/*
+	 * 项目回复列表 LIN
+	 */
+	@RequestMapping("comment")
+	public ModelAndView commentlist() {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "项目管理");
+		model.addObject("currenttitle", "项目交流");
+		model.addObject("viewPath", "project/comment");
+		return model;
+	}
+
+	@RequestMapping("commentdo")
+	public ModelAndView commentlistdo(PagedCommentReq req) { 
+		ModelAndView model = new ModelAndView("project/commentdo");
+		PagedResponse<Comment> commentList = new PagedResponse<Comment>();
+		commentList=commentService.getCommentPagingList(req);
+		model.addObject("listData",commentList);
 		return model;
 	}
 	/**

@@ -4,14 +4,17 @@ package com.etaofinance.wap.controllor;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
@@ -27,6 +30,7 @@ import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.MemberOther;
+import com.etaofinance.entity.req.CreatePayPwdReq;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
@@ -37,6 +41,7 @@ import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberDM;
+import com.etaofinance.entity.resp.CreatePayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.SendCodeResp;
@@ -253,6 +258,8 @@ public class UserController {
 		req.setCookieKey(cookieKey);
 		return memberService.forgetpwdsetpone(req);
 	}
+
+	
 	/**
 	 * 忘记密码第二步
 	 * @param 
@@ -306,27 +313,61 @@ public class UserController {
 	}
 	
 	/**
-	 * 创建支付密码
-	 * 修改，找回
+	 * 创建支付密码第1步
 	 * @param 
 	 * @author hulingbo
-	 * @date 2016年3月28日16:31:15
+	 * @date 2016年4月13日15:36:56
 	 * @return
 	 */
-	@RequestMapping("createpaypwd")
+	@RequestMapping("createpaypwdone")
 	@ResponseBody
-	@RequireLogin
-	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
+	@ApiOperation(value = "创建支付密码第一步", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "创建支付密码")
-	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
-	{
-		Member member=UserContext.getCurrentContext(request).getUserInfo();		
-		record.setMemberid(member.getId());			
-
-		return memberOtherService.createPayPwd(record);
+	notes = "创建支付密码第一步")
+	public HttpResultModel<CreatePayPwdResp> createPayPwdOne(@RequestBody  CreatePayPwdReq req)
+	{	
+		return memberOtherService.createPayPwdOne(req);
 	}
 	
+	/**
+	 * 创建支付密码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日15:36:56
+	 * @return
+	 */
+	@RequestMapping("createpaypwdtwo")
+	@ResponseBody
+	@ApiOperation(value = "创建支付密码第一步", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "创建支付密码第一步")
+	public HttpResultModel<CreatePayPwdResp> createPayPwdTwo(@RequestBody  CreatePayPwdReq req)
+	{	
+		return memberOtherService.createPayPwdTwo(req);
+	}
+	
+//	/**
+//	 * 创建支付密码
+//	 * 修改，找回
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年3月28日16:31:15
+//	 * @return
+//	 */
+//	@RequestMapping("createpaypwd")
+//	@ResponseBody
+//	@RequireLogin
+//	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
+//	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+//	notes = "创建支付密码")
+//	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
+//	{
+//		Member member=UserContext.getCurrentContext(request).getUserInfo();		
+//		record.setMemberid(member.getId());			
+//
+//		return memberOtherService.createPayPwd(record);
+//	}
+//	
 	
 	/**
 	 * 验证支付密码
@@ -387,4 +428,45 @@ public class UserController {
 		record.setMemberid(memberid);
 		return  memberApplyService.create(record);	
 	}	
+	
+	
+	/**
+	 * 发起邮箱绑定请求
+	 * @param member  {"id":"1","phoneno":"110","email":"110@qq.com"}
+	 * @return
+	 */
+	@RequestMapping("bindemail")
+	@ResponseBody
+	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "发送邮箱绑定验证")
+	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmail(member);
+		
+		return res;
+	}
+	
+	/**
+	 * 邮箱绑定回调
+	 * 
+	 * @param idAndEmail 
+	 * @return
+	 */
+	@RequestMapping("emailbindcallback")
+	@ResponseBody
+	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "邮箱绑定回调")
+	public HttpResultModel<Object> bindEmailcallback(String idAndEmail)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmailCallBk(idAndEmail);
+		
+		return res;
+	}
+	
 }

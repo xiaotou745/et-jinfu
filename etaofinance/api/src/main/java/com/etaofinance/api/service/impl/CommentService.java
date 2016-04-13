@@ -8,7 +8,9 @@ import com.etaofinance.api.service.inter.ICommentService;
 import com.etaofinance.core.enums.WithdrawformEnum;
 import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
+import com.etaofinance.entity.req.PagedCommentReq;
 
 @Service
 public class CommentService implements ICommentService {
@@ -108,6 +110,11 @@ public class CommentService implements ICommentService {
 	public int updateByPrimaryKeySelective(Comment record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PagedResponse<Comment> getCommentPagingList(PagedCommentReq req) {
+		return commentDao.getCommentPagingList(req);
 	}
 
 }

@@ -10,23 +10,15 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">提交人:</label>
+						<label class="col-sm-5 control-label">评论人ID:</label>
 						<div class="col-sm-7">
-							<input type="text" placeholder="提交人姓名" class="form-control" id="CreateName" maxlength="10"/>
+							<input type="text" placeholder="评论人ID" class="form-control" id="memberid" maxlength="10"/>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">关键字:</label>
-						<div class="col-sm-7">
-							<input type="text" placeholder="反馈内容" class="form-control" id="Description" />
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="form-group">
-						<label class="col-sm-4 control-label">反馈时间:</label>
+						<label class="col-sm-4 control-label">评论时间:</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" value=""
 								name="applyStartDate" id="createStartDate"
@@ -58,44 +50,30 @@
 		<div class="ibox-content" id="content"></div>
 	</div>
 </div>
-<div tabindex="-1" class="modal inmodal" id="divmodify"
-	role="dialog" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-		<div class="modal-content animated bounceInRight">
-			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">
-					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
-				</button>
-				<h4 class="modal-title">用户反馈</h4>
-			</div>
-			<small class="font-bold">
-				<div class="modal-body">
-					<fieldset>
-            <br>                
-           <div class="control-group">  
-                <label>反馈内容：</label>
-                <label id="des"></label>
-            </div>        
-            
-            
-        </fieldset>
-				</div>
-			</small>
-		</div> 
-	</div> 
-</div>
 <script>
+var GetQueryString = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    var context = "";
+    if (r != null)
+        context = r[2];
+
+    reg = null;
+    r = null;
+
+    return context == null || context == "" || context == "undefined" ? "" : context;
+}
 	var jss={
-			search:function(currentPage){	
-                 var createname = $("#CreateName").val();          
-                 var description=$("#Description").val();
+			search:function(currentPage){
+				 var projectid= GetQueryString("id");
+                 var memberid = $("#memberid").val();          
                  var begindate=$("#createStartDate").val();
                  var enddate=$("#createEndDate").val();
 				 var paramaters = { 
-						 "createname":createname,
-						 "description": description,
+						 "memberid":memberid,
 						 "beginCreatetime": begindate,
 						 "endCreatetime":enddate,
+						 "projectid":projectid,
 						 "currentPage":currentPage
 						 };        
 			        var url = "../project/commentdo";
@@ -112,5 +90,5 @@
 	jss.search(1);
 	$("#btnSearch").click(function(){
 		jss.search(1);
-	});	
+	});
 </script>
