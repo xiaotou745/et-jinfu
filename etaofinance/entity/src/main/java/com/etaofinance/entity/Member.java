@@ -116,13 +116,7 @@ public class Member {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Boolean getIslock() {
-        return islock;
-    }
-
-    public void setIslock(Boolean isread) {
-        this.islock = islock;
-    }
+   
     public Boolean getIsread() {
         return isread;
     }
@@ -177,4 +171,12 @@ public class Member {
     public void setHeadimage(String headimage) {
         this.headimage = headimage == null ? null : headimage.trim();
     }
+
+	public Boolean getIslock() {
+		return islock;
+	}
+
+	public void setIslock(Boolean islock) {
+		this.islock = islock;
+	}
 }

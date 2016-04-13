@@ -304,7 +304,7 @@ function InitUpload(uploader, buttonId, imgboxId, maxImgCount) {
         //将LI放置在图片容器里面
     });
     // 文件删除。
-    uploader.on('fileDequeued', function(file) {       
+    uploader.on('fileDequeued', function(file) {
         var $li = $('#' + file.id);
         $li.remove();
     });

@@ -83,7 +83,7 @@ public class UploadFileHelper {
 		sfu.setHeaderEncoding("UTF-8");
 		Iterator fii = sfu.parseRequest(request).iterator();
 		regionPath = PropertyUtils
-				.getProperty("FileUploadFolderNameCustomerIcon");
+				.getProperty("FileUploadFolderNameProject");
 		rootPath = PropertyUtils.getProperty("FileUploadPath") + "/"
 				+ regionPath;
 		FileUtil.createDirectory(rootPath);// 创建目录

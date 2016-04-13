@@ -6,7 +6,7 @@ import com.etaofinance.core.enums.ProjectType;
 
 public class Project {
 	private Long id;
-
+	private String phoneNo;
 	private String projectname;
 
 	private Short typeid;
@@ -328,5 +328,13 @@ public class Project {
 
 	public void setRefusereasion(String refusereasion) {
 		this.refusereasion = refusereasion;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 }
