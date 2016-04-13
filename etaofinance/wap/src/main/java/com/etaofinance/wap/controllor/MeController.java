@@ -416,5 +416,24 @@ public class MeController {
 		return view;
 	}
 	
+	/**
+	 * 账户与安全
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("accountsecurity")
+	@RequireLogin
+	public ModelAndView accountsecurity() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "账户与安全");
+		view.addObject("viewPath", "me/accountsecurity");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		member=memberService.getById(member.getId());
+		view.addObject("member",member);
+		return view;
+	}
 
 }
