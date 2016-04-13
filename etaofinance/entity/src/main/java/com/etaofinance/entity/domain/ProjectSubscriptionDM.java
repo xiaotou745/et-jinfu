@@ -8,7 +8,17 @@ import com.etaofinance.entity.ProjectSubscription;
 public class ProjectSubscriptionDM  extends ProjectSubscription{
 
     private String projectName;
-    private String projectStatus;	
+    private int projectStatus;	
+    private String projectImage;
+
+
+	public String getProjectImage() {
+		return projectImage;
+	}
+
+	public void setProjectImage(String projectImage) {
+		this.projectImage = projectImage;
+	}
 
 	public String getProjectName() {
 		return projectName;
@@ -18,11 +28,11 @@ public class ProjectSubscriptionDM  extends ProjectSubscription{
 		this.projectName = projectName;
 	}
 
-	public String getProjectStatus() {
+	public int getProjectStatus() {
 		return projectStatus;
 	}
 
-	public void setProjectStatus(String projectStatus) {
+	public void setProjectStatus(int projectStatus) {
 		this.projectStatus = projectStatus;
 	}
 
