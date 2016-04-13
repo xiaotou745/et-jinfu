@@ -1,12 +1,94 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ page import="com.etaofinance.core.util.HtmlHelper"%>
+<%@ page import="com.etaofinance.core.util.EnumHelper"%>
+<%@ page import="com.etaofinance.core.enums.MemberTypeEnum"%>
+<%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<div class="wrapper wrapper-content animated fadeInRight form-horizontal">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="col-sm-5 control-label">评论人ID:</label>
+						<div class="col-sm-7">
+							<input type="text" placeholder="评论人ID" class="form-control" id="memberid" maxlength="10"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">评论时间:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" value=""
+								name="applyStartDate" id="createStartDate"
+								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'createEndDate\',{d:-1})||\'2030-10-01\'}'})" />
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">到</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" value=""
+								name="applyEndDate" id="createEndDate"
+								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'createStartDate\',{d:1})}',maxDate:'2030-10-01'})" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-lg-2">
+					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 925px;">查询</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox-content" id="content"></div>
+	</div>
+</div>
+<script>
+var GetQueryString = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    var context = "";
+    if (r != null)
+        context = r[2];
 
-</body>
-</html>
+    reg = null;
+    r = null;
+
+    return context == null || context == "" || context == "undefined" ? "" : context;
+}
+	var jss={
+			search:function(currentPage){
+				 var projectid= GetQueryString("id");
+                 var memberid = $("#memberid").val();          
+                 var begindate=$("#createStartDate").val();
+                 var enddate=$("#createEndDate").val();
+				 var paramaters = { 
+						 "memberid":memberid,
+						 "beginCreatetime": begindate,
+						 "endCreatetime":enddate,
+						 "projectid":projectid,
+						 "currentPage":currentPage
+						 };        
+			        var url = "../project/commentdo";
+			        $.ajax({
+			            type: 'POST',
+			            url: url,
+			            data: paramaters,
+			            success: function (result) {   			            
+			            	$("#content").html(result);               
+			            }
+			        });
+			}
+		}	
+	jss.search(1);
+	$("#btnSearch").click(function(){
+		jss.search(1);
+	});
+</script>

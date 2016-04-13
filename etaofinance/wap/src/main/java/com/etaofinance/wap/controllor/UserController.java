@@ -428,4 +428,45 @@ public class UserController {
 		record.setMemberid(memberid);
 		return  memberApplyService.create(record);	
 	}	
+	
+	
+	/**
+	 * 发起邮箱绑定请求
+	 * @param member  {"id":"1","phoneno":"110","email":"110@qq.com"}
+	 * @return
+	 */
+	@RequestMapping("bindemail")
+	@ResponseBody
+	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "发送邮箱绑定验证")
+	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmail(member);
+		
+		return res;
+	}
+	
+	/**
+	 * 邮箱绑定回调
+	 * 
+	 * @param idAndEmail 
+	 * @return
+	 */
+	@RequestMapping("emailbindcallback")
+	@ResponseBody
+	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
+	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+	notes = "邮箱绑定回调")
+	public HttpResultModel<Object> bindEmailcallback(String idAndEmail)
+	{
+		HttpResultModel<Object> res = null;
+		
+		res = memberService.bindEmailCallBk(idAndEmail);
+		
+		return res;
+	}
+	
 }

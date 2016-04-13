@@ -16,5 +16,16 @@ public class UploadController {
 	public String img(HttpServletRequest request) throws Exception {
 	return UploadFileHelper.UploadImg(request);
 	}
+	/**
+	 * 文件上传
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("file")
+	@ResponseBody
+	public String file(HttpServletRequest request) throws Exception {
+	return UploadFileHelper.UploadImg(request);
+	}
 
 }

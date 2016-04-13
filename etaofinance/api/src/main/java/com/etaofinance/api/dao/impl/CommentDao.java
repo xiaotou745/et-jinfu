@@ -15,6 +15,7 @@ import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MenuEntity;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedCommentReq;
 
 @Repository
 public class CommentDao extends DaoBase implements ICommentDao{
@@ -58,6 +59,10 @@ public class CommentDao extends DaoBase implements ICommentDao{
 	public int updateByPrimaryKey(Comment record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public PagedResponse<Comment> getCommentPagingList(PagedCommentReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("ICommentDao.getCommentListPaging",req);
 	}
 
 }

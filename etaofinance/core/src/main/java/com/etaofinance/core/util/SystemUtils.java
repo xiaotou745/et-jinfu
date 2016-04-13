@@ -154,7 +154,26 @@ public class SystemUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+		/**
+		 * 发送报警邮件
+		 * 
+		 * @param title
+		 * @param body
+		 */
+		public static void sendEmail(String title, String body,String toEmail) {
+			try {
+				String emailHost = PropertyUtils.getProperty("EmailHost");// "smtp.263.net";//发送邮件服务器
+				String emailFrom = PropertyUtils.getProperty("EmailFrom");// "edssys@etao.cn";
+				String emailTo =toEmail;
+				String emailUserName = PropertyUtils.getProperty("EmailUserName");// "edssys@etao.cn";
+				String emailPwd = PropertyUtils.getProperty("EmailPwd");// "eds1234";
+				sendEmailTo(title, body, emailHost, emailFrom, emailTo,
+						emailUserName, emailPwd);
 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	/** 计算距离 ,从网上找的google的算法

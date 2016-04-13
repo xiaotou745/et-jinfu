@@ -1,6 +1,8 @@
 package com.etaofinance.api.dao.inter;
 
 import com.etaofinance.entity.Comment;
+import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.req.PagedCommentReq;
 
 public interface ICommentDao {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +18,6 @@ public interface ICommentDao {
     int updateByPrimaryKeyAndMem(Comment record);
     
     int updateByPrimaryKey(Comment record);
+    
+    PagedResponse<Comment> getCommentPagingList(PagedCommentReq req);
 }

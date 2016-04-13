@@ -30,8 +30,8 @@
 				<div class="item">
 					<div><img src="<%=list.get(i).getProjectImage()%>" alt=""></div>
 						<dl>
-							<dt>易淘餐厅华腾世纪总部公园店</dt>
-							<dd><span>上线时间：</span>2015.06.29</dd>
+							<dt><%=list.get(i).getProjectName()%></dt>
+							<dd><span>上线时间：</span><%=ParseHelper.ToDateString(list.get(i).getProjectBeginDate())%></dd>
 						</dl>
 					</div>
 					<div class="offer">
@@ -44,26 +44,6 @@
         		  <%
         		}
         	}%>  
-<section class="container bg">
-	<div class="title">
-		<div>关注时间：2015.06.29</div>
-		<i class="win">已成功</i>
-	</div>
-	<div class="item">
-		<div><img src="<%=staticResPath%>/etao-crowdfunding/img/p/me/project-concern/img.png" alt=""></div>
-		<dl>
-			<dt>易淘餐厅华腾世纪总部公园店</dt>
-			<dd><span>上线时间：</span>2015.06.29</dd>
-		</dl>
-	</div>
-	<div class="offer">
-		<ul>
-			<li>直接认购</li>
-			<li><i></i>取消关注</li>
-		</ul>
-	</div>
-</section>
-
         </div>
     </div>
     <script src="<%=staticResPath%>/etao-crowdfunding/js/p/me/project-concern.js"></script>
