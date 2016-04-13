@@ -5,11 +5,18 @@ package com.etaofinance.entity.req;
  *
  */
 public class ForgetPayPwdReq {
+private Long userId;
 private String phoneNo;
 private String veriCode;
 private String passWord;
 private String checkKey;
 
+public Long getUserId() {
+	return userId;
+}
+public void setUserId(Long userId) {
+	this.userId = userId;
+}
 public String getPhoneNo() {
 	return phoneNo;
 }
