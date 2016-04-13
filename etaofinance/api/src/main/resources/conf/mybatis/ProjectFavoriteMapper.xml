@@ -25,11 +25,11 @@
     from projectfavorite
     where ProjectId = #{proId,jdbcType=BIGINT}
   </select>
-  
+  <!-- 我关注的项目WAP -->
    <select id="getListMore" resultType="com.etaofinance.entity.domain.ProjectFavoriteDM"  parameterType="com.etaofinance.entity.req.ProFavoriteReq" >
  select 
  ps.Id, ps.MemberId, ps.ProjectId,  ps.CreateTime, ps.IsDel, 
-p.ProjectName, p.projectStatus
+p.ProjectName, p.projectStatus,p.PreheatTime as projectBeginDate,p.ProjectImage
     from projectfavorite ps
 left join project  p on ps.ProjectId=p.Id
 where ps.memberid = #{memberid,jdbcType=BIGINT}
