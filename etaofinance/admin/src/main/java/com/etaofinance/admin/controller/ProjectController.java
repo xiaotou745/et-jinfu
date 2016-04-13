@@ -35,6 +35,7 @@ import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -277,8 +278,8 @@ public class ProjectController {
 			view.addObject("projectId", id);
 		}
 		return view;
-	}
-/*
+	}	
+	/*
 	 * 用户反馈 LIN
 	 */
 	@RequestMapping("favorite")
@@ -297,5 +298,18 @@ public class ProjectController {
 		favoriteList=projectFavoriteService.getFavoritePageList(req);
 		model.addObject("listData",favoriteList);
 		return model;
+	}
+	/**
+	 * 修改项目  wangchao
+	 * 
+	 * @return
+	 */
+	@RequestMapping("modifyproject")
+	@ResponseBody
+	public int modifyproject(HttpServletRequest request, String data) {
+		ModifyProjectReq req = JsonUtil.str2obj(data, ModifyProjectReq.class);
+		UserContext context = UserContext.getCurrentContext(request);
+		req.setPublishName(context.getUserName());
+		return projectService.modifyProject(req);
 	}
 }

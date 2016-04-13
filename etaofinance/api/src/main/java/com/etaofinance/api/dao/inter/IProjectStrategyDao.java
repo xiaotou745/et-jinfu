@@ -13,4 +13,6 @@ public interface IProjectStrategyDao {
     List<ProjectStrategy> getByProjectIds(List<Long> projectids);
     
 	List<ProjectStrategy> getByProjectId(long projectid);
+	
+	int updateDeleteByProjectId(Long projectId);
 }

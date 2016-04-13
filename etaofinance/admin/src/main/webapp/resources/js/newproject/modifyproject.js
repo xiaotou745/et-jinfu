@@ -41,7 +41,6 @@ function SaveChek() {
             return false;
         }
         var p1b = $('#projectType1B').val();
-        alert(p1b.length);
         if (p1b.length != 0 && !IsDouble(p1b)) {
             alert('请输入正确的收益比例!');
             $('#projectType1B').focus();
@@ -108,19 +107,24 @@ function SaveChek() {
     }
     //上传图片验证.暂时只验证 项目图片.waptu片
     var xmurl = $('#ProjectImgBox').find('.hideurl');
-    if (xmurl.length == 0) {
+    var proId=$("#projectId").val();
+    var oriUrl = $('#ProjectImgBox').find('.modifyProImg');
+    if (xmurl.length == 0 && oriUrl.length ==0) {
         alert('请上传项目图片!');
         return false;
     }
     //项目概况(Wap):
     var gkurl = $('#ProjectDescImgWapBox').find('.hideurl');
-    if (gkurl.length == 0) {
+    var origkurl = $('#ProjectDescImgWapBox').find('.hideurl');
+    
+    if (gkurl.length == 0 && origkurl==0) {
         alert('请上传项目概况(Wap)图片!');
         return false;
     }
     //回报说明(Wap):
     var hburl = $('#ProjectHuibaoImgWapBox').find('.hideurl');
-    if (hburl.length == 0) {
+    var orihburl = $('#ProjectHuibaoImgWapBox').find('.hideurl');
+    if (hburl.length == 0&& orihburl==0) {
         alert('请上传回报说明(Wap)图片!');
         return false;
     }
@@ -143,6 +147,7 @@ function SaveChek() {
 //创建项目对象
 function CreateProj() {
     var project = new Object();
+    project.id=$("#projectId").val();
     project.projectname = $('#projectName').val();
     project.typeid = $('input[name=rProjectType]:checked').val();
     project.description = $('#projectDescription').val();
@@ -214,6 +219,8 @@ function CreateImgList() {
         tmpObj.url = $(obj).val();
         imglist.push(tmpObj);
     });
+    
+    
     /*项目概况wap图*/
     $('#ProjectDescImgWapBox .hideurl').each(function(i, obj) {
         var tmpObj = new Object();

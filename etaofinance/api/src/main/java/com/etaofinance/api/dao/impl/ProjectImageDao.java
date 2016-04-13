@@ -1,10 +1,13 @@
 package com.etaofinance.api.dao.impl;
 
 import java.util.List;
+
 import org.springframework.stereotype.Repository;
+
 import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IProjectImageDao;
 import com.etaofinance.entity.ProjectImage;
+import com.etaofinance.entity.domain.ModifyProjectImg;
 @Repository
 public class ProjectImageDao extends DaoBase implements IProjectImageDao{
 
@@ -53,6 +56,11 @@ public class ProjectImageDao extends DaoBase implements IProjectImageDao{
 	@Override
 	public List<ProjectImage> getByProjectId(long projectId) {
 		return getMasterSqlSessionUtil().selectList("IProjectImageDao.getByProjectId",projectId);
+	}
+
+	@Override
+	public int updateDeleteById(List<ModifyProjectImg> updateImgs) {
+		return getMasterSqlSessionUtil().update("IProjectImageDao.updateDeleteById",updateImgs);
 	}
 
 }
