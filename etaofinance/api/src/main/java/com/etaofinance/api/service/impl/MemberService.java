@@ -24,6 +24,7 @@ import com.etaofinance.core.enums.PublicEnum;
 import com.etaofinance.core.enums.QAEnum;
 import com.etaofinance.core.enums.SendCodeType;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
+import com.etaofinance.core.security.AES;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.core.util.PropertyUtils;
@@ -560,8 +561,10 @@ public class MemberService implements IMemberService {
 		}
 
 		// 一串链接
-		// 后续 进行base64编码 顺便进行资源文件配置
-		String emailContent = "http://localhost:8080/wap/me/emailbindcallback?idAndEmail="+id+"-"+email;
+		// 后续  进行资源文件配置
+		String idAndEmail = AES.aesEncrypt(id+"-"+email);
+		
+		String emailContent = "http://localhost:8080/wap/me/emailbindcallback?idAndEmail="+idAndEmail;
 		// 发送邮箱
 		SystemUtils.sendEmail("易宝众筹绑定邮箱验证", emailContent, email);
 
@@ -593,6 +596,8 @@ public class MemberService implements IMemberService {
 		}
 		// 处理 id email
 		// 更新对应会员的邮箱
+		idAndEmail  = AES.aesDecrypt(idAndEmail);
+		
 		String[] strs = idAndEmail.split("-");
 
 		if (null == strs || 2 != strs.length) {
