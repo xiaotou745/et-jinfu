@@ -104,8 +104,7 @@
 						<tr>
 							<td>状态：</td>
 							<td><input type="radio" id="rStatus1" name="rStatusOpt"
-								value="1"
-								checked='<%=member.getIslock() != true ? "checked" : ""%>' />有效
+								value="1" checked='<%=member.getIslock() != true ? "checked" : ""%>' />有效
 								<input type="radio" id="rStatus0" name="rStatusOpt" value="0"
 								<%=member.getIslock() != false ? "checked" : ""%> />无效</td>
 						</tr>
