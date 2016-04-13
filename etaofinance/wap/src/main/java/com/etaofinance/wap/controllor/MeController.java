@@ -22,6 +22,7 @@ import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.PropertyUtils;
@@ -29,6 +30,8 @@ import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.RequireLogin;
@@ -60,6 +63,8 @@ public class MeController {
 	private IBalanceRecordService balanceRecordService;
 	@Autowired
 	IMemberApplyService memberApplyService;
+	@Autowired
+	IProjectSubscriptionService  projectSubscriptionService;
 	/**
 	 * 登录页面
 	 * @return
@@ -307,7 +312,7 @@ public class MeController {
 		view.addObject("isHas", isHas);
 		return view;
 	}	/**
-	 * 跟投人认证
+	 * 提示跳转页
 	 * @param checkKey
 	 * @param userId
 	 * @return
@@ -341,6 +346,23 @@ public class MeController {
 		view.addObject("tip", tip);
 		view.addObject("url", url);
 		view.addObject("button", button);
+		return view;
+	}
+	/**
+	 * 投资的项目
+	 * @return
+	 */
+	@RequestMapping("projectinvest")
+	@RequireLogin
+	public  ModelAndView projectinvest()
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "投资的项目");
+		view.addObject("viewPath", "me/projectinvest");
+		ProSubInvestReq req=new ProSubInvestReq();
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
+		//List<ProjectSubscriptionDM> list=projectSubscriptionService.getListMore(req);
+		//view.addObject("list", list);
 		return view;
 	}
 }
