@@ -128,4 +128,34 @@
     set  IsDel = #{isdel,jdbcType=TINYINT}
     where Id = #{id,jdbcType=BIGINT} And MemberId = #{memberid,jdbcType=BIGINT}
   </update>
+  <select id="getCommentListPaging"
+		resultType="com.etaofinance.entity.Comment"
+		parameterType="com.etaofinance.entity.req.PagedCommentReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' a.createTime desc ',
+		' a.Id,a.MemberId,a.Content,a.CreateTime ',
+		' comment a ',
+		' <include refid="queryCommentListPagingWhere" /> ',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+ </select>
+ <sql id="queryCommentListPagingWhere">
+		a.IsDel = 0
+		<if test="projectid>0">
+			and a.ProjectId=${projectid}
+		</if>
+		<if test="memberid>0">
+			and a.MemberId=${memberid}
+		</if>
+		<if test="beginCreatetime != null and beginCreatetime !=''">
+			and a.CreateTime>=''${beginCreatetime}''
+		</if>
+		<if test="endCreatetime != null and endCreatetime !=''">
+			and ''${endCreatetime}''>a.createTime
+		</if>
+	</sql>
 </mapper>
