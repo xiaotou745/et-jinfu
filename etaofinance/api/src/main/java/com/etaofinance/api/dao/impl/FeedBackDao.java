@@ -16,13 +16,13 @@ import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MenuEntity;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedFeedBackReq;
 @Repository
 public class FeedBackDao extends DaoBase implements IFeedBackDao{
 
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().delete("IFeedBackDao.deleteByPrimaryKey", id);
 	}
 
 	@Override
@@ -45,14 +45,19 @@ public class FeedBackDao extends DaoBase implements IFeedBackDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(FeedBack record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getMasterSqlSessionUtil().update(
+				"IFeedBackDao.updateByPrimaryKeySelective", record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(FeedBack record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PagedResponse<FeedBack> getFeedBackList(PagedFeedBackReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IFeedBackDao.getFeedBackList",req);
 	}
 
 	

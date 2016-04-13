@@ -37,8 +37,8 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 
 	@Override
 	public int insertSelective(BalanceRecord record) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		return this.getMasterSqlSessionUtil().insert("IBalanceRecordDao.insertSelective",record);
 	}
 
 	@Override
@@ -85,6 +85,17 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 			PagedBalancerecordReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IBalanceRecordDao.getBuyList", req);
 	}
+
+	@Override
+	public BalanceRecord GetLatestedModelByMbId(Long memberId) {
+		
+		BalanceRecord balance = null;
+		
+		balance = getReadOnlySqlSessionUtil().selectOne("IBalanceRecordDao.GetLatestedModelByMbId",memberId);
+				
+		return balance;
+	}
+
 	
 
 }

@@ -4,9 +4,6 @@
 <%@ page import="com.etaofinance.core.util.EnumHelper"%>
 <%@ page import="com.etaofinance.core.enums.MemberTypeEnum"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
-<%
-	String basePath =PropertyUtils.getProperty("java.admin.url");
-%>
 <div class="wrapper wrapper-content animated fadeInRight form-horizontal">
 	<div class="row">
 		<div class="col-lg-12">
@@ -61,6 +58,32 @@
 		<div class="ibox-content" id="content"></div>
 	</div>
 </div>
+<div tabindex="-1" class="modal inmodal" id="divmodify"
+	role="dialog" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content animated bounceInRight">
+			<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal">
+					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+				</button>
+				<h4 class="modal-title">用户反馈</h4>
+			</div>
+			<small class="font-bold">
+				<div class="modal-body">
+					<fieldset>
+            <br>                
+           <div class="control-group">  
+                <label>反馈内容：</label>
+                <label id="des"></label>
+            </div>        
+            
+            
+        </fieldset>
+				</div>
+			</small>
+		</div> 
+	</div> 
+</div>
 <script>
 	var jss={
 			search:function(currentPage){	
@@ -71,11 +94,11 @@
 				 var paramaters = { 
 						 "createname":createname,
 						 "description": description,
-						 "begindate": begindate,
-						 "enddate":enddate,
+						 "beginCreatetime": begindate,
+						 "endCreatetime":enddate,
 						 "currentPage":currentPage
 						 };        
-			        var url = "<%=basePath%>/member/feedbacklistdo";
+			        var url = "../member/feedbacklistdo";
 			        $.ajax({
 			            type: 'POST',
 			            url: url,

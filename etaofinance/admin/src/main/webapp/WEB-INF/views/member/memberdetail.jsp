@@ -5,7 +5,7 @@
 	pageEncoding="utf-8"%>
 <%@page import="com.etaofinance.core.util.HtmlHelper"%>
 <%@page import="com.etaofinance.core.util.EnumHelper"%>
-<%@page import="com.etaofinance.core.enums.MemberIncomeRecordEnum"%>
+<%@page import="com.etaofinance.core.enums.RecordType"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="com.etaofinance.entity.BankCard"%>
 <%@page import="com.etaofinance.entity.PublicProvinceCity"%>
@@ -159,7 +159,7 @@
 									<label class="col-sm-4 control-label">类型:</label>
 									<div class="col-sm-8">
 										<%=HtmlHelper.getSelect("incomeRecordType",
-						EnumHelper.GetEnumItems(MemberIncomeRecordEnum.class),
+						EnumHelper.GetEnumItems(RecordType.class),
 						"desc", "value", null, "-1", "全部")%>
 									</div>
 								</div>

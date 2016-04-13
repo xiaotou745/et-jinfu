@@ -13,27 +13,12 @@
 <script src="<%=basePath%>/js/jquery-2.1.1.js"></script>
 <body>
 <body>
-<!-- <script>window.location.href='http://izc.etao.cn/zt';</script> -->
 hello
-<a href="javascript:void(0)" id="login">点击登录测试</a>
+<a href="javascript:void(0)" id="login">点击进入主页</a>
 </body>
 <script>
 $('#login').click(function(){
-	var url="<%=basePath%>/user/login";
-	var data={"loginName":"15652662526",
-			"pwd":"123456",
-			"remberMe":"1",
-			"reUrl":""}
-	 $.ajax({
-         type: "POST",
-         url: url,
-         data: data,
-         dataType: "json",
-         success: function(dt){
-                   console.log(dt);
-                     },
-         contentType:"application/json;charset=utf-8"
-	 });
+	window.location.href=window.location.href+'home/index';
 });
 </script>
 </html>

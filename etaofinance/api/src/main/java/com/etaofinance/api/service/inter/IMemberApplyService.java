@@ -22,4 +22,10 @@ public interface IMemberApplyService {
 	List<MemberApply> getMemberApplyInfoByMemberId(long memberId);
 
 	HttpResultModel<Object> create(MemberApply record);
+	/**
+	 * 是否有未审核的申请单
+	 * @param uid
+	 * @return
+	 */
+	boolean IsHasApply(Long uid);
 }

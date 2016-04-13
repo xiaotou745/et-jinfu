@@ -115,4 +115,39 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
       IsDel = #{isdel,jdbcType=INTEGER}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getProjectFavList"
+		resultType="com.etaofinance.entity.domain.ProjectFavoriteInvestModel"
+		parameterType="com.etaofinance.entity.req.PagedProjectFavReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' a.createTime desc ',
+		' a.Id,a.createTime,a.MemberId,b.EMail,b.PhoneNo,b.UserName,b.TrueName,b.IdCard,
+       (SELECT COUNT(DISTINCT ProjectId) from projectsubscription 
+        where MemberId=a.MemberId AND ProjectId = a.ProjectId) ProjectCount ',
+		' projectfavorite a LEFT join member b on a.MemberId=b.Id ',
+		' <include refid="queryProjectFavListWhere" /> ',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+ </select>
+ <sql id="queryProjectFavListWhere">
+		a.IsDel = 0
+		<if test="projectid>0">
+			and a.ProjectId=${projectid}
+		</if>
+		<if test="memberid>0">
+			and a.MemberId=${memberid}
+		</if>
+		<if test="truename != null and truename!=''">
+			and b.TrueName=''${truename}''
+		</if>
+		<if test="phoneno != null and phoneno!=''">
+			and b.PhoneNo=''${phoneno}''
+		</if>
+		<if test="email != null and email!=''">
+			and b.EMail=''${email}''
+		</if>
+	</sql>
 </mapper>

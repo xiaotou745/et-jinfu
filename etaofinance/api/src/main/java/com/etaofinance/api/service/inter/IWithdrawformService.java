@@ -35,4 +35,5 @@ public interface IWithdrawformService {
 	
     int updateByPrimaryKeySelective(Withdrawform record);
     
+  int Audit(long id,short status);
 }
