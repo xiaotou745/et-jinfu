@@ -22,6 +22,7 @@ import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.util.CookieUtils;
@@ -30,7 +31,9 @@ import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.ProFavoriteReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.wap.common.LoginUtil;
@@ -65,6 +68,8 @@ public class MeController {
 	IMemberApplyService memberApplyService;
 	@Autowired
 	IProjectSubscriptionService  projectSubscriptionService;
+	@Autowired
+	IProjectFavoriteService  projectFavoriteService;
 	/**
 	 * 登录页面
 	 * @return
@@ -361,8 +366,25 @@ public class MeController {
 		view.addObject("viewPath", "me/projectinvest");
 		ProSubInvestReq req=new ProSubInvestReq();
 		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
-		//List<ProjectSubscriptionDM> list=projectSubscriptionService.getListMore(req);
-		//view.addObject("list", list);
+		List<ProjectSubscriptionDM> list=projectSubscriptionService.getListMore(req);
+		view.addObject("list", list);
+		return view;
+	}
+	/**
+	 * 关注的项目
+	 * @return
+	 */
+	@RequestMapping("projectconcern")
+	@RequireLogin
+	public  ModelAndView projectconcern()
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "关注的项目");
+		view.addObject("viewPath", "me/projectconcern");
+		ProFavoriteReq req=new ProFavoriteReq();
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
+		List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
+		view.addObject("list", list);
 		return view;
 	}
 }
