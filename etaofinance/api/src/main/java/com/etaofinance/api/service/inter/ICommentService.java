@@ -1,8 +1,12 @@
 package com.etaofinance.api.service.inter;
 
 import com.etaofinance.entity.Comment;
+import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.common.HttpResultModel;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
+import com.etaofinance.entity.req.PagedCommentReq;
+import com.etaofinance.entity.req.PagedFeedBackReq;
 
 public interface ICommentService {
 	int deleteByPrimaryKey(Long id);
@@ -18,4 +22,6 @@ public interface ICommentService {
     int updateByPrimaryKey(Comment record);
     
     HttpResultModel<Object> updateByPrimaryKeyAndMem(Comment record);
+    
+    PagedResponse<Comment> getCommentPagingList(PagedCommentReq req);
 }
