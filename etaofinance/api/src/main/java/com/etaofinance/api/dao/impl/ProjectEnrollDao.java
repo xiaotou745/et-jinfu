@@ -13,6 +13,7 @@ import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedProjectEnrollReq;
 @Repository
 public class ProjectEnrollDao extends DaoBase implements IProjectEnrollDao{
 
@@ -50,6 +51,18 @@ public class ProjectEnrollDao extends DaoBase implements IProjectEnrollDao{
 	public int updateByPrimaryKey(ProjectEnroll record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PagedResponse<ProjectEnroll> getProjectEnrollList(
+			PagedProjectEnrollReq req) {
+	
+		PagedResponse<ProjectEnroll> res = null;
+		
+		res= getReadOnlySqlSessionUtil().selectPageList("IProjectEnrollDao.getProjectEnrollList", req);
+		
+		return res;
+		
 	}
 
 	
