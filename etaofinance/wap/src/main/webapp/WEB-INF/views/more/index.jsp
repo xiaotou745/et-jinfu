@@ -28,7 +28,7 @@
 			<i class="m-icon icon-arrow-r"></i>
 		</div>
 		</a>
-		<a href="#">
+		<a href="<%=basePath%>/more/feedback">
 		<div class="text top-line">
 			<div>意见反馈</div>
 			<i class="m-icon icon-arrow-r"></i>

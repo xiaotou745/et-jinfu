@@ -95,4 +95,19 @@ public class MoreController {
 		view.addObject("member", member);
 		return view;
 	}
+	/**
+	 * 意见反馈
+	 * @return
+	 */
+	@RequestMapping("feedback")
+	public ModelAndView feedback()
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "意见反馈");
+		view.addObject("viewPath", "more/feedback");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		member=(member==null?new Member():member);
+		view.addObject("member", member);
+		return view;
+	}
 }
