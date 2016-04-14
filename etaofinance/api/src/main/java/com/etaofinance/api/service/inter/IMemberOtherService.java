@@ -87,7 +87,7 @@ public interface IMemberOtherService {
 	 * @return
 	 */
 	HttpResultModel<ForgetPayPwdResp> forgetPayPwdTwo(@RequestBody  ForgetPayPwdReq req);	
-	
+
     
     /**
      * 根据ID获取用户信息
