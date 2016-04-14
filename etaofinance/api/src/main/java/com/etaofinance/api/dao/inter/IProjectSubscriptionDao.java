@@ -3,7 +3,9 @@ package com.etaofinance.api.dao.inter;
 import java.util.List;
 
 import com.etaofinance.entity.ProjectSubscription;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 
 public interface IProjectSubscriptionDao {
@@ -20,4 +22,6 @@ public interface IProjectSubscriptionDao {
     int updateByPrimaryKey(ProjectSubscription record);
     
     List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record);
+    
+    PagedResponse<ProjectSubscription> getProjectSubPageList(PagedProjectSubReq req);
 }

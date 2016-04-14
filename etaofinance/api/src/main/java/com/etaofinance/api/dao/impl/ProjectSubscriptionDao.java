@@ -16,6 +16,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 @Repository
 public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscriptionDao{
@@ -64,6 +65,13 @@ public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscript
 						"IProjectSubscriptionDao.getListMore",record);
 		 
 		 return list;
+	}
+
+	@Override
+	public PagedResponse<ProjectSubscription> getProjectSubPageList(
+			PagedProjectSubReq req) {
+		// TODO Auto-generated method stub
+		return getReadOnlySqlSessionUtil().selectPageList("IProjectSubscriptionDao.getProjectSubList",req);
 	}
 	
 
