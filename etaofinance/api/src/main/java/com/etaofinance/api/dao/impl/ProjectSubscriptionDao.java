@@ -10,10 +10,12 @@ import com.etaofinance.api.dao.inter.IProjectSubscriptionDao;
 import com.etaofinance.api.dao.inter.IRoleInfoDao;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.BalanceRecord;
+import com.etaofinance.entity.Member;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.BalanceRecordDM;
+import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedProjectSubReq;
@@ -73,6 +75,13 @@ public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscript
 		// TODO Auto-generated method stub
 		return getReadOnlySqlSessionUtil().selectPageList("IProjectSubscriptionDao.getProjectSubList",req);
 	}
-	
+	/**
+	 * 获取项目领头人信息
+	 */
+	@Override
+	public List<ProjectMember> getProjectLeadMember(Long projectId) {
+		return getReadOnlySqlSessionUtil().selectList("IProjectSubscriptionDao.getProjectLeadMember",projectId);
+ 
+	}	
 
 }

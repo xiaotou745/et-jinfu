@@ -11,6 +11,24 @@ public class ProjectModel extends Project{
 	private Float aValue;
 	private Float bValue;
 	private String projectStatusStr;
+	private String cityName;
+	private String provinceName;
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
 	public String getProjectStatusStr() {
 		return ProjectStatus.getEnum(ParseHelper.ToInt(getProjectstatus())).desc();
 	}

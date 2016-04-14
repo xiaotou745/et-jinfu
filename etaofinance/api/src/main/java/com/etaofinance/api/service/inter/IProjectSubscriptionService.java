@@ -5,9 +5,11 @@ import java.util.List;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountInfo;
 import com.etaofinance.entity.Bank;
+import com.etaofinance.entity.Member;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
@@ -23,6 +25,12 @@ public interface IProjectSubscriptionService {
    
 
 	List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record);
+	/**
+	 * 获取项目领投入
+	 * @param projectId
+	 * @return
+	 */
+	List<ProjectMember> getProjectLeadMember(Long projectId);
 
 	PagedResponse<ProjectSubscription> getProjectSubPageList(PagedProjectSubReq req);
 }
