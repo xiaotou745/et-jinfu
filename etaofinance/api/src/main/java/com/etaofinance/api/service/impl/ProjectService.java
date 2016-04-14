@@ -3,6 +3,7 @@ package com.etaofinance.api.service.impl;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +28,14 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ModifyProjectImg;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
@@ -273,8 +277,10 @@ public class ProjectService implements IProjectService {
 					.getProjectStrategyList());
 			// 3.项目图片表 projectimage
 			if (proStrategyResult > 0) {
-				req.getProjectImageList().forEach(
-						action -> action.setProjectid(req.getProject().getId()));
+				req.getProjectImageList()
+						.forEach(
+								action -> action.setProjectid(req.getProject()
+										.getId()));
 				int k = projectImageDao.insertList(req.getProjectImageList());
 				if (k > 0) {
 					return 1;
@@ -288,11 +294,63 @@ public class ProjectService implements IProjectService {
 	public int audit(ProjectAuditReq req) {
 		return projectDao.audit(req);
 	}
+
 	/**
 	 * 新手专享项目列表
 	 */
 	@Override
 	public List<ProjectModel> getNoviceProject() {
 		return projectDao.getNoviceProject();
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	public int modifyProject(ModifyProjectReq req) {
+		Long projectId = req.getProject().getId();
+		// 1.修改项目主表project，还没有日志记录
+		req.getProject().setCreatename(req.getPublishName());
+		long i = projectDao.updateByPrimaryKeySelective(req.getProject());
+		if (i > 0) {
+			// 2.修改策略表 projectstrategy 先删除原来的策略 在插入新的策略
+			int upDel = projectStrategyDao.updateDeleteByProjectId(projectId); // 策略表打删除标记
+			if (upDel > 0) {
+				req.getProjectStrategyList().forEach(action -> action.setProjectid(projectId));
+				int proStrategyResult = projectStrategyDao.insertList(req.getProjectStrategyList()); // 插入新的策略
+				// 3.修改项目图片表 projectimage
+				if (proStrategyResult > 0) {
+					int updeImg=0;
+					//先删除的原来的图片，在插入新的图片
+					List<ModifyProjectImg> modifyProjectImgs = req.getModifyProjectImgList();
+					if (modifyProjectImgs != null&& modifyProjectImgs.size() > 0) {
+						List<ModifyProjectImg> updateImgs = modifyProjectImgs.stream().filter(t -> t.getModifyType() == 2).collect(Collectors.toList());
+						if (updateImgs != null && updateImgs.size() > 0) {
+							updeImg = projectImageDao.updateDeleteById(updateImgs);
+						}
+					}else{
+						updeImg=1;
+					}
+					int insImg=0;
+					//插入新的图片
+					List<ProjectImage> projectImages = req.getProjectImageList();
+					if (projectImages != null && projectImages.size() > 0) {
+						req.getProjectImageList().forEach(action -> action.setProjectid(req.getProject().getId()));
+						insImg = projectImageDao.insertList(req.getProjectImageList());
+					}else{
+						insImg=1;
+					}
+					if(updeImg>0 && insImg>0){
+						return 1;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	/**
+	 * 获取项目详情
+	 */
+	@Override
+	public ProjectModel getProjectDetail(Long projectid) {
+		return projectDao.getProjectDetail(projectid);
 	}
 }

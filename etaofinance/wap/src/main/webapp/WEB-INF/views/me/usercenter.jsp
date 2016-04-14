@@ -66,7 +66,7 @@
         </a>
     </section>
     <section class="container bg">
-        <a href="#">
+        <a href="<%=basePath%>/me/accountsecurity">
         <div class="text">
             <div><i class="m-icon icon-security"></i>账号与安全</div>
             <i class="m-icon icon-arrow-r"></i>

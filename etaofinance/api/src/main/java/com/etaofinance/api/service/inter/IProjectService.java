@@ -6,6 +6,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
@@ -55,4 +56,14 @@ public interface IProjectService {
 	 * @return
 	 */
 	List<ProjectModel>getNoviceProject();
+	/*
+	 * 修改项目 wangchao
+	 */
+	int modifyProject(ModifyProjectReq req);
+	/**
+	 * 获取项目详情
+	 * @param projectid
+	 * @return
+	 */
+	ProjectModel getProjectDetail(Long projectid);
 }

@@ -45,4 +45,9 @@ public class ProjectStrategyDao extends DaoBase implements IProjectStrategyDao {
 		return getReadOnlySqlSessionUtil().selectList("IProjectStrategyDao.getByProjectId",projectid);
 	}
 
+	@Override
+	public int updateDeleteByProjectId(Long projectId) {
+		return getMasterSqlSessionUtil().update("IProjectStrategyDao.updateDeleteByProjectId",projectId);
+	}
+
 }

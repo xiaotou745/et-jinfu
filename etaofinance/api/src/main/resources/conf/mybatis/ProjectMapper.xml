@@ -308,43 +308,43 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.Project">
 		update project
 		<set>
-			<if test="projectname != null">
+			<if test="projectname != null and projectname!=''">
 				ProjectName = #{projectname,jdbcType=VARCHAR},
 			</if>
-			<if test="typeid != null">
+			<if test="typeid != null and typeid>0">
 				TypeId = #{typeid,jdbcType=SMALLINT},
 			</if>
-			<if test="description != null">
+			<if test="description != null and description!=''">
 				Description = #{description,jdbcType=VARCHAR},
 			</if>
-			<if test="amount != null">
+			<if test="amount != null and amount>0">
 				Amount = #{amount,jdbcType=REAL},
 			</if>
-			<if test="fenshu != null">
+			<if test="fenshu != null and fenshu>0">
 				FenShu = #{fenshu,jdbcType=INTEGER},
 			</if>
-			<if test="leadminfenshu != null">
+			<if test="leadminfenshu != null and leadminfenshu>0">
 				LeadMinFenShu = #{leadminfenshu,jdbcType=INTEGER},
 			</if>
-			<if test="preheatmaxfenshu != null">
+			<if test="preheatmaxfenshu != null and preheatmaxfenshu>0">
 				PreheatMaxFenShu = #{preheatmaxfenshu,jdbcType=INTEGER},
 			</if>
-			<if test="unitprice != null">
+			<if test="unitprice != null and unitprice>0">
 				UnitPrice = #{unitprice,jdbcType=REAL},
 			</if>
-			<if test="provincecode != null">
+			<if test="provincecode != null and provincecode !=-1">
 				ProvinceCode = #{provincecode,jdbcType=INTEGER},
 			</if>
-			<if test="citycode != null">
+			<if test="citycode != null and citycode!=-1">
 				CityCode = #{citycode,jdbcType=INTEGER},
 			</if>
-			<if test="areacode != null">
+			<if test="areacode != null and areacode!=-1">
 				AreaCode = #{areacode,jdbcType=INTEGER},
 			</if>
-			<if test="address != null">
+			<if test="address != null and address!=''">
 				Address = #{address,jdbcType=VARCHAR},
 			</if>
-			<if test="projectimage != null">
+			<if test="projectimage != null and projectimage!=''">
 				ProjectImage = #{projectimage,jdbcType=VARCHAR},
 			</if>
 			<if test="auditstatus != null">
@@ -371,10 +371,10 @@
 			<if test="schedule != null">
 				Schedule = #{schedule,jdbcType=INTEGER},
 			</if>
-			<if test="investmentnumber != null">
+			<if test="investmentnumber != null and investmentnumber>0">
 				InvestmentNumber = #{investmentnumber,jdbcType=INTEGER},
 			</if>
-			<if test="follownumber != null">
+			<if test="follownumber != null and follownumber>0">
 				FollowNumber = #{follownumber,jdbcType=INTEGER},
 			</if>
 			<if test="auditname != null">
@@ -383,10 +383,10 @@
 			<if test="audittime != null">
 				AuditTime = #{audittime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="createname != null">
+			<if test="createname != null and createname!=''">
 				CreateName = #{createname,jdbcType=VARCHAR},
 			</if>
-			<if test="createtime != null">
+			<if test="createtime != null and createtime!=''">
 				CreateTime = #{createtime,jdbcType=TIMESTAMP},
 			</if>
 		</set>
@@ -523,11 +523,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyA''), ''0'') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyB''), ''0'') AS BValue',
 		'
 		project p ',
 		'
@@ -569,11 +569,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyA'), '0') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyA'), '0') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyB'), '0') AS BValue
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyB'), '0') AS BValue
     FROM    project p  WHERE 
     p.IsShelve = 1
 		AND p.ProjectStatus != 1
@@ -583,5 +583,36 @@
 		AND p.AuditStatus = 2
 		AND NOW() >= p.PreheatTime
 		AND p.EndTime >= NOW()
+	</select>
+	<!-- 获取项目详情 -->
+	<select id="getProjectDetail">
+	  SELECT p.Id,
+		p.ProjectName,
+		p.TypeId,
+		p.Amount,
+		p.FenShu,
+		p.UnitPrice,
+		p.ProjectImage,
+		p.Schedule,
+		p.ProjectStatus,
+		p.StartTime,
+    p.Address,
+    p.Description,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyA'), '0') AS AValue,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyB'), '0') AS BValue
+   ,p1.Name AS CityName
+    ,p2.Name AS ProvinceName
+    FROM    project p 
+    LEFT JOIN publicprovincecity p1 ON p1.Code=p.CityCode
+    LEFT JOIN publicprovincecity p2 ON p2.Code=p.ProvinceCode
+    WHERE 
+    p.Id=5
+	
 	</select>
 </mapper>

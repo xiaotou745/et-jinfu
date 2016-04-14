@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.common.LoginHelper;
@@ -23,6 +25,7 @@ import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
+import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.util.CookieUtils;
@@ -30,15 +33,20 @@ import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
+import com.etaofinance.entity.common.HttpResultModel;
+
+import com.etaofinance.entity.Project;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.ProFavoriteReq;
+import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.req.PublicMemberReq;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * 登录页面
@@ -70,6 +78,8 @@ public class MeController {
 	IProjectSubscriptionService  projectSubscriptionService;
 	@Autowired
 	IProjectFavoriteService  projectFavoriteService;
+	@Autowired
+	IProjectService projectService;
 	/**
 	 * 登录页面
 	 * @return
@@ -398,10 +408,32 @@ public class MeController {
 		ModelAndView view= new ModelAndView("wapView");
 		view.addObject("currenttitle", "发起的项目");
 		view.addObject("viewPath", "me/projectlanuch");
-		ProFavoriteReq req=new ProFavoriteReq();
-		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
-		//List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
-		//view.addObject("list", list);
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		ProLaunchReq req=new ProLaunchReq();
+		req.setMemberid(memberid);	
+		List<Project> list= projectService.getListMore(req);
+		view.addObject("list", list);
 		return view;
 	}
+	
+	/**
+	 * 账户与安全
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("accountsecurity")
+	@RequireLogin
+	public ModelAndView accountsecurity() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "账户与安全");
+		view.addObject("viewPath", "me/accountsecurity");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		member=memberService.getById(member.getId());
+		view.addObject("member",member);
+		return view;
+	}
+
 }
