@@ -585,7 +585,7 @@ public class UserController {
 		HttpResultModel<Object> res = null;
 		
 		res = memberService.bindEmailCallBk(idAndEmail);
-		
+		//todo: 此处 最好返回一个友好的验证成功的页面
 		return res;
 	}
 	
