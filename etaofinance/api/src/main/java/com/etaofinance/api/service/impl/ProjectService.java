@@ -346,4 +346,11 @@ public class ProjectService implements IProjectService {
 		}
 		return 0;
 	}
+	/**
+	 * 获取项目详情
+	 */
+	@Override
+	public ProjectModel getProjectDetail(Long projectid) {
+		return projectDao.getProjectDetail(projectid);
+	}
 }
