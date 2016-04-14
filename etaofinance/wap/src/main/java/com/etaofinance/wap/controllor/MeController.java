@@ -253,6 +253,34 @@ public class MeController {
 		view.addObject("list", list);
 		return view;
 	}
+	
+	/**
+	 * 充值
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("recharge")
+	@RequireLogin
+	public ModelAndView recharge() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "充值");
+		view.addObject("viewPath", "me/recharge");
+		
+//		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+//		memberOtherService.get
+//		
+//		
+//		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+//		
+//		PublicMemberReq record =new PublicMemberReq();
+//		record.setMemberId(member.getId());
+//		List<BalanceRecordDM> list=balanceRecordService.getListMore(record);
+//		view.addObject("list", list);
+		return view;
+	}
 	/**
 	 * 用户信息
 	 * @param checkKey

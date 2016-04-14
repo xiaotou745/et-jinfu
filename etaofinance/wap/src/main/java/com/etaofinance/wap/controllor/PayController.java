@@ -62,7 +62,7 @@ public class PayController {
 	
 	
 	/**
-	 * 支付密码第1个页面
+	 * 创建支付密码第1个页面
 	 * @return
 	 */
 	@RequestMapping("setpaypasswordstep1")
@@ -78,7 +78,7 @@ public class PayController {
 	}	
 	
 	/**
-	 * 支付密码第2个页面
+	 * 创建支付密码第2个页面
 	 * @return
 	 */
 	@RequestMapping("setpaypasswordstep2")
@@ -92,4 +92,31 @@ public class PayController {
 		return view;
 	}
 	
+	
+	/**
+	 * 修改支付密码第1个页面
+	 * @return
+	 */
+	@RequestMapping("modifypaypasswordstep1")
+	public ModelAndView modifypaypasswordstep1()
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改支付密码");
+		view.addObject("viewPath", "pay/modifypaypasswordstep1");		
+		return view;
+	}	
+	
+	/**
+	 * 修改支付密码第2个页面
+	 * @return
+	 */
+	@RequestMapping("modifypaypasswordstep2")
+	public ModelAndView modifypaypasswordstep2(String checkKey) throws IOException
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改支付密码");
+		view.addObject("viewPath", "pay/modifypaypasswordstep2");	
+		view.addObject("checkKey", checkKey);	
+		return view;
+	}
 }
