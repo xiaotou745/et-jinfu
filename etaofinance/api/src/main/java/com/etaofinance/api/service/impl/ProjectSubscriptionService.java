@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.etaofinance.api.dao.inter.IProjectSubscriptionDao;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.ProjectSubscription;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedProjectSubReq;
@@ -27,10 +29,11 @@ public class ProjectSubscriptionService implements  IProjectSubscriptionService{
 		return projectSubscriptionDao.getListMore(record);
 	}
 	/**
-	 * ªÒ»°œÓƒø¡ÏÕ∂»Î
+	 * Ëé∑ÂèñÊäïËµÑ‰∫∫ÂàóË°®
 	 */
 	@Override
-	public List<ProjectMember> getProjectLeadMember(Long projectId) {
+	public List<ProjectMember> getProjectLeadMember(Long projectId) 
+	{
 		return projectSubscriptionDao.getProjectLeadMember(projectId);
 	}
 

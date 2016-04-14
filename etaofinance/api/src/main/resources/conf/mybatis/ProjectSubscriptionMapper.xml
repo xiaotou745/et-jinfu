@@ -245,7 +245,7 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
 			and a.RefundStatus=''${refundstatus}''
 		</if>
 	</sql>
-  <!-- »ñÈ¡ÏîÄ¿ÁìÍ·ÈËÐÅÏ¢ -->
+  <!-- èŽ·å–æŠ•èµ„äºº-->
   <select id="getProjectLeadMember" parameterType="java.lang.Long" resultType="com.etaofinance.entity.domain.ProjectMember">
     SELECT m.UserName AS membername,
     p.Amount,
