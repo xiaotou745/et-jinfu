@@ -8,6 +8,9 @@ import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.ModifyMemberReq;
+import com.etaofinance.entity.req.ModifyPayPwdReq;
+import com.etaofinance.entity.req.ModifyPhoneByMessageReq;
+import com.etaofinance.entity.req.ModifyPhoneByPayReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
@@ -15,6 +18,9 @@ import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
+import com.etaofinance.entity.resp.ModifyPayPwdResp;
+import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
+import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
@@ -106,6 +112,44 @@ public interface IMemberService {
      * @return
      */
     HttpResultModel<ForgetPwdResp> forgetpwdsetpthree(ForgetPwdThreeReq req);
+    
+    
+	/**
+	 * 通过发送短信修改手机号码 第1步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:05
+	 * @return
+	 */
+	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req);
+	
+	/**
+	 * 通过发送短信修改手机号码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:12
+	 * @return
+	 */
+	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req);    
+	
+	
+	/**
+	 * 通过支付密码修改手机号码 第1步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:05
+	 * @return
+	 */
+	HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(@RequestBody  ModifyPhoneByPayReq req);
+	
+	/**
+	 * 通过支付密码修改手机号码 第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:12
+	 * @return
+	 */
+	HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(@RequestBody  ModifyPhoneByPayReq req);    
     
     /**
      *修改用户密码

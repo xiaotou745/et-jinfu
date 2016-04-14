@@ -60,4 +60,10 @@ public interface IProjectService {
 	 * 修改项目 wangchao
 	 */
 	int modifyProject(ModifyProjectReq req);
+	/**
+	 * 获取项目详情
+	 * @param projectid
+	 * @return
+	 */
+	ProjectModel getProjectDetail(Long projectid);
 }

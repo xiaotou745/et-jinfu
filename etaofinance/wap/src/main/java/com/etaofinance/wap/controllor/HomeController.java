@@ -71,4 +71,25 @@ public class HomeController {
 		view.addObject("result", result);
 		return view;
 	}
+	/**
+	 * 项目列表异步分页
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/detail")
+	public ModelAndView detail(Long projectid)
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "项目详情");
+		view.addObject("viewPath", "home/detail");
+		//1.项目详情
+		
+		//2.领头人
+		//3.项目概况,回报说明图片.
+		//4.项目交流以及评论
+		//5.认投人列表
+		//PagedResponse<ProjectModel> result=projectService.getProjectList(req);
+		//view.addObject("result", result);
+		return view;
+	}
 }

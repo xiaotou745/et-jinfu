@@ -18,6 +18,7 @@ import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberCertificationEnum;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.enums.MemberOtherCreatePayPwdEnum;
 import com.etaofinance.core.enums.MemberTypeEnum;
 import com.etaofinance.core.enums.ProjectEnrollEnum;
 import com.etaofinance.core.enums.PublicEnum;
@@ -39,6 +40,8 @@ import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.ModifyMemberReq;
+import com.etaofinance.entity.req.ModifyPhoneByMessageReq;
+import com.etaofinance.entity.req.ModifyPhoneByPayReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedMemberReq;
 import com.etaofinance.entity.req.RegistReq;
@@ -47,8 +50,11 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
+import com.etaofinance.entity.resp.CreatePayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
+import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
+import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 
 @Service
@@ -521,6 +527,191 @@ public class MemberService implements IMemberService {
 		return res;
 	}
 
+	
+	@Override
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(
+			ModifyPhoneByMessageReq req) {
+		HttpResultModel<ModifyPhoneByMessageResp> resultModel=new HttpResultModel<ModifyPhoneByMessageResp>();
+		
+		if(req.getPhoneNo()==null ||req.getPhoneNo().equals(""))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("手机号不能为空!");
+			return resultModel;
+		}		
+		//查询会员是否存在	
+		Member member=null;
+		if(RegexHelper.IsPhone(req.getPhoneNo()))
+		{
+			member=memberDao.selectByPhoneNo(req.getPhoneNo());			
+			if(member==null)
+			{
+				resultModel.setCode(-1);
+				resultModel.setMsg("会员不存在!");
+				return resultModel;
+			}
+		}		
+		
+		//手机验证码
+		String phoneKey= String.format(RedissCacheKey.JF_Member_ChangePhone ,req.getPhoneNo());
+		String phoneValue=redisService.get(phoneKey, String.class);
+		if(req.getVeriCode()==null || req.getVeriCode().equals("")|| 
+				phoneValue==null ||phoneValue.equals("")|| 		    
+		    !req.getVeriCode().equals(phoneValue) )
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}		
+		
+		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+		String UUIDvalue=UUID.randomUUID().toString();
+		String UUIDkey=String.format(RedissCacheKey.JF_Member_ChangePhoneOne,UUIDvalue);
+		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
+		//验证码错误
+		resultModel.setCode(1);
+		resultModel.setMsg("验证通过!");
+		ModifyPhoneByMessageResp resp=new ModifyPhoneByMessageResp();
+		resp.setUserID(member.getId());
+		resp.setCheckKey(UUIDvalue);
+		resultModel.setData(resp);
+		return resultModel;
+	}
+
+	@Override
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(
+			ModifyPhoneByMessageReq req) {
+		HttpResultModel<ModifyPhoneByMessageResp> resultModel=new HttpResultModel<ModifyPhoneByMessageResp>();	
+		
+		//第一步给返回的UUID
+		String keyOne=String.format(RedissCacheKey.JF_Member_ChangePhoneOne,req.getCheckKey());
+		String valueOne=redisService.get(keyOne, String.class);
+		if(req.getCheckKey()==null || req.getCheckKey().equals("")||
+			valueOne==null || valueOne.equals("")||
+			!req.getCheckKey().equals(valueOne))		
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}
+		
+		//手机验证码
+		String phoneKey= String.format(RedissCacheKey.JF_Member_BindNewPhone ,req.getPhoneNo());
+		String phoneValue=redisService.get(phoneKey, String.class);
+		if(req.getVeriCode()==null || req.getVeriCode().equals("")|| 
+						phoneValue==null ||phoneValue.equals("")|| 		    
+				    !req.getVeriCode().equals(phoneValue) )
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}		
+				
+		
+		//删除第一次给的UUID,防止被重复使用
+		redisService.remove(keyOne);		
+		
+		Member member=new Member();
+		member.setId(req.getUserId());
+		member.setPhoneno(req.getPhoneNo());	
+		int row=memberDao.updateByPrimaryKeySelective(member);
+				
+		if(row<=0)
+		{
+			resultModel.setCode(MemberEnum.Err.value());
+			resultModel.setMsg(MemberEnum.Err.desc());
+			return resultModel;	
+		}
+		resultModel.setCode(MemberEnum.Success.value());
+		resultModel.setMsg(MemberEnum.Success.desc());
+		return resultModel;
+	}
+
+	@Override
+	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(
+			ModifyPhoneByPayReq req) {
+		HttpResultModel<ModifyPhoneByPayResp> resultModel=new HttpResultModel<ModifyPhoneByPayResp>();
+		
+		if(req.getPayPassWord()==null ||req.getPayPassWord().equals(""))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("支付密码不能为空!");
+			return resultModel;
+		}		
+		//查询会员是否存在	
+		MemberOther memberOther=memberOtherDao.selectByMemberId(req.getMemberId());
+		String opwd=MD5Util.MD5(req.getPayPassWord());
+		if(memberOther==null 
+		||!memberOther.getPaypassword().equals(opwd))
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("支付密码错误!");
+			return resultModel;
+		}	
+		
+		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+		String UUIDvalue=UUID.randomUUID().toString();
+		String UUIDkey=String.format(RedissCacheKey.JF_Member_ChangePhoneByPayOne,UUIDvalue);
+		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
+		//验证码错误
+		resultModel.setCode(1);
+		resultModel.setMsg("验证通过!");
+		ModifyPhoneByPayResp resp=new ModifyPhoneByPayResp();
+		resp.setUserID(req.getMemberId());
+		resp.setCheckKey(UUIDvalue);
+		resultModel.setData(resp);
+		return resultModel;
+	}
+
+	@Override
+	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(
+			ModifyPhoneByPayReq req) {
+		HttpResultModel<ModifyPhoneByPayResp> resultModel=new HttpResultModel<ModifyPhoneByPayResp>();	
+		
+		//第一步给返回的UUID
+		String keyOne=String.format(RedissCacheKey.JF_Member_ChangePhoneByPayOne,req.getCheckKey());
+		String valueOne=redisService.get(keyOne, String.class);
+		if(req.getCheckKey()==null || req.getCheckKey().equals("")||
+			valueOne==null || valueOne.equals("")||
+			!req.getCheckKey().equals(valueOne))		
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}
+		
+		//手机验证码
+		String phoneKey= String.format(RedissCacheKey.JF_Member_BindNewPhone ,req.getPhoneNo());
+		String phoneValue=redisService.get(phoneKey, String.class);
+		if(req.getVeriCode()==null || req.getVeriCode().equals("")|| 
+						phoneValue==null ||phoneValue.equals("")|| 		    
+				    !req.getVeriCode().equals(phoneValue) )
+		{
+			resultModel.setCode(-1);
+			resultModel.setMsg("验证码错误,请重试!");
+			return resultModel;
+		}		
+				
+		
+		//删除第一次给的UUID,防止被重复使用
+		redisService.remove(keyOne);		
+		
+		Member member=new Member();
+		member.setId(req.getMemberId());
+		member.setPhoneno(req.getPhoneNo());	
+		int row=memberDao.updateByPrimaryKeySelective(member);
+				
+		if(row<=0)
+		{
+			resultModel.setCode(MemberEnum.Err.value());
+			resultModel.setMsg(MemberEnum.Err.desc());
+			return resultModel;	
+		}
+		resultModel.setCode(MemberEnum.Success.value());
+		resultModel.setMsg(MemberEnum.Success.desc());
+		return resultModel;
+	}
+	
 	/**
 	 * 通过用户吗获取信息
 	 */
@@ -651,4 +842,6 @@ public class MemberService implements IMemberService {
 
 		return bindEmailRes;
 	}
+	
+	
 }

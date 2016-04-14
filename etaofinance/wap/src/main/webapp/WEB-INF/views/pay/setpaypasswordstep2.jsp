@@ -7,6 +7,9 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	
+	String checkKey= (String)request.getAttribute("checkKey");
+	//Long userID=(Long)request.getAttribute("userId");
 %>
 
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/pay/set-paypassword-step2.css">
@@ -28,7 +31,8 @@
     </div>
 
         </div>
-    </div>
+    </div>     
+      <input type="hidden" id="checkKey" value="<%=checkKey%>"/>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
  <script src="<%=staticResPath%>/etao-crowdfunding/js/p/pay/set-paypassword-step2.js"></script>    
     

@@ -37,6 +37,8 @@ import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.LoginReq;
 import com.etaofinance.entity.req.ModifyPayPwdReq;
+import com.etaofinance.entity.req.ModifyPhoneByMessageReq;
+import com.etaofinance.entity.req.ModifyPhoneByPayReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
@@ -48,6 +50,8 @@ import com.etaofinance.entity.resp.ForgetPayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.ModifyPayPwdResp;
+import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
+import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
@@ -317,6 +321,66 @@ public class UserController {
 	}
 	
 	/**
+	 * 通过发送短信修改手机号码 第1步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:05
+	 * @return
+	 */
+	@RequestMapping("modifyphonebymessageone")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req)
+	{
+		return memberService.modifyPhoneByMessageOne(req);
+	}
+	
+	/**
+	 * 通过发送短信修改手机号码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:12
+	 * @return
+	 */
+	@RequestMapping("modifyphonebymessagetwo")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req)
+	{
+		return memberService.modifyPhoneByMessageTwo(req);
+	}
+	
+	
+	/**
+	 * 通过支付密码修改手机号码 第1步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:05
+	 * @return
+	 */
+	@RequestMapping("modifyphonebypayone")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(@RequestBody  ModifyPhoneByPayReq req)
+	{
+		return memberService.modifyPhoneByPayOne(req);
+	}
+	
+	/**
+	 * 通过支付密码修改手机号码 第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日20:07:12
+	 * @return
+	 */
+	@RequestMapping("modifyphonebypaytwo")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(@RequestBody  ModifyPhoneByPayReq req)
+	{
+		return memberService.modifyPhoneByPayTwo(req);
+	}
+	/**
 	 * 创建支付密码第1步
 	 * @param 
 	 * @author hulingbo
@@ -325,8 +389,11 @@ public class UserController {
 	 */
 	@RequestMapping("createpaypwdone")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<CreatePayPwdResp> createPayPwdOne(@RequestBody  CreatePayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.createPayPwdOne(req);
 	}
 	
@@ -339,8 +406,11 @@ public class UserController {
 	 */
 	@RequestMapping("createpaypwdtwo")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<CreatePayPwdResp> createPayPwdTwo(@RequestBody  CreatePayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.createPayPwdTwo(req);
 	}
 	

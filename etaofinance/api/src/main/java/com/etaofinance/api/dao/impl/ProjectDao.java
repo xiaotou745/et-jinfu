@@ -93,5 +93,12 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	public List<ProjectModel> getNoviceProject() {
 		return getReadOnlySqlSessionUtil().selectList("IProjectDao.getNoviceProject");
 	}
+	/**
+	 * 获取项目详情
+	 */
+	@Override
+	public ProjectModel getProjectDetail(Long projectid) {
+		return getReadOnlySqlSessionUtil().selectOne("IProjectDao.getProjectDetail",projectid);
+	}
 	
 }
