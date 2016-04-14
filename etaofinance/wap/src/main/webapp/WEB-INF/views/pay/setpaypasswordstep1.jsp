@@ -7,6 +7,7 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	String phoneNo=(String)request.getAttribute("phone");
 %>
 
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/pay/set-paypassword-step1.css">
@@ -18,7 +19,7 @@
             <div class="des">
                 验证码已发送到您的手机
             </div>
-            <div class="phone">
+            <div class="phone">            
                 185****4920
             </div>
         </div>
@@ -37,5 +38,7 @@
     
         </div>
     </div>
+    <input type="hidden" id="phoneNo" value="<%=phoneNo%>"></input>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/pay/set-paypassword-step1.js"></script>    
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/pay/set-paypassword-step1.js"></script>
+        

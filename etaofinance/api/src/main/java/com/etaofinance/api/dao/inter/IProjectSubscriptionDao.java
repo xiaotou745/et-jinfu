@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.ProjectSubscription;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 
 public interface IProjectSubscriptionDao {
@@ -22,10 +24,11 @@ public interface IProjectSubscriptionDao {
     int updateByPrimaryKey(ProjectSubscription record);
     
     List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record);
+
+    PagedResponse<ProjectSubscription> getProjectSubPageList(PagedProjectSubReq req);
     /**
-     * è·å–é¡¹ç›®é¢†æŠ•å…¥
+     * »ñÈ¡ÏîÄ¿ÁìÍ¶Èë
      * @param projectId
      * @return
      */
-    List<ProjectMember> getProjectLeadMember(Long projectId);
-}
+    List<ProjectMember> getProjectLeadMember(Long projectId);}

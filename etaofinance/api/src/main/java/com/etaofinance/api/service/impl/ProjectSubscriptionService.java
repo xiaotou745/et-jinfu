@@ -10,6 +10,7 @@ import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 
 
@@ -26,11 +27,17 @@ public class ProjectSubscriptionService implements  IProjectSubscriptionService{
 		return projectSubscriptionDao.getListMore(record);
 	}
 	/**
-	 * è·å–é¡¹ç›®é¢†æŠ•å…¥
+	 * »ñÈ¡ÏîÄ¿ÁìÍ¶Èë
 	 */
 	@Override
 	public List<ProjectMember> getProjectLeadMember(Long projectId) {
 		return projectSubscriptionDao.getProjectLeadMember(projectId);
+	}
+
+	@Override
+	public PagedResponse<ProjectSubscription> getProjectSubPageList(
+			PagedProjectSubReq req) {
+		return projectSubscriptionDao.getProjectSubPageList(req);
 	}
 
 }

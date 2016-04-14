@@ -111,8 +111,12 @@ public class MemberOtherService implements IMemberOtherService{
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
 		CreatePayPwdResp resp=new CreatePayPwdResp();
-		resp.setUserID(member.getId());
-		resp.setCheckKey(UUIDvalue);
+		//resp.setUserID(member.getId());
+		resp.setCheckKey(UUIDvalue);		
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		basePath+="/pay/setpaypasswordstep2?";
+		basePath+="checkKey="+UUIDvalue;		
+		resultModel.setUrl(basePath);
 		resultModel.setData(resp);
 		return resultModel;
 	}
@@ -154,7 +158,7 @@ public class MemberOtherService implements IMemberOtherService{
 			resultModel.setCode(MemberOtherCreatePayPwdEnum.Err.value());
 			resultModel.setMsg(MemberOtherCreatePayPwdEnum.Err.desc());
 			return resultModel;	
-		}
+		}	
 		resultModel.setCode(MemberOtherCreatePayPwdEnum.Success.value());
 		resultModel.setMsg(MemberOtherCreatePayPwdEnum.Success.desc());
 		return resultModel;
