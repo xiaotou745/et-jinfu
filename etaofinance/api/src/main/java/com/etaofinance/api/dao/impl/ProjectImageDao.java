@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IProjectImageDao;
 import com.etaofinance.entity.ProjectImage;
+import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ModifyProjectImg;
+import com.etaofinance.entity.domain.ProjectComment;
+import com.etaofinance.entity.req.PagedCommentReq;
 @Repository
 public class ProjectImageDao extends DaoBase implements IProjectImageDao{
 
@@ -62,5 +65,6 @@ public class ProjectImageDao extends DaoBase implements IProjectImageDao{
 	public int updateDeleteById(List<ModifyProjectImg> updateImgs) {
 		return getMasterSqlSessionUtil().update("IProjectImageDao.updateDeleteById",updateImgs);
 	}
+	
 
 }
