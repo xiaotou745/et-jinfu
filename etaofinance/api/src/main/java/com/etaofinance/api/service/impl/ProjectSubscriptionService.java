@@ -26,6 +26,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
@@ -40,6 +41,12 @@ public class ProjectSubscriptionService implements  IProjectSubscriptionService{
 	@Override
 	public List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record) {
 		return projectSubscriptionDao.getListMore(record);
+	}
+
+	@Override
+	public PagedResponse<ProjectSubscription> getProjectSubPageList(
+			PagedProjectSubReq req) {
+		return projectSubscriptionDao.getProjectSubPageList(req);
 	}
 
 }

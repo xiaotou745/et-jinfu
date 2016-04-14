@@ -33,6 +33,7 @@ import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectStrategy;
+import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
@@ -42,6 +43,7 @@ import com.etaofinance.entity.req.PagedCommentReq;
 import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 import com.etaofinance.entity.Member;
 /**
@@ -323,6 +325,27 @@ public class ProjectController {
 		PagedResponse<Comment> commentList = new PagedResponse<Comment>();
 		commentList=commentService.getCommentPagingList(req);
 		model.addObject("listData",commentList);
+		return model;
+	}
+	
+	/*
+	 * 项目认投情况 LIN
+	 */
+	@RequestMapping("projectsub")
+	public ModelAndView sublist() {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "项目管理");
+		model.addObject("currenttitle", "认投情况");
+		model.addObject("viewPath", "project/projectsub");
+		return model;
+	}
+
+	@RequestMapping("projectsubdo")
+	public ModelAndView subdo(PagedProjectSubReq req) { 
+		ModelAndView model = new ModelAndView("project/projectsubdo");
+		PagedResponse<ProjectSubscription> subList = new PagedResponse<ProjectSubscription>();
+		subList=projectSubscriptionService.getProjectSubPageList(req);
+		model.addObject("listData",subList);
 		return model;
 	}
 	/**

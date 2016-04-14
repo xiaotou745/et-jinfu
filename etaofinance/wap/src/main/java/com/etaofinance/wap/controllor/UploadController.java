@@ -25,7 +25,7 @@ public class UploadController {
 	@RequestMapping("file")
 	@ResponseBody
 	public String file(HttpServletRequest request) throws Exception {
-	return UploadFileHelper.UploadImg(request);
+	return UploadFileHelper.UploadFile(request);
 	}
 
 }
