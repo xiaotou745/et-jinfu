@@ -424,8 +424,11 @@ public class UserController {
 	 */
 	@RequestMapping("modifypaypwdone")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdOne(@RequestBody  ModifyPayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.modifyPayPwdOne(req);
 	}
 
@@ -438,8 +441,11 @@ public class UserController {
 	 */
 	@RequestMapping("modifypaypwdtwo")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdTwo(@RequestBody  ModifyPayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.modifyPayPwdTwo(req);
 	}
 	

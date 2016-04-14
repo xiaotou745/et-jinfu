@@ -30,6 +30,13 @@ function SaveChek() {
         $('#projectName').focus();
         return false;
     }
+    var onlinePreheatDate=$("#onlinePreheatDate").val();
+    var openFinancingDate=$("#openFinancingDate").val();
+    var endFinancingDate=$("#endFinancingDate").val();
+    if(onlinePreheatDate=="" ||openFinancingDate=="" ||endFinancingDate==""){
+        alert("预热时间、融资时间不能能为空！");
+        return false;
+    }     
     //收益比例判断
     var typevalue = $('input[name=rProjectType]:checked').val();
     if (typevalue == 1)//稳健性
@@ -162,6 +169,9 @@ function CreateProj() {
     project.address = $('#projectAddress').val();
     project.projectimage = $('#ProjectImgBox .hideurl').val();
     project.memberid = $('#memberId').val();
+    project.preheattime=$("#onlinePreheatDate").val();
+    project.starttime=$("#openFinancingDate").val();
+    project.endtime=$("#endFinancingDate").val();
     return project;
 }
 
