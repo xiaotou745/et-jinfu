@@ -1,4 +1,5 @@
 package com.etaofinance.wap.controllor;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.IProjectService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.entity.ADVert;
+import com.etaofinance.entity.Member;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 
@@ -33,6 +37,8 @@ public class HomeController {
 	IADVertService adService;
 	@Autowired
 	IProjectService projectService;
+	@Autowired
+	IProjectSubscriptionService projectSubscriptionService;
 	/**
 	 * 首页
 	 * @return
@@ -83,8 +89,20 @@ public class HomeController {
 		view.addObject("currenttitle", "项目详情");
 		view.addObject("viewPath", "home/detail");
 		//1.项目详情
-		
-		//2.领头人
+		ProjectModel detaiModel=projectService.getProjectDetail(projectid);
+		//2.投资人
+		List<ProjectMember> subList=projectSubscriptionService.getProjectLeadMember(projectid);
+		//3.领头人
+		List<ProjectMember> leadList=new ArrayList<ProjectMember>();
+		if(subList!=null)
+		{
+			for (int i = 0; i < subList.size(); i++) {
+				if(subList.get(i).getIsLead()==1)
+				{
+					leadList.add(subList.get(i));
+				}
+			}
+		}
 		//3.项目概况,回报说明图片.
 		//4.项目交流以及评论
 		//5.认投人列表

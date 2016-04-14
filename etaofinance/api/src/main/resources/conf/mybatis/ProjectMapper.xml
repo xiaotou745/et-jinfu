@@ -585,8 +585,8 @@
 		AND p.EndTime >= NOW()
 	</select>
 	<!-- 获取项目详情 -->
-	<select id="getProjectDetail">
-	  SELECT p.Id,
+	<select id="getProjectDetail" resultType="com.etaofinance.entity.domain.ProjectModel" parameterType="java.lang.Long">
+	   SELECT p.Id,
 		p.ProjectName,
 		p.TypeId,
 		p.Amount,
@@ -612,7 +612,6 @@
     LEFT JOIN publicprovincecity p1 ON p1.Code=p.CityCode
     LEFT JOIN publicprovincecity p2 ON p2.Code=p.ProvinceCode
     WHERE 
-    p.Id=5
-	
+    p.Id=#{projectid,jdbcType=BIGINT}
 	</select>
 </mapper>

@@ -209,4 +209,16 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
       RefundTime = #{refundtime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <!-- 获取项目领头人信息 -->
+  <select id="getProjectLeadMember" parameterType="java.lang.Long" resultType="com.etaofinance.entity.domain.ProjectMember">
+    SELECT m.UserName AS membername,
+    p.Amount,
+    m.HeadImage AS headimg,
+    p.IsLead,
+    p.CreateTime AS createdate
+    FROM projectsubscription p
+  LEFT JOIN member m ON m.Id=p.MemberId
+WHERE p.ProjectId=#{projectId,jdbcType=BIGINT}
+  ORDER BY p.Id asc    
+  </select>
 </mapper>
