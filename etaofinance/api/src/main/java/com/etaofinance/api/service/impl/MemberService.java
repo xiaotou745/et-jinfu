@@ -564,7 +564,8 @@ public class MemberService implements IMemberService {
 		// 后续  进行资源文件配置
 		String idAndEmail = AES.aesEncrypt(id+"-"+email);
 		
-		String emailContent = "http://localhost:8080/wap/me/emailbindcallback?idAndEmail="+idAndEmail;
+		String emailContent = PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
+		//String emailContent = "http://localhost:8080/wap/user/emailbindcallback?idAndEmail="+idAndEmail;
 		// 发送邮箱
 		SystemUtils.sendEmail("易宝众筹绑定邮箱验证", emailContent, email);
 
