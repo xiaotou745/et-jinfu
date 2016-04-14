@@ -80,4 +80,19 @@ public class MoreController {
 		view.addObject("flag", flag);
 		return view;
 	}
+	/**
+	 * 项目报名
+	 * @return
+	 */
+	@RequestMapping("projectapply")
+	public ModelAndView projectapply()
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "项目报名");
+		view.addObject("viewPath", "more/projectapply");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		member=(member==null?new Member():member);
+		view.addObject("member", member);
+		return view;
+	}
 }

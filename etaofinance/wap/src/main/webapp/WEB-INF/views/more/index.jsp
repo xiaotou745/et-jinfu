@@ -14,7 +14,7 @@
         <div class="g-views">
             
 	<section class="container bg">
-		<a href="#">
+		<a href="<%=basePath%>/more/projectapply">
 		<div class="text">
 			<div>项目报名</div>
 			<i class="m-icon icon-arrow-r"></i>
