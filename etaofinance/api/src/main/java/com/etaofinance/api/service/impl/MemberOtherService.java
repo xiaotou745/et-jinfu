@@ -180,6 +180,16 @@ public class MemberOtherService implements IMemberOtherService{
 		String opwd=MD5Util.MD5(req.getPassWord());	
 		if(!oldMemberOther.getPaypassword().equals(opwd))
 		{
+			String key = String.format(RedissCacheKey.JF_Member_InputPayPassword, req.getUserId());
+			String excuteCount=redisService.get(key, String.class);        
+	        if (excuteCount!=null &&Integer.parseInt(excuteCount)>=5 )
+	         {
+	        	resultModel.setCode(-1);
+				resultModel.setMsg("录入支付密码错误5次!");
+				return resultModel; 			
+	         }
+	        redisService.set(key, excuteCount + 1,60*5,TimeUnit.SECONDS);
+	        
 			resultModel.setCode(MemberOtherVerificationPayPwdEnum.PayPassWordErr.value());
 			resultModel.setMsg(MemberOtherVerificationPayPwdEnum.PayPassWordErr.desc());
 			return resultModel;	
