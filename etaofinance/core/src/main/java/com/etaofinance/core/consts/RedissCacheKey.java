@@ -23,14 +23,18 @@ public class RedissCacheKey {
      */
     public static final String JF_Member_Register= "JF_Member_Register_%s";
     //public static final String JF_Member_UpdatePasswrd= "JF_Member_UpdatePasswrd_%s";
-    public static final String JF_Member_ForgetPassword= "JF_Member_ForgetPassword_%s";
-    public static final String JF_Member_SetPayPassWord= "JF_Member_SetPayPassWord_%s";
-    public static final String JF_Member_FindPayPassWord= "JF_Member_FindPayPassWord_%s";
+    public static final String JF_Member_ForgetPassword= "JF_Member_ForgetPassword_%s";//忘记密码
+    public static final String JF_Member_SetPayPassWord= "JF_Member_SetPayPassWord_%s";//创建支付密码
+    public static final String JF_Member_FindPayPassWord= "JF_Member_FindPayPassWord_%s";//找回支付密码
     public static final String JF_Member_ChangePhone= "JF_Member_ChangePhone_%s";
     public static final String JF_Member_BindNewPhone= "JF_Member_BindNewPhone_%s";
     //找回密码第一步缓存UUID
-    public static final String JF_Member_FindPassWordSetpOne= "JF_Member_FindPassWordSetpOne_%s";
-    public static final String JF_Member_FindPassWordSetpTwo= "JF_Member_FindPassWordSetpTwo_%s";
+    public static final String JF_Member_FindPassWordSetpOne= "JF_Member_FindPassWordSetpOne_%s";//找回密码1
+    public static final String JF_Member_FindPassWordSetpTwo= "JF_Member_FindPassWordSetpTwo_%s";//找回密码2
+    public static final String JF_Member_SetPayPassWordOne= "JF_Member_SetPayPassWordOne_%s";//创建支付密码1
+    public static final String JF_Member_ModifyPayPassWordOne= "JF_Member_ModifyPayPassWordOne_%s";//修改支付密码1
+    public static final String JF_Member_FindPayPassWordOne= "JF_Member_FindPayPassWordOne_%s";//找回支付密码1
+
     /**
      * 广告轮播图
      */

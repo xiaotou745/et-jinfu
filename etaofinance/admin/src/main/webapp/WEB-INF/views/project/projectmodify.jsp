@@ -1,6 +1,7 @@
-<%@page import="com.etaofinance.core.enums.ProjectType"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@page import="com.etaofinance.core.enums.ProjectImageTypeEnum"%>
+<%@page import="com.etaofinance.core.enums.ProjectType"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="java.util.List"%>
 <%@page import="com.etaofinance.core.util.HtmlHelper"%>
@@ -10,17 +11,29 @@
 <%@page import="com.etaofinance.entity.ProjectStrategy"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
 <%@page import="com.etaofinance.core.util.Config"%>
+<%@page import="com.etaofinance.core.enums.ProjectAuditStatus"%>
+
 <%@page import="java.util.Map"%>
 <%
-	String basePath =PropertyUtils.getProperty("java.admin.url");
-long projectId = (long) request.getAttribute("projectId");
-Project project = (Project) request.getAttribute("project");
-List<ProjectStrategy> proStrList = (List<ProjectStrategy>) request.getAttribute("proStrList");
-List<ProjectImage> proImgList = (List<ProjectImage>) request.getAttribute("proImgList");
-Member member=(Member)request.getAttribute("member");
-List<PublicProvinceCity> provincelist = (List<PublicProvinceCity>) request.getAttribute("provincelist");
-String pro_city = (String) request.getAttribute("pro_city");
-String city_region = (String) request.getAttribute("city_region");
+	String basePath = PropertyUtils.getProperty("java.admin.url");
+	long projectId = (long) request.getAttribute("projectId");
+	Project project = (Project) request.getAttribute("project");
+%>
+<%
+	if (project == null) {
+%>
+======暂无数据 无此项目信息=====
+<%
+	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value() || project.getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
+		======已经<%=ProjectAuditStatus.getEnum(project.getAuditstatus()).desc() %> 暂时不能修改=====
+		<a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a>		 
+	<% }else {
+		List<ProjectStrategy> proStrList = (List<ProjectStrategy>) request.getAttribute("proStrList");
+		List<ProjectImage> proImgList = (List<ProjectImage>) request.getAttribute("proImgList");
+		Member member=(Member)request.getAttribute("member");
+		List<PublicProvinceCity> provincelist = (List<PublicProvinceCity>) request.getAttribute("provincelist");
+		String pro_city = (String) request.getAttribute("pro_city");
+		String city_region = (String) request.getAttribute("city_region");
 %>
 <!-- 百度图片上传 start -->
 <!--引入CSS-->
@@ -142,6 +155,7 @@ String city_region = (String) request.getAttribute("city_region");
 	<form method="POST" action="#" class="form-horizontal" id="searchForm">
 		<input type="hidden" id="pro_city" value="<%=pro_city%>" /> <input
 			type="hidden" id="city_region" value="<%=city_region%>" />
+			<input type="hidden" id="projectId" value="<%=projectId%>"/>
 		<fieldset>
 			<legend>基本信息</legend>
 			<div class="row">
@@ -348,11 +362,11 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<div class="col-sm-8 uploader">
 									<ul id="ProjectImgBox" class="filelist">
-										<li id="WU_FILE_100">
+										<li>
 											<p class="imgWrap">
-												<img style="height: 80px; width: 100px;" src="<%=basePath + "/" + project.getProjectimage()%>">
+												<img class="modifyProImg" style="height: 80px; width: 100px;" src="<%=Config.ImgShowUrl + "/" + project.getProjectimage()%>">
 											</p>
-											<div class="file-panel">
+											<div id="<%=project.getId()%>" class="file-panel">
 												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
 											</div>
 										</li>
@@ -377,19 +391,19 @@ String city_region = (String) request.getAttribute("city_region");
 								<div class="col-sm-9 uploader">
 									<ul id="ProjectDescImgPcBox" class="filelist">
 									<%
-										for (int i = 0; i < proImgList.size(); i++) {
+										for (int i = 0; i < proImgList.size(); i++) { if((int)proImgList.get(i).getTypeid()== ProjectImageTypeEnum.ProjectBasicDesPC.value()){
 									%>
-									<li id="WU_FILE_"+<%=i+"50"%>>
+									<li>
 											<p class="imgWrap">
-												<img id="WU_FILE_100" style="height: 80px; width: 100px;"
-													src="<%=Config.ImgShowUrl+"/"+project.getProjectimage()%>">
+												<img class="modifyProImg" style="height: 80px; width: 100px;"
+													src="<%=Config.ImgShowUrl+"/"+proImgList.get(i).getUrl()%>">
 											</p>
-											<div class="file-panel">
+											<div id="<%=proImgList.get(i).getId()%>" class="file-panel">
 												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
 											</div>
 										</li>
 									<%
-										}
+										}}
 									%>
 									</ul>
 								</div>
@@ -411,6 +425,21 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectDescImgWapBox" class="filelist">
+									<%
+										for (int i = 0; i < proImgList.size(); i++) { if((int)proImgList.get(i).getTypeid()== ProjectImageTypeEnum.ProjectBasicDesWap.value()){
+									%>
+									<li>
+											<p class="imgWrap">
+												<img class="modifyProImg" style="height: 80px; width: 100px;"
+													src="<%=Config.ImgShowUrl+"/"+proImgList.get(i).getUrl()%>">
+											</p>
+											<div id="<%=proImgList.get(i).getId()%>" class="file-panel">
+												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
+											</div>
+										</li>
+									<%
+										}}
+									%>
 									</ul>
 								</div>
 							</div>
@@ -431,6 +460,21 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectHuibaoImgPcBox" class="filelist">
+									<%
+										for (int i = 0; i < proImgList.size(); i++) { if((int)proImgList.get(i).getTypeid()== ProjectImageTypeEnum.ProjectRtnDesPC.value()){
+									%>
+									<li>
+											<p class="imgWrap">
+												<img class="modifyProImg" style="height: 80px; width: 100px;"
+													src="<%=Config.ImgShowUrl+"/"+proImgList.get(i).getUrl()%>">
+											</p>
+											<div id="<%=proImgList.get(i).getId()%>" class="file-panel">
+												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
+											</div>
+										</li>
+									<%
+										}}
+									%>
 									</ul>
 								</div>
 							</div>
@@ -451,6 +495,21 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectHuibaoImgWapBox" class="filelist">
+									<%
+										for (int i = 0; i < proImgList.size(); i++) { if((int)proImgList.get(i).getTypeid()== ProjectImageTypeEnum.ProjectRtnDesWap.value()){
+									%>
+									<li>
+											<p class="imgWrap">
+												<img class="modifyProImg" style="height: 80px; width: 100px;"
+													src="<%=Config.ImgShowUrl+"/"+proImgList.get(i).getUrl()%>">
+											</p>
+											<div id="<%=proImgList.get(i).getId()%>" class="file-panel">
+												<span class="cancel" onclick="delOriginalImg(this)">删除</span>
+											</div>
+										</li>
+									<%
+										}}
+									%>
 									</ul>
 								</div>
 							</div>
@@ -460,7 +519,7 @@ String city_region = (String) request.getAttribute("city_region");
 						<div class="col-lg-4">
 							<span id="tip" style="color: red"></span>
 							<button type="button" class="btn btn-w-m btn-primary"
-								id="saveProject" style="margin-left: 3px; height: 30px;">保存</button>
+								id="modifyProject" style="margin-left: 3px; height: 30px;">修改并保存</button>
 							<button type="button" class="btn btn-w-m btn-primary"
 								id="uploadallimg" style="margin-left: 3px; height: 30px;">上传所有图片</button>
 						</div>
@@ -471,7 +530,7 @@ String city_region = (String) request.getAttribute("city_region");
 		</fieldset>
 	</form>
 </div>
-
+<%} %>
 <!--引入JS-->
 <script>
 var BasePath='<%=basePath%>';
@@ -511,6 +570,8 @@ $(function(){
 	});
 	InitProvince();
 	InitProjectType();
+	//InitProjectImg();
+	validatePhoneNo();
 	//计算份额
 	$('#projectAmount').blur(function(){
 		 FenshuJisuan();
@@ -556,7 +617,7 @@ function InitProvince()
 }
 /*初始化项目图片 */
 function InitProjectImg(){
-	
+	$("#ProjectImg").hide();
 }
 //校验手机号会员ID
 $('#memberPhone').blur(function(){
@@ -609,7 +670,7 @@ function validatePhoneNo(){
 		}
 	}
 	//保存
-	$('#saveProject').click(function() {
+	$('#modifyProject').click(function() {
 		if (!SaveChek()) {
 			return;
 		}
@@ -617,11 +678,12 @@ function validatePhoneNo(){
 		proObjReq.project = CreateProj();
 		proObjReq.projectStrategyList = CreateStrategylist();
 		proObjReq.projectImageList = CreateImgList();
+		proObjReq.modifyProjectImgList = imgModifyList;
 		//构建数据库信息
 		var json_data =JSON.stringify(proObjReq);
 		$("#tip").html("正在执行。。。");
-		$("#saveProject").attr("disabled",true);
-		var url = "<%=basePath%>/project/saveproject";
+		$("#modifyProject").attr("disabled",true);
+		var url = "<%=basePath%>/project/modifyproject";
 		$.ajax({
 			type : 'POST',
 			url : url,
@@ -630,14 +692,14 @@ function validatePhoneNo(){
 			},
 			success : function(result) {
 				$("#tip").html("");
-				$("#saveProject").attr("disabled", false);
+				$("#modifyProject").attr("disabled", false);
 				if (result > 0) {
-					alert("发布成功");
-					window.location.href = window.location.href;
+					alert("修改成功");
+					window.location.href = "<%=Config.adminUrl%>+/project/waitlist";
 				} else if (result == 0) {
-					alert("发布失败");
+					alert("修改失败");
 				} else {
-					alert("发布作失败:下载链接无法访问，请修改后重试");
+					alert("修改失败:下载链接无法访问，请修改后重试");
 				}
 			},
 			error : function(errordata) {
@@ -646,7 +708,23 @@ function validatePhoneNo(){
 			}
 		});
 	});
+	var imgModifyList = new Array();
+	//删除图片
 	function delOriginalImg(obj){
+		var str=$(obj).parent().parent().parent().attr("id");
+		if(str =="ProjectImgBox"){
+// 			var tmpProObj = new Object();
+// 			tmpProObj.modifyId = $(obj).parent().attr("id");
+// 			tmpProObj.modifyType = 1;
+// 	        imgModifyList.push(tmpProObj);   
+		   $("#ProjectImg").show();
+		}else{
+			var tmpObj = new Object();
+			tmpObj.modifyId = $(obj).parent().attr("id");
+			tmpObj.modifyType = 2;
+	        imgModifyList.push(tmpObj);
+		}
 		$(obj).parent().parent().remove();
+		   
 	}
 </script>

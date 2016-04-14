@@ -30,18 +30,24 @@ import com.etaofinance.core.util.RegexHelper;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.MemberOther;
+import com.etaofinance.entity.req.CreatePayPwdReq;
+import com.etaofinance.entity.req.ForgetPayPwdReq;
 import com.etaofinance.entity.req.ForgetPwdOneReq;
 import com.etaofinance.entity.req.ForgetPwdThreeReq;
 import com.etaofinance.entity.req.ForgetPwdTwoReq;
 import com.etaofinance.entity.req.LoginReq;
+import com.etaofinance.entity.req.ModifyPayPwdReq;
 import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberDM;
+import com.etaofinance.entity.resp.CreatePayPwdResp;
+import com.etaofinance.entity.resp.ForgetPayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
+import com.etaofinance.entity.resp.ModifyPayPwdResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
@@ -256,6 +262,8 @@ public class UserController {
 		req.setCookieKey(cookieKey);
 		return memberService.forgetpwdsetpone(req);
 	}
+
+	
 	/**
 	 * 忘记密码第二步
 	 * @param 
@@ -309,47 +317,133 @@ public class UserController {
 	}
 	
 	/**
-	 * 创建支付密码
-	 * 修改，找回
+	 * 创建支付密码第1步
 	 * @param 
 	 * @author hulingbo
-	 * @date 2016年3月28日16:31:15
+	 * @date 2016年4月13日15:36:56
 	 * @return
 	 */
-	@RequestMapping("createpaypwd")
+	@RequestMapping("createpaypwdone")
 	@ResponseBody
-	@RequireLogin
-	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "创建支付密码")
-	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
-	{
-		Member member=UserContext.getCurrentContext(request).getUserInfo();		
-		record.setMemberid(member.getId());			
-
-		return memberOtherService.createPayPwd(record);
+	public HttpResultModel<CreatePayPwdResp> createPayPwdOne(@RequestBody  CreatePayPwdReq req)
+	{	
+		return memberOtherService.createPayPwdOne(req);
+	}
+	
+	/**
+	 * 创建支付密码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日15:36:56
+	 * @return
+	 */
+	@RequestMapping("createpaypwdtwo")
+	@ResponseBody
+	public HttpResultModel<CreatePayPwdResp> createPayPwdTwo(@RequestBody  CreatePayPwdReq req)
+	{	
+		return memberOtherService.createPayPwdTwo(req);
 	}
 	
 	
 	/**
-	 * 验证支付密码
+	 * 修改支付密码第1步
 	 * @param 
 	 * @author hulingbo
-	 * @date 2016年3月28日17:13:36
+	 * @date 2016年4月13日15:36:56
 	 * @return
 	 */
-	@RequestMapping("verificationpaypwd")
+	@RequestMapping("modifypaypwdone")
 	@ResponseBody
-	@RequireLogin
-	@ApiOperation(value = "验证支付密码", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "验证支付密码")
-	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
-	{
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
-		record.setMemberid(memberid);
-		return memberOtherService.verificationPayPwd(record);
+	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdOne(@RequestBody  ModifyPayPwdReq req)
+	{	
+		return memberOtherService.modifyPayPwdOne(req);
 	}
+
+	/**
+	 * 修改支付密码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日15:36:56
+	 * @return
+	 */
+	@RequestMapping("modifypaypwdtwo")
+	@ResponseBody
+	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdTwo(@RequestBody  ModifyPayPwdReq req)
+	{	
+		return memberOtherService.modifyPayPwdTwo(req);
+	}
+	
+	
+	/**
+	 * 找回支付密码第1步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日15:36:56
+	 * @return
+	 */
+	@RequestMapping("forgetpaypwdone")
+	@ResponseBody
+	public HttpResultModel<ForgetPayPwdResp> forgetPayPwdOne(@RequestBody  ForgetPayPwdReq req)
+	{	
+		return memberOtherService.forgetPayPwdOne(req);
+	}
+
+	/**
+	 * 修改支付密码第2步
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月13日15:36:56
+	 * @return
+	 */
+	@RequestMapping("forgetpaypwdtwo")
+	@ResponseBody
+	public HttpResultModel<ForgetPayPwdResp> modifyPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
+	{	
+		return memberOtherService.forgetPayPwdTwo(req);
+	}
+//	
+//	/**
+//	 * 创建支付密码
+//	 * 修改，找回
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年3月28日16:31:15
+//	 * @return
+//	 */
+//	@RequestMapping("createpaypwd")
+//	@ResponseBody
+//	@RequireLogin
+//	@ApiOperation(value = "创建支付密码", httpMethod = "POST", 
+//	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+//	notes = "创建支付密码")
+//	public HttpResultModel<Object> createPayPwd(@RequestBody  MemberOther record)
+//	{
+//		Member member=UserContext.getCurrentContext(request).getUserInfo();		
+//		record.setMemberid(member.getId());			
+//
+//		return memberOtherService.createPayPwd(record);
+//	}
+//	
+	
+//	/**
+//	 * 验证支付密码
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年3月28日17:13:36
+//	 * @return
+//	 */
+//	@RequestMapping("verificationpaypwd")
+//	@ResponseBody
+//	@RequireLogin
+//	@ApiOperation(value = "验证支付密码", httpMethod = "POST", 
+//	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
+//	notes = "验证支付密码")
+//	public HttpResultModel<Object> verificationPayPwd(@RequestBody  MemberOther record)
+//	{
+//		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
+//		record.setMemberid(memberid);
+//		return memberOtherService.verificationPayPwd(record);
+//	}
 	
 	/**
 	 * 会员实名认证

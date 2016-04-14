@@ -7,6 +7,7 @@
     <result column="Key" property="key" jdbcType="VARCHAR" />
     <result column="Value" property="value" jdbcType="REAL" />
     <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="IsDel" property="isdel" jdbcType="INTEGER" />    
   </resultMap>
   <sql id="Base_Column_List" >
     Id, ProjectId, `Key`, `Value`, Description
@@ -20,6 +21,11 @@
     delete from projectstrategy
     where ProjectId = #{projectid,jdbcType=BIGINT}
   </delete>
+  <!-- 修改项目时，修改项目策略 打删除标记 wangchao -->
+  <update id="updateDeleteByProjectId" parameterType="java.lang.Long">
+	update projectstrategy set isdel=1 
+	where ProjectId = #{projectid,jdbcType=BIGINT} and isdel=0 
+  </update>
   <insert id="insertList" parameterType="java.util.List" >
   <foreach collection="list" index="index" item="item">
     insert into projectstrategy (ProjectId, `Key`, `Value`, Description)
@@ -39,7 +45,7 @@
     parameterType="java.util.List" >
 	select 
     <include refid="Base_Column_List" />
-    from projectstrategy where ProjectId in 
+    from projectstrategy where isdel=0 and ProjectId in 
 	     <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
 	           ${item}
 	     </foreach> ;
@@ -49,7 +55,7 @@
     parameterType="java.lang.Long" >
 	select 
     <include refid="Base_Column_List" />
-    from projectstrategy where ProjectId =#{projectid,jdbcType=BIGINT}
+    from projectstrategy where isdel=0 and ProjectId =#{projectid,jdbcType=BIGINT}
   </select>
   
 </mapper>
