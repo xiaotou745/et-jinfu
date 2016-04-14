@@ -1,3 +1,5 @@
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
+<%@page import="com.etaofinance.core.enums.ProjectStatus"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="com.etaofinance.core.enums.ProjectImageTypeEnum"%>
@@ -24,7 +26,7 @@
 %>
 ======暂无数据 无此项目信息=====
 <%
-	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value() || project.getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
+	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value() && project.getProjectstatus()!=ProjectStatus.NotOnLine.value()) {%>
 		======已经<%=ProjectAuditStatus.getEnum(project.getAuditstatus()).desc() %> 暂时不能修改=====
 		<a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a>		 
 	<% }else {
@@ -160,13 +162,46 @@
 			<legend>基本信息</legend>
 			<div class="row">
 				<div class="col-lg-12">
+					<div class="row" id="someDateDiv">
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">上线预热时间：</label>
+								<div class="col-sm-6">
+									<input type="text" style="width: 150px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getPreheattime(),"yyyy-MM-dd")%>" name="onlinePreheatDate" id="onlinePreheatDate"
+										onFocus="WdatePicker({minDate:'%y-%M-%d'})" />
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">开放融资时间：</label>
+								<div class="col-sm-6">
+									<input type="text" style="width: 150px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getStarttime(),"yyyy-MM-dd")%>" name="openFinancingDate" id="openFinancingDate"
+										onFocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">融资结束时间：</label>
+								<div class="col-sm-6">
+									<input type="text" style="width: 150px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getEndtime(),"yyyy-MM-dd")%>" name="endFinancingDate" id="endFinancingDate"
+										onFocus="WdatePicker({minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">发起者会员手机号: </label>
 								<div class="col-sm-6">
 									<input type="text" maxlength="11" class="form-control"
-										name="memberPhone" id="memberPhone" value="<%=member.getPhoneno()%>"
+										name="memberPhone" id="memberPhone"
+										value="<%=member.getPhoneno()%>"
 										onkeyup="this.value = parseInt(this.value); if (this.value=='NaN') { this.value = ''}"
 										maxlength="11" /> <input type="hidden" id="memberId"
 										value="0" />
@@ -178,7 +213,8 @@
 								<label class="col-sm-4 control-label">项目名称: </label>
 								<div class="col-sm-6">
 									<input type="text" maxlength="15" class="form-control"
-										name="projectName" id="projectName" value="<%=project.getProjectname()%>" />
+										name="projectName" id="projectName"
+										value="<%=project.getProjectname()%>" />
 								</div>
 							</div>
 						</div>
@@ -188,10 +224,9 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">项目类型: </label>
 								<div class="col-sm-6">
-<input id="rProjectType1" name="rProjectType" type="radio" value="1"/>
-<label>稳健型</label>
-<input id="rProjectType2" name="rProjectType" type="radio" value="2"/>
-<label>风险共担型</label>
+									<input id="rProjectType1" name="rProjectType" type="radio"
+										value="1" /> <label>稳健型</label> <input id="rProjectType2"
+										name="rProjectType" type="radio" value="2" /> <label>风险共担型</label>
 								</div>
 							</div>
 						</div>
@@ -236,7 +271,8 @@
 								<label class="col-sm-4 control-label">一句话简介: </label>
 								<div class="col-sm-8">
 									<input type="text" maxlength="20" class="form-control"
-										name="projectDescription" id="projectDescription" value="<%=project.getDescription()%>" />
+										name="projectDescription" id="projectDescription"
+										value="<%=project.getDescription()%>" />
 								</div>
 							</div>
 						</div>
@@ -267,7 +303,8 @@
 								<label class="col-sm-4 control-label">每份金额: </label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="projectUnitPrice"
-										id="projectUnitPrice" value="<%=project.getUnitprice()%>" readonly="readonly" />
+										id="projectUnitPrice" value="<%=project.getUnitprice()%>"
+										readonly="readonly" />
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">元</div>
 							</div>
@@ -335,7 +372,8 @@
 								<label class="col-sm-4 control-label">详细地址: </label>
 								<div class="col-sm-8">
 									<input type="text" maxlength="140" class="form-control"
-										name="projectAddress" id="projectAddress" value="<%=project.getAddress()%>" />
+										name="projectAddress" id="projectAddress"
+										value="<%=project.getAddress()%>" />
 								</div>
 							</div>
 						</div>

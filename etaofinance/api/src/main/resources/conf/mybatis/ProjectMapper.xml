@@ -359,13 +359,13 @@
 			<if test="memberid != null">
 				MemberId = #{memberid,jdbcType=BIGINT},
 			</if>
-			<if test="preheattime != null">
+			<if test="preheattime != null and preheattime!=''">
 				PreheatTime = #{preheattime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="starttime != null">
+			<if test="starttime != null and starttime!=''">
 				StartTime = #{starttime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="endtime != null">
+			<if test="endtime != null and endtime!=''">
 				EndTime = #{endtime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="schedule != null">
