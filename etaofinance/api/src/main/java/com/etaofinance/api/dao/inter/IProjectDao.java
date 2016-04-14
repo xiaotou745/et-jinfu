@@ -20,6 +20,12 @@ public interface IProjectDao {
 
     Project selectByPrimaryKey(Long id);
     /**
+     * 获取项目详情
+     * @param projectid
+     * @return
+     */
+    ProjectModel getProjectDetail(Long projectid);
+    /**
      * 获取预热和进行中的项目
      * @param id
      * @return

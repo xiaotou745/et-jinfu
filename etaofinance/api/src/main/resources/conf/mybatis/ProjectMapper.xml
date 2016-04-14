@@ -523,11 +523,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyA''), ''0'') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyB''), ''0'') AS BValue',
 		'
 		project p ',
 		'
@@ -569,11 +569,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyA'), '0') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyA'), '0') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyB'), '0') AS BValue
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyB'), '0') AS BValue
     FROM    project p  WHERE 
     p.IsShelve = 1
 		AND p.ProjectStatus != 1
@@ -583,5 +583,35 @@
 		AND p.AuditStatus = 2
 		AND NOW() >= p.PreheatTime
 		AND p.EndTime >= NOW()
+	</select>
+	<!-- 获取项目详情 -->
+	<select id="getProjectDetail" resultType="com.etaofinance.entity.domain.ProjectModel" parameterType="java.lang.Long">
+	   SELECT p.Id,
+		p.ProjectName,
+		p.TypeId,
+		p.Amount,
+		p.FenShu,
+		p.UnitPrice,
+		p.ProjectImage,
+		p.Schedule,
+		p.ProjectStatus,
+		p.StartTime,
+    p.Address,
+    p.Description,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyA'), '0') AS AValue,
+		IFNULL((SELECT
+		p2.Value
+		FROM projectstrategy p2
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyB'), '0') AS BValue
+   ,p1.Name AS CityName
+    ,p2.Name AS ProvinceName
+    FROM    project p 
+    LEFT JOIN publicprovincecity p1 ON p1.Code=p.CityCode
+    LEFT JOIN publicprovincecity p2 ON p2.Code=p.ProvinceCode
+    WHERE 
+    p.Id=#{projectid,jdbcType=BIGINT}
 	</select>
 </mapper>

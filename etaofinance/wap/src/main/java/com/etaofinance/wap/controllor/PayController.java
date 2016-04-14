@@ -56,32 +56,39 @@ public class PayController {
     RedisService redisService;
 	@Autowired
 	HttpServletResponse response;
+	
 	@Autowired
 	IMemberService memberService;
-	@Autowired
-	IMemberOtherService memberOtherService;
-	@Autowired
-	IBankCardService bankService;
-	@Autowired
-	private IBalanceRecordService balanceRecordService;
-	@Autowired
-	IMemberApplyService memberApplyService;
-	@Autowired
-	IProjectSubscriptionService  projectSubscriptionService;
-	@Autowired
-	IProjectFavoriteService  projectFavoriteService;
 	
 	
 	/**
-	 * 支付密码第一个页面
+	 * 支付密码第1个页面
 	 * @return
 	 */
 	@RequestMapping("setpaypasswordstep1")
-	public ModelAndView retrievepasswordstep1()
+	public ModelAndView setpaypasswordstep1()
 	{
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "设置支付密码");
 		view.addObject("viewPath", "pay/setpaypasswordstep1");
+		
+		String phone="13520860798";
+		view.addObject("phone", phone);	
+		return view;
+	}	
+	
+	/**
+	 * 支付密码第2个页面
+	 * @return
+	 */
+	@RequestMapping("setpaypasswordstep2")
+	public ModelAndView retrievepasswordstep1(String checkKey) throws IOException
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "设置支付密码");
+		view.addObject("viewPath", "pay/setpaypasswordstep2");
+	
+		view.addObject("checkKey", checkKey);	
 		return view;
 	}
 	

@@ -48,7 +48,7 @@ public class CommonController {
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
-	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {		
 		return memberService.sendCode(req);
 	}
 

@@ -209,4 +209,52 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
       RefundTime = #{refundtime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getProjectSubList"
+		resultType="com.etaofinance.entity.ProjectSubscription"
+		parameterType="com.etaofinance.entity.req.PagedProjectSubReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' a.createTime desc ',
+		' a.Id,a.createTime,a.MemberId,a.ProjectId,a.IsLead,a.Amount,a.FenShu,a.Name,a.PhoneNo,a.Email,a.IdCard,a.RefundStatus ',
+		' projectsubscription a ',
+		' <include refid="queryProjectSubListWhere" /> ',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+ </select>
+ <sql id="queryProjectSubListWhere">
+		1=1
+		<if test="projectid>0">
+			and a.ProjectId=${projectid}
+		</if>
+		<if test="memberid>0">
+			and a.MemberId=${memberid}
+		</if>
+		<if test="name != null and name!=''">
+			and a.Name=''${name}''
+		</if>
+		<if test="phoneno != null and phoneno!=''">
+			and a.PhoneNo=''${phoneno}''
+		</if>
+		<if test="email != null and email!=''">
+			and a.EMail=''${email}''
+		</if>
+		<if test="refundstatus != null and refundstatus!=''">
+			and a.RefundStatus=''${refundstatus}''
+		</if>
+	</sql>
+  <!-- 获取投资人-->
+  <select id="getProjectLeadMember" parameterType="java.lang.Long" resultType="com.etaofinance.entity.domain.ProjectMember">
+    SELECT m.UserName AS membername,
+    p.Amount,
+    m.HeadImage AS headimg,
+    p.IsLead,
+    p.CreateTime AS createdate
+    FROM projectsubscription p
+  LEFT JOIN member m ON m.Id=p.MemberId
+WHERE p.ProjectId=#{projectId,jdbcType=BIGINT}
+  ORDER BY p.Id asc    
+  </select>
 </mapper>

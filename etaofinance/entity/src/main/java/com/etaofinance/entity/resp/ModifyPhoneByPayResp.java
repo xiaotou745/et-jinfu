@@ -1,11 +1,11 @@
 package com.etaofinance.entity.resp;
 /**
- * 创建支付密码
+ * 修改手机号
  * 第1，2步返回值
  * @author ofmyi_000
  *
  */
-public class CreatePayPwdResp {
+public class ModifyPhoneByPayResp {
 private Long userID;
 private String checkKey;
 public Long getUserID() {

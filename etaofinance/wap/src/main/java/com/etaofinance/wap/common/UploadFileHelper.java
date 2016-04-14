@@ -38,6 +38,20 @@ public class UploadFileHelper {
 	public static String UploadImg(HttpServletRequest request) throws Exception {
 		return doUpload(request, 0, "");
 	}
+	/**
+	 * 上传图片
+	 * 
+	 * @author hailongzhao
+	 * @date 20160104
+	 * @param request
+	 * @param loadFrom
+	 * @return
+	 * @throws Exception
+	 */
+	public static String UploadFile(HttpServletRequest request) throws Exception {
+		return doUpload(request, 1, "");
+	}
+
 
 	/**
 	 * 上传文件的核心逻辑
@@ -62,15 +76,10 @@ public class UploadFileHelper {
 		// 定义允许上传的文件扩展名
 		HashMap<String, String> extMap = new HashMap<String, String>();
 		extMap.put("image", "gif,jpg,jpeg,png,bmp");
-		extMap.put("flash", "swf,flv");
-		extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
-		extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
+		extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2,pdf,swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 		List<String> ext = Arrays.<String> asList(extMap.get("image").split(","));
 		if (fileType > 0) {
 			ext = Arrays.<String> asList(extMap.get("file").split(","));
-			List<String> mediaExt = Arrays.<String> asList(extMap.get("media")
-					.split(","));
-			ext.addAll(mediaExt);
 		}
 		String regionPath = "";
 		String rootPath = "";
@@ -86,7 +95,7 @@ public class UploadFileHelper {
 			regionPath = PropertyUtils.getProperty("UserFile");//UserFile
 		}else
 		{	//用户头像
-			regionPath = PropertyUtils.getProperty("UserIcon");//UserIcon 用户头像
+			regionPath = PropertyUtils.getProperty("ImageUserIcon");//UserIcon 用户头像
 		}
 		rootPath = PropertyUtils.getProperty("ImageSavePath") + "/"+ regionPath;//=/data/img/UserIcon
 		FileUtil.createDirectory(rootPath);// 创建目录
@@ -155,7 +164,7 @@ public class UploadFileHelper {
 			//图片的相对路径
 			String relativePath = regionPath + "/" + temp + "/" + realFileName;
 			//图片的完整路径
-			String url = PropertyUtils.getProperty("ImgShowUrl") + "/"+ relativePath;
+			String url = PropertyUtils.getProperty("ImageShowPath") + "/"+ relativePath;
 			obj.put("error", 0);
 			obj.put("url", url);
 			obj.put("relativeurl", relativePath);

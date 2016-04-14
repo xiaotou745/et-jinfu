@@ -44,7 +44,11 @@
 			<td><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getStarttime(), "") %></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getEndtime(), "") %></td>
-			<td><a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
+			<td>
+			<a href="<%=basePath%>/project/projectsub?id=<%=list.get(i).getId()%>">认投</a>
+			<a href="<%=basePath%>/project/favorite?id=<%=list.get(i).getId()%>">关注</a>
+			<a href="<%=basePath%>/project/comment?id=<%=list.get(i).getId()%>">交流</a>
+			<a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
 			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
 			<% if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
 				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改详情</a>
