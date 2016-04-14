@@ -562,7 +562,8 @@ public class MemberService implements IMemberService {
 
 		// 一串链接
 		// 后续  进行资源文件配置
-		String idAndEmail = AES.aesEncrypt(id+"-"+email);
+	//	String idAndEmail = AES.aesEncrypt(id+"-"+email);
+		String idAndEmail = id+"-"+email;
 		
 		String emailContent = PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
 		//String emailContent = "http://localhost:8080/wap/user/emailbindcallback?idAndEmail="+idAndEmail;
@@ -597,7 +598,7 @@ public class MemberService implements IMemberService {
 		}
 		// 处理 id email
 		// 更新对应会员的邮箱
-		idAndEmail  = AES.aesDecrypt(idAndEmail);
+	//	idAndEmail  = AES.aesDecrypt(idAndEmail);
 		
 		String[] strs = idAndEmail.split("-");
 
