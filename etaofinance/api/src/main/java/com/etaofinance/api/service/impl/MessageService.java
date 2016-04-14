@@ -138,5 +138,10 @@ public class MessageService implements IMessageService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Message getByid(Long id) {
+		return messageDao.selectByPrimaryKey(id);
+	}
 	
 }

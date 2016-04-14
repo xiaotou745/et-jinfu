@@ -24,6 +24,7 @@ import com.etaofinance.api.service.inter.IBankCardService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IMessageService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
@@ -33,8 +34,8 @@ import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
+import com.etaofinance.entity.Message;
 import com.etaofinance.entity.common.HttpResultModel;
-
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.domain.BalanceRecordDM;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
@@ -80,6 +81,9 @@ public class MeController {
 	IProjectFavoriteService  projectFavoriteService;
 	@Autowired
 	IProjectService projectService;
+
+	@Autowired
+	IMessageService  messageService;
 	/**
 	 * 登录页面
 	 * @return
@@ -461,6 +465,46 @@ public class MeController {
 		Member member=UserContext.getCurrentContext(request).getUserInfo();
 		member=memberService.getById(member.getId());
 		view.addObject("member",member);
+		return view;
+	}
+	
+	/**
+	 * 消息列表
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("messagelist")
+	@RequireLogin
+	public ModelAndView messagelist() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "消息列表");
+		view.addObject("viewPath", "me/messagelist");
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		List<Message> list=messageService.getList(member.getId());
+		view.addObject("list",list);
+		return view;
+	}
+	
+	/**
+	 * 消息列表
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("messagedetail")
+	@RequireLogin
+	public ModelAndView messagedetail(Long id) 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "消息详情");
+		view.addObject("viewPath", "me/messagedetail");
+		Message m=messageService.getByid(id);
+		messageService.readMsg(m);
+		view.addObject("message",m);
 		return view;
 	}
 
