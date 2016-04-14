@@ -523,11 +523,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyA''), ''0'') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyA''), ''0'') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = ''SteadyB''), ''0'') AS BValue',
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = ''SteadyB''), ''0'') AS BValue',
 		'
 		project p ',
 		'
@@ -569,11 +569,11 @@
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyA'), '0') AS AValue,
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyA'), '0') AS AValue,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2
-		WHERE p2.ProjectId = p.Id AND p2.Key = 'SteadyB'), '0') AS BValue
+		WHERE p2.ProjectId = p.Id AND p2.isdel=0 AND p2.Key = 'SteadyB'), '0') AS BValue
     FROM    project p  WHERE 
     p.IsShelve = 1
 		AND p.ProjectStatus != 1
