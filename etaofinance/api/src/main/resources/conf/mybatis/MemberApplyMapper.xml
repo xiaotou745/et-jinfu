@@ -14,9 +14,9 @@
 		<result column="ApplyInfo" property="applyinfo" jdbcType="VARCHAR" />
 		<result column="CompanyName" property="companyname" jdbcType="VARCHAR" />
 		<result column="CompanyTitle" property="companytitle" jdbcType="VARCHAR" />
-		<result column="CertifyMaterialName" property="certifyMaterialName"
+		<result column="CertifyMaterialName" property="certifymaterialname"
 			jdbcType="VARCHAR" />
-		<result column="CertifyMaterialUrl" property="certifyMaterialUrl"
+		<result column="CertifyMaterialUrl" property="certifymaterialurl"
 			jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
@@ -88,6 +88,12 @@
 			<if test="companytitle != null">
 				CompanyTitle,
 			</if>
+				<if test="certifymaterialname != null">
+				CertifyMaterialName,
+			</if>
+				<if test="certifymaterialurl != null">
+				CertifyMaterialUrl,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">	
 			<if test="memberid != null">
@@ -120,6 +126,12 @@
 			<if test="companytitle != null">
 				#{companytitle,jdbcType=VARCHAR},
 			</if>
+			<if test="certifymaterialname != null">
+				#{certifymaterialname,jdbcType=VARCHAR},
+			</if>
+			<if test="certifymaterialurl != null">
+				#{certifymaterialurl,jdbcType=VARCHAR},
+			</if>		
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.MemberApply">
