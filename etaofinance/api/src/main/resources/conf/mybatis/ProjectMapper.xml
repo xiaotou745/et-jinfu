@@ -614,4 +614,9 @@
     WHERE 
     p.Id=#{projectid,jdbcType=BIGINT}
 	</select>
+	<!-- 修改项目融资状态  wangchao -->
+	<update id="modifyProjectStatus" parameterType="com.etaofinance.entity.req.ProjectStatusReq">
+		UPDATE project set ProjectStatus=#{aftProjectStatus,jdbcType=INTEGER}
+	      WHERE Id=#{projectId,jdbcType=BIGINT}
+	</update>	
 </mapper>
