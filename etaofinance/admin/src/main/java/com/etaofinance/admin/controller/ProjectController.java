@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.ICommentService;
+import com.etaofinance.api.service.inter.IProjectEnrollService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
@@ -28,9 +29,11 @@ import com.etaofinance.core.enums.ProjectType;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.ParseHelper;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectStrategy;
 import com.etaofinance.entity.ProjectSubscription;
@@ -39,8 +42,10 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.ModifyProjectReq;
+import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedCommentReq;
 import com.etaofinance.entity.req.PagedFeedBackReq;
+import com.etaofinance.entity.req.PagedProjectEnrollReq;
 import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.PagedProjectSubReq;
@@ -72,6 +77,8 @@ public class ProjectController {
 	private IProjectFavoriteService projectFavoriteService;
 	@Autowired
 	private ICommentService commentService;
+	@Autowired
+	private IProjectEnrollService  projectEnrollService;
 	/**
 	 * 项目列表查询页
 	 * 
@@ -362,6 +369,33 @@ public class ProjectController {
 		req.setPublishName(context.getUserName());
 		return projectService.modifyProject(req);
 	}
+
+	@RequestMapping("enrolllist")
+	public ModelAndView buyList() {
+		
+		ModelAndView view = new ModelAndView("adminView");
+		
+		view.addObject("subtitle", "项目管理");
+		
+		view.addObject("currenttitle", "报名项目列表");
+		
+		view.addObject("viewPath", "project/enrolllist");
+		
+		return view;
+	}
+	
+	@RequestMapping("enrolllistdo")
+	public ModelAndView payListDo(PagedProjectEnrollReq req) {
+		
+		ModelAndView view = new ModelAndView("project/enrolllistdo");
+		
+		PagedResponse<ProjectEnroll> listData=projectEnrollService.getProjectEnrollList(req);
+		
+		view.addObject("listData", listData);
+		
+		return view;
+	}
+
 	/**
 	 * 修改项目融资状态  wangchao
 	 * 

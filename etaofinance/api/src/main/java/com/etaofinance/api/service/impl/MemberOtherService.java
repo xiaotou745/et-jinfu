@@ -204,8 +204,7 @@ public class MemberOtherService implements IMemberOtherService{
 		//给缓存设置一个UUID 5分钟 第二步进来的时候验证用
 		String UUIDvalue=UUID.randomUUID().toString();
 		String UUIDkey=String.format(RedissCacheKey.JF_Member_ModifyPayPassWordOne,UUIDvalue);
-		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
-		
+		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);		
 		
 		resultModel.setCode(MemberOtherVerificationPayPwdEnum.Success.value());
 		resultModel.setMsg(MemberOtherVerificationPayPwdEnum.Success.desc());
@@ -266,13 +265,13 @@ public class MemberOtherService implements IMemberOtherService{
 		return resultModel;
 	}
 	
-	/**
-	 * 找回支付密码 第1步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:36:37
-	 * @return
-	 */
+//	/**
+//	 * 找回支付密码 第1步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日20:36:37
+//	 * @return
+//	 */
 	public HttpResultModel<ForgetPayPwdResp> forgetPayPwdOne(@RequestBody  ForgetPayPwdReq req)
 	{
 		HttpResultModel<ForgetPayPwdResp> resultModel = new HttpResultModel<ForgetPayPwdResp>();
@@ -301,7 +300,7 @@ public class MemberOtherService implements IMemberOtherService{
 		// 给缓存设置一个UUID 5分钟 第二步进来的时候验证用
 		String UUIDvalue = UUID.randomUUID().toString();
 		String UUIDkey = String.format(
-				RedissCacheKey.JF_Member_FindPayPassWordOne, UUIDvalue);
+				RedissCacheKey.JF_Member_ModifyPayPassWordOne, UUIDvalue);
 		redisService.set(UUIDkey, UUIDvalue, 60 * 5, TimeUnit.SECONDS);
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
@@ -310,50 +309,9 @@ public class MemberOtherService implements IMemberOtherService{
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
 		return resultModel;
-	}
+}
 	
-	/**
-	 * 找回支付密码 第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:36:45
-	 * @return
-	 */
-	public HttpResultModel<ForgetPayPwdResp> forgetPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
-	{
-		HttpResultModel<ForgetPayPwdResp> resultModel=new HttpResultModel<ForgetPayPwdResp>();	
-		
-		//第一步给返回的UUID
-		String keyOne=String.format(RedissCacheKey.JF_Member_FindPayPassWordOne,req.getCheckKey());
-		String valueOne=redisService.get(keyOne, String.class);
-		if(req.getCheckKey()==null || req.getCheckKey().equals("")||
-			valueOne==null || valueOne.equals("")||
-			!req.getCheckKey().equals(valueOne))		
-		{
-			resultModel.setCode(-1);
-			resultModel.setMsg("验证码错误,请重试!");
-			return resultModel;
-		}
-		
-		//删除第一次给的UUID,防止被重复使用
-		redisService.remove(keyOne);		
 
-		MemberOther memberOther=new MemberOther();
-		memberOther.setMemberid(req.getUserId());
-		String opwd=MD5Util.MD5(req.getPassWord());
-		memberOther.setPaypassword(opwd);		
-		int row=memberOtherDao.updateByMemberIdSelective(memberOther);
-				
-		if(row<=0)
-		{
-			resultModel.setCode(MemberOtherCreatePayPwdEnum.Err.value());
-			resultModel.setMsg(MemberOtherCreatePayPwdEnum.Err.desc());
-			return resultModel;	
-		}
-		resultModel.setCode(MemberOtherCreatePayPwdEnum.Success.value());
-		resultModel.setMsg(MemberOtherCreatePayPwdEnum.Success.desc());
-		return resultModel;
-	}
 
 	/**
 	 * 获取用户信息
@@ -446,5 +404,94 @@ public class MemberOtherService implements IMemberOtherService{
 //		resp.setCode(MemberOtherVerificationPayPwdEnum.Success.value());
 //		resp.setMsg(MemberOtherVerificationPayPwdEnum.Success.desc());
 //		return resp;
+//	}
+	
+//	/**
+//	 * 找回支付密码 第1步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日20:36:37
+//	 * @return
+//	 */
+//	public HttpResultModel<ForgetPayPwdResp> forgetPayPwdOne(@RequestBody  ForgetPayPwdReq req)
+//	{
+//		HttpResultModel<ForgetPayPwdResp> resultModel = new HttpResultModel<ForgetPayPwdResp>();
+//		// 手机验证码
+//		String key = String.format(RedissCacheKey.JF_Member_FindPayPassWord,
+//				req.getPhoneNo());
+//		String value = redisService.get(key, String.class);
+//
+//		if (req.getPhoneNo() == null || req.getVeriCode() == null|| value == null
+//				|| req.getPhoneNo().equals("") || req.getVeriCode().equals("")|| value.equals("") 
+//				||  !req.getVeriCode().equals(value))
+//	     {
+//			resultModel.setCode(-1);
+//			resultModel.setMsg("验证码错误,请重试!");
+//			return resultModel;
+//		}
+//
+//		// 查询会员是否存在
+//		Member member = memberDao.selectByPhoneNo(req.getPhoneNo());
+//		if (member == null) {
+//			// 验证码错误
+//			resultModel.setCode(-1);
+//			resultModel.setMsg("用户不存在!");
+//			return resultModel;
+//		}
+//		// 给缓存设置一个UUID 5分钟 第二步进来的时候验证用
+//		String UUIDvalue = UUID.randomUUID().toString();
+//		String UUIDkey = String.format(
+//				RedissCacheKey.JF_Member_FindPayPassWordOne, UUIDvalue);
+//		redisService.set(UUIDkey, UUIDvalue, 60 * 5, TimeUnit.SECONDS);
+//		resultModel.setCode(1);
+//		resultModel.setMsg("验证通过!");
+//		ForgetPayPwdResp resp = new ForgetPayPwdResp();
+//		resp.setUserID(member.getId());
+//		resp.setCheckKey(UUIDvalue);
+//		resultModel.setData(resp);
+//		return resultModel;
+//	}
+	
+//	/**
+//	 * 找回支付密码 第2步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日20:36:45
+//	 * @return
+//	 */
+//	public HttpResultModel<ForgetPayPwdResp> forgetPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
+//	{
+//		HttpResultModel<ForgetPayPwdResp> resultModel=new HttpResultModel<ForgetPayPwdResp>();	
+//		
+//		//第一步给返回的UUID
+//		String keyOne=String.format(RedissCacheKey.JF_Member_FindPayPassWordOne,req.getCheckKey());
+//		String valueOne=redisService.get(keyOne, String.class);
+//		if(req.getCheckKey()==null || req.getCheckKey().equals("")||
+//			valueOne==null || valueOne.equals("")||
+//			!req.getCheckKey().equals(valueOne))		
+//		{
+//			resultModel.setCode(-1);
+//			resultModel.setMsg("验证码错误,请重试!");
+//			return resultModel;
+//		}
+//		
+//		//删除第一次给的UUID,防止被重复使用
+//		redisService.remove(keyOne);		
+//
+//		MemberOther memberOther=new MemberOther();
+//		memberOther.setMemberid(req.getUserId());
+//		String opwd=MD5Util.MD5(req.getPassWord());
+//		memberOther.setPaypassword(opwd);		
+//		int row=memberOtherDao.updateByMemberIdSelective(memberOther);
+//				
+//		if(row<=0)
+//		{
+//			resultModel.setCode(MemberOtherCreatePayPwdEnum.Err.value());
+//			resultModel.setMsg(MemberOtherCreatePayPwdEnum.Err.desc());
+//			return resultModel;	
+//		}
+//		resultModel.setCode(MemberOtherCreatePayPwdEnum.Success.value());
+//		resultModel.setMsg(MemberOtherCreatePayPwdEnum.Success.desc());
+//		return resultModel;
 //	}
 }

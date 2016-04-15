@@ -447,19 +447,19 @@ public class UserController {
 		return memberOtherService.forgetPayPwdOne(req);
 	}
 
-	/**
-	 * 修改支付密码第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日15:36:56
-	 * @return
-	 */
-	@RequestMapping("forgetpaypwdtwo")
-	@ResponseBody
-	public HttpResultModel<ForgetPayPwdResp> modifyPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
-	{	
-		return memberOtherService.forgetPayPwdTwo(req);
-	}
+//	/**
+//	 * 找回支付密码第2步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日15:36:56
+//	 * @return
+//	 */
+//	@RequestMapping("forgetpaypwdtwo")
+//	@ResponseBody
+//	public HttpResultModel<ForgetPayPwdResp> modifyPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
+//	{	
+//		return memberOtherService.forgetPayPwdTwo(req);
+//	}
 //	
 //	/**
 //	 * 创建支付密码
@@ -552,12 +552,18 @@ public class UserController {
 	 */
 	@RequestMapping("bindemail")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "发送邮箱绑定验证")
 	@RequireLogin
 	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
 	{
+		
+		Long id=UserContext.getCurrentContext(request).getUserInfo().getId();
+		
+		member.setId(id);
+		
 		HttpResultModel<Object> res = null;
 		member.setId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		res = memberService.bindEmail(member);
@@ -573,6 +579,7 @@ public class UserController {
 	 */
 	@RequestMapping("emailbindcallback")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "邮箱绑定回调")

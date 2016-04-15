@@ -593,13 +593,7 @@ public class MeController {
 		Member member=memberService.getById(memberId);
 		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
 		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
-		{						
-//			String basePath = PropertyUtils.getProperty("java.wap.url");
-//			basePath+="/pay/setpaypasswordstep1";		
-//			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
-//			view2.addObject("phone", member.getPhoneno());
-//			return  view2;	
-	
+		{			
 			String basePath = PropertyUtils.getProperty("java.wap.url");
 			basePath+="/me/transfer";		
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
@@ -630,7 +624,8 @@ public class MeController {
 		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
 		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
 		{						
-			String basePath = "/me/transfer";		
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";	
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 			view2.addObject("type", "3");
 			return  view2;			
@@ -661,7 +656,8 @@ public class MeController {
 		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
 		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
 		{						
-			String basePath = "/wap/me/transfer";		
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";			
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 			view2.addObject("type", "3");
 			return  view2;		
@@ -670,36 +666,20 @@ public class MeController {
 		List<BankCard> bandCardList=bankCardService.getListByMemberId(memberId);
 		if(bandCardList==null || bandCardList.size()==0)
 		{
-			String basePath = "/me/transfer";		
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";		
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 			view2.addObject("type", "4");
 			return  view2;		
 		}		
+	    String bankname=bandCardList.get(0).getBankname();
+	    String cardno=bandCardList.get(0).getCardno();
+	    int len=cardno.length()-4;
+	    String cardnoStr="**** **** **** "+cardno.substring(len);  
+		view.addObject("bankname", bankname);	
+		view.addObject("cardnoStr", cardnoStr);
 
-
-		return view;		
-		
-		
-//		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,checkKey);
-//		String value=redisService.get(key, String.class);
-//		ModelAndView view = new ModelAndView("wapView");
-//		view.addObject("currenttitle", "找回密码");
-//		view.addObject("viewPath", "me/retrievepasswordstep2");
-//		if(value==null||value.equals("")||!value.equals(checkKey))
-//		{
-//			ModelAndView view2 = new ModelAndView("wapView");
-//			view2.addObject("currenttitle", "找回密码");
-//			view2.addObject("viewPath", "me/retrievepasswordstep1");
-//			return view2;
-//		}
-//		Member member=memberService.getById(userId);
-//		String phone=member.getPhoneno();
-//		
-//		String sString=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
-//		view.addObject("phoneString", sString);
-//		view.addObject("phone", phone);
-//		view.addObject("checkKey", checkKey);
-//		return view;
+		return view;			
 	}
 	
 	/**绑定银行卡
@@ -731,6 +711,36 @@ public class MeController {
 
 		return view;
 	}	
+	
+	/**
+	 * 支付管理
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("paymanagement")
+	@RequireLogin
+	public ModelAndView paymanagement() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "提现");
+		view.addObject("viewPath", "me/paymanagement");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";	
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "3");
+			return  view2;			
+		}	
+
+		return view;
+	}
 	
 	/******************************************资金账户end*/
 	/**修改邮箱

@@ -79,14 +79,14 @@ public interface IMemberOtherService {
 	 */
 	HttpResultModel<ForgetPayPwdResp> forgetPayPwdOne(@RequestBody  ForgetPayPwdReq req);
 	
-	/**
-	 * 找回支付密码 第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:36:45
-	 * @return
-	 */
-	HttpResultModel<ForgetPayPwdResp> forgetPayPwdTwo(@RequestBody  ForgetPayPwdReq req);	
+//	/**
+//	 * 找回支付密码 第2步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日20:36:45
+//	 * @return
+//	 */
+//	HttpResultModel<ForgetPayPwdResp> forgetPayPwdTwo(@RequestBody  ForgetPayPwdReq req);	
 
     
     /**

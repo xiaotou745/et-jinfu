@@ -14,20 +14,24 @@
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
      Id, MemberId, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, 
     Contacts, CreateName, CreateTime
   </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from projectenroll
     where Id = #{id,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectenroll
     where Id = #{id,jdbcType=BIGINT}
   </delete>
+  
   <insert id="insert" parameterType="com.etaofinance.entity.ProjectEnroll" >
     insert into projectenroll (Id, MemberId, Title, 
       OwnedIndustry, BusinessPlanName, BusinessPlanUrl, 
@@ -38,6 +42,7 @@
       #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
       #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
     insert into projectenroll
     <trim prefix="(" suffix=")" suffixOverrides="," > 
@@ -105,6 +110,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
     update projectenroll
     <set >
@@ -141,6 +147,7 @@
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectEnroll" >
     update projectenroll
     set MemberId = #{memberid,jdbcType=BIGINT},
@@ -155,4 +162,36 @@
       CreateTime = #{createtime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  
+    <sql id="getProjectEnrollListWhere">
+		1=1
+		<if test="title!= null and title!=''">
+			and Title like ''%${title}%''
+		</if>
+		<if test="ownedIndustry !=null and ownedIndustry!=''">
+			and OwnedIndustry like ''%${ownedIndustry}%''
+		</if>
+		<if test="startTime != null and startTime!=''">
+			and CreateTime>=''${startTime}''
+		</if>
+		<if test="endTime != null and endTime!=''">
+			and date_add(''${endTime}'', INTERVAL 1 day)>CreateTime
+		</if>
+	</sql>
+	<select id="getProjectEnrollList" resultType="com.etaofinance.entity.ProjectEnroll"
+		parameterType="com.etaofinance.entity.req.PagedProjectEnrollReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' Id desc ',
+		' a.* ',
+		'projectenroll as a ',
+		'
+		<include refid="getProjectEnrollListWhere" />
+		',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
 </mapper>

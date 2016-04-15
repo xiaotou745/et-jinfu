@@ -27,6 +27,7 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedProjectEnrollReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
 
@@ -114,6 +115,19 @@ public class ProjectEnrollService implements IProjectEnrollService{
 		resp.setCode(ProjectEnrollEnum.Success.value());
 		resp.setMsg(ProjectEnrollEnum.Success.desc());		
 		return resp;
+	}
+
+	@Override
+	public PagedResponse<ProjectEnroll> getProjectEnrollList(
+			PagedProjectEnrollReq req) {
+	
+		
+		PagedResponse<ProjectEnroll> projectEnrollRes = null;
+		
+		
+		projectEnrollRes = projectEnrollDao.getProjectEnrollList(req);
+		
+		return projectEnrollRes;
 	}
 
 
