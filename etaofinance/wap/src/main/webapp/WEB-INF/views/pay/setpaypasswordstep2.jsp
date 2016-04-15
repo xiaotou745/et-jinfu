@@ -9,7 +9,6 @@
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	
 	String checkKey= (String)request.getAttribute("checkKey");
-	//Long userID=(Long)request.getAttribute("userId");
 %>
 
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/pay/set-paypassword-step2.css">

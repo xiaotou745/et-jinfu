@@ -446,19 +446,19 @@ public class UserController {
 		return memberOtherService.forgetPayPwdOne(req);
 	}
 
-	/**
-	 * 修改支付密码第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日15:36:56
-	 * @return
-	 */
-	@RequestMapping("forgetpaypwdtwo")
-	@ResponseBody
-	public HttpResultModel<ForgetPayPwdResp> modifyPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
-	{	
-		return memberOtherService.forgetPayPwdTwo(req);
-	}
+//	/**
+//	 * 找回支付密码第2步
+//	 * @param 
+//	 * @author hulingbo
+//	 * @date 2016年4月13日15:36:56
+//	 * @return
+//	 */
+//	@RequestMapping("forgetpaypwdtwo")
+//	@ResponseBody
+//	public HttpResultModel<ForgetPayPwdResp> modifyPayPwdTwo(@RequestBody  ForgetPayPwdReq req)
+//	{	
+//		return memberOtherService.forgetPayPwdTwo(req);
+//	}
 //	
 //	/**
 //	 * 创建支付密码

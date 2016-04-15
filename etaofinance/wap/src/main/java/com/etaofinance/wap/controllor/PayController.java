@@ -68,13 +68,13 @@ public class PayController {
 	@RequestMapping("setpaypasswordstep1")
 	public ModelAndView setpaypasswordstep1()
 	{
-		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
-		Member member=memberService.getById(memberId);
-		String phone=member.getPhoneno();	
-		
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "设置支付密码");
 		view.addObject("viewPath", "pay/setpaypasswordstep1");		
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		String phone=member.getPhoneno();	
 		view.addObject("phone", phone);	
 		return view;
 	}	
@@ -88,12 +88,10 @@ public class PayController {
 	{
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "设置支付密码");
-		view.addObject("viewPath", "pay/setpaypasswordstep2");
-	
+		view.addObject("viewPath", "pay/setpaypasswordstep2");	
 		view.addObject("checkKey", checkKey);	
 		return view;
-	}
-	
+	}	
 	
 	/**
 	 * 修改支付密码第1个页面
@@ -121,4 +119,22 @@ public class PayController {
 		view.addObject("checkKey", checkKey);	
 		return view;
 	}
+	
+	/**
+	 * 找回支付密码第1个页面
+	 * @return
+	 */
+	@RequestMapping("retrievepaypasswordstep1")
+	public ModelAndView retrievepaypasswordstep1()
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "找回支付密码");
+		view.addObject("viewPath", "pay/retrievepaypasswordstep1");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		String phone=member.getPhoneno();	
+		view.addObject("phone", phone);	
+		return view;
+	}	
 }
