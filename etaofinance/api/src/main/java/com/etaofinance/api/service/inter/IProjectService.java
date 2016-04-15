@@ -10,6 +10,7 @@ import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
+import com.etaofinance.entity.req.ProjectStatusReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
 public interface IProjectService {
@@ -66,4 +67,8 @@ public interface IProjectService {
 	 * @return
 	 */
 	ProjectModel getProjectDetail(Long projectid);
+	/*
+	 * 修改融资状态 wangchao
+	 */
+	int modifyProjectStatus(ProjectStatusReq req);
 }

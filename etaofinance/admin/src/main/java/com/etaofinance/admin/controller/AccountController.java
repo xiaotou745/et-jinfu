@@ -47,7 +47,8 @@ public class AccountController {
 	private IAccountAuthService accountAuthService;
 	@Autowired
 	private IMenuInfoService menuService;
-
+	@Autowired
+	HttpServletRequest request;
 	@Autowired
 	private IRoleInfoService authorityRoleService;
 	@RequestMapping("list")
@@ -107,6 +108,7 @@ public class AccountController {
 		account.setOptname(context.getUserName());
 		return accountInfoService.update(account);
 	}
+	
 	@RequestMapping("getuserinfo")
 	@ResponseBody
 	public AccountInfo getUserInfo(HttpServletRequest request,int userId) {
@@ -200,5 +202,21 @@ public class AccountController {
 		UserContext context = UserContext.getCurrentContext(request);
 		req.setUserId(context.getId());
 		return accountInfoService.updatePwd(req);
+	}
+	
+	@RequestMapping("modifypwdpg")
+	public ModelAndView modifyPwdpg() {
+		
+		ModelAndView view = new ModelAndView("adminView");
+		
+		view.addObject("subtitle", "设置");
+		
+		view.addObject("currenttitle", "修改密码");
+		
+		view.addObject("viewPath", "member/modifypwd");
+		
+		view.addObject("currentUser",accountInfoService.getByID(UserContext.getCurrentContext(request).getId()));
+		
+		return view;
 	}
 }

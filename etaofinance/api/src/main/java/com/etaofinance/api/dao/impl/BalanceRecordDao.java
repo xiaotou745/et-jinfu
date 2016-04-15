@@ -96,6 +96,11 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 		return balance;
 	}
 
+	@Override
+	public int insertTran(BalanceRecord balance) {
+		return this.getMasterSqlSessionUtil().insert("IBalanceRecordDao.insertTran",balance);
+	}
+
 	
 
 }

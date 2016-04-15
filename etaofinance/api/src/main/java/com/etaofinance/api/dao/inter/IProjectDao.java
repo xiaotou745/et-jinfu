@@ -10,6 +10,7 @@ import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
+import com.etaofinance.entity.req.ProjectStatusReq;
 
 public interface IProjectDao {
     int deleteByPrimaryKey(Long id);
@@ -58,4 +59,6 @@ public interface IProjectDao {
      * @return
      */
 	List<ProjectModel> getNoviceProject();
+
+	int modifyProjectStatus(ProjectStatusReq req);
 }

@@ -1,6 +1,7 @@
 package com.etaofinance.api.service.impl;
 
 import java.nio.file.Path;
+import java.sql.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import com.etaofinance.api.dao.inter.IMemberDao;
 import com.etaofinance.api.dao.inter.IMemberOtherDao;
 import com.etaofinance.api.dao.inter.IProjectDao;
 import com.etaofinance.api.dao.inter.IProjectImageDao;
+import com.etaofinance.api.dao.inter.IProjectLogDao;
 import com.etaofinance.api.dao.inter.IProjectStrategyDao;
 import com.etaofinance.api.dao.inter.IProjectSubscriptionDao;
 import com.etaofinance.api.service.inter.IProjectService;
@@ -23,12 +25,13 @@ import com.etaofinance.core.enums.ProjectStatus;
 import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
-import com.etaofinance.core.util.PropertyUtils;
+import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectImage;
+import com.etaofinance.entity.ProjectLogModel;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -39,6 +42,7 @@ import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
+import com.etaofinance.entity.req.ProjectStatusReq;
 import com.etaofinance.entity.req.SubProjectReq;
 
 @Service
@@ -57,6 +61,8 @@ public class ProjectService implements IProjectService {
 	private IProjectSubscriptionDao projectSubscriptionDao;
 	@Autowired
 	private IBalanceRecordDao blanceRecordDao;
+	@Autowired
+	private IProjectLogDao projectLogDao;
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -240,6 +246,11 @@ public class ProjectService implements IProjectService {
 		{
 			throw new TransactionalRuntimeException("认购失败!");
 		}
+		//您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
+		//String content="您于"+ParseHelper.ToDateString(Date)+"认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177";
+		
+		//发送认购短信
+		//SmsUtils.sendSMS(m.getPhoneno(), content);
 		HttpResultModel<Object> rModel = new HttpResultModel<Object>();
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");
@@ -289,10 +300,26 @@ public class ProjectService implements IProjectService {
 		}
 		return 0;
 	}
-
+	/*
+	 * 项目审核 通过or拒绝 wangchao
+	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public int audit(ProjectAuditReq req) {
-		return projectDao.audit(req);
+		//记日志，更新审核状态
+		ProjectLogModel pLogModel = new ProjectLogModel();
+		pLogModel.setProjectId(req.getProjectId());
+		pLogModel.setIsDel(0);
+		pLogModel.setOperater(req.getAuditName());
+		pLogModel.setRemark(req.getLogRemark());
+		int a = projectLogDao.insert(pLogModel);
+		if (a > 0) {
+			int b=projectDao.audit(req);
+			if (b > 0) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 	/**
@@ -314,31 +341,42 @@ public class ProjectService implements IProjectService {
 			// 2.修改策略表 projectstrategy 先删除原来的策略 在插入新的策略
 			int upDel = projectStrategyDao.updateDeleteByProjectId(projectId); // 策略表打删除标记
 			if (upDel > 0) {
-				req.getProjectStrategyList().forEach(action -> action.setProjectid(projectId));
-				int proStrategyResult = projectStrategyDao.insertList(req.getProjectStrategyList()); // 插入新的策略
+				req.getProjectStrategyList().forEach(
+						action -> action.setProjectid(projectId));
+				int proStrategyResult = projectStrategyDao.insertList(req
+						.getProjectStrategyList()); // 插入新的策略
 				// 3.修改项目图片表 projectimage
 				if (proStrategyResult > 0) {
-					int updeImg=0;
-					//先删除的原来的图片，在插入新的图片
-					List<ModifyProjectImg> modifyProjectImgs = req.getModifyProjectImgList();
-					if (modifyProjectImgs != null&& modifyProjectImgs.size() > 0) {
-						List<ModifyProjectImg> updateImgs = modifyProjectImgs.stream().filter(t -> t.getModifyType() == 2).collect(Collectors.toList());
+					int updeImg = 0;
+					// 先删除的原来的图片，在插入新的图片
+					List<ModifyProjectImg> modifyProjectImgs = req
+							.getModifyProjectImgList();
+					if (modifyProjectImgs != null
+							&& modifyProjectImgs.size() > 0) {
+						List<ModifyProjectImg> updateImgs = modifyProjectImgs
+								.stream().filter(t -> t.getModifyType() == 2)
+								.collect(Collectors.toList());
 						if (updateImgs != null && updateImgs.size() > 0) {
-							updeImg = projectImageDao.updateDeleteById(updateImgs);
+							updeImg = projectImageDao
+									.updateDeleteById(updateImgs);
 						}
-					}else{
-						updeImg=1;
+					} else {
+						updeImg = 1;
 					}
-					int insImg=0;
-					//插入新的图片
-					List<ProjectImage> projectImages = req.getProjectImageList();
+					int insImg = 0;
+					// 插入新的图片
+					List<ProjectImage> projectImages = req
+							.getProjectImageList();
 					if (projectImages != null && projectImages.size() > 0) {
-						req.getProjectImageList().forEach(action -> action.setProjectid(req.getProject().getId()));
-						insImg = projectImageDao.insertList(req.getProjectImageList());
-					}else{
-						insImg=1;
+						req.getProjectImageList().forEach(
+								action -> action.setProjectid(req.getProject()
+										.getId()));
+						insImg = projectImageDao.insertList(req
+								.getProjectImageList());
+					} else {
+						insImg = 1;
 					}
-					if(updeImg>0 && insImg>0){
+					if (updeImg > 0 && insImg > 0) {
 						return 1;
 					}
 				}
@@ -346,11 +384,32 @@ public class ProjectService implements IProjectService {
 		}
 		return 0;
 	}
+
 	/**
 	 * 获取项目详情
 	 */
 	@Override
 	public ProjectModel getProjectDetail(Long projectid) {
 		return projectDao.getProjectDetail(projectid);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	public int modifyProjectStatus(ProjectStatusReq req) {
+		// 1.修改项目表project融资状态
+		int a = projectDao.modifyProjectStatus(req);
+		// 2.projectlog添加日志记录
+		if (a > 0) {
+			ProjectLogModel pLogModel = new ProjectLogModel();
+			pLogModel.setProjectId(req.getProjectId());
+			pLogModel.setIsDel(0);
+			pLogModel.setOperater(req.getOperater());
+			pLogModel.setRemark(req.getLogRemark());
+			int b = projectLogDao.insert(pLogModel);
+			if (b > 0) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

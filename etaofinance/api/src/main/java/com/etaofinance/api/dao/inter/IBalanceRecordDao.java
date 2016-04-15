@@ -32,4 +32,6 @@ public interface IBalanceRecordDao {
 
 
 	BalanceRecord GetLatestedModelByMbId(Long memberId);
+
+	int insertTran(BalanceRecord balance);
 }

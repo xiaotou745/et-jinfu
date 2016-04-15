@@ -48,11 +48,21 @@
 			<a href="<%=basePath%>/project/projectsub?id=<%=list.get(i).getId()%>">认投</a>
 			<a href="<%=basePath%>/project/favorite?id=<%=list.get(i).getId()%>">关注</a>
 			<a href="<%=basePath%>/project/comment?id=<%=list.get(i).getId()%>">交流</a>
-			<a href="<%=basePath%>/?projectid=<%=list.get(i).getId()%>">详情</a>
-			<a href="javascript:void(0)" onclick="setstatus(<%=list.get(i).getId()%>,1)">修改状态</a>
 			<% if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
 				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改详情</a>
-			<% } %>	
+			<% } %>
+			<%if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
+				<a href="javascript:void(0)" onclick="showRefuseDiv(<%=list.get(i).getId()%>)">不通过</a>
+			<%} %>
+			<%if(list.get(i).getProjectstatus()==ProjectStatus.Success.value()){ %>
+				<a href="javascript:void(0)" onclick="investFail(<%=list.get(i).getId()%>)">融资失败</a>
+			<%} %>
+			<%if(list.get(i).getProjectstatus()==ProjectStatus.Financeing.value()){ %>
+				<a href="javascript:void(0)" onclick="hideProject(<%=list.get(i).getId()%>)">隐藏</a>
+			<%} %>
+			<%if(list.get(i).getProjectstatus()==ProjectStatus.Preheating.value()){ %>
+				<a href="javascript:void(0)" onclick="showProject(<%=list.get(i).getId()%>)">显示</a>
+			<%} %>
 			</td>
 		</tr>
 		<%

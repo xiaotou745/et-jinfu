@@ -551,11 +551,17 @@ public class UserController {
 	 */
 	@RequestMapping("bindemail")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "发送邮箱绑定验证")
 	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
 	{
+		
+		Long id=UserContext.getCurrentContext(request).getUserInfo().getId();
+		
+		member.setId(id);
+		
 		HttpResultModel<Object> res = null;
 		
 		res = memberService.bindEmail(member);
@@ -571,6 +577,7 @@ public class UserController {
 	 */
 	@RequestMapping("emailbindcallback")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "邮箱绑定回调")
