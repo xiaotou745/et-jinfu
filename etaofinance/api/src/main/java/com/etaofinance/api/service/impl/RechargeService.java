@@ -144,13 +144,12 @@ public class RechargeService implements IRechargeService {
 		charge.setNo(uuid.toString());
 
 		// 2 insert balancerecord
-		BalanceRecord balance = balanceRecordDao
-				.GetLatestedModelByMbId(memberId);
+		BalanceRecord balance =new BalanceRecord();
 
 		balance.setId(null);
-		balance.setAmount(balance.getAfteramount());
-		balance.setAfteramount(balance.getAmount() + amount);
-
+		balance.setAmount(amount);
+		balance.setAfteramount(amount);
+		balance.setMemberid(memberId);
 		balance.setRemark("充值流水");
 		balance.setTypeid((short) BalanceRecordType.Recharge.value());
 		balance.setRelationno(uuid.toString());
@@ -159,12 +158,11 @@ public class RechargeService implements IRechargeService {
 		// 3 update memberother
 		int insertRechargeRes = this.insertSelective(charge);
 		if (0 == insertRechargeRes) {
-
 			throw new TransactionalRuntimeException("充值表异常");
-			
 		}
 
-		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
+		int insertBalanceRes = balanceRecordDao.insertTran(balance);
+		
 		if (0 == insertBalanceRes) {
 
 			throw new TransactionalRuntimeException("流水表异常");

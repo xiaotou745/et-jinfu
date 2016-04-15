@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +19,7 @@ import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.FeedBack;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberApply;
+import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.impl.BalanceRecordService;
 import com.etaofinance.api.service.inter.IBalanceRecordService;
@@ -26,19 +28,24 @@ import com.etaofinance.api.service.inter.IFeedBackService;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.api.service.inter.IPublicProvinceCityService;
+import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberApplyAuditModel;
 import com.etaofinance.entity.domain.MemberApplyInvestModel;
 import com.etaofinance.entity.domain.MemberModel;
 import com.etaofinance.entity.req.MemberApplyAuditReq;
+import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.PagedFeedBackReq;
 import com.etaofinance.entity.req.PagedMemberBalanceRecordReq;
 import com.etaofinance.entity.req.ModifyMemberReq;
 import com.etaofinance.entity.req.PagedMemberReq;
+import com.etaofinance.entity.req.PagedProjectEnrollReq;
 
 @Controller
 @RequestMapping("member")
 public class MemberController {
+
+	
 	@Autowired
 	private IMemberService memberService;	
 	@Autowired
@@ -235,5 +242,10 @@ public class MemberController {
 		model.addObject("listData",memberBalanceRecord);
 		return model;
 	}
+	
+	
+
+	
+	
 	
 }
