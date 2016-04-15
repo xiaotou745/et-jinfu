@@ -79,8 +79,7 @@ public class WithdrawformService implements IWithdrawformService{
 		}		
 		record.setWithwardno(OrderNoHelper.generateOrderCode(record.getMemberid().intValue()));
 		record.setStatus((short)1);
-		record.setCreatetime(new Date());			 	
-		record.setAfteramount(0.0F);
+		record.setCreatetime(new Date());		 	
 		record.setAccounttype("1");
 		//临时
 		record.setAccountno("x000000001");		

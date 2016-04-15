@@ -79,6 +79,11 @@ public class WithdrawformDao extends DaoBase implements IWithdrawformDao{
 		return getReadOnlySqlSessionUtil().selectPageList("IWithdrawformDao.getWithdrawList", req);
 	}
 
+	@Override
+	public double  GetWithdrawPendingAmountByMbId(Long memberId)
+	{
+		return getMasterSqlSessionUtil().selectOne("IWithdrawformDao.GetWithdrawPendingAmountByMbId",memberId);
+	}
 
 
 }

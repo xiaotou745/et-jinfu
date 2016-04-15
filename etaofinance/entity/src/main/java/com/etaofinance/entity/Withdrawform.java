@@ -10,9 +10,7 @@ public class Withdrawform {
     private String withwardno;
 
     private Float amount;
-
-    private Float afteramount;
-
+    
     private Short status;
 
     private String remark;
@@ -63,15 +61,7 @@ public class Withdrawform {
     public void setAmount(Float amount) {
         this.amount = amount;
     }
-
-    public Float getAfteramount() {
-        return afteramount;
-    }
-
-    public void setAfteramount(Float afteramount) {
-        this.afteramount = afteramount;
-    }
-
+   
     public Short getStatus() {
         return status;
     }
