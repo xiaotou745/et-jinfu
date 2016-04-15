@@ -31,6 +31,7 @@
 	int isLogin=member==null?0:1;//是否登录
 	int isTzr=member==null?0:(member.getLevel()>1?1:0);//是否投资人
 	Long myid=member==null?0:member.getId();
+	int isLead=member==null?0:(member.getLevel()==3?1:0);//是否领头人
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/detail.css">
@@ -212,31 +213,29 @@
                 	%>
                 	<div class="detail-head-list container">
                         <ul>
-                            <li>
-                                <p>马化腾</p>
-                                <p class="head-list-one">领投人</p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
+                        	<%if(subList!=null&&subList.size()>0)
+                        	{
+                        		for(int i=0;i<subList.size();i++)
+                        		{
+                        			%>
+                        			<li>
+                                	<p><%=subList.get(i).getMemberName()%></p>
+                                	<%=subList.get(i).getIsLead()==1?"<p class=\"head-list-one\">领投人</p>":"<p></p>"%>
+                                	<p>认投金额:<b>￥<%=subList.get(i).getAmount() %></b>
+                                	<span><%=subList.get(i).getCreateDate()%></span></p>
+                            		</li>
+                        			<%
+                        		}
+                        		
+                        	}else{
+                        		
+                        		%>
+                        		<li>
+                                	暂无认购记录
+                            	</li>
+                        		<%
+                        	}%>
+                            
                         </ul>
                     </div>
                 	<%}
@@ -252,9 +251,23 @@
         <div class="foot-one">
             <a href="###"></a><b>225</b></div>
         <!-- 按钮以及样式 按钮认证和我要领头是默认样式、成功按钮样式名为‘two-me’、预热按钮样式名为'two-you'-->
-        <div class="foot-two">
-            <button disabled>认证</button>
-        </div>
+       		<div class="foot-two">
+			<%
+			if(detaiModel.getProjectstatus()==2&&isLead==1)
+			{//领头人+预热
+				 
+				 //<button disabled>认证</button>
+			     
+				
+			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
+			{//购买中 +投资人
+				
+			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
+			{//预热中+投资中+非投资人
+				
+			}
+			%>        
+         	</div>
     </footer>
     
         </div>
