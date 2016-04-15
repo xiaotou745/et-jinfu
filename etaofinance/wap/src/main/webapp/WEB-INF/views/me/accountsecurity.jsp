@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		</a>
-		<a href="#">
+		<a href="<%=basePath%>/me/modifypassword">
 		<div class="text">
 			<div class="title">密码</div>
 			<div class="content">
