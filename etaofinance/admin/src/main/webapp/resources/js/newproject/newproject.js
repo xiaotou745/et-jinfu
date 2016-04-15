@@ -40,8 +40,7 @@ function SaveChek() {
             $('#projectType1A').focus();
             return false;
         }
-        var p1b = $('#projectType1B').val();
-        alert(p1b.length);
+        var p1b = $('#projectType1B').val();         
         if (p1b.length != 0 && !IsDouble(p1b)) {
             alert('请输入正确的收益比例!');
             $('#projectType1B').focus();
@@ -50,14 +49,13 @@ function SaveChek() {
     } else//风险性
     {
         var p2a = $('#projectType2A').val();
-        var p2b = $('#projectType2B').val();
         if (!IsDouble(p2a)) {
             alert('请输入正确的收益比例!');
             $('#projectType2A').focus();
             return false;
         }
-        var p1b = $('#projectType1B').val();
-        if (p1b.length != 0 && !IsDouble(p2b)) {
+        var p2b = $('#projectType2B').val();
+        if (p2b.length != 0 && !IsDouble(p2b)) {
             alert('请输入正确的收益比例!');
             $('#projectType2B').focus();
             return false;

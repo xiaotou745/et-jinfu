@@ -20,6 +20,7 @@ import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.enums.ADVertEnum;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -77,17 +78,12 @@ public class BankCardService implements IBankCardService{
 			resp.setCode(BankCardEnum.CardNoIsErr.value());
 			resp.setMsg(BankCardEnum.CardNoIsErr.desc());
 			return resp;			
-		}
-		if(record.getCardname() ==null || record.getCardname().equals(""))
-		{	
-			resp.setCode(BankCardEnum.CardNameIsNull.value());
-			resp.setMsg(BankCardEnum.CardNameIsNull.desc());
-			return resp;			
-		}	
+		}		
 		
 		record.setCreatetime(new Date());
-		record.setCreatename("admin");
-		record.setIsdel(false);	  		
+		record.setCreatename(record.getCreatename());
+		record.setIsdel(false);
+		record.setCardname("");
 		int row= bankCardDao.insert(record);		
 		if(row<=0)
 		{
@@ -95,6 +91,10 @@ public class BankCardService implements IBankCardService{
 			resp.setMsg(BankCardEnum.Err.desc());
 			return resp;	
 		}
+		
+		//跳转我的账户余额
+        String basePath = PropertyUtils.getProperty("java.wap.url");
+        resp.setUrl(basePath + "/me/accountblance");	
 		resp.setCode(BankCardEnum.Success.value());
 		resp.setMsg(BankCardEnum.Success.desc());		
 		return resp;

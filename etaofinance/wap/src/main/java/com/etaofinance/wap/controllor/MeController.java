@@ -715,6 +715,7 @@ public class MeController {
 			return  view2;		
 		}	
 
+		view.addObject("truename", member.getTruename());	
 		return view;
 	}	
 	
