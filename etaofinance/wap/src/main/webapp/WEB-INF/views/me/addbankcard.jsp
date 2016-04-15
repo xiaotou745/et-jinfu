@@ -7,6 +7,8 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	
+	String truename= (String)request.getAttribute("truename");	
 %>
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/add-bankcard.css">
       
@@ -22,7 +24,7 @@
 	<section class="container bg">
 		<div class="label-input">
 			<label>持卡人</label>
-			<input type="text" value="宋瑞轩" disabled />
+			<input type="text" value="<%=truename %>" disabled />
 		</div>
 		<div class="label-input" data-role="bank">
 			<label>银行</label>
@@ -38,8 +40,8 @@
 			<button disabled data-role="submit">确认</button>
 		</div>
 	</section>
-	<input type="hidden" name="bankid" data-role="bankid" value="初始值"/>
-	<input type="hidden" name="bankname" data-role="bankname" value="初始值"/>
+	<input type="hidden" name="bankid" data-role="bankid" value="1"/>
+	<input type="hidden" name="bankname" data-role="bankname" value="农业银行"/>
 	</form>
 	<div class="popup hide">
             <div class="popup-title">
@@ -47,10 +49,10 @@
             </div>
             <div class="popup-content">
                 <div class="content-title">选择银行</div>
-                <div class="item active" data-id="" data-name=""><span>农业银行</span></div>
-                <div class="item" data-id="" data-name=""><span>交通银行</span></div>
-                <div class="item" data-id="" data-name=""><span>建设银行</span></div>
-                <div class="item" data-id="" data-name=""><span>招商银行</span></div>
+                <div class="item active" data-id="1" data-name="农业银行"><span>农业银行</span></div>
+                <div class="item" data-id="2" data-name="交通银行"><span>交通银行</span></div>
+                <div class="item" data-id="3" data-name="建设银行"><span>建设银行</span></div>
+                <div class="item" data-id="4" data-name="招商银行"><span>招商银行</span></div>
             </div>
         </div>
 

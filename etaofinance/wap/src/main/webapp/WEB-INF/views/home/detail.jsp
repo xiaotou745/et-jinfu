@@ -13,6 +13,7 @@
 <%
 	//网站跟地址
 	String basePath = PropertyUtils.getProperty("java.wap.url");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	//当前用户
@@ -31,21 +32,24 @@
 	int isLogin=member==null?0:1;//是否登录
 	int isTzr=member==null?0:(member.getLevel()>1?1:0);//是否投资人
 	Long myid=member==null?0:member.getId();
+	int isLead=member==null?0:(member.getLevel()==3?1:0);//是否领头人
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/detail.css">
     <div class="g-wrap">
         <div class="g-views">
             
-<ul class="list-nav hide" data-role="hide-tabs">
+			<ul class="list-nav hide" data-role="hide-tabs">
                 <li class="nav-on" data-tabindex="0">项目概况</li>
                 <li data-tabindex="1">回报说明</li>
                 <li data-tabindex="2">项目交流</li>
                 <li data-tabindex="3">认投情况</li>
             </ul>
+   <section class="content-wrap">
+   
    <section class="content">
    		 <div class="detail-banner">
-        <p><span><img src="<%=detaiModel.getProjectimage()%>"></span>
+        <p><span><img src="<%=imgurl+detaiModel.getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/detail/index_<%=detaiModel.getTypeid()==1?"6":"7"%>.png"></b></p>
     </div>
     <div class="detail-one">
@@ -93,28 +97,30 @@
             </ul>
             <div class="panes con">
                 <div class="pane" data-panelindex="0">
-                    <%
+                   <ul> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
                     	if(imgList.get(i).getTypeid()==12)
                     	{%>
-                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<li><img src="<%=imgurl+imgList.get(i).getUrl()%>"></li>
                     	<%}
                     }
                     %>
+                    </ul>
                 </div>
                 <div class="pane hide" data-panelindex="1">
-                     <%
+                    <ul> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
                     	if(imgList.get(i).getTypeid()==22)
                     	{%>
-                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<li><img src="<%=imgurl+imgList.get(i).getUrl()%>"></li>
                     	<%}
                     }
                     %>
+                    </ul>
                 </div>
                 <div class="pane hide" data-panelindex="2">
                 	<%
@@ -212,31 +218,29 @@
                 	%>
                 	<div class="detail-head-list container">
                         <ul>
-                            <li>
-                                <p>马化腾</p>
-                                <p class="head-list-one">领投人</p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
-                            <li>
-                                <p>马**</p>
-                                <p></p>
-                                <p>认投金额:<b>￥50000.00</b><span>2015.06.29</span></p>
-                            </li>
+                        	<%if(subList!=null&&subList.size()>0)
+                        	{
+                        		for(int i=0;i<subList.size();i++)
+                        		{
+                        			%>
+                        			<li>
+                                	<p><%=subList.get(i).getMemberName()%></p>
+                                	<%=subList.get(i).getIsLead()==1?"<p class=\"head-list-one\">领投人</p>":"<p></p>"%>
+                                	<p>认投金额:<b>￥<%=subList.get(i).getAmount() %></b>
+                                	<span><%=subList.get(i).getCreateDate()%></span></p>
+                            		</li>
+                        			<%
+                        		}
+                        		
+                        	}else{
+                        		
+                        		%>
+                        		<li>
+                                	暂无认购记录
+                            	</li>
+                        		<%
+                        	}%>
+                            
                         </ul>
                     </div>
                 	<%}
@@ -248,13 +252,26 @@
     </div>
 
    </section>
+   </section>
     <footer class="foot-list">
         <div class="foot-one">
             <a href="###"></a><b>225</b></div>
         <!-- 按钮以及样式 按钮认证和我要领头是默认样式、成功按钮样式名为‘two-me’、预热按钮样式名为'two-you'-->
-        <div class="foot-two">
-            <button disabled>认证</button>
-        </div>
+       		<div class="foot-two">
+			<%
+			if(detaiModel.getProjectstatus()==2&&isLead==1)
+			{//领头人+预热
+				 %><a href="#"><button disabled>领投</button></a><% 
+				 
+			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
+			{//购买中 +投资人
+				%><a href="#"><button disabled>认购</button></a><% 
+			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
+			{//预热中+投资中+非投资人
+				%><a href="#"><button disabled>认证</button></a><% 
+			}
+			%>        
+         	</div>
     </footer>
     
         </div>

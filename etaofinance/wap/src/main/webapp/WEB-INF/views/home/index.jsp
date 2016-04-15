@@ -13,6 +13,7 @@
 	List<ADVert> adlist=(ArrayList<ADVert>)request.getAttribute("ADLIST");
 	List<ProjectModel> proList=(ArrayList<ProjectModel>)request.getAttribute("proList");
 	List<ProjectModel> itemList=(ArrayList<ProjectModel>)request.getAttribute("itemList");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/index.css">
@@ -91,7 +92,7 @@ if(itemList!=null&&itemList.size()>0)
 <div class="container-one">
     <div class="one-list container">
         <h3><b><%=itemList.get(i).getProjectname()%></b><span><%=itemList.get(i).getProjectStatusStr()%></span></h3>
-        <p><span><img src="<%=itemList.get(i).getProjectimage()%>"></span>
+        <p><span><img src="<%=imgurl+itemList.get(i).getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_<%=itemList.get(i).getTypeid()==1?"6":"7"%>.png"></b>
             <div class="progress">
                 <span class="bar" style="width:<%=itemList.get(i).getSchedule()%>%">
