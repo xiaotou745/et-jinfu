@@ -556,7 +556,6 @@ public class UserController {
 	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "发送邮箱绑定验证")
-	@RequireLogin
 	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
 	{
 		
