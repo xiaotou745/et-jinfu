@@ -13,6 +13,7 @@
 <%
 	//网站跟地址
 	String basePath = PropertyUtils.getProperty("java.wap.url");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	//当前用户
@@ -38,15 +39,17 @@
     <div class="g-wrap">
         <div class="g-views">
             
-<ul class="list-nav hide" data-role="hide-tabs">
+			<ul class="list-nav hide" data-role="hide-tabs">
                 <li class="nav-on" data-tabindex="0">项目概况</li>
                 <li data-tabindex="1">回报说明</li>
                 <li data-tabindex="2">项目交流</li>
                 <li data-tabindex="3">认投情况</li>
             </ul>
+   <section class="content-wrap">
+   
    <section class="content">
    		 <div class="detail-banner">
-        <p><span><img src="<%=detaiModel.getProjectimage()%>"></span>
+        <p><span><img src="<%=imgurl+detaiModel.getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/detail/index_<%=detaiModel.getTypeid()==1?"6":"7"%>.png"></b></p>
     </div>
     <div class="detail-one">
@@ -94,28 +97,30 @@
             </ul>
             <div class="panes con">
                 <div class="pane" data-panelindex="0">
-                    <%
+                   <ul> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
                     	if(imgList.get(i).getTypeid()==12)
                     	{%>
-                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<li><img src="<%=imgurl+imgList.get(i).getUrl()%>"></li>
                     	<%}
                     }
                     %>
+                    </ul>
                 </div>
                 <div class="pane hide" data-panelindex="1">
-                     <%
+                    <ul> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
                     	if(imgList.get(i).getTypeid()==22)
                     	{%>
-                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<li><img src="<%=imgurl+imgList.get(i).getUrl()%>"></li>
                     	<%}
                     }
                     %>
+                    </ul>
                 </div>
                 <div class="pane hide" data-panelindex="2">
                 	<%
@@ -247,6 +252,7 @@
     </div>
 
    </section>
+   </section>
     <footer class="foot-list">
         <div class="foot-one">
             <a href="###"></a><b>225</b></div>
@@ -255,16 +261,14 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
+				 %><a href="#"><button disabled>领投</button></a><% 
 				 
-				 //<button disabled>认证</button>
-			     
-				
 			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
 			{//购买中 +投资人
-				
+				%><a href="#"><button disabled>认购</button></a><% 
 			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
 			{//预热中+投资中+非投资人
-				
+				%><a href="#"><button disabled>认证</button></a><% 
 			}
 			%>        
          	</div>
