@@ -23,12 +23,12 @@
 			</div>
 		</div>
 		</a>
-		<a href="#">
+		<a href="<%=basePath%>/me/modifyemail">
 		<div class="text">
 			<div class="title">邮箱</div>
 			<div class="content">
 			<%
-			if(member.getEmail()==null || member.getEmail().equals(""))
+			if(member.getEmail()!=null&&!member.getEmail().equals(""))
 			{			
 			%>
 			<span><%=member.getEmail()%></span>

@@ -687,30 +687,20 @@ public class MemberService implements IMemberService {
 
 		bindRes.setCode(HttpReturnRnums.Fail.value());
 		bindRes.setMsg(HttpReturnRnums.Fail.desc());
-
 		// 检查 邮箱是否已经被绑定
 		Member member = memberDao.selectByemail(email);
-
 		if (null != member) {
-			bindRes.setData("该邮箱已经被绑定");
+			bindRes.setMsg("该邮箱已被绑定!");
 			return bindRes;
 		}
-
-		// 一串链接
-		// 后续  进行资源文件配置
-	//	String idAndEmail = AES.aesEncrypt(id+"-"+email);
 		String idAndEmail = id+"-"+email;
 		
-		String emailContent = PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
-		//String emailContent = "http://localhost:8080/wap/user/emailbindcallback?idAndEmail="+idAndEmail;
+		String emailContent ="请点击链接进行邮箱绑定:"+PropertyUtils.getProperty("java.wap.url")+ PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
 		// 发送邮箱
 		SystemUtils.sendEmail("易宝众筹绑定邮箱验证", emailContent, email);
-
 		bindRes.setCode(HttpReturnRnums.Success.value());
-		bindRes.setMsg(HttpReturnRnums.Success.desc());
-		
-		bindRes.setData("已经发送邮箱绑定");
-
+		bindRes.setMsg("已经发送邮箱绑定");
+		bindRes.setUrl(PropertyUtils.getProperty("java.wap.url")+"/me/accountsecurity");
 		return bindRes;
 
 	}
@@ -721,47 +711,37 @@ public class MemberService implements IMemberService {
 	@Override
 	public HttpResultModel<Object> bindEmailCallBk(String idAndEmail) {
 
+		
 		HttpResultModel<Object> bindEmailCbRes = new HttpResultModel<Object>();
-
 		bindEmailCbRes.setCode(HttpReturnRnums.Fail.value());
 		bindEmailCbRes.setMsg(HttpReturnRnums.Fail.desc());
 		
 		if (null == idAndEmail || 0 >= idAndEmail.length()) {
-
-			bindEmailCbRes.setData("参数异常");
-
+			bindEmailCbRes.setMsg("参数异常");
 			return bindEmailCbRes;
 		}
-		// 处理 id email
-		// 更新对应会员的邮箱
-	//	idAndEmail  = AES.aesDecrypt(idAndEmail);
-		
 		String[] strs = idAndEmail.split("-");
 
-		if (null == strs || 2 != strs.length) {
-			
-			bindEmailCbRes.setData("参数异常");
-			
+		if (null == strs || 2 != strs.length) {		
+			bindEmailCbRes.setMsg("参数异常");
 			return bindEmailCbRes;
 		}
-
 		Member memberModel = new Member();
-
 		memberModel.setId((long) Integer.parseInt(strs[0]));
 
 		memberModel.setEmail(strs[1]);
-
-		int ibindEmailCbRes = memberDao
-				.updateByPrimaryKeySelective(memberModel);
-
+		Member member=this.selectByEmail(strs[1]);
+		if(member!=null)
+		{
+			bindEmailCbRes.setMsg("该邮箱已被绑定,请重新修改!");
+			return bindEmailCbRes;
+		}
+		int ibindEmailCbRes = memberDao.updateByPrimaryKeySelective(memberModel);
 		if (0 == ibindEmailCbRes) {
-			bindEmailCbRes.setData("绑定失败");
+			bindEmailCbRes.setMsg("绑定失败");
 		}
 		bindEmailCbRes.setCode(HttpReturnRnums.Success.value());
-		bindEmailCbRes.setMsg(HttpReturnRnums.Success.desc());
-
-		bindEmailCbRes.setData("绑定成功");
-
+		bindEmailCbRes.setMsg("绑定成功");
 		return bindEmailCbRes;
 	}
 
@@ -776,9 +756,8 @@ public class MemberService implements IMemberService {
 		bindEmailRes.setCode(HttpReturnRnums.Fail.value());
 
 		bindEmailRes.setMsg(HttpReturnRnums.Fail.desc());
-
-		if (null == member || null==member.getId()|| null==member.getEmail()) {
-			bindEmailRes.setData("参数异常");
+		if (null==member.getEmail()||member.getEmail().equals("")) {
+			bindEmailRes.setMsg("邮箱不能为空!");
 			return bindEmailRes;
 		}
 
