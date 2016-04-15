@@ -32,7 +32,7 @@
                 <div>
                     <i></i>
                 </div>
-                <a href="#"><span>消息</span></a>
+                <a href="<%=basePath%>/me/messagelist"><span>消息</span></a>
             </div>
         </div>
     </section>

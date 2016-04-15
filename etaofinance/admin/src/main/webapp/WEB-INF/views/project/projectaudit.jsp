@@ -20,7 +20,7 @@
 %>
 ======暂无数据 无此项目信息=====
 <%
-	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value() || project.getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
+	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value()) {%>
 		======已经<%=ProjectAuditStatus.getEnum(project.getAuditstatus()).desc() %>=====
 		<a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a>		 
 	<% }else {
@@ -82,9 +82,7 @@
 					<button id="btnConfirm" class="btn btn-w-m btn-primary"
 						type="button">确定</button>
 				</div>
-				<div class="col-lg-3">
-					<button class="btn btn-w-m btn-white" type="button" onclick="<%=basePath%>/project/waitlist">返回</button>
-				</div>
+				<div class="col-lg-3"><a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a></div>
 			</div>
 		</div>
 	</div>
@@ -167,7 +165,7 @@ $("#btnConfirm").click(function(){
 		var endFinancingDate=$("#endFinancingDate").val();
 		if(auditStaus==2){
 			if(onlinePreheatDate=="" ||openFinancingDate=="" ||endFinancingDate==""){
-				alert("时间不能问为空！");
+				alert("时间不能为空！");
 				return;
 			}
 		}

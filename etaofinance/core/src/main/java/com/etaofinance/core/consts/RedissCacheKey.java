@@ -37,7 +37,7 @@ public class RedissCacheKey {
     public static final String JF_Member_ModifyPayPassWordOne= "JF_Member_ModifyPayPassWordOne_%s";//修改支付密码1
     public static final String JF_Member_FindPayPassWordOne= "JF_Member_FindPayPassWordOne_%s";//找回支付密码1
     public static final String JF_Member_ChangePhoneOne= "JF_Member_ChangePhoneOne_%s";//修改绑定手机1
-    public static final String JF_Member_ChangePhoneByPayOne= "JF_Member_ChangePhoneByPayOne_%s";//通过支付密码修改绑定手机1  
+
     
 
     /**

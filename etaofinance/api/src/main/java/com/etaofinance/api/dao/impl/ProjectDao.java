@@ -13,6 +13,7 @@ import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
+import com.etaofinance.entity.req.ProjectStatusReq;
 @Repository
 public class ProjectDao extends DaoBase implements IProjectDao{
 
@@ -99,6 +100,11 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	@Override
 	public ProjectModel getProjectDetail(Long projectid) {
 		return getReadOnlySqlSessionUtil().selectOne("IProjectDao.getProjectDetail",projectid);
+	}
+
+	@Override
+	public int modifyProjectStatus(ProjectStatusReq req) {
+		return getMasterSqlSessionUtil().update("IProjectDao.modifyProjectStatus",req);
 	}
 	
 }

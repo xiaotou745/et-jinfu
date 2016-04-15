@@ -1,4 +1,5 @@
 package com.etaofinance.wap.controllor;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.etaofinance.api.service.inter.IADVertService;
+import com.etaofinance.api.service.inter.ICommentService;
+import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
+import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.entity.ADVert;
+import com.etaofinance.entity.Comment;
+import com.etaofinance.entity.Member;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.ProjectComment;
+import com.etaofinance.entity.domain.ProjectMember;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.req.PagedCommentReq;
+import com.etaofinance.entity.req.PagedProjectCommentReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.wap.common.UserContext;
 
 
 
@@ -33,6 +46,14 @@ public class HomeController {
 	IADVertService adService;
 	@Autowired
 	IProjectService projectService;
+	@Autowired
+	IProjectSubscriptionService projectSubscriptionService;
+	@Autowired
+	IProjectImageService projectImageService;
+	@Autowired
+	ICommentService commentService;
+	@Autowired
+	IMemberService memberService;
 	/**
 	 * 首页
 	 * @return
@@ -82,14 +103,48 @@ public class HomeController {
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "项目详情");
 		view.addObject("viewPath", "home/detail");
+		view.addObject("projectid",projectid);
+		Member member=UserContext.getCurrentContext(request).getUserInfo();
+		if(member!=null)
+		{
+			member=memberService.getById(member.getId());
+		}
+		view.addObject("member", member);
 		//1.项目详情
-		
-		//2.领头人
+		ProjectModel detaiModel=projectService.getProjectDetail(projectid);
+		view.addObject("detaiModel",detaiModel);
+		//2.投资人
+		List<ProjectMember> subList=new ArrayList<ProjectMember>();
+		if(member!=null&&member.getLevel()>1)
+		{
+			subList=projectSubscriptionService.getProjectLeadMember(projectid);
+		}
+		view.addObject("subList",subList);
+		//3.领头人
+		List<ProjectMember> leadList=new ArrayList<ProjectMember>();
+		if(subList!=null)
+		{
+			for (int i = 0; i < subList.size(); i++) {
+				if(subList.get(i).getIsLead()==1)
+				{
+					leadList.add(subList.get(i));
+				}
+			}
+		}
+		view.addObject("leadList",leadList);
 		//3.项目概况,回报说明图片.
+		List<ProjectImage> imgList=projectImageService.getByProjectId(projectid);
+		view.addObject("imgList",imgList);
 		//4.项目交流以及评论
-		//5.认投人列表
-		//PagedResponse<ProjectModel> result=projectService.getProjectList(req);
-		//view.addObject("result", result);
+		List<ProjectComment> commentList=new ArrayList<ProjectComment>();
+		if(member!=null&&member.getLevel()>1)
+		{	PagedProjectCommentReq  commentReq=new PagedProjectCommentReq();
+			commentReq.setCurrentPage(1);
+			commentReq.setProjectId(projectid);
+			commentReq.setMemberId(member.getId());
+			commentList=commentService.getProjectComment(commentReq).getResultList();
+		}
+		view.addObject("commentList",commentList);
 		return view;
 	}
 }

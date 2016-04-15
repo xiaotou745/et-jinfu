@@ -31,6 +31,7 @@ import com.etaofinance.core.enums.WithdrawStatus;
 import com.etaofinance.core.enums.WithdrawformEnum;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
 import com.etaofinance.core.util.OrderNoHelper;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -78,9 +79,11 @@ public class WithdrawformService implements IWithdrawformService{
 		}		
 		record.setWithwardno(OrderNoHelper.generateOrderCode(record.getMemberid().intValue()));
 		record.setStatus((short)1);
-		record.setCreatetime(new Date());
-		record.setCreatename("admin");	 	
+		record.setCreatetime(new Date());			 	
 		record.setAfteramount(0.0F);
+		record.setAccounttype("1");
+		//临时
+		record.setAccountno("x000000001");		
 		int row= withdrawformDao.insertSelective(record);		
 		if(row<=0)
 		{
@@ -88,8 +91,12 @@ public class WithdrawformService implements IWithdrawformService{
 			resp.setMsg(WithdrawformEnum.Err.desc());
 			return resp;	
 		}
+		
 		resp.setCode(WithdrawformEnum.Success.value());
-		resp.setMsg(WithdrawformEnum.Success.desc());		
+		resp.setMsg(WithdrawformEnum.Success.desc());	
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		basePath+="/me/accountblance";	
+		resp.setUrl(basePath);
 		return resp;
 	}
 

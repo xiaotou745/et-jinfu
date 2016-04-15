@@ -110,8 +110,7 @@ public class MemberOtherService implements IMemberOtherService{
 		//验证码错误
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
-		CreatePayPwdResp resp=new CreatePayPwdResp();
-		//resp.setUserID(member.getId());
+		CreatePayPwdResp resp=new CreatePayPwdResp();		
 		resp.setCheckKey(UUIDvalue);		
 		String basePath = PropertyUtils.getProperty("java.wap.url");
 		basePath+="/pay/setpaypasswordstep2?";
@@ -159,6 +158,9 @@ public class MemberOtherService implements IMemberOtherService{
 			resultModel.setMsg(MemberOtherCreatePayPwdEnum.Err.desc());
 			return resultModel;	
 		}	
+		//跳转我的账户余额
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath + "/me/accountblance");	
 		resultModel.setCode(MemberOtherCreatePayPwdEnum.Success.value());
 		resultModel.setMsg(MemberOtherCreatePayPwdEnum.Success.desc());
 		return resultModel;
@@ -174,7 +176,7 @@ public class MemberOtherService implements IMemberOtherService{
 	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdOne(@RequestBody  ModifyPayPwdReq req)
 	{
 		HttpResultModel<ModifyPayPwdResp> resultModel=new HttpResultModel<ModifyPayPwdResp>();
-		MemberOther oldMemberOther=memberOtherDao.selectByPrimaryKey(req.getUserId());
+		MemberOther oldMemberOther=memberOtherDao.selectByMemberId(req.getUserId());
 		if(oldMemberOther==null)
 		{
 			resultModel.setCode(MemberOtherVerificationPayPwdEnum.Err.value());
@@ -208,9 +210,12 @@ public class MemberOtherService implements IMemberOtherService{
 		resultModel.setCode(MemberOtherVerificationPayPwdEnum.Success.value());
 		resultModel.setMsg(MemberOtherVerificationPayPwdEnum.Success.desc());
 		
-		ModifyPayPwdResp resp=new ModifyPayPwdResp();
-		resp.setUserID(req.getUserId());
+		ModifyPayPwdResp resp=new ModifyPayPwdResp();	
 		resp.setCheckKey(UUIDvalue);
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		basePath+="/pay/modifypaypasswordstep2?";
+		basePath+="checkKey="+UUIDvalue;	
+		resultModel.setUrl(basePath);
 		resultModel.setData(resp);
 		return resultModel;
 	}
@@ -253,6 +258,9 @@ public class MemberOtherService implements IMemberOtherService{
 			resultModel.setMsg(MemberOtherCreatePayPwdEnum.Err.desc());
 			return resultModel;	
 		}
+		//跳转我的账户余额
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath + "/me/accountblance");	
 		resultModel.setCode(MemberOtherCreatePayPwdEnum.Success.value());
 		resultModel.setMsg(MemberOtherCreatePayPwdEnum.Success.desc());
 		return resultModel;

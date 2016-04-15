@@ -43,9 +43,8 @@ public class MessageDao extends DaoBase implements IMessageDao{
 	}
 
 	@Override
-	public Message selectByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Message selectByPrimaryKey(Long id) {
+		return getReadOnlySqlSessionUtil().selectOne("IMessageDao.selectByPrimaryKey",id);
 	}
 
 	@Override

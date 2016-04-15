@@ -359,13 +359,13 @@
 			<if test="memberid != null">
 				MemberId = #{memberid,jdbcType=BIGINT},
 			</if>
-			<if test="preheattime != null">
+			<if test="preheattime != null and preheattime!=''">
 				PreheatTime = #{preheattime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="starttime != null">
+			<if test="starttime != null and starttime!=''">
 				StartTime = #{starttime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="endtime != null">
+			<if test="endtime != null and endtime!=''">
 				EndTime = #{endtime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="schedule != null">
@@ -585,8 +585,8 @@
 		AND p.EndTime >= NOW()
 	</select>
 	<!-- 获取项目详情 -->
-	<select id="getProjectDetail">
-	  SELECT p.Id,
+	<select id="getProjectDetail" resultType="com.etaofinance.entity.domain.ProjectModel" parameterType="java.lang.Long">
+	   SELECT p.Id,
 		p.ProjectName,
 		p.TypeId,
 		p.Amount,
@@ -612,7 +612,11 @@
     LEFT JOIN publicprovincecity p1 ON p1.Code=p.CityCode
     LEFT JOIN publicprovincecity p2 ON p2.Code=p.ProvinceCode
     WHERE 
-    p.Id=5
-	
+    p.Id=#{projectid,jdbcType=BIGINT}
 	</select>
+	<!-- 修改项目融资状态  wangchao -->
+	<update id="modifyProjectStatus" parameterType="com.etaofinance.entity.req.ProjectStatusReq">
+		UPDATE project set ProjectStatus=#{aftProjectStatus,jdbcType=INTEGER}
+	      WHERE Id=#{projectId,jdbcType=BIGINT}
+	</update>	
 </mapper>

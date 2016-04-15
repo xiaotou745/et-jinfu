@@ -11,7 +11,7 @@ public interface IMessageDao {
 
     int insertSelective(Message record);
 
-    Message selectByPrimaryKey(Integer id);
+    Message selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(Message record);
 

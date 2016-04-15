@@ -29,6 +29,7 @@ import com.etaofinance.core.enums.ADVertEnum;
 import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.enums.RechargeStatus;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -125,6 +126,7 @@ public class RechargeService implements IRechargeService {
 			Integer accountType, String createName) {
 		HttpResultModel<Object> res = new HttpResultModel<Object>();
 
+
 		res.setCode(HttpReturnRnums.Fail.value());
 		res.setMsg(HttpReturnRnums.Fail.desc());
 
@@ -176,8 +178,10 @@ public class RechargeService implements IRechargeService {
 
 		res.setCode(HttpReturnRnums.Success.value());
 		res.setMsg(HttpReturnRnums.Success.desc());
-		res.setData("充值成功");
-
+		//res.setData("充值成功");
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		basePath+="/me/accountblance";	
+		res.setUrl(basePath);		
 		return res;
 	}
 

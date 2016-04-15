@@ -5,15 +5,8 @@ package com.etaofinance.entity.resp;
  * @author ofmyi_000
  *
  */
-public class ModifyPhoneByMessageResp {
-private Long userID;
+public class ModifyPhoneResp {
 private String checkKey;
-public Long getUserID() {
-	return userID;
-}
-public void setUserID(Long userID) {
-	this.userID = userID;
-}
 public String getCheckKey() {
 	return checkKey;
 }

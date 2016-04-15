@@ -1,3 +1,8 @@
+<%@page import="com.etaofinance.core.enums.ProjectStatus"%>
+<%@page import="com.etaofinance.entity.domain.ProjectComment"%>
+<%@page import="com.etaofinance.entity.ProjectImage"%>
+<%@page import="com.etaofinance.entity.domain.ProjectMember"%>
+<%@page import="com.etaofinance.entity.Member"%>
 <%@page import="com.etaofinance.entity.domain.ProjectModel"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -10,6 +15,22 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	//当前用户
+	Member member=request.getAttribute("member")==null?null:(Member)request.getAttribute("member");
+	//项目详情
+	ProjectModel detaiModel=(ProjectModel)request.getAttribute("detaiModel");
+	//认购人列表
+	List<ProjectMember> subList=(ArrayList<ProjectMember>)request.getAttribute("subList");
+	//领头人列表
+	List<ProjectMember> leadList=(ArrayList<ProjectMember>)request.getAttribute("leadList");
+	//项目图列表
+	List<ProjectImage> imgList=(ArrayList<ProjectImage>)request.getAttribute("imgList");
+	//评论列表
+	List<ProjectComment> commentList=(ArrayList<ProjectComment>)request.getAttribute("commentList");
+	Long projectid=(Long)request.getAttribute("projectid");
+	int isLogin=member==null?0:1;//是否登录
+	int isTzr=member==null?0:(member.getLevel()>1?1:0);//是否投资人
+	Long myid=member==null?0:member.getId();
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/detail.css">
@@ -24,19 +45,20 @@
             </ul>
    <section class="content">
    		 <div class="detail-banner">
-        <p><span><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/detail/img_1.jpg"></span><b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/detail/index_6.png"></b></p>
+        <p><span><img src="<%=detaiModel.getProjectimage()%>"></span>
+        <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/detail/index_<%=detaiModel.getTypeid()==1?"6":"7"%>.png"></b></p>
     </div>
     <div class="detail-one">
         <div class="container">
             <div class="one-list">
-                <h3><b>易淘餐厅华腾世纪总部公园店</b><span>融资中</span></h3>
-                <p><b></b><span>北京市朝阳区</span></p>
-                <dd>以前所未有的就餐感受，开启互联网餐厅新时代。以前所未有的就餐感受。</dd>
-                <h4>预计</h4>
+                <h3><b><%=detaiModel.getProjectname()%></b><span><%=ProjectStatus.getEnum(detaiModel.getProjectstatus()).desc()%></span></h3>
+                <p><b></b><span><%=detaiModel.getProvinceName()+detaiModel.getCityName()%></span></p>
+                <dd><%=detaiModel.getDescription()%></dd>
+<!--                 <h4>预计</h4> -->
                 <ul class="detail-ul">
-                    <li><span>12%+5%</span><b>年化收益</b></li>
-                    <li><span>¥26万</span><b>目标金额</b></li>
-                    <li><span>￥4500</span><b>起投金额</b></li>
+                    <li><span><%=detaiModel.getInComeStr()%></span><b>年化收益</b></li>
+                    <li><span><%=detaiModel.getAmountStr()%></span><b>目标金额</b></li>
+                    <li><span><%=detaiModel.getUnitpriceStr()%></span><b>起投金额</b></li>
                 </ul>
             </div>
         </div>
@@ -46,9 +68,17 @@
             <div class="two-list">
                 <h3>领投方</h3>
                 <ul>
-                    <li>IDG资本</li>
-                    <li>IDG资本</li>
-                    <li class="list-head">IDG资本</li>
+                <%if(leadList.size()>0)
+                {
+	                for(int i=0;i<leadList.size();i++)
+	                {%>
+	                 <li><%=leadList.get(i).getMemberName()%></li>
+	                <%
+	                }
+                }else{
+                %>
+                 	<li>暂无领投人</li>
+                <%}%>
                 </ul>
             </div>
         </div>
@@ -63,16 +93,50 @@
             </ul>
             <div class="panes con">
                 <div class="pane" data-panelindex="0">
-                    1
+                    <%
+                    for(int i=0;i<imgList.size();i++)
+                    {
+                    	//项目概况Wap图
+                    	if(imgList.get(i).getTypeid()==12)
+                    	{%>
+                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<%}
+                    }
+                    %>
                 </div>
                 <div class="pane hide" data-panelindex="1">
-                    2
+                     <%
+                    for(int i=0;i<imgList.size();i++)
+                    {
+                    	//项目概况Wap图
+                    	if(imgList.get(i).getTypeid()==22)
+                    	{%>
+                    	<img src="<%=imgList.get(i).getUrl()%>">
+                    	<%}
+                    }
+                    %>
                 </div>
                 <div class="pane hide" data-panelindex="2">
-                    <div class="detail-box" style="display:none">
-                        <p>认证合格投资人后才可查看，去<a href="###">登录</a></p>
-                        <p>认证合格投资人后才可查看，去<a href="###">认证</a></p>
-                    </div>
+                	<%
+                	if(isLogin==0)
+                	{//未登录
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/home/detail?projectid=<%=projectid%>">登录</a></p>
+                    	</div>
+                		<% 
+                	}
+                	else if(isLogin==1&&isTzr==0)
+                	{//非投资人
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/certificationinvestor">认证</a></p>
+                    	</div>
+                		<% 
+                	}else
+                	{//显示评论信息
+                	%>
+                		 
                     <div class="detail-box-list container">
                         <div class="box-list-input">
                             <textarea placeholder="在此处写上您的评论或问题" data-role="comment"></textarea>
@@ -80,47 +144,73 @@
                         </div>
                         <div class="box-list-ul">
                             <ul>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>客服小美</span><span>2015.06.29</span><span>回复<a href="###">IDG资本:</a>感谢您对该项目的认可。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
-                                <li>
-                                    <p><b></b></p>
-                                    <p><span>IDG资本</span><span>2015.06.29</span><span>这个项目很靠谱，好项目不等人。</span><a class="ul-del" href="###">删除</a></p>
-                                    <p><i></i></p>
-                                </li>
+                            	<%
+                            	if(commentList.size()>0)
+                            	{
+                            	for(int i=0;i<commentList.size();i++)
+                            	{
+                            		byte isr=commentList.get(i).getIsreply();
+                            		%>
+                            	  <li>
+                                      <p><b></b></p>
+                                      <p><span><%=commentList.get(i).getCommontName()%></span>
+                                      <span><%=commentList.get(i).getCreatetime()%></span>
+                                      <span>
+                                      <%if(isr==1)
+                                      {
+                                    	  %>回复<a href="###"><%=commentList.get(i).getReplayName()%>:</a>
+                                    	  <%
+                                      } %>
+                                      	<%=commentList.get(i).getContent()%>
+                                      	</span>
+                                      	<%
+                                      	if(myid==commentList.get(i).getMemberid())
+                                      	{
+                                      		%>
+                                      		<a class="ul-del" href="###">删除</a>
+                                      		<%
+                                      	}
+                                      	%>
+                                      </p>
+                                      <p><i></i></p>
+                                  </li>
+                            		
+                            		<%
+                            	}
+                            	}else{
+                            		%>
+                            		 <li>暂无评论</li>
+                            		<%
+                            	}%>
                             </ul>
                         </div>
                     </div>
+                		
+                	<%}
+                	%>
+                   
                 </div>
                 <div class="pane hide" data-panelindex="3">
-                    <div class="detail-head-list container">
+                <%
+                	if(isLogin==0)
+                	{//未登录
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/home/detail?projectid=<%=projectid%>">登录</a></p>
+                    	</div>
+                		<% 
+                	}
+                	else if(isLogin==1&&isTzr==0)
+                	{//非投资人
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/me/certificationinvestor">认证</a></p>
+                    	</div>
+                		<% 
+                	}else
+                	{//显示评论信息
+                	%>
+                	<div class="detail-head-list container">
                         <ul>
                             <li>
                                 <p>马化腾</p>
@@ -149,19 +239,14 @@
                             </li>
                         </ul>
                     </div>
+                	<%}
+                	%>
+                   
                 </div>
             </div>
         </div>
     </div>
-    <!-- <section>
-		<div class="detail-fixed">
-			<div class="container">
-				<h3>回复IDG资本</h3>
-				<textarea placeholder="在此处写上您的评论或问题"></textarea>
-				<button disabled>发布</button>
-			</div>
-		</div>
-	</section> -->
+
    </section>
     <footer class="foot-list">
         <div class="foot-one">

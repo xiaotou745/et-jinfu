@@ -43,25 +43,18 @@ import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.resp.CreatePayPwdResp;
 import com.etaofinance.entity.resp.ForgetPayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
-import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.ModifyPayPwdResp;
-import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
 import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
-import com.etaofinance.entity.resp.SendCodeResp;
+import com.etaofinance.entity.resp.ModifyPhoneResp;
 import com.etaofinance.wap.common.LoginUtil;
-import com.etaofinance.wap.common.NoRequireLogin;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiImplicitParam;
-import com.wordnik.swagger.annotations.ApiImplicitParams;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
 
 /**
  * 用户相关
@@ -330,24 +323,26 @@ public class UserController {
 	@RequestMapping("modifyphonebymessageone")
 	@ResponseBody
 	@RequireLogin
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req)
+	public HttpResultModel<ModifyPhoneResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req)
 	{
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return memberService.modifyPhoneByMessageOne(req);
 	}
 	
 	/**
-	 * 通过发送短信修改手机号码第2步
+	 * 修改手机号码第2步
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年4月13日20:07:12
 	 * @return
 	 */
-	@RequestMapping("modifyphonebymessagetwo")
+	@RequestMapping("modifyphonetwo")
 	@ResponseBody
 	@RequireLogin
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req)
+	public HttpResultModel<ModifyPhoneResp> modifyPhonewo(@RequestBody  ModifyPhoneByMessageReq req)
 	{
-		return memberService.modifyPhoneByMessageTwo(req);
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
+		return memberService.modifyPhoneTwo(req);
 	}
 	
 	
@@ -363,23 +358,10 @@ public class UserController {
 	@RequireLogin
 	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(@RequestBody  ModifyPhoneByPayReq req)
 	{
+		req.setMemberId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return memberService.modifyPhoneByPayOne(req);
 	}
 	
-	/**
-	 * 通过支付密码修改手机号码 第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:07:12
-	 * @return
-	 */
-	@RequestMapping("modifyphonebypaytwo")
-	@ResponseBody
-	@RequireLogin
-	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(@RequestBody  ModifyPhoneByPayReq req)
-	{
-		return memberService.modifyPhoneByPayTwo(req);
-	}
 	/**
 	 * 创建支付密码第1步
 	 * @param 
@@ -424,8 +406,11 @@ public class UserController {
 	 */
 	@RequestMapping("modifypaypwdone")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdOne(@RequestBody  ModifyPayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.modifyPayPwdOne(req);
 	}
 
@@ -438,8 +423,11 @@ public class UserController {
 	 */
 	@RequestMapping("modifypaypwdtwo")
 	@ResponseBody
+	@RequireLogin
 	public HttpResultModel<ModifyPayPwdResp> modifyPayPwdTwo(@RequestBody  ModifyPayPwdReq req)
 	{	
+		Member m=UserContext.getCurrentContext(request).getUserInfo();
+		req.setUserId(m.getId());
 		return memberOtherService.modifyPayPwdTwo(req);
 	}
 	
@@ -563,11 +551,17 @@ public class UserController {
 	 */
 	@RequestMapping("bindemail")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "发送邮箱绑定验证")
 	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
 	{
+		
+		Long id=UserContext.getCurrentContext(request).getUserInfo().getId();
+		
+		member.setId(id);
+		
 		HttpResultModel<Object> res = null;
 		
 		res = memberService.bindEmail(member);
@@ -583,6 +577,7 @@ public class UserController {
 	 */
 	@RequestMapping("emailbindcallback")
 	@ResponseBody
+	@RequireLogin
 	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "邮箱绑定回调")

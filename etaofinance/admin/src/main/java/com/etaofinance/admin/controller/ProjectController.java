@@ -50,6 +50,7 @@ import com.etaofinance.entity.req.PagedProjectFavReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
+import com.etaofinance.entity.req.ProjectStatusReq;
 import com.etaofinance.entity.Member;
 /**
  * 项目管理
@@ -368,7 +369,7 @@ public class ProjectController {
 		req.setPublishName(context.getUserName());
 		return projectService.modifyProject(req);
 	}
-	
+
 	@RequestMapping("enrolllist")
 	public ModelAndView buyList() {
 		
@@ -395,4 +396,16 @@ public class ProjectController {
 		return view;
 	}
 
+	/**
+	 * 修改项目融资状态  wangchao
+	 * 
+	 * @return
+	 */
+	@RequestMapping("modifyprojectstatus")
+	@ResponseBody
+	public int modifyProjectStatus(HttpServletRequest request,ProjectStatusReq req) {
+		UserContext context = UserContext.getCurrentContext(request);
+		req.setOperater(context.getUserName());		 
+		return projectService.modifyProjectStatus(req);
+	}
 }
