@@ -195,10 +195,22 @@
 				#{amount,jdbcType=REAL},
 			</if>
 			<if test="amount != null">
-				select  #{amount,jdbcType=REAL} +
-				 (
-				 case when 0 = ( select count(1)  from balancerecord where memberid= #{memberid,jdbcType=BIGINT}) then 0 
-				 else (select afteramount from balancerecord where memberid =#{memberid,jdbcType=BIGINT} order by opttime desc limit 1) end ),
+	#{amount,jdbcType=REAL} +			 
+ case when 0 = 
+ (
+	select  count(1)  from balancerecord 
+	where memberid = 1
+	order by opttime desc
+	limit 1
+
+) then 0 else (
+
+	select  afteramount  from balancerecord 
+	where memberid = 1
+	order by opttime desc
+	limit 1 
+	
+)end afteramount ,
 			</if>
 			<if test="typeid != null">
 				#{typeid,jdbcType=SMALLINT},
