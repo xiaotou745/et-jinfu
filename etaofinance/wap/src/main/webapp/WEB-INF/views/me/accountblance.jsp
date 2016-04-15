@@ -26,14 +26,15 @@
         </div>
     </section>
     <section class="container bg">
-    	<a href="#"><div class="text">
+    	<a href="<%=basePath%>/me/recharge">
+    	<div class="text">
     		<div class="title">充值</div>
     		<div class="content">
     			<i class="m-icon icon-arrow-r"></i>
     		</div>
     	</div>
         </a>
-        <a href="#">
+       	<a href="<%=basePath%>/me/withdraw">
     	<div class="text top-line">
     		<div class="title">提现</div>
     		<div class="content">
