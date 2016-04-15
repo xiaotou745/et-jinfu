@@ -210,5 +210,10 @@ public class WithdrawformService implements IWithdrawformService{
 		return withdrawformDao.selectByPrimaryKey(id);
 		
 	}
+	
+	public double  GetWithdrawPendingAmountByMbId(Long memberId)
+	{
+		return withdrawformDao.GetWithdrawPendingAmountByMbId(memberId);
+	}
 
 }
