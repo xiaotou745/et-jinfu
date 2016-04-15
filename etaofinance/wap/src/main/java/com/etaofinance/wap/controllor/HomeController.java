@@ -115,7 +115,7 @@ public class HomeController {
 		view.addObject("detaiModel",detaiModel);
 		//2.投资人
 		List<ProjectMember> subList=new ArrayList<ProjectMember>();
-		if(member!=null)
+		if(member!=null&&member.getLevel()>1)
 		{
 			subList=projectSubscriptionService.getProjectLeadMember(projectid);
 		}
@@ -137,7 +137,7 @@ public class HomeController {
 		view.addObject("imgList",imgList);
 		//4.项目交流以及评论
 		List<ProjectComment> commentList=new ArrayList<ProjectComment>();
-		if(member!=null)
+		if(member!=null&&member.getLevel()>1)
 		{	PagedProjectCommentReq  commentReq=new PagedProjectCommentReq();
 			commentReq.setCurrentPage(1);
 			commentReq.setProjectId(projectid);

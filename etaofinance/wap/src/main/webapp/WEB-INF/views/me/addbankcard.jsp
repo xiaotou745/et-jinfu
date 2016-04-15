@@ -10,7 +10,7 @@
 %>
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/add-bankcard.css">
       
-  <div class="g-wrap">
+   <div class="g-wrap">
         <div class="g-views">
             
 	<form data-role="form">
@@ -24,13 +24,13 @@
 			<label>持卡人</label>
 			<input type="text" value="宋瑞轩" disabled />
 		</div>
-		<div class="label-input">
+		<div class="label-input" data-role="bank">
 			<label>银行</label>
-			<input class="highlight" type="text" value="请选择银行 >" disabled/>
+			<input class="highlight" type="text" value="农业银行 >" disabled/>
 		</div>
 		<div class="label-input">
 			<label>卡号</label>
-			<input type="tel" placeholder="请输入银行卡号" />
+			<input type="tel" name="cardno" data-role="cardno" placeholder="请输入银行卡号" />
 		</div>
 	</section>
 	<section class="container top-gap">
@@ -38,6 +38,8 @@
 			<button disabled data-role="submit">确认</button>
 		</div>
 	</section>
+	<input type="hidden" name="bankid" data-role="bankid" value="初始值"/>
+	<input type="hidden" name="bankname" data-role="bankname" value="初始值"/>
 	</form>
 	<div class="popup hide">
             <div class="popup-title">
@@ -45,10 +47,10 @@
             </div>
             <div class="popup-content">
                 <div class="content-title">选择银行</div>
-                <div class="item active"><span>农业银行</span></div>
-                <div class="item"><span>交通银行</span></div>
-                <div class="item"><span>建设银行</span></div>
-                <div class="item"><span>招商银行</span></div>
+                <div class="item active" data-id="" data-name=""><span>农业银行</span></div>
+                <div class="item" data-id="" data-name=""><span>交通银行</span></div>
+                <div class="item" data-id="" data-name=""><span>建设银行</span></div>
+                <div class="item" data-id="" data-name=""><span>招商银行</span></div>
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 package com.etaofinance.api.service.impl;
 
 import java.nio.file.Path;
+import java.sql.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ import com.etaofinance.core.enums.ProjectStatus;
 import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
@@ -244,6 +246,11 @@ public class ProjectService implements IProjectService {
 		{
 			throw new TransactionalRuntimeException("认购失败!");
 		}
+		//您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
+		//String content="您于"+ParseHelper.ToDateString(Date)+"认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177";
+		
+		//发送认购短信
+		//SmsUtils.sendSMS(m.getPhoneno(), content);
 		HttpResultModel<Object> rModel = new HttpResultModel<Object>();
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");

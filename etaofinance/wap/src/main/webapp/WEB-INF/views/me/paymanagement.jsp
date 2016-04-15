@@ -7,23 +7,28 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
-	String bankname= (String)request.getAttribute("bankname");
-	String cardnoStr= (String)request.getAttribute("cardnoStr");
 %>
-  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/bankcard-list.css">
+  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/pay-management.css">
       
-     <div class="g-wrap">
+  <div class="g-wrap">
         <div class="g-views">
             
-	<section class="container top-gap">
-		<div class="bankcard-wrap">
-			<div class="bank-name"><%=bankname%></div>
-			<div class="card-number"><%=cardnoStr%></div>
+	<section class="container">
+		
+		<div class="item">
+			<div><a href="<%=basePath%>/pay/modifypaypasswordstep1">修改支付密码   </a></div>
+			<i class="m-icon icon-arrow-r"></i>
 		</div>
+
+		<div class="item">
+			<div><a href="<%=basePath%>/pay/retrievepaypasswordstep1">找回支付密码  </a></div>
+			<i class="m-icon icon-arrow-r"></i>
+		</div>
+	 
 	</section>
 
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
-    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/me/bankcard-list.js"></script>
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/me/pay-management.js"></script>
     

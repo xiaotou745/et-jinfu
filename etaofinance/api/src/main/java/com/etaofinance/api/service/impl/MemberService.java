@@ -127,6 +127,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号已经存在,不能注册!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_Register, phoneNo);
 			content = "验证码#验证码#，您正在注册易淘众筹，请勿向他人泄露短信验证码。";
@@ -137,6 +138,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能找回密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_ForgetPassword,
 					phoneNo);
@@ -149,6 +151,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能设置支付密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_SetPayPassWord,
 					phoneNo);
@@ -161,6 +164,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能找回支付密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_FindPayPassWord,
 					phoneNo);
@@ -173,9 +177,10 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能修改手机绑定!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_ChangePhone, phoneNo);
-			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
+			content = "验证码#验证码#，您正在修改易淘众筹绑定手机号，请勿向他人泄露短信验证码。";
 
 		}
 			break;
@@ -184,6 +189,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号存在,不能绑定!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_BindNewPhone, phoneNo);
 			content = "验证码#验证码#，您正在绑定此手机号，请勿向他人泄露短信验证码。";
@@ -520,6 +526,7 @@ public class MemberService implements IMemberService {
 		if (memberDao.updateByPrimaryKeySelective(member) > 0) {
 			res.setCode(1);
 			res.setMsg("密码修改成功!");
+			res.setUrl(PropertyUtils.getProperty("java.wap.url")+"/me/accountsecurity");
 			return res;
 		}
 		res.setCode(-1);
@@ -555,6 +562,8 @@ public class MemberService implements IMemberService {
 		ModifyPhoneResp resp=new ModifyPhoneResp();
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath+"/me/bindtelephone?checkKey="+UUIDvalue);
 		return resultModel;
 	}
 	/**
@@ -593,6 +602,8 @@ public class MemberService implements IMemberService {
 		resp.setUserID(req.getMemberId());
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath+"/me/bindtelephone?checkKey="+UUIDvalue);
 		return resultModel;
 	}
 	/**
@@ -677,30 +688,20 @@ public class MemberService implements IMemberService {
 
 		bindRes.setCode(HttpReturnRnums.Fail.value());
 		bindRes.setMsg(HttpReturnRnums.Fail.desc());
-
 		// 检查 邮箱是否已经被绑定
 		Member member = memberDao.selectByemail(email);
-
 		if (null != member) {
-			bindRes.setData("该邮箱已经被绑定");
+			bindRes.setMsg("该邮箱已被绑定!");
 			return bindRes;
 		}
-
-		// 一串链接
-		// 后续  进行资源文件配置
-	//	String idAndEmail = AES.aesEncrypt(id+"-"+email);
 		String idAndEmail = id+"-"+email;
 		
-		String emailContent = PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
-		//String emailContent = "http://localhost:8080/wap/user/emailbindcallback?idAndEmail="+idAndEmail;
+		String emailContent ="请点击链接进行邮箱绑定:"+PropertyUtils.getProperty("java.wap.url")+ PropertyUtils.getProperty("EmailSendPreFix")+idAndEmail;
 		// 发送邮箱
 		SystemUtils.sendEmail("易宝众筹绑定邮箱验证", emailContent, email);
-
 		bindRes.setCode(HttpReturnRnums.Success.value());
-		bindRes.setMsg(HttpReturnRnums.Success.desc());
-		
-		bindRes.setData("已经发送邮箱绑定");
-
+		bindRes.setMsg("已经发送邮箱绑定");
+		bindRes.setUrl(PropertyUtils.getProperty("java.wap.url")+"/me/accountsecurity");
 		return bindRes;
 
 	}
@@ -711,47 +712,37 @@ public class MemberService implements IMemberService {
 	@Override
 	public HttpResultModel<Object> bindEmailCallBk(String idAndEmail) {
 
+		
 		HttpResultModel<Object> bindEmailCbRes = new HttpResultModel<Object>();
-
 		bindEmailCbRes.setCode(HttpReturnRnums.Fail.value());
 		bindEmailCbRes.setMsg(HttpReturnRnums.Fail.desc());
 		
 		if (null == idAndEmail || 0 >= idAndEmail.length()) {
-
-			bindEmailCbRes.setData("参数异常");
-
+			bindEmailCbRes.setMsg("参数异常");
 			return bindEmailCbRes;
 		}
-		// 处理 id email
-		// 更新对应会员的邮箱
-	//	idAndEmail  = AES.aesDecrypt(idAndEmail);
-		
 		String[] strs = idAndEmail.split("-");
 
-		if (null == strs || 2 != strs.length) {
-			
-			bindEmailCbRes.setData("参数异常");
-			
+		if (null == strs || 2 != strs.length) {		
+			bindEmailCbRes.setMsg("参数异常");
 			return bindEmailCbRes;
 		}
-
 		Member memberModel = new Member();
-
 		memberModel.setId((long) Integer.parseInt(strs[0]));
 
 		memberModel.setEmail(strs[1]);
-
-		int ibindEmailCbRes = memberDao
-				.updateByPrimaryKeySelective(memberModel);
-
+		Member member=this.selectByEmail(strs[1]);
+		if(member!=null)
+		{
+			bindEmailCbRes.setMsg("该邮箱已被绑定,请重新修改!");
+			return bindEmailCbRes;
+		}
+		int ibindEmailCbRes = memberDao.updateByPrimaryKeySelective(memberModel);
 		if (0 == ibindEmailCbRes) {
-			bindEmailCbRes.setData("绑定失败");
+			bindEmailCbRes.setMsg("绑定失败");
 		}
 		bindEmailCbRes.setCode(HttpReturnRnums.Success.value());
-		bindEmailCbRes.setMsg(HttpReturnRnums.Success.desc());
-
-		bindEmailCbRes.setData("绑定成功");
-
+		bindEmailCbRes.setMsg("绑定成功");
 		return bindEmailCbRes;
 	}
 
@@ -766,9 +757,8 @@ public class MemberService implements IMemberService {
 		bindEmailRes.setCode(HttpReturnRnums.Fail.value());
 
 		bindEmailRes.setMsg(HttpReturnRnums.Fail.desc());
-
-		if (null == member || null==member.getId()|| null==member.getEmail()) {
-			bindEmailRes.setData("参数异常");
+		if (null==member.getEmail()||member.getEmail().equals("")) {
+			bindEmailRes.setMsg("邮箱不能为空!");
 			return bindEmailRes;
 		}
 

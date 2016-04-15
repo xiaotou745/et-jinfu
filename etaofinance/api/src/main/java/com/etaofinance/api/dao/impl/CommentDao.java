@@ -72,7 +72,7 @@ public class CommentDao extends DaoBase implements ICommentDao{
 	 */
 	@Override
 	public PagedResponse<ProjectComment> getProjectComment(PagedProjectCommentReq req) {
-		return getReadOnlySqlSessionUtil().selectPageList("getProjectComment", req);
+		return getReadOnlySqlSessionUtil().selectPageList("ICommentDao.getProjectComment", req);
 	}
 
 }

@@ -79,8 +79,7 @@ public class WithdrawformService implements IWithdrawformService{
 		}		
 		record.setWithwardno(OrderNoHelper.generateOrderCode(record.getMemberid().intValue()));
 		record.setStatus((short)1);
-		record.setCreatetime(new Date());			 	
-		record.setAfteramount(0.0F);
+		record.setCreatetime(new Date());		 	
 		record.setAccounttype("1");
 		//临时
 		record.setAccountno("x000000001");		
@@ -149,7 +148,6 @@ public class WithdrawformService implements IWithdrawformService{
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public int Audit(long id, short status) {
 		
-			
 		// 1 拒绝
 		// 1.1 update withdrawform	
 		int updateWithdrawRes =0;
@@ -173,20 +171,18 @@ public class WithdrawformService implements IWithdrawformService{
 		// 2.1 update withdrawform
 	
 		if(0==updateWithdrawRes){
-
 			throw new TransactionalRuntimeException("通过失败");
 		}
 		// 2.2 insert balancerecord
 		 // 获取 withdraw
 		Withdrawform withdrawMd = this.getWithdrawMdById(id);
 		
-		BalanceRecord balance = balanceRecordDao
-				.GetLatestedModelByMbId(withdrawMd.getMemberid());
+		BalanceRecord balance =new BalanceRecord();
 
 		balance.setId(null);
-		balance.setAmount(balance.getAfteramount());
-		balance.setAfteramount(balance.getAfteramount() +(- withdrawMd.getAmount()));
-
+		balance.setAmount(-withdrawMd.getAmount());
+		balance.setAfteramount(- withdrawMd.getAmount());
+		balance.setMemberid(withdrawMd.getMemberid());
 		balance.setRemark("提现审核");
 		balance.setTypeid((short) BalanceRecordType.Apply.value());
 		balance.setRelationno(withdrawMd.getWithwardno());
@@ -213,6 +209,11 @@ public class WithdrawformService implements IWithdrawformService{
 		
 		return withdrawformDao.selectByPrimaryKey(id);
 		
+	}
+	
+	public double  GetWithdrawPendingAmountByMbId(Long memberId)
+	{
+		return withdrawformDao.GetWithdrawPendingAmountByMbId(memberId);
 	}
 
 }

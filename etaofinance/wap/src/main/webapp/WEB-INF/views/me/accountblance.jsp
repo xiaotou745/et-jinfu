@@ -53,7 +53,7 @@
     		</div>
     	</div>
         </a>
-        <a href="#">
+       <a href="<%=basePath%>/me/paymanagement">   
     	<div class="text top-line">
     		<div class="title">支付管理</div>
     		<div class="content">
