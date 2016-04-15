@@ -1,0 +1,34 @@
+<%@page import="com.etaofinance.entity.Member"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@page import="com.etaofinance.entity.PublicProvinceCity" %>
+<%@page import="java.util.List" %>
+<%
+	//网站跟地址
+	String basePath = PropertyUtils.getProperty("java.wap.url");
+	//静态资源跟地址
+	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+%>
+<link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/pay/input-paypassword.css">
+    <div class="g-wrap">
+        <div class="g-views">
+            
+    <div class="modify-paypassword-wrap">
+        <div class="title">
+            请输入6位支付密码
+        </div>
+        <div class="pay_pwd_wrap ">
+            <div class="point"></div>
+            <input type="tel" class="pay_pwd" value="" maxlength="6" />
+        </div>
+        <div class="err_tip">
+            两次输入密码不一致
+        </div>
+        <div class="test"></div>
+    </div>
+
+        </div>
+    </div>
+<script src="<%=staticResPath%>/etao-crowdfunding/js/p/pay/input-paypassword.js"></script>
+
+

@@ -97,6 +97,8 @@ public interface IMemberOtherService {
     MemberOther getByMemberId(Long id);
     
     
+    
+    
 //	/**
 //	 * 创建支付密码
 //	 * @param 

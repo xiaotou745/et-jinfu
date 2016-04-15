@@ -5,11 +5,10 @@ package com.etaofinance.entity.req;
  *
  */
 public class ModifyPhoneByMessageReq {
-	private Long userId;
 	private String phoneNo;
 	private String veriCode;
 	private String checkKey;
-
+	private Long userId;
 	public Long getUserId() {
 		return userId;
 	}

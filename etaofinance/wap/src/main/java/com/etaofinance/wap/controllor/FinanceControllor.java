@@ -106,13 +106,12 @@ public class FinanceControllor {
 	@RequestMapping("/createwithdrawform")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "提现", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "提现")
 	public HttpResultModel<Object> createWithdrawform(@RequestBody Withdrawform record)
-	{
+	{		
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		record.setMemberid(memberid);	
+		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
+		record.setMemberid(memberid);
+		record.setCreatename(createname);
 		return withdrawformService.create(record);
 	}
 	
@@ -164,14 +163,19 @@ public class FinanceControllor {
 	 */
 	@RequestMapping("recharge")
 	@ResponseBody
-//	@RequireLogin
+	@RequireLogin
 	@ApiOperation(value = "充值", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "充值")
-	public HttpResultModel<Object> recharge(@RequestBody Recharge recharge)
+	public HttpResultModel<Object> recharge(@RequestBody Recharge record)
 	{
-		
-		return	rechargeService.recharge(recharge);
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
+		record.setMemberid(memberid);	
+		record.setCreatename(createname);
+		if(record.getAccounttype()==null || record.getAccounttype().equals(""))
+			record.setAccounttype(1);
+		return	rechargeService.recharge(record);
 		
 	}
 	
