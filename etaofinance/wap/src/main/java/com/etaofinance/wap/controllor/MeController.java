@@ -341,7 +341,58 @@ public class MeController {
 		view.addObject("member", member);
 		view.addObject("isHas", isHas);
 		return view;
-	}	/**
+	}
+	
+	/**
+	 * 领投人认证
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("certificationleadinvestor")
+	@RequireLogin
+	public ModelAndView certificationleadinvestor() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "领投人认证");
+		view.addObject("viewPath", "me/certificationleadinvestor");
+		Long memberId=UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		
+		//未设置实名认证 跳转实名认证
+		if(member.getLevel().equals("0"))
+		{
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";			
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "1");
+			return  view2;	
+		}	
+		//已是领投人或跟投 人 跳转 
+		if(member.getLevel().equals("2") || member.getLevel().equals("3"))
+		{
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/usercenter";			
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));		
+			return  view2;	
+		}
+		
+		//存在未审核的领投人信息或跟投人信息 跳转
+		boolean isHas=memberApplyService.IsHasApply(memberId);
+		if(isHas)
+		{
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";			
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "2");
+			return  view2;
+		}
+		return view;
+	}
+	
+	
+	/**
 	 * 提示跳转页
 	 * @param checkKey
 	 * @param userId
@@ -659,6 +710,7 @@ public class MeController {
 		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
 		Member member=memberService.getById(memberId);
 		
+		//未设置支付密码 跳转
 		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
 		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
 		{						
@@ -669,6 +721,7 @@ public class MeController {
 			return  view2;		
 		}	
 		
+		//未绑定银行卡 跳转
 		List<BankCard> bandCardList=bankCardService.getListByMemberId(memberId);
 		if(bandCardList==null || bandCardList.size()==0)
 		{

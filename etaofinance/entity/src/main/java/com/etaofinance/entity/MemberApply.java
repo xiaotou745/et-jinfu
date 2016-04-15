@@ -28,9 +28,9 @@ public class MemberApply {
 
 	private String companytitle;
 
-	private String certifyMaterialName;
+	private String certifymaterialname;
 
-	private String certifyMaterialUrl;
+	private String certifymaterialurl;
 
 	public Long getId() {
 		return id;
@@ -130,19 +130,19 @@ public class MemberApply {
 		this.companytitle = companytitle == null ? "" : companytitle.trim();
 	}
 
-	public String getCertifyMaterialName() {
-		return certifyMaterialName==null?"":certifyMaterialName;
+	public String getCertifymaterialname() {
+		return certifymaterialname;
 	}
 
-	public void setCertifyMaterialName(String certifyMaterialName) {
-		this.certifyMaterialName = certifyMaterialName;
+	public void setCertifymaterialname(String certifymaterialname) {
+		this.certifymaterialname = certifymaterialname;
 	}
 
-	public String getCertifyMaterialUrl() {
-		return certifyMaterialUrl==null?"":certifyMaterialUrl;
+	public String getCertifymaterialurl() {
+		return certifymaterialurl;
 	}
 
-	public void setCertifyMaterialUrl(String certifyMaterialUrl) {
-		this.certifyMaterialUrl = certifyMaterialUrl;
+	public void setCertifymaterialurl(String certifymaterialurl) {
+		this.certifymaterialurl = certifymaterialurl;
 	}
 }

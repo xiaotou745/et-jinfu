@@ -10,6 +10,7 @@ import com.etaofinance.api.dao.inter.IMemberApplyDao;
 import com.etaofinance.api.service.inter.IMemberApplyService;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberApplyEnum;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.MemberApply;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -59,6 +60,9 @@ public class MemberApplyService implements IMemberApplyService{
 			resp.setMsg(MemberApplyEnum.Err.desc());
 			return resp;	
 		}
+		
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		resp.setUrl(basePath + "/me/usercenter");	
 		resp.setCode(MemberApplyEnum.Success.value());
 		resp.setMsg(MemberApplyEnum.Success.desc());		
 		return resp;
