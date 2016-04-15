@@ -630,7 +630,8 @@ public class MeController {
 			view2.addObject("type", "3");
 			return  view2;			
 		}	
-
+		double allowwithdrawprice=memberOther.getAllowwithdrawprice();
+		view.addObject("allowwithdrawprice",allowwithdrawprice);
 		return view;
 	}
 	
