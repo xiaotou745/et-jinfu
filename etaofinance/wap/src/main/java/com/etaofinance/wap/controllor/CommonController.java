@@ -48,7 +48,8 @@ public class CommonController {
 	 */
 	@RequestMapping("sendcode")
 	@ResponseBody
-	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {		
+	public  HttpResultModel<Object> sendcode(@RequestBody SendCodeReq req) {	
+		req.setPhoneNo("13520860798");
 		return memberService.sendCode(req);
 	}
 

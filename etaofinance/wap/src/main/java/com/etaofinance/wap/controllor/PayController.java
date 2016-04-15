@@ -66,13 +66,14 @@ public class PayController {
 	 * @return
 	 */
 	@RequestMapping("setpaypasswordstep1")
-	public ModelAndView setpaypasswordstep1()
+	public ModelAndView setpaypasswordstep1(String phone )
 	{
+		if(phone==null || phone.equals(""))
+			phone=(String)request.getAttribute("phone");//从其它Controller中获取
+		
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "设置支付密码");
-		view.addObject("viewPath", "pay/setpaypasswordstep1");
-		
-		String phone="13520860798";
+		view.addObject("viewPath", "pay/setpaypasswordstep1");		
 		view.addObject("phone", phone);	
 		return view;
 	}	

@@ -29,6 +29,7 @@ import com.etaofinance.core.enums.ADVertEnum;
 import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.enums.RechargeStatus;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
@@ -125,61 +126,63 @@ public class RechargeService implements IRechargeService {
 			Integer accountType, String createName) {
 		HttpResultModel<Object> res = new HttpResultModel<Object>();
 
-		res.setCode(HttpReturnRnums.Fail.value());
-		res.setMsg(HttpReturnRnums.Fail.desc());
-
-		// todo:唯一标识码--- 其实应该有一个公共的方法去处理各种单号的问题
-		UUID uuid = UUID.randomUUID();
-
-		// 1 insert recharge
-		Recharge charge = new Recharge();
-
-		charge.setAccounttype(accountType);
-		charge.setAmount(amount);
-		charge.setCreatename(createName);
-		charge.setMemberid(memberId);
-		charge.setOptname(createName);
-		charge.setRemark("充值");
-		charge.setStatus((short) RechargeStatus.Success.value());
-		charge.setNo(uuid.toString());
-
-		// 2 insert balancerecord
-		BalanceRecord balance = balanceRecordDao
-				.GetLatestedModelByMbId(memberId);
-
-		balance.setId(null);
-		balance.setAmount(balance.getAfteramount());
-		balance.setAfteramount(balance.getAmount() + amount);
-
-		balance.setRemark("充值流水");
-		balance.setTypeid((short) BalanceRecordType.Recharge.value());
-		balance.setRelationno(uuid.toString());
-		balance.setOptname(createName);
-
-		// 3 update memberother
-		int insertRechargeRes = this.insertSelective(charge);
-		if (0 == insertRechargeRes) {
-
-			throw new TransactionalRuntimeException("充值表异常");
-			
-		}
-
-		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
-		if (0 == insertBalanceRes) {
-
-			throw new TransactionalRuntimeException("流水表异常");
-		}
-		int updateMemberOterRes = memberOtherDao.updateMemberOther(memberId,
-				amount,null);
-		if (0 == updateMemberOterRes) {
-
-			throw new TransactionalRuntimeException("余额表异常");
-		}
+//		res.setCode(HttpReturnRnums.Fail.value());
+//		res.setMsg(HttpReturnRnums.Fail.desc());
+//
+//		// todo:唯一标识码--- 其实应该有一个公共的方法去处理各种单号的问题
+//		UUID uuid = UUID.randomUUID();
+//
+//		// 1 insert recharge
+//		Recharge charge = new Recharge();
+//
+//		charge.setAccounttype(accountType);
+//		charge.setAmount(amount);
+//		charge.setCreatename(createName);
+//		charge.setMemberid(memberId);
+//		charge.setOptname(createName);
+//		charge.setRemark("充值");
+//		charge.setStatus((short) RechargeStatus.Success.value());
+//		charge.setNo(uuid.toString());
+//
+//		// 2 insert balancerecord
+//		BalanceRecord balance = balanceRecordDao
+//				.GetLatestedModelByMbId(memberId);
+//
+//		balance.setId(null);
+//		balance.setAmount(balance.getAfteramount());
+//		balance.setAfteramount(balance.getAmount() + amount);
+//
+//		balance.setRemark("充值流水");
+//		balance.setTypeid((short) BalanceRecordType.Recharge.value());
+//		balance.setRelationno(uuid.toString());
+//		balance.setOptname(createName);
+//
+//		// 3 update memberother
+//		int insertRechargeRes = this.insertSelective(charge);
+//		if (0 == insertRechargeRes) {
+//
+//			throw new TransactionalRuntimeException("充值表异常");
+//			
+//		}
+//
+//		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
+//		if (0 == insertBalanceRes) {
+//
+//			throw new TransactionalRuntimeException("流水表异常");
+//		}
+//		int updateMemberOterRes = memberOtherDao.updateMemberOther(memberId,
+//				amount,null);
+//		if (0 == updateMemberOterRes) {
+//
+//			throw new TransactionalRuntimeException("余额表异常");
+//		}
 
 		res.setCode(HttpReturnRnums.Success.value());
 		res.setMsg(HttpReturnRnums.Success.desc());
-		res.setData("充值成功");
-
+		//res.setData("充值成功");
+		String basePath = PropertyUtils.getProperty("java.wap.url");
+		basePath+="/me/accountblance";	
+		res.setUrl(basePath);		
 		return res;
 	}
 

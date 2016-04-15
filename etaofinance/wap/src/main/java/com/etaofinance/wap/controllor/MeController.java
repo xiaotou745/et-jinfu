@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.dao.inter.IMemberOtherDao;
@@ -273,16 +274,54 @@ public class MeController {
 		view.addObject("currenttitle", "充值");
 		view.addObject("viewPath", "me/recharge");
 		
-//		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
-//		memberOtherService.get
-//		
-//		
-//		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
-//		
-//		PublicMemberReq record =new PublicMemberReq();
-//		record.setMemberId(member.getId());
-//		List<BalanceRecordDM> list=balanceRecordService.getListMore(record);
-//		view.addObject("list", list);
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = "";
+			basePath+="/pay/setpaypasswordstep1";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("phone", member.getPhoneno());
+			return  view2;
+			
+//			String basePath = "";
+//			basePath+="/pay/setpaypasswordstep1";		
+//			ModelAndView view2= new ModelAndView("forward:"+basePath);
+//			view2.addObject("phone", member.getPhoneno());
+//			return  view2; 
+		}	
+
+		return view;
+	}
+	
+	/**
+	 * 提现
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("withdraw")
+	@RequireLogin
+	public ModelAndView withdraw() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "提现");
+		view.addObject("viewPath", "me/withdraw");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = "";
+			basePath+="/pay/setpaypasswordstep1";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("phone", member.getPhoneno());
+			return  view2;			
+		}	
+
 		return view;
 	}
 	/**
