@@ -71,4 +71,8 @@ public interface IProjectService {
 	 * 修改融资状态 wangchao
 	 */
 	int modifyProjectStatus(ProjectStatusReq req);
+	/*
+	 * 修改项目上架 下架 wangchao
+	 */
+	int isShelf(ProjectStatusReq req);
 }

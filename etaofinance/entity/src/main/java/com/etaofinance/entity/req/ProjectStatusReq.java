@@ -12,7 +12,8 @@ public class ProjectStatusReq {
 	// 修改后项目融资状态
 	private int aftProjectStatus;
 	private String logRemark;
-
+	private int isShelve;	
+	
 	public String getRemark() {
 		return remark;
 	}
@@ -59,5 +60,13 @@ public class ProjectStatusReq {
 
 	public void setOperater(String operater) {
 		this.operater = operater;
+	}
+
+	public int getIsShelve() {
+		return isShelve;
+	}
+
+	public void setIsShelve(int isShelve) {
+		this.isShelve = isShelve;
 	}
 }
