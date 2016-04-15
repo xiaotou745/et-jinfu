@@ -50,8 +50,8 @@ import com.etaofinance.entity.resp.ForgetPayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.ModifyPayPwdResp;
-import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
 import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
+import com.etaofinance.entity.resp.ModifyPhoneResp;
 import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
 import com.etaofinance.wap.common.NoRequireLogin;
@@ -330,8 +330,9 @@ public class UserController {
 	@RequestMapping("modifyphonebymessageone")
 	@ResponseBody
 	@RequireLogin
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req)
+	public HttpResultModel<ModifyPhoneResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req)
 	{
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return memberService.modifyPhoneByMessageOne(req);
 	}
 	
@@ -345,8 +346,9 @@ public class UserController {
 	@RequestMapping("modifyphonetwo")
 	@ResponseBody
 	@RequireLogin
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhonewo(@RequestBody  ModifyPhoneByMessageReq req)
+	public HttpResultModel<ModifyPhoneResp> modifyPhonewo(@RequestBody  ModifyPhoneByMessageReq req)
 	{
+		req.setUserId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return memberService.modifyPhoneTwo(req);
 	}
 	
@@ -363,23 +365,10 @@ public class UserController {
 	@RequireLogin
 	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(@RequestBody  ModifyPhoneByPayReq req)
 	{
+		req.setMemberId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return memberService.modifyPhoneByPayOne(req);
 	}
 	
-	/**
-	 * 通过支付密码修改手机号码 第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:07:12
-	 * @return
-	 */
-	@RequestMapping("modifyphonebypaytwo")
-	@ResponseBody
-	@RequireLogin
-	public HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(@RequestBody  ModifyPhoneByPayReq req)
-	{
-		return memberService.modifyPhoneByPayTwo(req);
-	}
 	/**
 	 * 创建支付密码第1步
 	 * @param 

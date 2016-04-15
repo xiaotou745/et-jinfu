@@ -5,7 +5,7 @@ package com.etaofinance.entity.resp;
  * @author ofmyi_000
  *
  */
-public class ModifyPhoneByMessageResp {
+public class ModifyPhoneResp {
 private String checkKey;
 public String getCheckKey() {
 	return checkKey;
