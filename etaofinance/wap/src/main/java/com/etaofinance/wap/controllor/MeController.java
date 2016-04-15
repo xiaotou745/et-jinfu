@@ -733,5 +733,21 @@ public class MeController {
 	}	
 	
 	/******************************************资金账户end*/
+	/**修改邮箱
+	 * 
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("modifyemail")
+	@RequireLogin
+	public ModelAndView modifyemail() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改邮箱");
+		view.addObject("viewPath", "me/modifyemail");
+		return view;
+	}	
 
 }

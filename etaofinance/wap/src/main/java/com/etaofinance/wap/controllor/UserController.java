@@ -2,6 +2,7 @@ package com.etaofinance.wap.controllor;
 
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -554,12 +555,12 @@ public class UserController {
 	@ApiOperation(value = "发送邮箱绑定验证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "发送邮箱绑定验证")
+	@RequireLogin
 	public HttpResultModel<Object> bindEmail(@RequestBody Member member)
 	{
 		HttpResultModel<Object> res = null;
-		
+		member.setId(UserContext.getCurrentContext(request).getUserInfo().getId());
 		res = memberService.bindEmail(member);
-		
 		return res;
 	}
 	
@@ -568,19 +569,23 @@ public class UserController {
 	 * 
 	 * @param idAndEmail 
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("emailbindcallback")
 	@ResponseBody
 	@ApiOperation(value = "邮箱绑定回调", httpMethod = "GET", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "邮箱绑定回调")
-	public HttpResultModel<Object> bindEmailcallback(String idAndEmail)
+	public void bindEmailcallback(String idAndEmail,HttpServletResponse response) throws IOException
 	{
 		HttpResultModel<Object> res = null;
-		
 		res = memberService.bindEmailCallBk(idAndEmail);
-		//todo: 此处 最好返回一个友好的验证成功的页面
-		return res;
+		String url=PropertyUtils.getProperty("java.wap.url")+"/home/index";
+		String content="<script>alert('"+res.getMsg()+"');window.location.href='"+url+"'</script>";
+		String data = content;
+        response.setHeader("content-type", "text/html;charset=UTF-8");
+        OutputStream out = response.getOutputStream();
+        out.write(data.getBytes("UTF-8"));
 	}
 	
 }
