@@ -21,6 +21,7 @@ import com.etaofinance.core.util.SystemUtils;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.BankCard;
+import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.ZcSuggestion;
@@ -78,8 +79,9 @@ public class BankControllor {
 	notes = "绑定银行卡")
 	HttpResultModel<Object> BindBankCard(@RequestBody  BankCard record)
 	{
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();
-		record.setMemberid(memberid);		
+		Member member=UserContext.getCurrentContext(request).getUserInfo();		
+		record.setMemberid(member.getId());
+		record.setCreatename(member.getUsername());		
 		return bankCardService.create(record);
 	}
 	
