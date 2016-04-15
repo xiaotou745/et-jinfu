@@ -44,7 +44,7 @@
         </a>
     </section>
     <section class="container bg">
-        <a href="#">
+    	<a href="<%=basePath%>/me/bankcardlist">        
     	<div class="text">
     		<div class="title">我的银行卡</div>
     		<div class="content">

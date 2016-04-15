@@ -85,6 +85,9 @@ public class MeController {
 
 	@Autowired
 	IMessageService  messageService;
+	
+	@Autowired
+	IBankCardService   bankCardService;
 	/**
 	 * 登录页面
 	 * @return
@@ -259,71 +262,7 @@ public class MeController {
 		return view;
 	}
 	
-	/**
-	 * 充值
-	 * @param checkKey
-	 * @param userId
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("recharge")
-	@RequireLogin
-	public ModelAndView recharge() 
-	{
-		ModelAndView view= new ModelAndView("wapView");
-		view.addObject("currenttitle", "充值");
-		view.addObject("viewPath", "me/recharge");
-		
-		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
-		Member member=memberService.getById(memberId);
-		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
-		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
-		{						
-			String basePath = "";
-			basePath+="/pay/setpaypasswordstep1";		
-			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
-			view2.addObject("phone", member.getPhoneno());
-			return  view2;
-			
-//			String basePath = "";
-//			basePath+="/pay/setpaypasswordstep1";		
-//			ModelAndView view2= new ModelAndView("forward:"+basePath);
-//			view2.addObject("phone", member.getPhoneno());
-//			return  view2; 
-		}	
-
-		return view;
-	}
 	
-	/**
-	 * 提现
-	 * @param checkKey
-	 * @param userId
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping("withdraw")
-	@RequireLogin
-	public ModelAndView withdraw() 
-	{
-		ModelAndView view= new ModelAndView("wapView");
-		view.addObject("currenttitle", "提现");
-		view.addObject("viewPath", "me/withdraw");
-		
-		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
-		Member member=memberService.getById(memberId);
-		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
-		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
-		{						
-			String basePath = "";
-			basePath+="/pay/setpaypasswordstep1";		
-			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
-			view2.addObject("phone", member.getPhoneno());
-			return  view2;			
-		}	
-
-		return view;
-	}
 	/**
 	 * 用户信息
 	 * @param checkKey
@@ -418,6 +357,8 @@ public class MeController {
 		switch (type) {
 		case 1:{tip="您尚未实名认证,请先进行实名认证";url=basePath+"/me/certification";button="去认证";}break;//实名认证
 		case 2:{tip="您当前有未审核通过的认证申请,请等待审核";url=basePath+"/me/userinfo";button="返回";}break;
+		case 3:{tip="您尚未设置支付密码,请先设置支付密码";url=basePath+"/pay/setpaypasswordstep1";button="支设置";}break;
+		case 4:{tip="您当前未绑定银行卡，请先绑定";url=basePath+"/me/addbankcard";button="去绑定";}break;
 //		case 3:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
 //		case 4:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
 //		case 5:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
@@ -546,5 +487,167 @@ public class MeController {
 		view.addObject("message",m);
 		return view;
 	}
+	
+	/******************************************资金账户begin*/
+	
+	/**
+	 * 充值
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("recharge")
+	@RequireLogin
+	public ModelAndView recharge() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "充值");
+		view.addObject("viewPath", "me/recharge");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+//			String basePath = "";
+//			basePath+="/pay/setpaypasswordstep1";		
+//			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+//			view2.addObject("phone", member.getPhoneno());
+//			return  view2;	
+	
+			String basePath = "";
+			basePath+="/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "3");
+			return  view2;			
+		}	
+
+		return view;
+	}
+	
+	/**
+	 * 提现
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("withdraw")
+	@RequireLogin
+	public ModelAndView withdraw() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "提现");
+		view.addObject("viewPath", "me/withdraw");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = "/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "3");
+			return  view2;			
+		}	
+
+		return view;
+	}
+	
+	
+	/**我的银行卡
+	 * 
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("bankcardlist")
+	@RequireLogin
+	public ModelAndView bankcardlist() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "我的银行卡");
+		view.addObject("viewPath", "me/bankcardlist");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = "/wap/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "3");
+			return  view2;		
+		}	
+		
+		List<BankCard> bandCardList=bankCardService.getListByMemberId(memberId);
+		if(bandCardList==null || bandCardList.size()==0)
+		{
+			String basePath = "/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "4");
+			return  view2;		
+		}		
+
+
+		return view;		
+		
+		
+//		String key=String.format(RedissCacheKey.JF_Member_FindPassWordSetpOne,checkKey);
+//		String value=redisService.get(key, String.class);
+//		ModelAndView view = new ModelAndView("wapView");
+//		view.addObject("currenttitle", "找回密码");
+//		view.addObject("viewPath", "me/retrievepasswordstep2");
+//		if(value==null||value.equals("")||!value.equals(checkKey))
+//		{
+//			ModelAndView view2 = new ModelAndView("wapView");
+//			view2.addObject("currenttitle", "找回密码");
+//			view2.addObject("viewPath", "me/retrievepasswordstep1");
+//			return view2;
+//		}
+//		Member member=memberService.getById(userId);
+//		String phone=member.getPhoneno();
+//		
+//		String sString=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
+//		view.addObject("phoneString", sString);
+//		view.addObject("phone", phone);
+//		view.addObject("checkKey", checkKey);
+//		return view;
+	}
+	
+	/**绑定银行卡
+	 * 
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("addbankcard")
+	@RequireLogin
+	public ModelAndView addbankcard() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "绑定银行卡");
+		view.addObject("viewPath", "me/addbankcard");
+		
+		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
+		Member member=memberService.getById(memberId);
+		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
+		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
+		{						
+			String basePath = "";
+			basePath+="/pay/setpaypasswordstep1";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("phone", member.getPhoneno());
+			return  view2;		
+		}	
+
+		return view;
+	}	
+	
+	/******************************************资金账户end*/
 
 }
