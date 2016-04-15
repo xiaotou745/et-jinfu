@@ -130,7 +130,7 @@ public interface IMemberService {
 	 * @date 2016年4月13日20:07:12
 	 * @return
 	 */
-	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req);    
+	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneTwo(@RequestBody  ModifyPhoneByMessageReq req);    
 	
 	
 	/**

@@ -15,7 +15,7 @@
         <div class="g-views">
             
 	<section class="container bg">
-		<a href="#"><div class="text">
+		<a href="<%=basePath%>/me/modifytelephone"><div class="text">
 			<div class="title">手机号</div>
 			<div class="content">
 				<span><%=member.getPhoneno()%></span>

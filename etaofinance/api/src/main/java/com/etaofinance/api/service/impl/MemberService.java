@@ -527,31 +527,13 @@ public class MemberService implements IMemberService {
 		return res;
 	}
 
-	
+	/**
+	 * 通过手机验证码修改手机号,验证
+	 */
 	@Override
 	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(
 			ModifyPhoneByMessageReq req) {
-		HttpResultModel<ModifyPhoneByMessageResp> resultModel=new HttpResultModel<ModifyPhoneByMessageResp>();
-		
-		if(req.getPhoneNo()==null ||req.getPhoneNo().equals(""))
-		{
-			resultModel.setCode(-1);
-			resultModel.setMsg("手机号不能为空!");
-			return resultModel;
-		}		
-		//查询会员是否存在	
-		Member member=null;
-		if(RegexHelper.IsPhone(req.getPhoneNo()))
-		{
-			member=memberDao.selectByPhoneNo(req.getPhoneNo());			
-			if(member==null)
-			{
-				resultModel.setCode(-1);
-				resultModel.setMsg("会员不存在!");
-				return resultModel;
-			}
-		}		
-		
+		HttpResultModel<ModifyPhoneByMessageResp> resultModel=new HttpResultModel<ModifyPhoneByMessageResp>();				
 		//手机验证码
 		String phoneKey= String.format(RedissCacheKey.JF_Member_ChangePhone ,req.getPhoneNo());
 		String phoneValue=redisService.get(phoneKey, String.class);
@@ -568,18 +550,18 @@ public class MemberService implements IMemberService {
 		String UUIDvalue=UUID.randomUUID().toString();
 		String UUIDkey=String.format(RedissCacheKey.JF_Member_ChangePhoneOne,UUIDvalue);
 		redisService.set(UUIDkey, UUIDvalue,60*5,TimeUnit.SECONDS);
-		//验证码错误
 		resultModel.setCode(1);
 		resultModel.setMsg("验证通过!");
 		ModifyPhoneByMessageResp resp=new ModifyPhoneByMessageResp();
-		resp.setUserID(member.getId());
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
 		return resultModel;
 	}
-
+	/**
+	 * 新手机号校验
+	 */
 	@Override
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneTwo(
 			ModifyPhoneByMessageReq req) {
 		HttpResultModel<ModifyPhoneByMessageResp> resultModel=new HttpResultModel<ModifyPhoneByMessageResp>();	
 		
@@ -610,12 +592,10 @@ public class MemberService implements IMemberService {
 		
 		//删除第一次给的UUID,防止被重复使用
 		redisService.remove(keyOne);		
-		
 		Member member=new Member();
 		member.setId(req.getUserId());
 		member.setPhoneno(req.getPhoneNo());	
-		int row=memberDao.updateByPrimaryKeySelective(member);
-				
+		int row=memberDao.updateByPrimaryKeySelective(member);	
 		if(row<=0)
 		{
 			resultModel.setCode(MemberEnum.Err.value());
@@ -624,6 +604,8 @@ public class MemberService implements IMemberService {
 		}
 		resultModel.setCode(MemberEnum.Success.value());
 		resultModel.setMsg(MemberEnum.Success.desc());
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath+"/me/accountsecurity");
 		return resultModel;
 	}
 

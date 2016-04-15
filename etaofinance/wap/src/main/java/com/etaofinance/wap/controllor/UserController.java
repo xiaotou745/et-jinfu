@@ -336,18 +336,18 @@ public class UserController {
 	}
 	
 	/**
-	 * 通过发送短信修改手机号码第2步
+	 * 修改手机号码第2步
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年4月13日20:07:12
 	 * @return
 	 */
-	@RequestMapping("modifyphonebymessagetwo")
+	@RequestMapping("modifyphonetwo")
 	@ResponseBody
 	@RequireLogin
-	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req)
+	public HttpResultModel<ModifyPhoneByMessageResp> modifyPhonewo(@RequestBody  ModifyPhoneByMessageReq req)
 	{
-		return memberService.modifyPhoneByMessageTwo(req);
+		return memberService.modifyPhoneTwo(req);
 	}
 	
 	

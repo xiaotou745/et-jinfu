@@ -6,14 +6,7 @@ package com.etaofinance.entity.resp;
  *
  */
 public class ModifyPhoneByMessageResp {
-private Long userID;
 private String checkKey;
-public Long getUserID() {
-	return userID;
-}
-public void setUserID(Long userID) {
-	this.userID = userID;
-}
 public String getCheckKey() {
 	return checkKey;
 }
