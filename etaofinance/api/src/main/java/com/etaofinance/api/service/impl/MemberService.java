@@ -526,6 +526,7 @@ public class MemberService implements IMemberService {
 		if (memberDao.updateByPrimaryKeySelective(member) > 0) {
 			res.setCode(1);
 			res.setMsg("密码修改成功!");
+			res.setUrl(PropertyUtils.getProperty("java.wap.url")+"/me/accountsecurity");
 			return res;
 		}
 		res.setCode(-1);

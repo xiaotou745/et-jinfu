@@ -196,6 +196,7 @@ public class ProjectController {
 	public int audit(HttpServletRequest request, ProjectAuditReq req) {
 		UserContext context = UserContext.getCurrentContext(request);
 		req.setAuditName(context.getUserName());
+		req.setLogRemark(ProjectAuditStatus.getEnum(req.getAuditStatus()).desc()+","+req.getRemark());
 		int r = projectService.audit(req);
 		return r;
 	}

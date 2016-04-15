@@ -765,6 +765,22 @@ public class MeController {
 		view.addObject("currenttitle", "修改邮箱");
 		view.addObject("viewPath", "me/modifyemail");
 		return view;
+	}
+	/**修改邮箱
+	 * 
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("modifypassword")
+	@RequireLogin
+	public ModelAndView modifypassword() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改密码");
+		view.addObject("viewPath", "me/modifypassword");
+		return view;
 	}	
 
 }
