@@ -19,8 +19,8 @@ import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.resp.ForgetPwdResp;
 import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.ModifyPayPwdResp;
-import com.etaofinance.entity.resp.ModifyPhoneByMessageResp;
 import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
+import com.etaofinance.entity.resp.ModifyPhoneResp;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.domain.MemberModel;
@@ -121,18 +121,7 @@ public interface IMemberService {
 	 * @date 2016年4月13日20:07:05
 	 * @return
 	 */
-	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req);
-	
-	/**
-	 * 通过发送短信修改手机号码第2步
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年4月13日20:07:12
-	 * @return
-	 */
-	HttpResultModel<ModifyPhoneByMessageResp> modifyPhoneByMessageTwo(@RequestBody  ModifyPhoneByMessageReq req);    
-	
-	
+	HttpResultModel<ModifyPhoneResp> modifyPhoneByMessageOne(@RequestBody  ModifyPhoneByMessageReq req);
 	/**
 	 * 通过支付密码修改手机号码 第1步
 	 * @param 
@@ -143,14 +132,15 @@ public interface IMemberService {
 	HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayOne(@RequestBody  ModifyPhoneByPayReq req);
 	
 	/**
-	 * 通过支付密码修改手机号码 第2步
+	 * 通过发送短信修改手机号码第2步
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年4月13日20:07:12
 	 * @return
 	 */
-	HttpResultModel<ModifyPhoneByPayResp> modifyPhoneByPayTwo(@RequestBody  ModifyPhoneByPayReq req);    
-    
+	HttpResultModel<ModifyPhoneResp> modifyPhoneTwo(@RequestBody  ModifyPhoneByMessageReq req);    
+	
+
     /**
      *修改用户密码
      * @param req

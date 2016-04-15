@@ -487,7 +487,52 @@ public class MeController {
 		view.addObject("message",m);
 		return view;
 	}
+	/**
+	 * 修改手机号
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("modifytelephone")
+	@RequireLogin
+	public ModelAndView modifytelephone() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "修改手机号");
+		view.addObject("viewPath", "me/modifytelephone");
+		MemberOther member=memberOtherService.getByMemberId(UserContext.getCurrentContext(request).getUserInfo().getId());
+		int flag=0;
+		if(member.getPaypassword()!=null&&!member.getPaypassword().equals(""))
+		{
+			flag=1;
+		}
+		view.addObject("flag", flag);
+		return view;
+	}
+	/**
+	 * 修改手机号短信验证码
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("messagecertification")
+	@RequireLogin
+	public ModelAndView messagecertification() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "短信验证");
+		view.addObject("viewPath", "me/modifytelephone");
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
+		return view;
+	}
+
+		return view;
+	}
 	
+
 	/******************************************资金账户begin*/
 	
 	/**
@@ -523,9 +568,7 @@ public class MeController {
 			return  view2;			
 		}	
 
-		return view;
-	}
-	
+
 	/**
 	 * 提现
 	 * @param checkKey
