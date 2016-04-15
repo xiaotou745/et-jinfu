@@ -20,7 +20,7 @@
 %>
 ======暂无数据 无此项目信息=====
 <%
-	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value() || project.getAuditstatus()==ProjectAuditStatus.AuditRefuse.value()) {%>
+	} else if(project.getAuditstatus()==ProjectAuditStatus.AuditPass.value()) {%>
 		======已经<%=ProjectAuditStatus.getEnum(project.getAuditstatus()).desc() %>=====
 		<a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a>		 
 	<% }else {
