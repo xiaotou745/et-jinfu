@@ -13,21 +13,20 @@
 	String sString=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
 %>
 
-<link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/message-certification.css">
+ <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/message-certification.css">
     <div class="g-wrap">
         <div class="g-views">
             
     <form data-role="form">
         <section class="container top-gap">
             <div class="form-input-vertify">
-                <input type="tel" name="telephone" data-role="telephone" value="<%=sString%>"  readonly maxlength="11" />
-                <input type="hidden" id="hidephone"  value="<%=phone%>"  readonly maxlength="11" />
+                <input type="tel" name="telephone" data-role="telephone"  value="<%=sString%>"  readonly maxlength="11" />
                 <button data-role="getCode" class="radius">获取验证码</button>
             </div>
         </section>
         <section class="container">
             <div class="form-input">
-                <input type="text" placeholder="请输入短信验证码" data-role="code" />
+                <input type="text" placeholder="请输入短信验证码" name="veriCode" data-role="veriCode" />
             </div>
         </section>
         <section class="container top-gap">
@@ -35,6 +34,7 @@
                 <button data-role="submit" disabled>绑定</button>
             </div>
         </section>
+        <input type="hidden" name="phoneNo" data-role="phoneNo" id="hidephone" value="<%=phone%>"  readonly="" maxlength="11">
     </form>
 
         </div>
