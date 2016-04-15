@@ -43,25 +43,18 @@ import com.etaofinance.entity.req.ModifypwdReq;
 import com.etaofinance.entity.req.RegistReq;
 import com.etaofinance.entity.req.SendCodeReq;
 import com.etaofinance.entity.common.HttpResultModel;
-import com.etaofinance.entity.common.ResponseBase;
 import com.etaofinance.entity.domain.MemberDM;
 import com.etaofinance.entity.resp.CreatePayPwdResp;
 import com.etaofinance.entity.resp.ForgetPayPwdResp;
 import com.etaofinance.entity.resp.ForgetPwdResp;
-import com.etaofinance.entity.resp.MemberResp;
 import com.etaofinance.entity.resp.ModifyPayPwdResp;
 import com.etaofinance.entity.resp.ModifyPhoneByPayResp;
 import com.etaofinance.entity.resp.ModifyPhoneResp;
-import com.etaofinance.entity.resp.SendCodeResp;
 import com.etaofinance.wap.common.LoginUtil;
-import com.etaofinance.wap.common.NoRequireLogin;
 import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiImplicitParam;
-import com.wordnik.swagger.annotations.ApiImplicitParams;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
 
 /**
  * 用户相关

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.print.DocFlavor.STRING;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -511,7 +512,8 @@ public class MeController {
 		return view;
 	}
 	/**
-	 * 修改手机号短信验证码
+	 * 修改手机号BY
+	 * 短信验证码
 	 * @param checkKey
 	 * @param userId
 	 * @return
@@ -523,9 +525,49 @@ public class MeController {
 	{
 		ModelAndView view= new ModelAndView("wapView");
 		view.addObject("currenttitle", "短信验证");
-		view.addObject("viewPath", "me/modifytelephone");
+		view.addObject("viewPath", "me/messagecertification");
 		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
 		view.addObject("member", member);
+		return view;
+	}
+	/**
+	 * 修改手机号By支付密码
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("inputpaypassword")
+	@RequireLogin
+	public ModelAndView inputpaypassword() 
+	{
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "输入支付密码");
+		view.addObject("viewPath", "me/inputpaypassword");
+		return view;
+	}
+	/**
+	 * 绑定新手机号
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("bindtelephone")
+	@RequireLogin
+	public ModelAndView bindtelephone(String checkKey) 
+	{
+		String value=redisService.get(RedissCacheKey.JF_Member_ChangePhoneOne, String.class);
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "输入支付密码");
+		view.addObject("viewPath", "me/bindtelephone");
+		if(value==null||!value.equals(checkKey))
+		{	//一次性校验码错误
+		
+			String basePath="/me/modifytelephone";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			return  view2;
+		}
 		return view;
 	}
 

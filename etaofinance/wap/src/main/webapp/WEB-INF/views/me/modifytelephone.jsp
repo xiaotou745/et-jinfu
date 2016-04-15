@@ -21,7 +21,7 @@
 		<div class="tips">
 			您需要先进行安全验证
 		</div>
-		<a href="#">
+		<a href="<%=basePath%>/me/messagecertification">
 		<div class="text top-line">
 			<div class="title">短信验证</div>
 			<i class="m-icon icon-arrow-r"></i>
@@ -31,7 +31,7 @@
 		if(flag==1)
 		{
 			%>
-			<a href="#">
+			<a href="<%=basePath%>/me/inputpaypassword">
 			<div class="text">
 			<div class="title">支付密码验证</div>
 			<i class="m-icon icon-arrow-r"></i>
