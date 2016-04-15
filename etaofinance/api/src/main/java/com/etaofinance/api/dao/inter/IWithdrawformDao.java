@@ -27,4 +27,6 @@ public interface IWithdrawformDao {
     WithdrawformDM selectDMByPrimaryKey(Long id);
 
 	PagedResponse<Withdrawform> getWithdrawList(PagedWithdrawReq req);
+	
+	double  GetWithdrawPendingAmountByMbId(Long memberId);
 }

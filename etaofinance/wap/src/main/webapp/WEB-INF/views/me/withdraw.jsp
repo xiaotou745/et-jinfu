@@ -7,7 +7,7 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
-	String allowwithdrawprice=(String)request.getAttribute("allowwithdrawprice");
+	double allowwithdrawprice=(double)request.getAttribute("allowwithdrawprice");
 	
 %>
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/withdraw.css">

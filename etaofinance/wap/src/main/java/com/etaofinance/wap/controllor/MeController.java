@@ -30,6 +30,7 @@ import com.etaofinance.api.service.inter.IMessageService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
+import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.consts.RedissCacheKey;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.PropertyUtils;
@@ -89,6 +90,9 @@ public class MeController {
 	
 	@Autowired
 	IBankCardService   bankCardService;
+	
+	@Autowired
+	IWithdrawformService    withdrawformService;
 	/**
 	 * 登录页面
 	 * @return
@@ -630,8 +634,9 @@ public class MeController {
 			view2.addObject("type", "3");
 			return  view2;			
 		}	
-		double allowwithdrawprice=memberOther.getAllowwithdrawprice();
-		view.addObject("allowwithdrawprice",allowwithdrawprice);
+		double allowwithdrawprice=memberOther.getAllowwithdrawprice();		
+		double  WithdrawPendingAmount= withdrawformService.GetWithdrawPendingAmountByMbId(memberId);
+		view.addObject("allowwithdrawprice",allowwithdrawprice-WithdrawPendingAmount);
 		return view;
 	}
 	
