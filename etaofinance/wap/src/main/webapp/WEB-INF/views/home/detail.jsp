@@ -130,7 +130,7 @@
                 	{//非投资人
                 		%>
                 		<div class="detail-box">
-                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/me/certificationinvestor">认证</a></p>
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/certificationinvestor">认证</a></p>
                     	</div>
                 		<% 
                 	}else
@@ -191,7 +191,26 @@
                    
                 </div>
                 <div class="pane hide" data-panelindex="3">
-                    <div class="detail-head-list container">
+                <%
+                	if(isLogin==0)
+                	{//未登录
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/home/detail?projectid=<%=projectid%>">登录</a></p>
+                    	</div>
+                		<% 
+                	}
+                	else if(isLogin==1&&isTzr==0)
+                	{//非投资人
+                		%>
+                		<div class="detail-box">
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/me/certificationinvestor">认证</a></p>
+                    	</div>
+                		<% 
+                	}else
+                	{//显示评论信息
+                	%>
+                	<div class="detail-head-list container">
                         <ul>
                             <li>
                                 <p>马化腾</p>
@@ -220,6 +239,9 @@
                             </li>
                         </ul>
                     </div>
+                	<%}
+                	%>
+                   
                 </div>
             </div>
         </div>

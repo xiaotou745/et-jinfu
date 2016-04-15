@@ -555,6 +555,8 @@ public class MemberService implements IMemberService {
 		ModifyPhoneResp resp=new ModifyPhoneResp();
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath+"/me/bindtelephone?checkKey="+UUIDvalue);
 		return resultModel;
 	}
 	/**
@@ -593,6 +595,8 @@ public class MemberService implements IMemberService {
 		resp.setUserID(req.getMemberId());
 		resp.setCheckKey(UUIDvalue);
 		resultModel.setData(resp);
+		String basePath=PropertyUtils.getProperty("java.wap.url");
+		resultModel.setUrl(basePath+"/me/bindtelephone?checkKey="+UUIDvalue);
 		return resultModel;
 	}
 	/**
