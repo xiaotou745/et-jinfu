@@ -529,10 +529,6 @@ public class MeController {
 		return view;
 	}
 
-		return view;
-	}
-	
-
 	/******************************************资金账户begin*/
 	
 	/**
@@ -555,18 +551,20 @@ public class MeController {
 		MemberOther memberOther=memberOtherService.getByMemberId(memberId);
 		if(memberOther.getPaypassword()==null || memberOther.getPaypassword().equals(""))
 		{						
-//			String basePath = "";
+//			String basePath = PropertyUtils.getProperty("java.wap.url");
 //			basePath+="/pay/setpaypasswordstep1";		
 //			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 //			view2.addObject("phone", member.getPhoneno());
 //			return  view2;	
 	
-			String basePath = "";
+			String basePath = PropertyUtils.getProperty("java.wap.url");
 			basePath+="/me/transfer";		
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 			view2.addObject("type", "3");
 			return  view2;			
 		}	
+		return view;
+	}	
 
 
 	/**
