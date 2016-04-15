@@ -619,4 +619,9 @@
 		UPDATE project set ProjectStatus=#{aftProjectStatus,jdbcType=INTEGER}
 	      WHERE Id=#{projectId,jdbcType=BIGINT}
 	</update>	
+	<!-- 修改项目上下架状态  wangchao -->
+	<update id="isShelf" parameterType="com.etaofinance.entity.req.ProjectStatusReq">
+		UPDATE project set isShelve=#{isShelve,jdbcType=BIT}
+	      WHERE Id=#{projectId,jdbcType=BIGINT}
+	</update>
 </mapper>

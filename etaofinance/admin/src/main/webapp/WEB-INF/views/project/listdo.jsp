@@ -57,12 +57,14 @@
 			<%if(list.get(i).getProjectstatus()==ProjectStatus.Success.value()){ %>
 				<a href="javascript:void(0)" onclick="investFail(<%=list.get(i).getId()%>)">融资失败</a>
 			<%} %>
-			<%if(list.get(i).getProjectstatus()==ProjectStatus.Financeing.value()){ %>
+			
+			<%if(list.get(i).getProjectstatus()==ProjectStatus.Financeing.value() || list.get(i).getProjectstatus()==ProjectStatus.Preheating.value()){
+				if(list.get(i).getIsshelve()==true){
+			%>
 				<a href="javascript:void(0)" onclick="hideProject(<%=list.get(i).getId()%>)">隐藏</a>
-			<%} %>
-			<%if(list.get(i).getProjectstatus()==ProjectStatus.Preheating.value()){ %>
+			<%  } else {%>			 
 				<a href="javascript:void(0)" onclick="showProject(<%=list.get(i).getId()%>)">显示</a>
-			<%} %>
+			<%}} %>						 
 			</td>
 		</tr>
 		<%

@@ -61,4 +61,6 @@ public interface IProjectDao {
 	List<ProjectModel> getNoviceProject();
 
 	int modifyProjectStatus(ProjectStatusReq req);
+
+	int isShelf(ProjectStatusReq req);
 }

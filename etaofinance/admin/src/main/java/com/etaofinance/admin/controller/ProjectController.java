@@ -409,4 +409,16 @@ public class ProjectController {
 		req.setOperater(context.getUserName());		 
 		return projectService.modifyProjectStatus(req);
 	}
+	/**
+	 * 修改项目融资状态  wangchao
+	 * 
+	 * @return
+	 */
+	@RequestMapping("isshelf")
+	@ResponseBody
+	public int isShelf(HttpServletRequest request,ProjectStatusReq req) {
+		UserContext context = UserContext.getCurrentContext(request);
+		req.setOperater(context.getUserName());		 
+		return projectService.isShelf(req);
+	}
 }

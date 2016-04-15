@@ -106,5 +106,10 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	public int modifyProjectStatus(ProjectStatusReq req) {
 		return getMasterSqlSessionUtil().update("IProjectDao.modifyProjectStatus",req);
 	}
+
+	@Override
+	public int isShelf(ProjectStatusReq req) {
+		return getMasterSqlSessionUtil().update("IProjectDao.isShelf",req);
+	}
 	
 }

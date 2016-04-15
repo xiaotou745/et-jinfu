@@ -246,11 +246,12 @@ public class ProjectService implements IProjectService {
 		{
 			throw new TransactionalRuntimeException("认购失败!");
 		}
-		//您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
-		//String content="您于"+ParseHelper.ToDateString(Date)+"认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177";
-		
-		//发送认购短信
-		//SmsUtils.sendSMS(m.getPhoneno(), content);
+		// 您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
+		// String
+		// content="您于"+ParseHelper.ToDateString(Date)+"认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177";
+
+		// 发送认购短信
+		// SmsUtils.sendSMS(m.getPhoneno(), content);
 		HttpResultModel<Object> rModel = new HttpResultModel<Object>();
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");
@@ -300,13 +301,14 @@ public class ProjectService implements IProjectService {
 		}
 		return 0;
 	}
+
 	/*
 	 * 项目审核 通过or拒绝 wangchao
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public int audit(ProjectAuditReq req) {
-		//记日志，更新审核状态
+		// 记日志，更新审核状态
 		ProjectLogModel pLogModel = new ProjectLogModel();
 		pLogModel.setProjectId(req.getProjectId());
 		pLogModel.setIsDel(0);
@@ -314,7 +316,7 @@ public class ProjectService implements IProjectService {
 		pLogModel.setRemark(req.getLogRemark());
 		int a = projectLogDao.insert(pLogModel);
 		if (a > 0) {
-			int b=projectDao.audit(req);
+			int b = projectDao.audit(req);
 			if (b > 0) {
 				return 1;
 			}
@@ -398,6 +400,25 @@ public class ProjectService implements IProjectService {
 	public int modifyProjectStatus(ProjectStatusReq req) {
 		// 1.修改项目表project融资状态
 		int a = projectDao.modifyProjectStatus(req);
+		// 2.projectlog添加日志记录
+		if (a > 0) {
+			ProjectLogModel pLogModel = new ProjectLogModel();
+			pLogModel.setProjectId(req.getProjectId());
+			pLogModel.setIsDel(0);
+			pLogModel.setOperater(req.getOperater());
+			pLogModel.setRemark(req.getLogRemark());
+			int b = projectLogDao.insert(pLogModel);
+			if (b > 0) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public int isShelf(ProjectStatusReq req) {
+		// 1.修改项目表project上下架状态
+		int a = projectDao.isShelf(req);
 		// 2.projectlog添加日志记录
 		if (a > 0) {
 			ProjectLogModel pLogModel = new ProjectLogModel();
