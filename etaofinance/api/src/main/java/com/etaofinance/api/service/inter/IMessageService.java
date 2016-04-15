@@ -28,4 +28,5 @@ public interface IMessageService {
     HttpResultModel<Object> addMsgSelective(Message record);
 
     List<Message> getList(Long memberid);	
+    Message getByid(Long id);
 }

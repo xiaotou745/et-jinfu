@@ -10,7 +10,9 @@ import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.common.ResponseBase;
+import com.etaofinance.entity.domain.ProjectComment;
 import com.etaofinance.entity.req.PagedCommentReq;
+import com.etaofinance.entity.req.PagedProjectCommentReq;
 
 @Service
 public class CommentService implements ICommentService {
@@ -115,6 +117,13 @@ public class CommentService implements ICommentService {
 	@Override
 	public PagedResponse<Comment> getCommentPagingList(PagedCommentReq req) {
 		return commentDao.getCommentPagingList(req);
+	}
+	/**
+	 * 分页获取评论列表
+	 */
+	@Override
+	public PagedResponse<ProjectComment> getProjectComment(PagedProjectCommentReq req) {
+		return commentDao.getProjectComment(req);
 	}
 
 }

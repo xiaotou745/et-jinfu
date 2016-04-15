@@ -10,16 +10,16 @@
     <result column="Status" property="status" jdbcType="SMALLINT" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
-       <result column="IsRead" property="isread" jdbcType="BIT" />
-          <result column="IsDel" property="isdel" jdbcType="BIT" />
-            <result column="MsgType" property="msgtype" jdbcType="INTEGER" />
-              <result column="MsgHead" property="msghead" jdbcType="VARCHAR" />
-                <result column="MsgDes" property="msgdes" jdbcType="VARCHAR" />
+  	<result column="IsRead" property="isread" jdbcType="BIT" />
+    <result column="IsDel" property="isdel" jdbcType="BIT" />
+    <result column="MsgType" property="msgtype" jdbcType="INTEGER" />
+    <result column="MsgHead" property="msghead" jdbcType="VARCHAR" />
+    <result column="MsgDes" property="msgdes" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     Id, MemberId, Phone, PushWay, Content, Status, CreateTime, CreateName,IsRead,IsDel,MsgType,MsgHead,MsgDes
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from message

@@ -14,8 +14,10 @@ import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.MenuEntity;
+import com.etaofinance.entity.domain.ProjectComment;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedCommentReq;
+import com.etaofinance.entity.req.PagedProjectCommentReq;
 
 @Repository
 public class CommentDao extends DaoBase implements ICommentDao{
@@ -63,6 +65,14 @@ public class CommentDao extends DaoBase implements ICommentDao{
 	@Override
 	public PagedResponse<Comment> getCommentPagingList(PagedCommentReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("ICommentDao.getCommentListPaging",req);
+	}
+	
+	/**
+	 * 分页获取评论列表
+	 */
+	@Override
+	public PagedResponse<ProjectComment> getProjectComment(PagedProjectCommentReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("getProjectComment", req);
 	}
 
 }
