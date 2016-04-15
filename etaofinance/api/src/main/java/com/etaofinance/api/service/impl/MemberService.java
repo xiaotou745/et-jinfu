@@ -127,6 +127,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号已经存在,不能注册!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_Register, phoneNo);
 			content = "验证码#验证码#，您正在注册易淘众筹，请勿向他人泄露短信验证码。";
@@ -137,6 +138,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能找回密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_ForgetPassword,
 					phoneNo);
@@ -149,6 +151,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能设置支付密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_SetPayPassWord,
 					phoneNo);
@@ -161,6 +164,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能找回支付密码!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_FindPayPassWord,
 					phoneNo);
@@ -173,9 +177,10 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号不存在,不能修改手机绑定!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_ChangePhone, phoneNo);
-			content = "验证码#验证码#，您正在找回易淘众筹支付密码，请勿向他人泄露短信验证码";
+			content = "验证码#验证码#，您正在修改易淘众筹绑定手机号，请勿向他人泄露短信验证码。";
 
 		}
 			break;
@@ -184,6 +189,7 @@ public class MemberService implements IMemberService {
 			{
 				resp.setCode(-1);
 				resp.setMsg("该手机号存在,不能绑定!");
+				return resp;
 			}
 			key = String.format(RedissCacheKey.JF_Member_BindNewPhone, phoneNo);
 			content = "验证码#验证码#，您正在绑定此手机号，请勿向他人泄露短信验证码。";

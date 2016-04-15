@@ -557,14 +557,15 @@ public class MeController {
 	@RequireLogin
 	public ModelAndView bindtelephone(String checkKey) 
 	{
-		String value=redisService.get(RedissCacheKey.JF_Member_ChangePhoneOne, String.class);
+		String value=redisService.get(String.format(RedissCacheKey.JF_Member_ChangePhoneOne, checkKey), String.class);
 		ModelAndView view= new ModelAndView("wapView");
-		view.addObject("currenttitle", "输入支付密码");
+		view.addObject("currenttitle", "绑定新手机号");
 		view.addObject("viewPath", "me/bindtelephone");
+		view.addObject("checkKey", checkKey);
 		if(value==null||!value.equals(checkKey))
 		{	//一次性校验码错误
 		
-			String basePath="/me/modifytelephone";		
+			String basePath=PropertyUtils.getProperty("java.wap.url")+"/me/modifytelephone";		
 			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
 			return  view2;
 		}
