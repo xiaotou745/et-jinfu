@@ -10,9 +10,12 @@
 List<RoleInfo> roleData = (List<RoleInfo>) request.getAttribute("roleData");
 %>
 <script src="<%=basePath%>/js/bootstrap-treeview.js"></script>
+
 <div class="wrapper wrapper-content animated fadeInRight form-horizontal">
 	<div class="row">
+		
 		<div class="col-lg-12">
+			
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="form-group">
@@ -24,13 +27,14 @@ List<RoleInfo> roleData = (List<RoleInfo>) request.getAttribute("roleData");
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-lg-3">
 					<button type="button" class="btn btn-w-m btn-primary" id=btnSearch
-						style="margin-left: 3px;">查询</button>
+						style="margin-left: 40px;">查询</button>
 					<button type="button" class="btn btn-w-m btn-primary"
 						style="margin-left: 3px;" data-toggle="modal"
-						data-target="#myModal" id="addUser">添加用户</button>
+						data-target="#myModal" id="addUser">新增</button>
 				</div>
 			</div>
 		</div>

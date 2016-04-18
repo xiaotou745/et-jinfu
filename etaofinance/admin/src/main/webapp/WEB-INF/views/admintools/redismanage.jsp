@@ -13,8 +13,8 @@
 				<div class="row">
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label">Redis键:</label>
-							<div class="col-sm-8">
+							<label class="col-sm-5 control-label">Redis键:</label>
+							<div class="col-sm-7">
 							  		<input type="text" placeholder="请输入Redis键"
 					class="form-control" id="txtKey" name="key"  value="" />
 							</div>
@@ -22,8 +22,8 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label"> 查询类型:</label>
-							<div class="col-sm-8">
+							<label class="col-sm-5 control-label"> 查询类型:</label>
+							<div class="col-sm-7">
 							<input type="radio" value="1" name="sType" checked="checked" id="selmh" />模糊查询 
 							<input type="radio" value="2" name="sType" id="seljz"/>精准查询
 							</div>
@@ -32,7 +32,7 @@
 				</div>
 			    <div class="row">
 						<div class="col-lg-3">
-						<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left:3px;">查询</button>
+						<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left:65px;">查询</button>
 					</div>
 			</div>
 		</div>

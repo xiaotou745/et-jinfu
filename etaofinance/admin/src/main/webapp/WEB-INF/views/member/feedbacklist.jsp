@@ -26,8 +26,8 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">反馈时间:</label>
-						<div class="col-sm-8">
+						<label class="col-sm-5 control-label">反馈时间:</label>
+						<div class="col-sm-7">
 							<input type="text" class="form-control" value=""
 								name="applyStartDate" id="createStartDate"
 								onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'createEndDate\',{d:-1})||\'2030-10-01\'}'})" />
@@ -36,8 +36,8 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-2 control-label">到</label>
-						<div class="col-sm-8">
+						<label class="col-sm-5 control-label">至</label>
+						<div class="col-sm-7">
 							<input type="text" class="form-control" value=""
 								name="applyEndDate" id="createEndDate"
 								onFocus="WdatePicker({minDate:'#F{$dp.$D(\'createStartDate\',{d:1})}',maxDate:'2030-10-01'})" />
@@ -47,7 +47,7 @@
 			</div>
 			<div class="row">
 			<div class="col-lg-2">
-					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 925px;">查询</button>
+					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 70px;">查询</button>
 				</div>
 			</div>
 		</div>

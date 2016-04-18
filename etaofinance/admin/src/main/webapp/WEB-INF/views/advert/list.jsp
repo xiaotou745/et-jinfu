@@ -32,23 +32,23 @@ width: 100%;
 				<div class="row">
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label">广告标题:</label>
-							<div class="col-sm-8">						
+							<label class="col-sm-5 control-label">广告标题:</label>
+							<div class="col-sm-7">						
 								<input type="text" class="form-control" value="" name="txtTitle" id="txtTitle" />
 							</div>
 						</div>
 					</div>					
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label"></label>
-							<div class="col-sm-8">							
+							<label class="col-sm-5 control-label"></label>
+							<div class="col-sm-7">							
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label"></label>
-							<div class="col-sm-8">
+							<label class="col-sm-5 control-label"></label>
+							<div class="col-sm-7">
 								
 							</div>
 						</div>
@@ -56,15 +56,15 @@ width: 100%;
 				</div>				
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label"></label>
-							<div class="col-sm-8">							
+							<label class="col-sm-5 control-label"></label>
+							<div class="col-sm-7">							
    						</div>
 						</div>
 					</div>
 					<div class="col-lg-3">
 						<div class="form-group">
-							<label class="col-sm-4 control-label"></label>
-							<div class="col-sm-8">
+							<label class="col-sm-5 control-label"></label>
+							<div class="col-sm-7">
 							  
 							</div>
 						</div>
@@ -74,9 +74,9 @@ width: 100%;
 			    <div class="row">
 						<div class="col-lg-3">
 						<button type="button" class="btn btn-w-m btn-primary" id=btnSearch
-							style="margin-left: 3px;height:30px;">查询</button>
+							style="margin-left: 30px;height:30px;">查询</button>
 								<button type="button" class="btn btn-w-m btn-primary" id="add"  onclick="showAdd()"
-					style="margin-left: 3px;height:30px;">新增		</button>	
+					style="margin-left: 3px;height:30px;">新增</button>	
 					 
 					</div>
 			</div>	
