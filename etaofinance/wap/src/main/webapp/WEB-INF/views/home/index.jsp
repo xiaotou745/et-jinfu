@@ -57,7 +57,7 @@
             		<a href="<%=basePath%>/home/detail?projectid=<%=proList.get(i).getId()%>"> 
                 	<div class="banner-list">
                     <div class="list-new">
-                        <div class="new-left"><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_5.png"></div>
+                        <div class="new-left"><div class="activity-name"><span>新手专享<%=i+1%></span></div><div class="triangle-right"></div></div>
                         <div class="new-right">
                             <ul>
                                 <li><span><%=proList.get(i).getInComeStr()%></span><b>年化收益</b></li>
@@ -120,7 +120,18 @@ if(itemList!=null&&itemList.size()>0)
 %>
     	
     <!-- 这里放置列表 -->
-    <div class="load-more"><span>加载更多<i class="m-icon icon-arrow-r"></i></span>
+    <% if(itemList.size()<15)
+    {
+    	%>
+    	<div class="load-more"><span>暂无更多数据<i class="m-icon icon-arrow-r hide"></i><span class="loader2 hide"></span></span>
+    	<%
+    }else
+    {
+    	%>
+    	<div class="load-more"><span>加载更多<i class="m-icon icon-arrow-r"></i><span class="loader2 hide"></span></span>
+    	<%
+    }%>
+    
     
     </div>
     </section>
