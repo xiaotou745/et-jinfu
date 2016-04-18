@@ -8,22 +8,25 @@
 %>
 <script src="<%=basePath%>/js/bootstrap-treeview.js"></script>
 <div class="wrapper wrapper-content animated fadeInRight form-horizontal">
+
 <div class="row">
 		<div class="col-lg-12">
+		
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">角色名称:</label>
-						<div class="col-sm-8">
+						<label class="col-sm-5 control-label">角色名称:</label>	
+						<div class="col-sm-7">
 								<input type="text" placeholder="新增的角色名称" class="form-control" id="newRole"/>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-lg-3">
 					<button type="button" class="btn btn-w-m btn-primary" id="add"
-					style="margin-left: 3px;">新增角色</button>
+					style="margin-left: 65px;">新增</button>
 				</div>
 			</div>
 		</div>

@@ -51,8 +51,10 @@
         	}else{
         		for(int i=0;i<proList.size();i++)
         		{
-        			%>	            
+        			%>	
+        			           
             		<div class="swiper-slide">
+            		<a href="<%=basePath%>/home/detail?projectid=<%=proList.get(i).getId()%>"> 
                 	<div class="banner-list">
                     <div class="list-new">
                         <div class="new-left"><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_5.png"></div>
@@ -63,15 +65,17 @@
                                 <li><span><%=proList.get(i).getAmount()%></span><b>目标金额</b></li>
                             </ul>
                             <div class="progress">
-                                <span class="bar" style="width:<%=proList.get(i).getSchedule()%>%">
+                                <span class="<%=proList.get(i).getSchedule()==0?"zero-bar":""%> bar" style="width:<%=proList.get(i).getSchedule()%>%">
                             		<span class="triangle-bottom"></span>
                                 <span class="percentage"><%=proList.get(i).getSchedule()%>%</span>
                                 </span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+               		</div>
+               		</a>
+            		</div>
+            		
         			<% 
         		}
         	}
@@ -88,14 +92,15 @@ if(itemList!=null&&itemList.size()>0)
 {
 	for(int i=0;i<itemList.size();i++)
 	{
-		%>		
+		%>	
+		<a href="<%=basePath%>/home/detail?projectid=<%=itemList.get(i).getId()%>">
 <div class="container-one">
     <div class="one-list container">
         <h3><b><%=itemList.get(i).getProjectname()%></b><span><%=itemList.get(i).getProjectStatusStr()%></span></h3>
         <p><span><img src="<%=imgurl+itemList.get(i).getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_<%=itemList.get(i).getTypeid()==1?"6":"7"%>.png"></b>
             <div class="progress">
-                <span class="bar" style="width:<%=itemList.get(i).getSchedule()%>%">
+                <span class="bar <%=itemList.get(i).getSchedule()==0?"zero-bar":""%>" style="width:<%=itemList.get(i).getSchedule()%>%">
                     		<span class="triangle-bottom"></span>
                 <span class="percentage"><%=itemList.get(i).getSchedule()%>%</span>
                 </span>
@@ -108,6 +113,7 @@ if(itemList!=null&&itemList.size()>0)
         </ul>
     </div>
 </div>
+</a>	
 		<%
 	}
 }

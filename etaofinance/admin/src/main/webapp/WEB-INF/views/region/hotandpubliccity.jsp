@@ -15,24 +15,28 @@
 	class="wrapper wrapper-content animated fadeInRight form-horizontal">
 	<div class="row">
 		<div class="col-lg-12">
+		
 			<div class="row"> 
 			<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">城市名称：</label>
-						<div class="col-sm-8">
+						<label class="col-sm-5 control-label">城市名称：</label>
+						<div class="col-sm-7">
 							 <input type="text" placeholder="请输入城市名称" class="form-control"
 							id="txtpubliccityname" name="key" />
 						</div>
 					</div>
 				</div> 
+				
+			
+			</div></div>
+			
 				<div class="row">
 				<div class="col-lg-3">
 					<button type="button" class="btn btn-w-m btn-primary"
-						id="btnPublicCitySearch">查询</button>
+						id="btnPublicCitySearch" style="margin-left:70px;">查询</button>
 					<button type="button" class="btn btn-w-m btn-primary"
 						id="btnSavePublicCitySearch">保存修改</button>
 				</div>
-			</div></div>
 		</div>
 	</div>
 	<div class="row">

@@ -16,7 +16,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>姓名</th>
 			<th>提现金额</th>
 			<th>提现银行</th>

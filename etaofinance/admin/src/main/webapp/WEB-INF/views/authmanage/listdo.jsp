@@ -13,7 +13,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>登录名称</th>
 			<th>启用状态</th>
 			<th>操作</th>
