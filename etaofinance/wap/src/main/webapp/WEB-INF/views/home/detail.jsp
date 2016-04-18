@@ -97,7 +97,7 @@
             </ul>
             <div class="panes con">
                 <div class="pane" data-panelindex="0">
-                   <ul> <%
+                   <ul class="ul-project-img"> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
@@ -110,7 +110,7 @@
                     </ul>
                 </div>
                 <div class="pane hide" data-panelindex="1">
-                    <ul> <%
+                    <ul class="ul-project-img"> <%
                     for(int i=0;i<imgList.size();i++)
                     {
                     	//项目概况Wap图
@@ -210,7 +210,7 @@
                 	{//非投资人
                 		%>
                 		<div class="detail-box">
-                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/login?reUrl=<%=basePath%>/me/certificationinvestor">认证</a></p>
+                        <p>认证合格投资人后才可查看，去<a href="<%=basePath%>/me/certificationinvestor">认证</a></p>
                     	</div>
                 		<% 
                 	}else
@@ -261,14 +261,14 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button disabled>领投</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >领投</button></a><% 
 				 
 			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
 			{//购买中 +投资人
-				%><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button disabled>认购</button></a><% 
+				%><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
 			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
 			{//预热中+投资中+非投资人
-				%><a href="<%=basePath%>/me/usercenter"><button disabled>认证</button></a><% 
+				%><a href="<%=basePath%>/me/usercenter"><button >认证</button></a><% 
 			}
 			%>        
          	</div>

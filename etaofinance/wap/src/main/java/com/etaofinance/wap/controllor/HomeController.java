@@ -94,7 +94,7 @@ public class HomeController {
 		return view;
 	}
 	/**
-	 * 项目列表异步分页
+	 * 详情页
 	 * @param req
 	 * @return
 	 */
@@ -166,6 +166,23 @@ public class HomeController {
 		ProjectModel detaiModel=projectService.getProjectDetail(projectid);
 		view.addObject("detaiModel",detaiModel);
 		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
+		return view;
+	}
+	/**
+	 * 评论分页列表
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/commentlistdo")
+	@RequireLogin
+	public ModelAndView commentlistdo(PagedProjectCommentReq commentReq)
+	{
+		ModelAndView view = new ModelAndView("home/commentlistdo");
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		commentReq.setMemberId(member.getId());
+		List<ProjectComment> commentList=commentService.getProjectComment(commentReq).getResultList();
+		view.addObject("commentList", commentList);
 		view.addObject("member", member);
 		return view;
 	}
