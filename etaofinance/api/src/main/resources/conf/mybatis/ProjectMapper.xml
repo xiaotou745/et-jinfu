@@ -627,4 +627,18 @@
 		UPDATE project set isShelve=#{isShelve,jdbcType=BIT}
 	      WHERE Id=#{projectId,jdbcType=BIGINT}
 	</update>
+	
+	<select id="getDataStatices" resultType="com.etaofinance.entity.domain.DataStatistics">
+	    SELECT 
+	    SUM(CASE ProjectStatus when 2 then 1 else 0 END) yr,
+		SUM(CASE ProjectStatus when 3 then 1 else 0 END) rzz,
+		SUM(CASE ProjectStatus when 4 then 1 else 0 END) rzsuccess,
+		SUM(CASE ProjectStatus when 4 then Amount else 0 END) rzsucamount,
+		SUM(CASE ProjectStatus when 5 then 1 else 0 END) rzfail,
+		(SELECT COUNT(Id) FROM member) usercount,
+		(SELECT SUM(case Level WHEN 2 then 1 ELSE 0 end ) FROM member) investor,
+		(SELECT SUM(case TypeId WHEN 3 then Amount ELSE 0 END) from balancerecord) recharge,
+		(SELECT SUM(case TypeId WHEN 4 then Amount ELSE 0 END) from balancerecord) cash
+		FROM project
+	</select>
 </mapper>
