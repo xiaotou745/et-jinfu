@@ -31,6 +31,7 @@
       #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{optip,jdbcType=VARCHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.AdminOptLog" >
     insert into adminoptlog
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -56,6 +57,7 @@
         OptIp,
       </if>
     </trim>
+    
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
@@ -78,8 +80,11 @@
       <if test="optip != null" >
         #{optip,jdbcType=VARCHAR},
       </if>
+      
     </trim>
+    
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.AdminOptLog" >
     update adminoptlog
     <set >
@@ -114,4 +119,28 @@
       OptIp = #{optip,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getLogPagingList" parameterType="com.etaofinance.entity.req.PagedAdminoptLogReq" resultType="com.etaofinance.entity.AdminOptLog" statementType="CALLABLE"> 
+		{call Sp_CustomPage2015_V1(
+		' f.CreateTime desc ',
+		' f.Id,f.AccountId,f.Remark,f.OptIp,f.CreateName,f.CreateTime,f.PlatForm ',
+		' adminoptlog f ',
+		'<include refid="queryLogPagingListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+	<sql id="queryLogPagingListWhere">
+		1 = 1
+		<if test="remark != null and remark !=''">
+			and f.Remark like ''%${remark}%''
+		</if>
+		<if test="beginCreatetime != null and beginCreatetime !=''">
+			and f.CreateTime>=''${beginCreatetime}''
+		</if>
+		<if test="endCreatetime != null and endCreatetime !=''">
+			and ''${endCreatetime}''>f.createTime
+		</if>
+	</sql>
 </mapper>

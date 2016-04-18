@@ -22,6 +22,7 @@ import com.etaofinance.api.common.LoginHelper;
 import com.etaofinance.api.redis.RedisService;
 import com.etaofinance.api.service.inter.IAccountAuthService;
 import com.etaofinance.api.service.inter.IAccountInfoService;
+import com.etaofinance.api.service.inter.IAdminOptLogService;
 import com.etaofinance.api.service.inter.IMenuInfoService;
 import com.etaofinance.api.service.inter.IRoleInfoService;
 import com.etaofinance.core.security.AES;
@@ -30,6 +31,7 @@ import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.JsonUtil;
 import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.AccountInfo;
+import com.etaofinance.entity.AdminOptLog;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.SimpleUserInfoModel;
@@ -39,6 +41,7 @@ import com.etaofinance.entity.req.UpdatePwdReq;
 @Controller
 @RequestMapping("account")
 public class AccountController {
+	
 	@Autowired
 	private RedisService redisService;
 	@Autowired
@@ -48,9 +51,17 @@ public class AccountController {
 	@Autowired
 	private IMenuInfoService menuService;
 	@Autowired
+	private IAdminOptLogService adminOptLogService;
+	
+	@Autowired
 	HttpServletRequest request;
 	@Autowired
 	private IRoleInfoService authorityRoleService;
+	
+	
+	
+	
+	
 	@RequestMapping("list")
 	public ModelAndView list() {
 		ModelAndView view = new ModelAndView("adminView");
@@ -62,6 +73,7 @@ public class AccountController {
 		return view;
 	}
 
+	
 	@RequestMapping("listdo")
 	public ModelAndView list(PagedAccountInfoReq req) {
 		PagedResponse<AccountInfo> resp = accountInfoService.queryAccount(req);
@@ -76,6 +88,8 @@ public class AccountController {
 		ModelAndView mv = new ModelAndView("account/code");
 		return mv;
 	}
+	
+	
 	@RequestMapping("adduser")
 	@ResponseBody
 	public int addUser(HttpServletRequest request,AccountInfo account) {
@@ -96,6 +110,7 @@ public class AccountController {
 		return accountInfoService.insert(account);
 	}
 
+	
 	@RequestMapping("updateuser")
 	@ResponseBody
 	public int updateUser(HttpServletRequest request,AccountInfo account) {
@@ -114,6 +129,9 @@ public class AccountController {
 	public AccountInfo getUserInfo(HttpServletRequest request,int userId) {
 		return accountInfoService.getByID(userId);
 	}
+	
+	
+	
 	@RequestMapping(value = "login", method = { RequestMethod.POST })
 	public void login(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam String username, @RequestParam String password, @RequestParam String code,
@@ -169,6 +187,21 @@ public class AccountController {
 		String encyCookie=AES.aesEncrypt(JsonUtil.obj2string(loginUser));
 		CookieUtils.setCookie(request,response,LoginUtil.LOGIN_COOKIE_NAME, encyCookie, cookieMaxAge,
 				true);
+		
+		
+		
+		
+		// 记录 登录日志
+		
+		AdminOptLog adminOptLog = new AdminOptLog();
+		
+		
+		adminOptLog.setRemark("登陆成功");
+		adminOptLog.setCreatename(account.getTruename());
+		adminOptLog.setAccountid(account.getId());
+	
+		adminOptLogService.insertSelective(adminOptLog);
+		
 		response.sendRedirect(basePath+"/account/list");
 	}
 	
@@ -188,6 +221,8 @@ public class AccountController {
 		response.sendRedirect(PropertyUtils.getProperty("java.admin.url") + "/");
 
 	}
+	
+	
 	@RequestMapping(value = "changepwd")
 	public ModelAndView changePwd(){
 		ModelAndView view = new ModelAndView("adminView");
@@ -196,6 +231,8 @@ public class AccountController {
 		view.addObject("viewPath", "account/changepwd");
 		return view;
 	}
+	
+	
 	@RequestMapping(value = "updatepwd")
 	@ResponseBody
 	public int updatePwd(HttpServletRequest request, UpdatePwdReq req){
@@ -203,6 +240,7 @@ public class AccountController {
 		req.setUserId(context.getId());
 		return accountInfoService.updatePwd(req);
 	}
+	
 	
 	@RequestMapping("modifypwdpg")
 	public ModelAndView modifyPwdpg() {
