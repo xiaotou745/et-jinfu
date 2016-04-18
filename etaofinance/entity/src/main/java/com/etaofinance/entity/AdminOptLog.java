@@ -17,6 +17,8 @@ public class AdminOptLog {
 
     private String optip;
 
+    private Short platform;
+    
     public Long getId() {
         return id;
     }
@@ -72,4 +74,12 @@ public class AdminOptLog {
     public void setOptip(String optip) {
         this.optip = optip == null ? null : optip.trim();
     }
+
+	public Short getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(Short platform) {
+		this.platform = platform;
+	}
 }

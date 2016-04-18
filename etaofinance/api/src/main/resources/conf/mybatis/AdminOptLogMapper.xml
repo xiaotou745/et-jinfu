@@ -119,4 +119,28 @@
       OptIp = #{optip,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getLogPagingList" parameterType="com.etaofinance.entity.req.PagedAdminoptLogReq" resultType="com.etaofinance.entity.AdminOptLog" statementType="CALLABLE"> 
+		{call Sp_CustomPage2015_V1(
+		' f.CreateTime desc ',
+		' f.Id,f.AccountId,f.Remark,f.OptIp,f.CreateName,f.CreateTime,f.PlatForm ',
+		' adminoptlog f ',
+		'<include refid="queryLogPagingListWhere" />',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+	</select>
+	<sql id="queryLogPagingListWhere">
+		1 = 1
+		<if test="remark != null and remark !=''">
+			and f.Remark like ''%${remark}%''
+		</if>
+		<if test="beginCreatetime != null and beginCreatetime !=''">
+			and f.CreateTime>=''${beginCreatetime}''
+		</if>
+		<if test="endCreatetime != null and endCreatetime !=''">
+			and ''${endCreatetime}''>f.createTime
+		</if>
+	</sql>
 </mapper>

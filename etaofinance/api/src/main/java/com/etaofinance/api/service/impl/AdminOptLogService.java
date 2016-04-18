@@ -23,6 +23,7 @@ import com.etaofinance.entity.AdminOptLog;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedAdminoptLogReq;
 import com.etaofinance.entity.resp.ADVertResp;
 
 
@@ -39,6 +40,11 @@ public int insertSelective(AdminOptLog record) {
 	return  adminOptLogDao.insertSelective(record);
 	
 	
+}
+
+@Override
+public PagedResponse<AdminOptLog> getAdminOptLogList(PagedAdminoptLogReq req) {
+	return adminOptLogDao.getAdminOptLogList(req);
 }
 
 

@@ -13,6 +13,7 @@ import com.etaofinance.entity.AdminOptLog;
 import com.etaofinance.entity.RoleInfo;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.req.PagedADVertReq;
+import com.etaofinance.entity.req.PagedAdminoptLogReq;
 @Repository
 public class AdminOptLogDao extends DaoBase implements IAdminOptLogDao{
 
@@ -52,6 +53,11 @@ public class AdminOptLogDao extends DaoBase implements IAdminOptLogDao{
 	public int updateByPrimaryKey(AdminOptLog record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PagedResponse<AdminOptLog> getAdminOptLogList(PagedAdminoptLogReq req) {
+		return getReadOnlySqlSessionUtil().selectPageList("IAdminOptLogDao.getLogPagingList",req);
 	}
 
 	
