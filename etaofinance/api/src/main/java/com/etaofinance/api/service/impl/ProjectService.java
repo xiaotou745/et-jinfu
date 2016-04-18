@@ -165,8 +165,7 @@ public class ProjectService implements IProjectService {
 				return result;
 			}
 			// 领投份数大于该项目的剩余可领投份额
-			if (req.getQuantity() > (project.getFenshu() - project
-					.getRedidueFenshu())) {
+			if (req.getQuantity() > (project.getFenshu() - project.getRediduePreheatMaxFenShu())) {
 				result.setCode(-1);
 				result.setMsg("您领投的份额大于该项目的剩余份额!");
 				return result;
@@ -174,7 +173,7 @@ public class ProjectService implements IProjectService {
 		} else {
 			// 跟投.
 			// 领投份数大于该项目的剩余可领投份额
-			if (req.getQuantity() > project.getRedidueFenshu()) {
+			if (req.getQuantity() > (project.getFenshu() -project.getRedidueFenshu())) {
 				result.setCode(-1);
 				result.setMsg("您投资的份额大于该项目的剩余份额!");
 				return result;
@@ -216,7 +215,7 @@ public class ProjectService implements IProjectService {
 		Double YR = mo.getBalanceprice();
 		updateOther.setBalanceprice(YR - yF);
 		updateOther.setAllowwithdrawprice(mo.getAllowwithdrawprice() - yF);
-		updateOther.setId(mo.getId());
+		updateOther.setMemberid(m.getId());
 		int res2 = memberOtherDao.updateByMemberIdSelective(updateOther);
 		// 3.插入流水.
 		BalanceRecord bRecord = new BalanceRecord();
@@ -231,11 +230,10 @@ public class ProjectService implements IProjectService {
 		// 4.更新项目信息
 		Project updateProject = new Project();
 		updateProject.setId(p.getId());
-		updateProject
-				.setRedidueFenshu(p.getRedidueFenshu() + req.getQuantity());
+		updateProject.setRedidueFenshu(p.getRedidueFenshu() + req.getQuantity());
 		updateProject.setInvestmentnumber(p.getInvestmentnumber() + 1);
 		// 已购买份数除以份数*100
-		int rp = Math.round(updateProject.getRedidueFenshu() / p.getFenshu()) * 100;
+		int rp = updateProject.getRedidueFenshu()*100 / p.getFenshu();
 		updateProject.setSchedule(rp);
 		if (req.getIsLead() == 1)// 领投
 		{

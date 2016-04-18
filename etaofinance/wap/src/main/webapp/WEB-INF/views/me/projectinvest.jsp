@@ -13,6 +13,7 @@
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 
 	List<ProjectSubscriptionDM> list=(ArrayList<ProjectSubscriptionDM>)request.getAttribute("list");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 %>
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/project-invest.css">
     <div class="g-wrap">
@@ -30,7 +31,7 @@ for(int i=0;i<list.size();i++)
 <i class="<%=list.get(i).getProjectStatus()==5?"fall":""%>"><%=ProjectStatus.getEnum(list.get(i).getProjectStatus()).desc()%></i>
 </div>
 <div class="item">
-<div><img src="<%=list.get(i).getProjectImage()%>" alt=""></div>
+<div><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></div>
 <dl>
 	<dt><%=list.get(i).getProjectName()%></dt>
 	<dd><span>认购金额：</span><%=list.get(i).getAmount()%></dd>
