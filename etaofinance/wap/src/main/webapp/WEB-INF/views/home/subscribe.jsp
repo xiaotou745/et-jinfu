@@ -1,3 +1,4 @@
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
 <%@page import="com.etaofinance.entity.domain.ProjectComment"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
@@ -22,37 +23,36 @@
 	Long projectid=(Long)request.getAttribute("projectid");
 
 %>
-
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/subscribe.css">
     <div class="g-wrap">
         <div class="g-views">
             
 	<section class="container bg">
 		<div class="title">
-			<%=detaiModel.getProjectname()%>
+			<%=detaiModel.getProjectname() %>
 		</div>
 		<div class="address">
 			<i class="m-icon icon-locate"></i>
-			<span><%=detaiModel.getProvinceName()+detaiModel.getCityName()%></span>
+			<span><%=detaiModel.getProvinceName()+detaiModel.getCityName() %></span>
 		</div>
 	</section>
 	<section class="container bg">
 		<div class="content">
 			<div class="amount">
-				认购金额:<b>￥</b><span>5000</span>
+				认购金额:<b>￥</b><span data-role="total">0</span>
 			</div>
-			<div class="count">
+			<div class="count f-numb">
 				<span class="minus">
 					<i class="m-icon icon-minus"></i>
 				</span>
-				<span class="number">5</span>
+				<em class="number">0</em>
 				<span class="plus">
 					<i class="m-icon icon-plus"></i>
 				</span>
 			</div>
 			<div class="remain">
-				<span><%=detaiModel.getUnitpriceStr()%>/份</span>
-				<span>剩余<b><%=detaiModel.getFenshu()-detaiModel.getRedidueFenshu()%></b>份</span>
+				<span>￥<b data-role="price"><%=ParseHelper.digitsNum(detaiModel.getUnitprice(), 0)%></b>/份</span>
+				<span>剩余<b data-role="amount"><%=detaiModel.getFenshu()-detaiModel.getRedidueFenshu()%></b>份</span>
 			</div>
 			<div class="protocol">
 				<i class="m-icon icon-approval"></i>
@@ -73,11 +73,12 @@
 		<div class="label-input">
 			<label>手机号码</label>
 			<input type="text" value="<%=member.getPhoneno()%>" readonly/>
+			<input type="hidden" name="projectid" data-role="projectid" value="<%=projectid%>" readonly/>
 		</div>
 	</section>
 	<section class="container top-gap">
 		<div class="btn-toggle">
-			<button>确认支付</button>
+			<button disabled data-role="submit">确认支付</button>
 		</div>
 	</section>
 

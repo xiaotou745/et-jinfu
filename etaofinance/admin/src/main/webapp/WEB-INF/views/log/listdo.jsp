@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+	<%@page import="com.etaofinance.entity.common.PagedResponse"%>
+<%@page import="com.etaofinance.core.util.PageHelper"%>
+<%@page import="java.util.ArrayList"%>
+    <%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%@page import="com.etaofinance.entity.AdminOptLog"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%
+    SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	PagedResponse<AdminOptLog> data = (PagedResponse<AdminOptLog>) request.getAttribute("listData");
+	List<AdminOptLog> list = data.getResultList();
+%>
+<% if(data.getResultList()==null||data.getResultList().size()==0) 
+{%>
+	=====暂无数据=====
+<%} else{%>
+<table
+	class="table table-striped table-bordered table-hover dataTables-example">
+	<thead>
+		<tr>
+			<th width="5%">ID</th>
+			<th>日志内容</th>
+			<th>操作时间</th>
+			<th>操作IP</th>
+			<th>操作人</th>
+			<th>来源</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%
+			for (int i = 0; i < list.size(); i++) {
+		%>
+		<tr>
+			<td><%=list.get(i).getId() %></td>
+			<td><%=list.get(i).getRemark().length()>8?list.get(i).getRemark().substring(0, 8)+"..":list.get(i).getRemark() %></td>
+			<td><%=dateFormater.format(list.get(i).getCreatetime())%></td>
+			<td><%=list.get(i).getOptip() %></td>
+			<td><%=list.get(i).getCreatename() %></td>
+			<td><%=list.get(i).getPlatform() == 1?"后台":"Wap" %></td>	
+		</tr>
+		<%
+			}
+		%>
+	</tbody>
+</table>
+<%} %>
+<%=PageHelper.getPage(data.getPageSize(),data.getCurrentPage(), data.getTotalRecord(),data.getTotalPage())%>
