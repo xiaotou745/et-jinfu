@@ -54,9 +54,9 @@
 				if(WithdrawStatus.Cking.value()==list.get(i).getStatus()){
 			%>
 			<td><a href="javascript:void(0)"
-				onclick="setstatus(<%=list.get(i).getId()%>,2)">通过</a> <a
+				onclick="setstatus(<%=list.get(i).getId()%>,2)">审核通过</a> <a
 				href="javascript:void(0)"
-				onclick="setstatus(<%=list.get(i).getId()%>,-1)">拒绝</a></td>
+				onclick="setstatus(<%=list.get(i).getId()%>,-1)">审核拒绝</a></td>
 			<%
 				}else{
 			%>

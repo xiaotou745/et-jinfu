@@ -13,13 +13,13 @@ AccountInfo curUser = (AccountInfo) request.getAttribute("currentUser");
 %>
 <ul class="list-group">
 	<li class="list-group-item"><label  >用户名：</label><label ><%=curUser.getLoginname()%></label></li>
-	<li class="list-group-item"><label  >旧密码：</label><input	type="password"  id="oldPwd"  value=""><label style="color: red;visibility:hidden;">不能为空</label></li>
-	<li class="list-group-item"><label >新密码：</label><input  	type="password" id="newPwd" /><label style="color: red;visibility:hidden;">不能为空</label></li>
+	<li class="list-group-item"><label  >旧&nbsp;密&nbsp;码：</label><input	type="password"  id="oldPwd"  value=""><label style="color: red;visibility:hidden;">不能为空</label></li>
+	<li class="list-group-item"><label >新&nbsp;密&nbsp;码：</label><input  	type="password" id="newPwd" /><label style="color: red;visibility:hidden;">不能为空</label></li>
 	<li class="list-group-item"><label  >重复新密码：</label><input  type="password" id="newPwdAgain" /><label style="color: red;visibility:hidden;">新旧密码不一致</label></li>
 </ul>
 
 <input type="hidden" value="" id="memberId">
-<button class="btn btn-w-m btn-primary" id="modifyPwd">提交</button>
+<button class="btn btn-w-m btn-primary" id="modifyPwd">保存</button>
 
 <script>
 

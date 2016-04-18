@@ -17,7 +17,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">项目id</th>
+			<th width="5%">项目ID</th>
 			<th>项目名称</th>
 			<th>融资额</th>
 			<th>项目类型</th>
