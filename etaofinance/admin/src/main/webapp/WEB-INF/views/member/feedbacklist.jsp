@@ -98,7 +98,7 @@
 						 "endCreatetime":enddate,
 						 "currentPage":currentPage
 						 };        
-			        var url = "../project/commentdo";
+			        var url = "../member/feedbacklistdo";
 			        $.ajax({
 			            type: 'POST',
 			            url: url,
