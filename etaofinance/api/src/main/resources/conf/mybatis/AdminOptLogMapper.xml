@@ -31,6 +31,7 @@
       #{remark,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{optip,jdbcType=VARCHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.etaofinance.entity.AdminOptLog" >
     insert into adminoptlog
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -56,6 +57,7 @@
         OptIp,
       </if>
     </trim>
+    
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
@@ -78,8 +80,11 @@
       <if test="optip != null" >
         #{optip,jdbcType=VARCHAR},
       </if>
+      
     </trim>
+    
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.AdminOptLog" >
     update adminoptlog
     <set >
