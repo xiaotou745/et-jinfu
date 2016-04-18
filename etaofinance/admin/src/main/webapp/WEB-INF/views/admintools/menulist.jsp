@@ -22,7 +22,7 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="control-group" style="width:400px;">
 			<div class="controls">
 				<button class="btn btn-success" id="btnExpanAll" type="button">展开/折叠</button>
-				<button class="btn btn-success" type="button" id="addNewMenu">新增菜单</button>
+				<button class="btn btn-success" type="button" id="addNewMenu">新增</button>
 			</div>
 			<div class="controls" style="height:600px; overflow:auto; ">
 				<div class="test treeview" id="treeview11"></div>
@@ -40,8 +40,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">编号:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">编号:</label>
+				<div class="col-sm-7">
 				   <input id="Id" class="form-control" type="text" name="Id" readonly="readonly" />
 				</div>
 			</div>
@@ -50,8 +50,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">父级编号:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">父级编号:</label>
+				<div class="col-sm-7">
 				   <input id="ParId" class="form-control" type="text" name="ParId" readonly="readonly" />
 				</div>
 			</div>
@@ -60,8 +60,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">菜单名称:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">菜单名称:</label>
+				<div class="col-sm-7">
 				   <input id="MenuName" class="form-control" type="text" name="MenuName"  readonly="readonly"/>
 				</div>
 			</div>
@@ -70,8 +70,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">是否锁定:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">是否锁定:</label>
+				<div class="col-sm-7">
 				   <input id="islock" class="form-control" type="text" name="islock" readonly="readonly" />
 				</div>
 			</div>
@@ -80,8 +80,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">页面URL:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">页面URL:</label>
+				<div class="col-sm-7">
 				   <input id="Url" class="form-control" type="text" name="Url"  readonly="readonly"/>
 				</div>
 			</div>
@@ -90,8 +90,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">是否按钮:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">是否按钮:</label>
+				<div class="col-sm-7">
 				   <input id="IsButton" class="form-control" type="text" name="IsButton"  readonly="readonly"/>
 				</div>
 			</div>
@@ -100,8 +100,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">authcode:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">authcode:</label>
+				<div class="col-sm-7">
 				   <input id="authcode" class="form-control" type="text" name="authcode"  readonly="readonly"/>
 				</div>
 			</div>
@@ -110,8 +110,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">父级名称:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">父级名称:</label>
+				<div class="col-sm-7">
 				   <input id="ParMenuName" class="form-control" type="text" name="ParMenuName"  readonly="readonly"/>
 				</div>
 			</div>
@@ -131,36 +131,30 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 <!-- 新增菜单 -->
 <div tabindex="-1" class="modal inmodal" id="addNewMenubox" role="dialog" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog modal-sm">
-		<div class="modal-content animated bounceInRight">
+		<div class="modal-content animated bounceInRight " >
+		
 			<div class="modal-header">
 				<button class="close" type="button" data-dismiss="modal">
 					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
 				</button>
 				<h4 class="modal-title">新增一级菜单</h4>
 			</div>
-			<small class="font-bold">
 				<div class="modal-body">
-					<fieldset>
-						<br>
-						<div class="control-group">
-							<label>菜单名称：</label> <input class="form-control" name="menuName" id="1jimenuName" type="text"/>
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input class="form-control" name="menuName" id="1jiauthcode" type="text"/>
-						</div>
-					</fieldset>
+							<label>菜单名称：</label> <input  name="menuName" id="1jimenuName" type="text"/>
+							<label>authcode：</label> <input name="menuName" id="1jiauthcode" type="text"/>
 				</div>
+				
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="save1ji()">保存</button>
 				</div>
-			</small>
 		</div>
 		<small class="font-bold"> </small>
 	</div>
 	<small class="font-bold"> </small>
 </div>
+
 <!-- 新增二级菜单 -->
 <div tabindex="-1" class="modal inmodal" id="addNewMenubox2ji" role="dialog" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog modal-sm">
@@ -171,27 +165,20 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				</button>
 				<h4 class="modal-title">新增二级菜单</h4>
 			</div>
-			<small class="font-bold">
 				<div class="modal-body">
-					<fieldset>
-						<br>
-						<div class="control-group">
-							<label>菜单名称：</label> <input class="form-control" name="menuName" id="2jimenuName" type="text"/>
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input class="form-control" name="menuName" id="2jiauthcode" type="text"/>
-						</div>
-						<div class="control-group">
-							<label>Url：</label> <input class="form-control" name="menuName" id="2jiUrl" type="text"/>
-						</div>
-					</fieldset>
+					
+							<label>菜单名称：</label> <input name="menuName" id="2jimenuName" type="text"/>
+				
+							<label>authcode：</label> <input name="menuName" id="2jiauthcode" type="text"/>
+						
+							<label>Url：</label> <input name="menuName" id="2jiUrl" type="text"/>
+				
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="save2ji()">保存</button>
 				</div>
-			</small>
 		</div>
 		<small class="font-bold"> </small>
 	</div>
@@ -207,24 +194,19 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				</button>
 				<h4 class="modal-title">新增按钮</h4>
 			</div>
-			<small class="font-bold">
+		
 				<div class="modal-body">
-					<fieldset>
-						<br>
-						<div class="control-group">
-							<label>按钮名称：</label> <input class="form-control" name="menuName" id="3jimenuName" type="text"/>
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input class="form-control" name="menuName" id="3jiauthcode" type="text"/>
-						</div>
-					</fieldset>
+					
+							<label>按钮名称：</label> <input name="menuName" id="3jimenuName" type="text"/>
+					
+							<label>authcode：</label> <input name="menuName" id="3jiauthcode" type="text"/>
+				
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="save3ji()">保存</button>
 				</div>
-			</small>
 		</div>
 		<small class="font-bold"> </small>
 	</div>
@@ -242,30 +224,25 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				</button>
 				<h4 class="modal-title">编辑一级菜单</h4>
 			</div>
-			<small class="font-bold">
+			
 				<div class="modal-body">
-					<fieldset>
-						<br>
+				
 						<input id="edit1hide" type="hidden"/>
-						<div class="control-group">
-							<label>菜单名称：</label> <input name="menuName" id="edit1jimenuName" type="text"  class="form-control"/>
-						</div>
-						<div class="control-group">
+					
+							<label>菜单名称：</label> <input name="menuName" id="edit1jimenuName" type="text"  />
+					
 							<label>是否锁定：</label> 
 							<input name="edit1radion" id="edit1radionY" type="radio" value="1" />是
 							<input name="edit1radion" id="edit1radionN"  type="radio" value="0" />否
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input name="menuName" id="edit1authcode" type="text"  class="form-control"/>
-						</div>
-					</fieldset>
+					
+							<label>authcode：</label> <input name="menuName" id="edit1authcode" type="text"  />
+					
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="edit1jiSave()">保存</button>
 				</div>
-			</small>
 		</div>
 		<small class="font-bold"> </small>
 	</div>
@@ -283,33 +260,30 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				</button>
 				<h4 class="modal-title">编辑二级菜单</h4>
 			</div>
-			<small class="font-bold">
+		
 				<div class="modal-body">
-					<fieldset>
-						<br>
+				
 						<input id="edit2hide" type="hidden"/>
-						<div class="control-group">
-							<label>菜单名称：</label> <input name="menuName" id="edit2jimenuName" type="text"  class="form-control"/>
-						</div>
-						<div class="control-group">
-							<label>URL：</label> <input name="menuName" id="edit2jiurl" type="text"  class="form-control"/>
-						</div>
-						<div class="control-group">
+					
+							<label>菜单名称：</label> <input name="menuName" id="edit2jimenuName" type="text"  />
+					
+					
+							<label>URL：</label> <input name="menuName" id="edit2jiurl" type="text"  />
+					
+					
 							<label>是否锁定：</label> 
 							<input name="edit2radion" id="edit2radionY" type="radio" value="1" />是
 							<input name="edit2radion" id="edit2radionN"  type="radio" value="0" />否
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input name="menuName" id="edit2authcode" type="text"  class="form-control"/>
-						</div>
-					</fieldset>
+				
+					
+							<label>authcode：</label> <input name="menuName" id="edit2authcode" type="text"  />
+					
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="edit2jiSave()">保存</button>
 				</div>
-			</small>
 		</div>
 		<small class="font-bold"> </small>
 	</div>
@@ -326,30 +300,29 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				</button>
 				<h4 class="modal-title">编辑按钮</h4>
 			</div>
-			<small class="font-bold">
+			
 				<div class="modal-body">
-					<fieldset>
-						<br>
+				
 						<input id="edit3hide" type="hidden"/>
-						<div class="control-group">
-							<label>按钮名称：</label> <input name="menuName" id="edit3jimenuName" type="text"  class="form-control"/>
-						</div>
-						<div class="control-group">
+					
+							<label>按钮名称：</label> <input name="menuName" id="edit3jimenuName" type="text"  />
+				
+					
 							<label>是否锁定：</label> 
 							<input name="edit3radion" id="edit3radionY" type="radio" value="1" />是
 							<input name="edit3radion" id="edit3radionN"  type="radio" value="0" />否
-						</div>
-						<div class="control-group">
-							<label>authcode：</label> <input name="menuName" id="edit3authcode" type="text"  class="form-control"/>
-						</div>
-					</fieldset>
+				
+				
+							<label>authcode：</label> <input name="menuName" id="edit3authcode" type="text"  />
+				
+				
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"
 						id="btnRechargeCommit" onclick="edit3jiSave()">保存</button>
 				</div>
-			</small>
+		
 		</div>
 		<small class="font-bold"> </small>
 	</div>

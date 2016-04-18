@@ -42,7 +42,7 @@ if(list == null){
 			<td><%=list.get(i).getClicknum()%></td>			
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>		
 			<td>			
-				<a href="javascript:void(0)" onclick="modify(<%=list.get(i).getId() %>)">修改</a>
+				<a href="javascript:void(0)" onclick="modify(<%=list.get(i).getId() %>)">编辑</a>
 				<a href="javascript:void(0)" onclick="del('<%=list.get(i).getId() %>')">删除</a>
 			</td>
 		</tr>

@@ -15,7 +15,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">项目ID</th>
 			<th>项目名称</th>
 			<th>融资进度</th>
 			<th>投资人数</th>
@@ -36,7 +36,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getProjectname()%></td>
 			<td><%=list.get(i).getSchedule()%>%</td>
 			<td><%=list.get(i).getInvestmentnumber()%></td>
@@ -49,7 +49,7 @@
 			<a href="<%=basePath%>/project/favorite?id=<%=list.get(i).getId()%>">关注</a>
 			<a href="<%=basePath%>/project/comment?id=<%=list.get(i).getId()%>">交流</a>
 			<% if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
-				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改详情</a>
+				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">编辑</a>
 			<% } %>
 			<%if(list.get(i).getProjectstatus()==ProjectStatus.NotOnLine.value()){ %>
 				<a href="javascript:void(0)" onclick="showRefuseDiv(<%=list.get(i).getId()%>)">不通过</a>

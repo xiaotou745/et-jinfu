@@ -15,7 +15,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>订单号</th>
 			<th>姓名</th>
 			<th>金额</th>
@@ -37,7 +37,7 @@
 		%>
 
 		<tr>
-			<td><%=(i + 1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getRelationno()%></td>
 			<td><%=list.get(i).getOptname()%></td>
 			<td><%=list.get(i).getAmount()%></td>

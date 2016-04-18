@@ -17,7 +17,7 @@
 			<div class="input-group" style="margin-bottom: 5px;">
 			<%if(context.getRoleId()==1){%>
 				<button type="button" class="btn btn-w-m btn-primary" id="btnaddboxshow"
-						style="margin-left: 3px;">添加</button> 
+						style="margin-left: 3px;">新增</button> 
 			<%}%>
 			</div>
 		</div>

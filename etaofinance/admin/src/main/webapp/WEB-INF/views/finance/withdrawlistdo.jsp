@@ -16,7 +16,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>姓名</th>
 			<th>提现金额</th>
 			<th>提现银行</th>
@@ -26,7 +26,7 @@
 			<th>到账时间</th>
 			<th>拒绝理由</th>
 			<th>状态</th>
-			<th>操作</th>
+			<th>审核操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -40,7 +40,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getCreatename()%></td>
 			<td>¥<%=list.get(i).getAmount()%></td>
 			<td><%=list.get(i).getBankname()%></td>
@@ -54,9 +54,9 @@
 				if(WithdrawStatus.Cking.value()==list.get(i).getStatus()){
 			%>
 			<td><a href="javascript:void(0)"
-				onclick="setstatus(<%=list.get(i).getId()%>,2)">通过</a> <a
+				onclick="setstatus(<%=list.get(i).getId()%>,2)">审核通过</a> <a
 				href="javascript:void(0)"
-				onclick="setstatus(<%=list.get(i).getId()%>,-1)">拒绝</a></td>
+				onclick="setstatus(<%=list.get(i).getId()%>,-1)">审核拒绝</a></td>
 			<%
 				}else{
 			%>

@@ -106,4 +106,20 @@ public class OrderNoHelper {
 		return result;
 	}
 
+	
+	/**
+	 * 根据userId+时间+时间戳+随机数 生成订单号(15位) 默认时间戳根据当前时间生成
+	 *
+	 * @author CaoHeYang
+	 * @Date 20150824
+	 * @param userId
+	 * @return
+	 */
+	public static String generatePrefixNoCode(String prefix,int userId) {
+		String result = prefix+userId
+				+ ParseHelper.ToDateString(new Date(), "yyMMddHHmmss")
+				+ createRandomData(3)
+				+ splitTimeSpan(System.currentTimeMillis() + "", 3);
+		return result;
+	}
 }

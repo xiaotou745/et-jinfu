@@ -29,6 +29,7 @@ import com.etaofinance.core.enums.ADVertEnum;
 import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.enums.RechargeStatus;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
+import com.etaofinance.core.util.OrderNoHelper;
 import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
@@ -131,7 +132,9 @@ public class RechargeService implements IRechargeService {
 		res.setMsg(HttpReturnRnums.Fail.desc());
 
 		// todo:唯一标识码--- 其实应该有一个公共的方法去处理各种单号的问题
-		UUID uuid = UUID.randomUUID();
+		//UUID uuid =  UUID.randomUUID();
+		String uuid=OrderNoHelper.generatePrefixNoCode("RC", memberId.intValue());
+		
 
 		// 1 insert recharge
 		Recharge charge = new Recharge();
@@ -143,7 +146,7 @@ public class RechargeService implements IRechargeService {
 		charge.setOptname(createName);
 		charge.setRemark("充值");
 		charge.setStatus((short) RechargeStatus.Success.value());
-		charge.setNo(uuid.toString());
+		charge.setNo(uuid);
 
 		// 2 insert balancerecord
 		BalanceRecord balance =new BalanceRecord();
@@ -154,7 +157,7 @@ public class RechargeService implements IRechargeService {
 		balance.setMemberid(memberId);
 		balance.setRemark("充值流水");
 		balance.setTypeid((short) BalanceRecordType.Recharge.value());
-		balance.setRelationno(uuid.toString());
+		balance.setRelationno(uuid);
 		balance.setOptname(createName);
 
 		// 3 update memberother

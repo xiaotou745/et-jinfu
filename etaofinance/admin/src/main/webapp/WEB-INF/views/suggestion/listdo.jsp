@@ -19,7 +19,7 @@ if(list == null){
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th>编号</th>
+			<th>ID</th>
 			<th>项目名称</th>
 			<th>姓名</th>
 			<th>电话</th>

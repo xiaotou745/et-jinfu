@@ -14,7 +14,7 @@
 	style='display: none'>
 	<thead>
 		<tr>
-			<th width="%5">序号</th>
+			<th width="%5">ID</th>
 			<th>省编号</th>
 			<th>省名称</th>
 			<th>市编号</th>

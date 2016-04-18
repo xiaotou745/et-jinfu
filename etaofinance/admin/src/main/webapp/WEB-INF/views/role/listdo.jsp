@@ -13,7 +13,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>角色名称</th>
 			<th>启用状态</th>
 			<th>操作人</th>
@@ -27,7 +27,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getRolename()%></td>
 			<td><%=list.get(i).getIslock()? "锁定" : "可用"%></td>
 			<td><%=list.get(i).getOptname()%></td>

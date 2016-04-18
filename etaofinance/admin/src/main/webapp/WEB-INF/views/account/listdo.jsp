@@ -14,7 +14,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>真实姓名</th>
 			<th>登录名称</th>
 			<th>最后操作时间</th>
@@ -34,7 +34,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getTruename()%></td>
 			<td><%=list.get(i).getLoginname()%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(), "") %></td>
