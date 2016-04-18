@@ -27,6 +27,7 @@ import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedCommentReq;
 import com.etaofinance.entity.req.PagedProjectCommentReq;
 import com.etaofinance.entity.req.PagedProjectReq;
+import com.etaofinance.wap.common.RequireLogin;
 import com.etaofinance.wap.common.UserContext;
 
 
@@ -147,4 +148,26 @@ public class HomeController {
 		view.addObject("commentList",commentList);
 		return view;
 	}
+	
+	/**
+	 * 项目认购页面
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/subscribe")
+	@RequireLogin
+	public ModelAndView subscribe(Long projectid)
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "项目详情");
+		view.addObject("viewPath", "home/subscribe");
+		view.addObject("projectid",projectid);
+		//1.项目详情
+		ProjectModel detaiModel=projectService.getProjectDetail(projectid);
+		view.addObject("detaiModel",detaiModel);
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
+		return view;
+	}
+	
 }

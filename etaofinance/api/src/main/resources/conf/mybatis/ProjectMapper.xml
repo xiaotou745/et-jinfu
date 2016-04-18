@@ -601,6 +601,9 @@
 		p.StartTime,
     p.Address,
     p.Description,
+    p.FollowNumber,
+    p.FenShu,
+    p.RedidueFenshu,
 		IFNULL((SELECT
 		p2.Value
 		FROM projectstrategy p2

@@ -18,8 +18,17 @@ public class Comment {
     private Date createtime;
 
     private Byte isdel;
+    private Long reCommentMemberId;
 
-    public Long getId() {
+    public Long getReCommentMemberId() {
+		return reCommentMemberId;
+	}
+
+	public void setReCommentMemberId(Long reCommentMemberId) {
+		this.reCommentMemberId = reCommentMemberId;
+	}
+
+	public Long getId() {
         return id;
     }
 

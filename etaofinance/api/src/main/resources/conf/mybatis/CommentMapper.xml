@@ -10,9 +10,10 @@
     <result column="ReCommentId" property="recommentid" jdbcType="BIGINT" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="IsDel" property="isdel" jdbcType="TINYINT" />
+    <result column="ReCommentMemberId" property="reCommentMemberId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, ProjectId, MemberId, Content, IsReply, ReCommentId, CreateTime, IsDel
+    Id, ProjectId, MemberId, Content, IsReply, ReCommentId, CreateTime, IsDel,reCommentMemberId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -158,4 +159,29 @@
 			and ''${endCreatetime}''>a.createTime
 		</if>
 	</sql>
+	<!-- 项目详情 ,评论 -->
+	  <select id="getProjectComment"
+		resultType="com.etaofinance.entity.domain.ProjectComment"
+		parameterType="com.etaofinance.entity.req.PagedProjectCommentReq"
+		statementType="CALLABLE">
+		{call Sp_CustomPage2015_V1(
+		' c.Id asc ',
+		' c.Id,
+       c.MemberId,
+       case when c.IsDel=1 THEN ''该评论已经被删除'' ELSE c.Content END  AS Content,
+       c.IsReply,
+       m1.HeadImage,
+       c.ReCommentId,
+       c.CreateTime,
+       IFNULL(m1.UserName,'''') AS commontName,IFNULL(m2.UserName,'''') AS replayName ',
+		' comment c
+		  LEFT JOIN member m1 ON m1.Id=c.MemberId
+          LEFT JOIN member m2 ON m2.Id=c.ReCommentMemberId  ',
+		' c.ProjectId=${projectId} ',
+		#{pageSize,mode=IN,jdbcType=INTEGER},
+		#{currentPage,mode=IN,jdbcType=INTEGER},
+		#{totalRecord,mode=OUT,jdbcType=INTEGER},
+		#{totalPage,mode=OUT,jdbcType=INTEGER}
+		)}
+ </select>
 </mapper>

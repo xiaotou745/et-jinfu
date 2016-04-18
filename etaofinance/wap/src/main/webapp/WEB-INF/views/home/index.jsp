@@ -51,7 +51,8 @@
         	}else{
         		for(int i=0;i<proList.size();i++)
         		{
-        			%>	            
+        			%>	
+        			<a href="<%=basePath%>/home/detail?projectid=<%=proList.get(i).getId()%>">            
             		<div class="swiper-slide">
                 	<div class="banner-list">
                     <div class="list-new">
@@ -63,15 +64,16 @@
                                 <li><span><%=proList.get(i).getAmount()%></span><b>目标金额</b></li>
                             </ul>
                             <div class="progress">
-                                <span class="bar" style="width:<%=proList.get(i).getSchedule()%>%">
+                                <span class="<%=proList.get(i).getSchedule()==0?"zero-bar":""%> bar" style="width:<%=proList.get(i).getSchedule()%>%">
                             		<span class="triangle-bottom"></span>
                                 <span class="percentage"><%=proList.get(i).getSchedule()%>%</span>
                                 </span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+               		</div>
+            		</div>
+            		</a>
         			<% 
         		}
         	}
@@ -88,7 +90,8 @@ if(itemList!=null&&itemList.size()>0)
 {
 	for(int i=0;i<itemList.size();i++)
 	{
-		%>		
+		%>	
+		<a href="<%=basePath%>/home/detail?projectid=<%=itemList.get(i).getId()%>">
 <div class="container-one">
     <div class="one-list container">
         <h3><b><%=itemList.get(i).getProjectname()%></b><span><%=itemList.get(i).getProjectStatusStr()%></span></h3>
@@ -108,6 +111,7 @@ if(itemList!=null&&itemList.size()>0)
         </ul>
     </div>
 </div>
+</a>	
 		<%
 	}
 }
