@@ -489,10 +489,10 @@ $(function(){
 	});
 	//计算份额
 	$('#projectAmount').blur(function(){
-		 FenshuJisuan();
+		 FenshuJisuan(1);
 	});
 	$('#projectFenShu').blur(function(){
-		 FenshuJisuan();
+		 FenshuJisuan(2);
 	});
 });
 //校验手机号会员ID
@@ -503,7 +503,7 @@ function validatePhoneNo(){
     var url='<%=basePath%>/member/getmemberid';
 		var phone = $('#memberPhone').val();
 		if (phone.length == 0) {
-			alert("请输入手机号！");
+			//alert("请输入手机号！");
 			return false;
 		}
 		$.post(url, {
@@ -521,21 +521,25 @@ function validatePhoneNo(){
 		});
 	}
 	//份额计算
-	function FenshuJisuan() {
+	function FenshuJisuan(obj) {
 		var a = $('#projectAmount').val();
 		var b = $('#projectFenShu').val();
 		if (a.length == 0 || b.length == 0) {
 			return;
 		}
-		if (!isInt(a)) {
-			alert('请输入正确的融资金额');
-			$('#projectAmount').focus();
-			return;
+		if(obj==1){
+			if (!isInt(a)) {
+				alert('请输入正确的融资金额');
+				$('#projectAmount').focus();
+				return;
+			}
 		}
-		if (!isInt(b)) {
-			alert('请输入正确的份数');
-			$('#projectFenShu').focus();
-			return;
+		if(obj==2){
+			if (!isInt(b)) {
+				alert('请输入正确的份数');
+				$('#projectFenShu').focus();
+				return;
+			}
 		}
 		var c = a / b;
 		if (!isInt(c) || c == 0) {

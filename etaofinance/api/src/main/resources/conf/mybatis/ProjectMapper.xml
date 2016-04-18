@@ -550,6 +550,9 @@
 			StartTime = #{openFinancingDate,jdbcType=TIMESTAMP},
 			EndTime = #{endFinancingDate,jdbcType=TIMESTAMP},
 		</if>
+		<if test="auditStatus==3">
+			RefuseReasion=#{remark,jdbcType=VARCHAR},
+		</if>
 		AuditName = #{auditName,jdbcType=VARCHAR},
 		AuditTime = now()
 		where Id = #{projectId,jdbcType=BIGINT}

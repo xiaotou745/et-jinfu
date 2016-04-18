@@ -167,9 +167,9 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">上线预热时间：</label>
 								<div class="col-sm-6">
-									<input type="text" style="width: 150px;" class="form-control"
-										value="<%=ParseHelper.ToDateString(project.getPreheattime(),"yyyy-MM-dd")%>" name="onlinePreheatDate" id="onlinePreheatDate"
-										onFocus="WdatePicker({minDate:'%y-%M-%d'})" />
+									<input type="text" style="width: 185px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getPreheattime(),"yyyy-MM-dd HH:mm:ss")%>" name="onlinePreheatDate" id="onlinePreheatDate"
+										onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d HH:mm:ss'})" />
 								</div>
 							</div>
 						</div>
@@ -177,9 +177,9 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">开放融资时间：</label>
 								<div class="col-sm-6">
-									<input type="text" style="width: 150px;" class="form-control"
-										value="<%=ParseHelper.ToDateString(project.getStarttime(),"yyyy-MM-dd")%>" name="openFinancingDate" id="openFinancingDate"
-										onFocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
+									<input type="text" style="width: 185px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getStarttime(),"yyyy-MM-dd HH:mm:ss")%>" name="openFinancingDate" id="openFinancingDate"
+										onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d HH:mm:ss',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
 								</div>
 							</div>
 						</div>
@@ -187,9 +187,9 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label">融资结束时间：</label>
 								<div class="col-sm-6">
-									<input type="text" style="width: 150px;" class="form-control"
-										value="<%=ParseHelper.ToDateString(project.getEndtime(),"yyyy-MM-dd")%>" name="endFinancingDate" id="endFinancingDate"
-										onFocus="WdatePicker({minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
+									<input type="text" style="width: 185px;" class="form-control"
+										value="<%=ParseHelper.ToDateString(project.getEndtime(),"yyyy-MM-dd HH:mm:ss")%>" name="endFinancingDate" id="endFinancingDate"
+										onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
 								</div>
 							</div>
 						</div>
@@ -665,7 +665,7 @@ function validatePhoneNo(){
     var url='<%=basePath%>/member/getmemberid';
 		var phone = $('#memberPhone').val();
 		if (phone.length == 0) {
-			alert("请输入手机号！");
+			//alert("请输入手机号！");
 			return false;
 		}
 		$.post(url, {
@@ -733,7 +733,7 @@ function validatePhoneNo(){
 				$("#modifyProject").attr("disabled", false);
 				if (result > 0) {
 					alert("修改成功");
-					window.location.href = "<%=Config.adminUrl%>+/project/waitlist";
+					window.location.href = "<%=Config.adminUrl%>"+"/project/waitlist";
 				} else if (result == 0) {
 					alert("修改失败");
 				} else {

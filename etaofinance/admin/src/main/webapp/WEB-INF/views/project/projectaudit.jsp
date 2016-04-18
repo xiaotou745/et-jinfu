@@ -45,26 +45,26 @@
 			<div class="row" id="someDateDiv">
 				<div class="col-lg-3">
 					<div class="control-group">
-						<label>上线预热时间：</label><input type="text" style="width: 200px;"
+						<label>上线预热时间：</label><input type="text" style="width: 185px;"
 							class="form-control" value="" name="onlinePreheatDate"
 							id="onlinePreheatDate"
-							onFocus="WdatePicker({minDate:'%y-%M-%d'})" />
+							onFocus="WdatePicker({minDate:'%y-%M-%d HH:mm:ss',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
 					</div>
 				</div>
 				<div class="col-lg-3">
 					<div class="control-group">
-						<label>开放融资时间：</label><input type="text" style="width: 200px;"
+						<label>开放融资时间：</label><input type="text" style="width: 185px;"
 							class="form-control" value="" name="openFinancingDate"
 							id="openFinancingDate"
-							onFocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
+							onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d HH:mm:ss',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
 					</div>
 				</div>
 				<div class="col-lg-3">
 					<div class="control-group">
-						<label>融资结束时间：</label><input type="text" style="width: 200px;"
+						<label>融资结束时间：</label><input type="text" style="width: 185px;"
 							class="form-control" value="" name="endFinancingDate"
 							id="endFinancingDate"
-							onFocus="WdatePicker({minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
+							onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
 					</div>
 				</div>
 			</div>
