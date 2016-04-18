@@ -35,6 +35,7 @@ import com.etaofinance.entity.ProjectLogModel;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ModifyProjectImg;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
@@ -437,5 +438,10 @@ public class ProjectService implements IProjectService {
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public List<DataStatistics> getDataStatistics() {
+		return projectDao.getDataStatistics();
 	}
 }

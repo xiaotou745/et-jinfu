@@ -8,6 +8,7 @@ import com.etaofinance.api.common.DaoBase;
 import com.etaofinance.api.dao.inter.IProjectDao;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -110,6 +111,13 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 	@Override
 	public int isShelf(ProjectStatusReq req) {
 		return getMasterSqlSessionUtil().update("IProjectDao.isShelf",req);
+	}
+
+	@Override
+	public List<DataStatistics> getDataStatistics() {
+		return getReadOnlySqlSessionUtil()
+				.selectList(
+						"IProjectDao.getDataStatices");
 	}
 	
 }

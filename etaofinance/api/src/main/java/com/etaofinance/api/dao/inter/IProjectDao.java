@@ -5,6 +5,7 @@ import java.util.List;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.req.PagedProjectReq;
@@ -63,4 +64,9 @@ public interface IProjectDao {
 	int modifyProjectStatus(ProjectStatusReq req);
 
 	int isShelf(ProjectStatusReq req);
+	
+	/*
+	 * 获取数据统计汇总
+	 */
+	List<DataStatistics> getDataStatistics();
 }
