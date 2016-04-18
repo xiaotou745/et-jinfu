@@ -4,6 +4,7 @@ import java.util.List;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
+import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
 import com.etaofinance.entity.req.ModifyProjectReq;
@@ -75,4 +76,9 @@ public interface IProjectService {
 	 * 修改项目上架 下架 wangchao
 	 */
 	int isShelf(ProjectStatusReq req);
+	
+	/*
+	 * 获取数据统计汇总
+	 */
+	List<DataStatistics> getDataStatistics();
 }

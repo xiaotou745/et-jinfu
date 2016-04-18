@@ -43,7 +43,7 @@
 				<div class="col-lg-3">
 					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 3px;">查询</button>
 			
-					<button type="button" class="btn btn-w-m btn-primary" id="newProject" style="margin-left: 3px;">发布项目</button>
+					<button type="button" class="btn btn-w-m btn-primary" id="newProject" style="margin-left: 3px;">发布</button>
 				</div>
 				</div>
 		</div>

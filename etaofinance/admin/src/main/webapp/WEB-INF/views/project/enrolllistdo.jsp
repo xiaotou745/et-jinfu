@@ -15,7 +15,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">编号</th>
+			<th width="5%">ID</th>
 			<th>项目名称</th>
 			<th>联系人</th>
 			<th>电话</th>
@@ -39,7 +39,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i + 1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getTitle()%></td>
 			<td><%=list.get(i).getContacts()%></td>
 			<td><%=list.get(i).getPhoneno()%></td>
