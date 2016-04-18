@@ -246,12 +246,17 @@ public class ProjectService implements IProjectService {
 		{
 			throw new TransactionalRuntimeException("认购失败!");
 		}
-		// 您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
-		// String
-		// content="您于"+ParseHelper.ToDateString(Date)+"认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177";
+		int year=ParseHelper.GetInDate(new java.util.Date(), 1);
+		int month=ParseHelper.GetInDate(new java.util.Date(), 2);
+		int day=ParseHelper.GetInDate(new java.util.Date(), 3);
+		
+		 //您于*年*月*日认购易淘众筹项目“*”，已确认成功，确认金额*元。如有任何疑问，请致电联系客服4000-999-177
+		 String content="您于"+year+"年"+month+"月"+day+"日"+"认购易淘众筹项目“"+p.getProjectname()+"”，"
+		 		+ "已确认成功，确认金额"+yF+"元。"
+		 		+ "如有任何疑问，请致电联系客服4000-999-177";
 
 		// 发送认购短信
-		// SmsUtils.sendSMS(m.getPhoneno(), content);
+		SmsUtils.sendSMS(m.getPhoneno(), content);
 		HttpResultModel<Object> rModel = new HttpResultModel<Object>();
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");
