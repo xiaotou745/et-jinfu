@@ -18,6 +18,7 @@
 	<thead>
 		<tr>
 			<th width="5%">ID</th>
+			<th width="5%">项目id</th>
 			<th>项目名称</th>
 			<th>融资额</th>
 			<th>项目类型</th>
@@ -43,8 +44,10 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
-			<td><%=list.get(i).getProjectname()%></td>
+			<td><%=list.get(i).getId()%></td>
+			<td>
+			<a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">
+			<%=list.get(i).getProjectname()%></a></td>
 			<td><%=list.get(i).getAmount()%></td>
 			<td><%=ProjectType.getEnum(list.get(i).getTypeid()).desc()%></td>
 			<td><%=cityMap.get(list.get(i).getCitycode())%></td>
@@ -52,9 +55,10 @@
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
 			<td><%=ProjectAuditStatus.getEnum(list.get(i).getAuditstatus()).desc()%></td>
 			<td><%=list.get(i).getRefusereasion()%></td>
-			<td><a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">预览</a>
+			<td>
+<%-- 			<a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">预览</a> --%>
 			<% if(list.get(i).getAuditstatus()!=ProjectAuditStatus.AuditPass.value()){ %>
-				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">修改</a>
+				<a href="<%=basePath%>/project/projectmodify?id=<%=list.get(i).getId()%>">编辑</a>
 			<% } %>			
 			<% if(list.get(i).getAuditstatus()==ProjectAuditStatus.WaitAudit.value()){ %>
 				<a href="<%=basePath%>/project/projectaudit?id=<%=list.get(i).getId()%>">审核</a>

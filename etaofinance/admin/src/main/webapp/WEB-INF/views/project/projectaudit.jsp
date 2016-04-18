@@ -30,50 +30,57 @@
 %>
 <div
 	class="wrapper wrapper-content animated fadeInRight form-horizontal">
-	<div class="row">
-		<div class="col-lg-12">
+
 			<div class="row">
 				<div class="col-lg-3">
-					<div class="control-group">
-						<label>审核操作：</label><input type="radio" id="rAuditPass"
+					<div class="form-group">
+						<label class="col-sm-5 control-label">审核操作：</label><div class="col-sm-7"><input type="radio" id="rAuditPass"
 							name="rAuditOpt" value="2" checked="checked" />通过 <input
 							type="radio" id="rAuditNotPass" name="rAuditOpt" value="3" />不通过<input
 							type="hidden" value="<%=projectId%>" id="projectId" />
+							</div>
 					</div>
 				</div>
 			</div>
 			<div class="row" id="someDateDiv">
 				<div class="col-lg-3">
-					<div class="control-group">
-						<label>上线预热时间：</label><input type="text" style="width: 185px;"
+					<div class="form-group">
+						<label class="col-sm-5 control-label">上线预热时间：</label>
+						<div class="col-sm-7">
+						<input type="text" 
 							class="form-control" value="" name="onlinePreheatDate"
 							id="onlinePreheatDate"
 							onFocus="WdatePicker({minDate:'%y-%M-%d HH:mm:ss',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+							</div>
 					</div>
 				</div>
 				<div class="col-lg-3">
-					<div class="control-group">
-						<label>开放融资时间：</label><input type="text" style="width: 185px;"
+					<div class="form-group">
+						<label class="col-sm-5 control-label">开放融资时间：</label><div class="col-sm-7"><input type="text" 
 							class="form-control" value="" name="openFinancingDate"
 							id="openFinancingDate"
 							onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d HH:mm:ss',maxDate:'#F{$dp.$D(\'endFinancingDate\',{d:-1})||\'2030-10-01\'}'})" />
+							</div>
 					</div>
 				</div>
 				<div class="col-lg-3">
-					<div class="control-group">
-						<label>融资结束时间：</label><input type="text" style="width: 185px;"
+					<div class="form-group">
+						<label class="col-sm-5 control-label">融资结束时间：</label><div class="col-sm-7"><input type="text" 
 							class="form-control" value="" name="endFinancingDate"
 							id="endFinancingDate"
 							onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'openFinancingDate\',{d:1})}',maxDate:'2030-10-01'})" />
+							</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-3">
-					<div class="control-group">
-						<label>备注：</label>
+					<div class="form-group">
+						<label  class="col-sm-5 control-label">备注：</label>
+						<div class="col-sm-7">
 						<textarea name="txtRemark" id="txtRemark"
 							style="width: 300px; height: 60px; max-width: 300px; max-height: 60px;"></textarea>
+							</div>
 					</div>
 				</div>
 			</div>
@@ -81,11 +88,9 @@
 				<div class="col-lg-3">
 					<button id="btnConfirm" class="btn btn-w-m btn-primary"
 						type="button">确定</button>
-				</div>
-				<div class="col-lg-3"><a class="btn btn-w-m btn-white" href="<%=basePath%>/project/waitlist">返回</a></div>
+			<a class="btn btn-w-m btn-primary" href="<%=basePath%>/project/waitlist">返回</a></div>
 			</div>
-		</div>
-	</div>
+
 </div>
 <table class="table table-condensed table-bordered">
 	<tbody>
