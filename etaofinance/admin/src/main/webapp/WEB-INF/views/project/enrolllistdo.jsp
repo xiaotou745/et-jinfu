@@ -39,7 +39,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i + 1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getTitle()%></td>
 			<td><%=list.get(i).getContacts()%></td>
 			<td><%=list.get(i).getPhoneno()%></td>

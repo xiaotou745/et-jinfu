@@ -37,7 +37,7 @@
 		%>
 
 		<tr>
-			<td><%=(i + 1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getRelationno()%></td>
 			<td><%=list.get(i).getOptname()%></td>
 			<td><%=list.get(i).getAmount()%></td>

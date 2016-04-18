@@ -26,7 +26,7 @@
 			<th>到账时间</th>
 			<th>拒绝理由</th>
 			<th>状态</th>
-			<th>操作</th>
+			<th>审核操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -40,7 +40,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getCreatename()%></td>
 			<td>¥<%=list.get(i).getAmount()%></td>
 			<td><%=list.get(i).getBankname()%></td>

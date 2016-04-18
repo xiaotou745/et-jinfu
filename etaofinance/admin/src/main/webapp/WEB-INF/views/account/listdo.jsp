@@ -34,7 +34,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getTruename()%></td>
 			<td><%=list.get(i).getLoginname()%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getOpttime(), "") %></td>

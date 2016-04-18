@@ -35,7 +35,7 @@
 					<button type="button" class="btn btn-w-m btn-primary"
 						id="btnPublicCitySearch" style="margin-left:70px;">查询</button>
 					<button type="button" class="btn btn-w-m btn-primary"
-						id="btnSavePublicCitySearch">保存修改</button>
+						id="btnSavePublicCitySearch">保存</button>
 				</div>
 		</div>
 	</div>

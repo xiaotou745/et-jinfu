@@ -27,7 +27,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i+1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getRolename()%></td>
 			<td><%=list.get(i).getIslock()? "锁定" : "可用"%></td>
 			<td><%=list.get(i).getOptname()%></td>

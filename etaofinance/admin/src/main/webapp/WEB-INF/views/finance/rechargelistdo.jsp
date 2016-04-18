@@ -37,7 +37,7 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=(i + 1)%></td>
+			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getNo()%></td>
 			<td><%=list.get(i).getCreatename()%></td>
 			<td><%=list.get(i).getAmount()%></td>
