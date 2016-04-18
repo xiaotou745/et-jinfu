@@ -12,6 +12,7 @@
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	PagedResponse<ProjectModel> result=(PagedResponse<ProjectModel>)request.getAttribute("result");
 	List<ProjectModel> list=result.getResultList();
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 	
 %>
 <%
@@ -20,13 +21,14 @@ if(list!=null&&list.size()>0)
 	for(int i=0;i<list.size();i++)
 	{
 		%>		
+<a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getId()%>">
 <div class="container-one">
     <div class="one-list container">
         <h3><b><%=list.get(i).getProjectname()%></b><span><%=list.get(i).getProjectStatusStr()%></span></h3>
-        <p><span><img src="<%=list.get(i).getProjectimage()%>"></span>
+        <p><span><img src="<%=imgurl+list.get(i).getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_<%=list.get(i).getTypeid()==1?"6":"7"%>.png"></b>
             <div class="progress">
-                <span class="bar" style="width:<%=list.get(i).getSchedule()%>%">
+                <span class="bar <%=list.get(i).getSchedule()==0?"zero-bar":""%>" style="width:<%=list.get(i).getSchedule()%>%">
                     		<span class="triangle-bottom"></span>
                 <span class="percentage"><%=list.get(i).getSchedule()%>%</span>
                 </span>
@@ -39,6 +41,7 @@ if(list!=null&&list.size()>0)
         </ul>
     </div>
 </div>
+</a>	
 		<%
 	}
 }

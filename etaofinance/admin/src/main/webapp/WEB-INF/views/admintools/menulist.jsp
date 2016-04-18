@@ -22,7 +22,7 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="control-group" style="width:400px;">
 			<div class="controls">
 				<button class="btn btn-success" id="btnExpanAll" type="button">展开/折叠</button>
-				<button class="btn btn-success" type="button" id="addNewMenu">新增菜单</button>
+				<button class="btn btn-success" type="button" id="addNewMenu">新增</button>
 			</div>
 			<div class="controls" style="height:600px; overflow:auto; ">
 				<div class="test treeview" id="treeview11"></div>
@@ -40,8 +40,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">编号:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">编号:</label>
+				<div class="col-sm-7">
 				   <input id="Id" class="form-control" type="text" name="Id" readonly="readonly" />
 				</div>
 			</div>
@@ -50,8 +50,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">父级编号:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">父级编号:</label>
+				<div class="col-sm-7">
 				   <input id="ParId" class="form-control" type="text" name="ParId" readonly="readonly" />
 				</div>
 			</div>
@@ -60,8 +60,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">菜单名称:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">菜单名称:</label>
+				<div class="col-sm-7">
 				   <input id="MenuName" class="form-control" type="text" name="MenuName"  readonly="readonly"/>
 				</div>
 			</div>
@@ -70,8 +70,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">是否锁定:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">是否锁定:</label>
+				<div class="col-sm-7">
 				   <input id="islock" class="form-control" type="text" name="islock" readonly="readonly" />
 				</div>
 			</div>
@@ -80,8 +80,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">页面URL:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">页面URL:</label>
+				<div class="col-sm-7">
 				   <input id="Url" class="form-control" type="text" name="Url"  readonly="readonly"/>
 				</div>
 			</div>
@@ -90,8 +90,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">是否按钮:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">是否按钮:</label>
+				<div class="col-sm-7">
 				   <input id="IsButton" class="form-control" type="text" name="IsButton"  readonly="readonly"/>
 				</div>
 			</div>
@@ -100,8 +100,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 		<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">authcode:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">authcode:</label>
+				<div class="col-sm-7">
 				   <input id="authcode" class="form-control" type="text" name="authcode"  readonly="readonly"/>
 				</div>
 			</div>
@@ -110,8 +110,8 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="col-sm-4 control-label">父级名称:</label>
-				<div class="col-sm-8">
+				<label class="col-sm-5 control-label">父级名称:</label>
+				<div class="col-sm-7">
 				   <input id="ParMenuName" class="form-control" type="text" name="ParMenuName"  readonly="readonly"/>
 				</div>
 			</div>
@@ -131,7 +131,7 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 <!-- 新增菜单 -->
 <div tabindex="-1" class="modal inmodal" id="addNewMenubox" role="dialog" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog modal-sm">
-		<div class="modal-content animated bounceInRight">
+		<div class="modal-content animated bounceInRight " >
 			<div class="modal-header">
 				<button class="close" type="button" data-dismiss="modal">
 					<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
@@ -139,6 +139,7 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 				<h4 class="modal-title">新增一级菜单</h4>
 			</div>
 			<small class="font-bold">
+			
 				<div class="modal-body">
 					<fieldset>
 						<br>
@@ -150,6 +151,7 @@ menuJson=new String(Base64.encodeBase64(menuJson.getBytes("UTF-8")));
 						</div>
 					</fieldset>
 				</div>
+				
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button"

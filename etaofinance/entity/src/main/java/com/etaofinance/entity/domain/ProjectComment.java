@@ -6,6 +6,13 @@ public class ProjectComment extends Comment{
 
 	private String commontName;
 	private String replayName;
+	private String headImage;
+	public String getHeadImage() {
+		return headImage;
+	}
+	public void setHeadImage(String headImage) {
+		this.headImage = headImage;
+	}
 	public String getCommontName() {
 		return commontName;
 	}

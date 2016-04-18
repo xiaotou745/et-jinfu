@@ -14,7 +14,7 @@ String basePath =PropertyUtils.getProperty("java.admin.url");
 					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="col-sm-4 control-label">SQL:</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 							   <textarea rows="5" cols="50" id="sql"></textarea>
 							</div>
 						</div>
@@ -22,7 +22,7 @@ String basePath =PropertyUtils.getProperty("java.admin.url");
 				</div>
 			    <div class="row">
 						<div class="col-lg-3">
-						<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left:3px;">查询</button>
+						<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left:60px;">查询</button>
 						</div>
 						<div class="col-lg-3">
 						<button type="button" class="btn btn-w-m btn-primary" id="btnExec" style="margin-left:3px;">执行</button>
