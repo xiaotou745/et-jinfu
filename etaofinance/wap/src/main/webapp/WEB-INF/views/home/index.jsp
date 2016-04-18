@@ -52,8 +52,9 @@
         		for(int i=0;i<proList.size();i++)
         		{
         			%>	
-        			<a href="<%=basePath%>/home/detail?projectid=<%=proList.get(i).getId()%>">            
+        			           
             		<div class="swiper-slide">
+            		<a href="<%=basePath%>/home/detail?projectid=<%=proList.get(i).getId()%>"> 
                 	<div class="banner-list">
                     <div class="list-new">
                         <div class="new-left"><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_5.png"></div>
@@ -72,8 +73,9 @@
                         </div>
                     </div>
                		</div>
+               		</a>
             		</div>
-            		</a>
+            		
         			<% 
         		}
         	}
@@ -98,7 +100,7 @@ if(itemList!=null&&itemList.size()>0)
         <p><span><img src="<%=imgurl+itemList.get(i).getProjectimage()%>"></span>
         <b><img src="<%=staticResPath%>/etao-crowdfunding/img/p/home/index/index_<%=itemList.get(i).getTypeid()==1?"6":"7"%>.png"></b>
             <div class="progress">
-                <span class="bar" style="width:<%=itemList.get(i).getSchedule()%>%">
+                <span class="bar <%=itemList.get(i).getSchedule()==0?"zero-bar":""%>" style="width:<%=itemList.get(i).getSchedule()%>%">
                     		<span class="triangle-bottom"></span>
                 <span class="percentage"><%=itemList.get(i).getSchedule()%>%</span>
                 </span>
