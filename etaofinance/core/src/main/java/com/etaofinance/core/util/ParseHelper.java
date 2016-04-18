@@ -42,7 +42,7 @@ public class ParseHelper {
 		try {
 			result = Integer.parseInt(o.toString());
 		} catch (Exception e) {
-
+			System.out.println(e);
 		}
 		return result;
 	}
@@ -325,7 +325,12 @@ public class ParseHelper {
 			return "0"+aString;
 		}
 		DecimalFormat decimalFormat=new DecimalFormat(aString);//构造方法的字符格式这里如果小数不足2位,会以0补足.
-		return decimalFormat.format(numVaule);
+		String reString= decimalFormat.format(numVaule);
+		if(reString.indexOf(".")==reString.length()-1)
+		{
+			reString=reString.replace(".", "");
+		}
+		return reString;
 	}
 	
 	/**

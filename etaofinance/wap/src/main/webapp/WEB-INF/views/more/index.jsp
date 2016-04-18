@@ -37,9 +37,7 @@
 	</section>
 	<section class="container bg info-telephone">
 		<div class="text">
-				客服电话:
-				&nbsp;&nbsp;<span>400-070-5286</span>
-				(工作日&nbsp;&nbsp;<span>09：00-21：30</span>)
+		客服电话:&nbsp;&nbsp;<span>400-070-5286</span>(工作日&nbsp;&nbsp;<span>09：00-21：30</span>)
 		</div>
 	</section>
 	<div class="footer top-line">

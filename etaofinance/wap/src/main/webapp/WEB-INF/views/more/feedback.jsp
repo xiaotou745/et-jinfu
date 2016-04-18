@@ -21,7 +21,7 @@
             
 	<form action="" data-role="form">
 		<section class="container top-gap">
-			<textarea class="feedback" placeholder="尽情吐槽~" name="feedback" data-role="feedback"></textarea>
+			<textarea class="feedback" placeholder="尽情吐槽~" name="description" data-role="description"></textarea>
 		</section>
 		<section class="container">
 			<div class="tips">您还可以输入<span data-role="text-count">500</span>字</div>
@@ -29,19 +29,19 @@
 		<section class="container ">
 			<div class="label-input">
 				<label>联系人</label>
-				<input type="text" name="contactname" data-role="contactname" value="<%=name%>"/>
+				<input type="text" name="contacts" data-role="contacts" value="<%=name%>"/>
 			</div>
 		</section>
 		<section class="container ">
 			<div class="label-input">
 				<label>联系电话</label>
-				<input type="text" name="mobile" data-role="mobile" value="<%=phone%>"/>
+				<input type="text" name="phoneno" data-role="phoneno" value="<%=phone%>"/>
 			</div>
 		</section>
 		<section class="container ">
 			<div class="label-input">
 				<label>联系邮箱</label>
-				<input type="text" name="mail" data-role="mail" value="<%=email%>"/>
+				<input type="text" name="email" data-role="email" value="<%=email%>"/>
 			</div>
 		</section>
 		<section class="container top-gap">
