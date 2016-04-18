@@ -25,6 +25,7 @@ import com.etaofinance.core.enums.ProjectStatus;
 import com.etaofinance.core.enums.RecordType;
 import com.etaofinance.core.security.MD5Util;
 import com.etaofinance.core.util.ParseHelper;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.core.util.SmsUtils;
 import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
@@ -260,6 +261,7 @@ public class ProjectService implements IProjectService {
 		HttpResultModel<Object> rModel = new HttpResultModel<Object>();
 		rModel.setCode(1);
 		rModel.setMsg("认购成功!");
+		rModel.setUrl(PropertyUtils.getProperty("java.wap.url")+"/home/detail?projectid="+p.getId());
 		return rModel;
 	}
 

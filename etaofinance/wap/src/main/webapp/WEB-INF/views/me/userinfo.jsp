@@ -47,17 +47,17 @@
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>
-        <a href="<%=basePath%>/me/certificationinvestor">
+        <a href="<%=member.getLevel()>1?"#":basePath+"/me/certificationinvestor"%>">
             <div class="text  top-line">
                 <div>跟投人认证</div>
-                <span><%=member.getLevel()==2?"已认证":"未认证"%></span>
+                <span><%=member.getLevel()>1?"已认证":"未认证"%></span>
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>
-          <a href="<%=basePath%>/me/certificationleadinvestor">
+          <a href="<%=member.getLevel()>2?"#":basePath+"/me/certificationleadinvestor"%>">
             <div class="text  top-line">
                 <div>领头人认证</div>
-                <span><%=member.getLevel()==3?"已认证":"未认证"%></span>
+                <span><%=member.getLevel()>2?"已认证":"未认证"%></span>
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>

@@ -186,5 +186,22 @@ public class HomeController {
 		view.addObject("member", member);
 		return view;
 	}
+	/**
+	 * 项目认购页面
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/subscribeinputpaypassword")
+	@RequireLogin
+	public ModelAndView subscribeinputpaypassword(Long projectid,Integer quantity,Integer islead)
+	{
+		ModelAndView view = new ModelAndView("wapView");
+		view.addObject("currenttitle", "支付密码");
+		view.addObject("viewPath", "home/subscribeinputpaypassword");
+		view.addObject("projectid",projectid);
+		view.addObject("quantity",quantity);
+		view.addObject("islead",islead);
+		return view;
+	}
 	
 }
