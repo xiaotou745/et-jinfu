@@ -570,8 +570,7 @@ function validatePhoneNo(){
 		var json_data = JSON.stringify(proObjReq);
 		$("#tip").html("正在执行。。。");
 		$("#saveProject").attr("disabled", true);
-		var url = "
-<%=basePath%>/project/saveproject";
+		var url = "<%=basePath%>/project/saveproject";
 		$.ajax({
 			type : 'POST',
 			url : url,
