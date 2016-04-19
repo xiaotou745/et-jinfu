@@ -30,14 +30,13 @@ public class CommentDao extends DaoBase implements ICommentDao{
 	//用户插入项目评论
 	@Override
 	public int insert(Comment comment) {
-		return getMasterSqlSessionUtil().insert(
-				"ICommentDao.insert", comment);
+		return getMasterSqlSessionUtil().insert("ICommentDao.insert", comment);
 	}
 
 	@Override
 	public int insertSelective(Comment record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return getMasterSqlSessionUtil().insert("ICommentDao.insertSelective", record);
 	}
 
 	@Override

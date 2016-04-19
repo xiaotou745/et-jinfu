@@ -1,4 +1,5 @@
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.entity.domain.ProjectComment"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
 <%@page import="com.etaofinance.entity.domain.ProjectMember"%>
@@ -77,7 +78,7 @@
                 {
 	                for(int i=0;i<leadList.size();i++)
 	                {%>
-	                 <li><%=leadList.get(i).getMemberName()%></li>
+	                 <li><span><img src="<%=imgurl+leadList.get(i).getHeadImg()%>"/></span><%=leadList.get(i).getMemberName()%></li>
 	                <%
 	                }
                 }else{
@@ -158,28 +159,30 @@
                             	{
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
-                            	  <li>
-                                      <p><b></b></p>
+                            	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
+                                      <p><b>
+                                      <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
+                                      </b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
-                                      <span><%=commentList.get(i).getCreatetime()%></span>
+                                      <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
                                       {
-                                    	  %>回复<a href="###"><%=commentList.get(i).getReplayName()%>:</a>
+                                    	  %>回复<a href="#"><%=commentList.get(i).getReplayName()%>:</a>
                                     	  <%
                                       } %>
                                       	<%=commentList.get(i).getContent()%>
                                       	</span>
                                       	<%
-                                      	if(myid==commentList.get(i).getMemberid())
+                                      	if(myid==commentList.get(i).getMemberid()&&commentList.get(i).getIsdel()!=1)
                                       	{
                                       		%>
-                                      		<a class="ul-del" href="###">删除</a>
+                                      		<a class="ul-del" href="#">删除</a>
                                       		<%
                                       	}
                                       	%>
                                       </p>
-                                      <p><i></i></p>
+                                      <p class="reply"><i></i></p>
                                   </li>
                             		
                             		<%
@@ -262,7 +265,7 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >领投</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
 				 
 			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
 			{//购买中 +投资人

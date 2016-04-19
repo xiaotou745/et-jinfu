@@ -8,7 +8,8 @@
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	String phoneNo=(String)request.getAttribute("phone");
-	String ss=phoneNo.substring(0,phoneNo.length()-(phoneNo.substring(3)).length())+"****"+phoneNo.substring(7);
+	//String ss=phoneNo.substring(0,phoneNo.length()-(phoneNo.substring(3)).length())+"****"+phoneNo.substring(7);
+	String phoneStr=(String)request.getAttribute("phoneStr");	
 %>
 
   <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/pay/retrieve-paypassword-step1.css">
@@ -21,7 +22,7 @@
                 验证码已发送到您的手机
             </div>
             <div class="phone">
-                <%=ss%>
+                <%=phoneStr%>
             </div>
         </div>
     </section>

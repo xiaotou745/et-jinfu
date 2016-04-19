@@ -74,8 +74,12 @@ public class PayController {
 		
 		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
 		Member member=memberService.getById(memberId);
-		String phone=member.getPhoneno();	
-		view.addObject("phone", phone);	
+//		String phone=member.getPhoneno();	
+//		view.addObject("phone", phone);	
+		String phone=member.getPhoneno();			
+		String phoneStr=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
+		view.addObject("phone", phone);
+		view.addObject("phoneStr", phoneStr);
 		return view;
 	}	
 	
@@ -133,8 +137,10 @@ public class PayController {
 		
 		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();
 		Member member=memberService.getById(memberId);
-		String phone=member.getPhoneno();	
-		view.addObject("phone", phone);	
+		String phone=member.getPhoneno();			
+		String phoneStr=phone.substring(0,phone.length()-(phone.substring(3)).length())+"****"+phone.substring(7);
+		view.addObject("phone", phone);
+		view.addObject("phoneStr", phoneStr);	
 		return view;
 	}	
 }

@@ -281,7 +281,7 @@ $("#showProjectConfirm").click(function(){
 	var paramaters = {
 		"projectId" : $('#showProjectDiv').attr("data-projectid"),
 		"logRemark":"修改项目为上架",
-		"isShelve":0
+		"isShelve":1
 	};
 	$.ajax({
 		type : "POST",

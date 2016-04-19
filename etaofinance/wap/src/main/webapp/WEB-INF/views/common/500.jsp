@@ -3,29 +3,63 @@
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@ page import="java.io.*"%>
 <%
-	String basePath = PropertyUtils.getProperty("java.wap.url");
-    //response.setStatus(HttpServletResponse.SC_OK);
+String basePath = PropertyUtils.getProperty("java.wap.url");
+response.setStatus(HttpServletResponse.SC_OK);
+//静态资源跟地址
+	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 %>
-<script src="<%=basePath%>/js/jquery-2.1.1.js"></script>
-<script>
-$(document).ready(function() {
-	$("#showErrorMessageButton").click(function() {
-		$("#errorMessageDiv").toggle();
-	});
-});
-</script>
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>500</h1>
-        <h3 class="font-bold">服务器内部错误</h3>
 
-        <div class="error-desc">
-            服务器好像出错了...
-            <br/>您可以返回主页看看
-            <br/><a href="<%=basePath%>/order/list"  class="btn btn-primary m-t">主页</a>
-            <br/><a id="showErrorMessageButton"  href="javascript:void(0)">详细错误信息</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404页面</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="360-fullscreen" content="true" />
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible_css.debug.js"></script>
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/flexible/flexible.debug.js"></script>
+    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/other/404.css">
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/mo.1.0.0.js"></script>
+</head>
+
+<body>
+    <div class="g-wrap">
+        <div class="g-views">
+            
+	<section class="container">
+		<div class="error-image"></div>
+		<div class="error-text"></div>
+	</section>
+	<seciton class="container">
+		<div class="tips">服务器去泡妞了！</div>
+	</seciton>
+	<section class="container">
+		<div class="btn-toggle">
+			<a href="<%=basePath%>/home/index"><button>返回首页</button></a>
+		</div>
+	</section>
+
         </div>
     </div>
-<div id="errorMessageDiv" style="display:none;">
+    <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->
+    <script src="<%=staticResPath%>/etao-crowdfunding/js/p/other/404.js"></script>
+    <div id="errorMessageDiv" style="display:none;">
 	<pre>
                 <%
                 	try {
@@ -70,6 +104,10 @@ $(document).ready(function() {
                 %>
             </pre>
 </div>
+</body>
+
+</html>
+
 
 
 
