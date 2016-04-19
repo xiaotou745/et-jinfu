@@ -1,3 +1,4 @@
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
 <%@page import="com.etaofinance.entity.domain.ProjectComment"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
@@ -30,14 +31,14 @@
                             	{
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
-                            	  <li>
+                            	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
                                       <p><b></b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
-                                      <span><%=commentList.get(i).getCreatetime()%></span>
+                                      <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
                                       {
-                                    	  %>回复<a href="###"><%=commentList.get(i).getReplayName()%>:</a>
+                                    	  %>回复<a href="#"><%=commentList.get(i).getReplayName()%>:</a>
                                     	  <%
                                       } %>
                                       	<%=commentList.get(i).getContent()%>
