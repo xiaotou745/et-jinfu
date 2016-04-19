@@ -95,6 +95,11 @@ public class BalanceRecordService implements IBalanceRecordService{
 		
 		return insertRes;
 	}
+
+	@Override
+	public BalanceRecord getById(Long id) {
+		return balanceRecordDao.selectByPrimaryKey(id);
+	}
 	
 
 }

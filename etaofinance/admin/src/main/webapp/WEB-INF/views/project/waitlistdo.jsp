@@ -53,7 +53,7 @@
 			<td><%=strategyMap.get(list.get(i).getId())%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(), "") %></td>
 			<td><%=ProjectAuditStatus.getEnum(list.get(i).getAuditstatus()).desc()%></td>
-			<td><%=list.get(i).getRefusereasion()%></td>
+			<td style="word-wrap:break-word;word-break:break-all;" width="200px"><%=list.get(i).getRefusereasion()%></td>
 			<td>
 <%-- 			<a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>">预览</a> --%>
 			<% if(list.get(i).getAuditstatus()!=ProjectAuditStatus.AuditPass.value()){ %>

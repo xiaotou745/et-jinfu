@@ -22,7 +22,7 @@
     OptName, OptTime, AccountType, AccountNo,BankName 
   </sql>
   <select id="GetWithdrawPendingAmountByMbId" resultType="java.lang.Double" parameterType="java.lang.Long" >
-    select sum(Amount)
+    select IFNULL(sum(Amount),0)
     from withdrawform
     where  Status=1 and memberId = #{memberId,jdbcType=BIGINT}
   </select>
