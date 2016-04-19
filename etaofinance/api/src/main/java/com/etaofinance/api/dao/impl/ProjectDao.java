@@ -1,6 +1,8 @@
 package com.etaofinance.api.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -118,6 +120,17 @@ return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList"
 		return getReadOnlySqlSessionUtil()
 				.selectList(
 						"IProjectDao.getDataStatices");
+	}
+	/**
+	 * 修改关注人数
+	 */
+	@Override
+	public int changeFlowNum(Long pid, int num) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("pid", pid);
+		return getMasterSqlSessionUtil().update("IProjectDao.changeFlowNum",map);
+
 	}
 	
 }

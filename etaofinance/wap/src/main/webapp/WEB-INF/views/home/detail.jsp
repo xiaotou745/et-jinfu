@@ -33,6 +33,7 @@
 	int isTzr=member==null?0:(member.getLevel()>1?1:0);//是否投资人
 	Long myid=member==null?0:member.getId();
 	int isLead=member==null?0:(member.getLevel()==3?1:0);//是否领头人
+	int isFavorite=(int)request.getAttribute("isFavorite");
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/detail.css">
@@ -255,7 +256,7 @@
    </section>
     <footer class="foot-list">
         <div class="foot-one">
-            <a href="###"></a><b><%=detaiModel.getFollownumber()%></b></div>
+            <a href="#" <%=isFavorite>0?"class=\"active\"":"" %>></a><b><%=detaiModel.getFollownumber()%></b></div>
         <!-- 按钮以及样式 按钮认证和我要领头是默认样式、成功按钮样式名为‘two-me’、预热按钮样式名为'two-you'-->
        		<div class="foot-two">
 			<%
@@ -273,7 +274,7 @@
 			%>        
          	</div>
     </footer>
-    
+    	<input type="hidden" name="projectid" data-role="projectid" value="<%=detaiModel.getId()%>">
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->

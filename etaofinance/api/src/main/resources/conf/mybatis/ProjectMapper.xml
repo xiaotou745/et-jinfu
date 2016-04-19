@@ -653,4 +653,8 @@
 		(SELECT SUM(case TypeId WHEN 4 then Amount ELSE 0 END) from balancerecord) cash
 		FROM project
 	</select>
+	<!-- 修改关注人数 -->
+	<update id="changeFlowNum"  parameterType="java.util.Map">
+	UPDATE project p set p.FollowNumber=(p.FollowNumber+#{num,jdbcType=INTEGER}) WHERE p.Id=#{pid,jdbcType=BIGINT}
+	</update>
 </mapper>

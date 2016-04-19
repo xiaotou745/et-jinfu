@@ -1,6 +1,8 @@
 package com.etaofinance.api.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -51,9 +53,7 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 
 		int insertRes=0;
 		
-		insertRes= getMasterSqlSessionUtil()
-				.insert(
-						"IProjectFavoriteDao.insertSelective",profavorite);
+		insertRes= getMasterSqlSessionUtil().insert("IProjectFavoriteDao.insertSelective",profavorite);
 		 
 		return insertRes;
 	}
@@ -116,6 +116,26 @@ public class ProjectFavoriteDao extends DaoBase implements IProjectFavoriteDao{
 	public PagedResponse<ProjectFavoriteInvestModel> getFavoritePageList(
 			PagedProjectFavReq req) {
 		return getReadOnlySqlSessionUtil().selectPageList("IProjectFavoriteDao.getProjectFavList",req);
+	}
+	/**
+	 * 该项目是否关注
+	 */
+	@Override
+	public int isMyFavorite(Long uid, Long pid) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("uid", uid);
+		map.put("pid", pid);
+		return getReadOnlySqlSessionUtil().selectOne("IProjectFavoriteDao.isMyFavorite",map);
+	}
+	/**
+	 * 取消关注
+	 */
+	@Override
+	public int cancelFavorite(Long uid, Long pid) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("uid", uid);
+		map.put("pid", pid);
+		return getMasterSqlSessionUtil().update("IProjectFavoriteDao.cancelFavorite",map);
 	}
 	
 

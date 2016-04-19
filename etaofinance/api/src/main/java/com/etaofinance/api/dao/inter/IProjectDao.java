@@ -69,4 +69,11 @@ public interface IProjectDao {
 	 * 获取数据统计汇总
 	 */
 	List<DataStatistics> getDataStatistics();
+	/**
+	 * 修改数量
+	 * @param poid
+	 * @param num
+	 * @return
+	 */
+	int changeFlowNum(Long poid,int num);
 }

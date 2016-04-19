@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.ICommentService;
 import com.etaofinance.api.service.inter.IMemberService;
+import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
@@ -56,6 +57,8 @@ public class HomeController {
 	ICommentService commentService;
 	@Autowired
 	IMemberService memberService;
+	@Autowired
+	IProjectFavoriteService projectFavoriteService;
 	/**
 	 * 首页
 	 * @return
@@ -146,6 +149,13 @@ public class HomeController {
 			commentReq.setMemberId(member.getId());
 			commentList=commentService.getProjectComment(commentReq).getResultList();
 		}
+		int  isFavorite=0;
+		if(member!=null)
+		{
+			isFavorite=projectFavoriteService.isMyFavorite(member.getId(), projectid);
+		}
+		view.addObject("isFavorite",isFavorite);
+		//5.是否关注该项目
 		view.addObject("commentList",commentList);
 		return view;
 	}
