@@ -891,8 +891,6 @@ public class MeController {
 		}else if(item.getTypeid()==BalanceRecordType.Apply.value())
 		{//提现
 			view.addObject("viewPath", "me/balancedetailapply");
-			Project project=projectService.selectByPrimaryKey(item.getProjectid());
-			view.addObject("project",project);
 			return view;
 			
 		}else if(item.getTypeid()==BalanceRecordType.Invest.value())
