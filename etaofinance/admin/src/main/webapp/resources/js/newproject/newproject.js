@@ -94,7 +94,7 @@ function SaveChek() {
     var pcode = $('#provinceCode').val();
     var ccode = $('#cityCode').val();
     var acode = $('#regionCode').val();
-    if (pcode == -1 || ccode == -1 || acode == -1) {
+    if (pcode == -1) {
         alert('请选择正确的省份,城市或区域!');
         return false;
     }
