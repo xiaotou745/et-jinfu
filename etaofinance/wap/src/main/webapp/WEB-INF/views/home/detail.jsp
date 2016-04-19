@@ -78,7 +78,7 @@
                 {
 	                for(int i=0;i<leadList.size();i++)
 	                {%>
-	                 <li><%=leadList.get(i).getMemberName()%></li>
+	                 <li><span><img src="<%=imgurl+leadList.get(i).getHeadImg()%>"/></span><%=leadList.get(i).getMemberName()%></li>
 	                <%
 	                }
                 }else{
@@ -160,7 +160,9 @@
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
                             	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
-                                      <p><b></b></p>
+                                      <p><b>
+                                      <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
+                                      </b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
                                       <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
@@ -180,7 +182,7 @@
                                       	}
                                       	%>
                                       </p>
-                                      <p><i></i></p>
+                                      <p class="reply"><i></i></p>
                                   </li>
                             		
                             		<%
@@ -263,7 +265,7 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >领投</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
 				 
 			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
 			{//购买中 +投资人

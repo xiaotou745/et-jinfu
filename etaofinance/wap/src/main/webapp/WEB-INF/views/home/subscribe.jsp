@@ -21,6 +21,11 @@
 	//项目详情
 	ProjectModel detaiModel=(ProjectModel)request.getAttribute("detaiModel");
 	Long projectid=(Long)request.getAttribute("projectid");
+	int isShow=0;
+	if(detaiModel.getProjectstatus()==3&&member.getLevel()==3)
+	{
+		isShow=1;
+	}
 
 %>
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/subscribe.css">
@@ -36,6 +41,15 @@
 			<span><%=detaiModel.getProvinceName()+detaiModel.getCityName() %></span>
 		</div>
 	</section>
+	 <section class="container bg <%=isShow==1?"":"hide"%>">
+        <div class="subscribe-identity">
+            选择认购身份
+        </div>
+        <div class="identity">
+            <span data-lead="0"><i class="select active"></i>跟投人</span>
+            <span data-lead="1"><i class="select"></i>领投人</span>
+        </div>
+    </section>
 	<section class="container bg">
 		<div class="content">
 			<div class="amount">

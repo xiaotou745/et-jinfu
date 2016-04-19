@@ -32,7 +32,9 @@
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
                             	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
-                                      <p><b></b></p>
+                                      <p><b>
+                                      <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
+                                      </b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
                                       <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
@@ -47,12 +49,12 @@
                                       	if(myid==commentList.get(i).getMemberid())
                                       	{
                                       		%>
-                                      		<a class="ul-del" href="###">删除</a>
+                                      		<a class="ul-del" href="#">删除</a>
                                       		<%
                                       	}
                                       	%>
                                       </p>
-                                      <p><i></i></p>
+                                         <p class="reply"><i></i></p>
                                   </li>
                             		
                             		<%
