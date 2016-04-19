@@ -50,7 +50,12 @@ return getMasterSqlSessionUtil().update("IProjectDao.updateByPrimaryKey", record
 
 	@Override
 	public PagedResponse<Project> queryProjectList(PagedProjectReq req) {
-return getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList", req);
+		
+		PagedResponse<Project> res = null;
+		
+		res= getReadOnlySqlSessionUtil().selectPageList("IProjectDao.queryProjectList", req);
+		
+		return res;
 	}
 	/**
 	 * wap获取项目列表

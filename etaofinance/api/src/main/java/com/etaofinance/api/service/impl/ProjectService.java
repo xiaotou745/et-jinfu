@@ -88,7 +88,12 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public PagedResponse<Project> queryProjectList(PagedProjectReq req) {
-		return projectDao.queryProjectList(req);
+		
+		PagedResponse<Project> res = null;
+		
+		res= projectDao.queryProjectList(req);
+		
+		return res;
 	}
 
 	/**
@@ -443,5 +448,13 @@ public class ProjectService implements IProjectService {
 	@Override
 	public List<DataStatistics> getDataStatistics() {
 		return projectDao.getDataStatistics();
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Project record) {
+	
+		
+		
+		return projectDao.updateByPrimaryKeySelective(record);
 	}
 }

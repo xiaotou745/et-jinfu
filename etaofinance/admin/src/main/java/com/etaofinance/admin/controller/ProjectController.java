@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,6 +53,7 @@ import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
 import com.etaofinance.entity.req.ProjectStatusReq;
 import com.etaofinance.entity.Member;
+
 /**
  * 项目管理
  * 
@@ -72,13 +74,14 @@ public class ProjectController {
 	@Autowired
 	private IProjectSubscriptionService projectSubscriptionService;
 	@Autowired
-	private IMemberService memberService; 
+	private IMemberService memberService;
 	@Autowired
 	private IProjectFavoriteService projectFavoriteService;
 	@Autowired
 	private ICommentService commentService;
 	@Autowired
-	private IProjectEnrollService  projectEnrollService;
+	private IProjectEnrollService projectEnrollService;
+
 	/**
 	 * 项目列表查询页
 	 * 
@@ -95,11 +98,17 @@ public class ProjectController {
 
 	@RequestMapping("listdo")
 	public ModelAndView listDo(PagedProjectReq req) {
+
 		ModelAndView view = new ModelAndView("project/listdo");
+
 		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
+
 		req.setId(ParseHelper.ToInt(req.getId(), 0));
+
 		PagedResponse<Project> listData = projectService.queryProjectList(req);
+
 		view.addObject("listData", listData);
+
 		return view;
 	}
 
@@ -196,7 +205,8 @@ public class ProjectController {
 	public int audit(HttpServletRequest request, ProjectAuditReq req) {
 		UserContext context = UserContext.getCurrentContext(request);
 		req.setAuditName(context.getUserName());
-		req.setLogRemark(ProjectAuditStatus.getEnum(req.getAuditStatus()).desc()+","+req.getRemark());
+		req.setLogRemark(ProjectAuditStatus.getEnum(req.getAuditStatus())
+				.desc() + "," + req.getRemark());
 		int r = projectService.audit(req);
 		return r;
 	}
@@ -266,15 +276,25 @@ public class ProjectController {
 		// 项目信息
 		Project project = projectService.selectByPrimaryKey(id);
 		if (project != null) {
-			Member member=memberService.getById(project.getMemberid());
+			Member member = memberService.getById(project.getMemberid());
 			// 项目 类型 信息
-			List<ProjectStrategy> tmpStrList = projectStrategyService.getByProjectId(id);
-			List<ProjectStrategy> proStrList=new ArrayList<ProjectStrategy>();
-			
-			proStrList.add(0, tmpStrList.stream().filter(t->t.getKey().equals("SteadyA")).collect(Collectors.toList()).get(0));
-			proStrList.add(1, tmpStrList.stream().filter(t->t.getKey().equals("SteadyB")).collect(Collectors.toList()).get(0));
+			List<ProjectStrategy> tmpStrList = projectStrategyService
+					.getByProjectId(id);
+			List<ProjectStrategy> proStrList = new ArrayList<ProjectStrategy>();
+
+			proStrList.add(
+					0,
+					tmpStrList.stream()
+							.filter(t -> t.getKey().equals("SteadyA"))
+							.collect(Collectors.toList()).get(0));
+			proStrList.add(
+					1,
+					tmpStrList.stream()
+							.filter(t -> t.getKey().equals("SteadyB"))
+							.collect(Collectors.toList()).get(0));
 			// 项目图片 信息
-			List<ProjectImage> proImgList = projectImageService.getByProjectId(id);
+			List<ProjectImage> proImgList = projectImageService
+					.getByProjectId(id);
 			// 省市区
 			Map<Integer, String> cityMap = publicProvinceCityService
 					.getOpenCityMap();
@@ -288,13 +308,14 @@ public class ProjectController {
 							.getOpenCityByJiBie(AreaLevel.District)));
 			view.addObject("cityMap", cityMap);
 			view.addObject("project", project);
-			view.addObject("member",member);
+			view.addObject("member", member);
 			view.addObject("proStrList", proStrList);
 			view.addObject("proImgList", proImgList);
 			view.addObject("projectId", id);
 		}
 		return view;
-	}	
+	}
+
 	/*
 	 * 项目收藏 LIN
 	 */
@@ -308,14 +329,14 @@ public class ProjectController {
 	}
 
 	@RequestMapping("favoritedo")
-	public ModelAndView favoritelistdo(PagedProjectFavReq req) { 
+	public ModelAndView favoritelistdo(PagedProjectFavReq req) {
 		ModelAndView model = new ModelAndView("project/favoritedo");
 		PagedResponse<ProjectFavoriteInvestModel> favoriteList = new PagedResponse<ProjectFavoriteInvestModel>();
-		favoriteList=projectFavoriteService.getFavoritePageList(req);
-		model.addObject("listData",favoriteList);
+		favoriteList = projectFavoriteService.getFavoritePageList(req);
+		model.addObject("listData", favoriteList);
 		return model;
 	}
-	
+
 	/*
 	 * 项目回复列表 LIN
 	 */
@@ -329,14 +350,14 @@ public class ProjectController {
 	}
 
 	@RequestMapping("commentdo")
-	public ModelAndView commentlistdo(PagedCommentReq req) { 
+	public ModelAndView commentlistdo(PagedCommentReq req) {
 		ModelAndView model = new ModelAndView("project/commentdo");
 		PagedResponse<Comment> commentList = new PagedResponse<Comment>();
-		commentList=commentService.getCommentPagingList(req);
-		model.addObject("listData",commentList);
+		commentList = commentService.getCommentPagingList(req);
+		model.addObject("listData", commentList);
 		return model;
 	}
-	
+
 	/*
 	 * 项目认投情况 LIN
 	 */
@@ -350,15 +371,16 @@ public class ProjectController {
 	}
 
 	@RequestMapping("projectsubdo")
-	public ModelAndView subdo(PagedProjectSubReq req) { 
+	public ModelAndView subdo(PagedProjectSubReq req) {
 		ModelAndView model = new ModelAndView("project/projectsubdo");
 		PagedResponse<ProjectSubscription> subList = new PagedResponse<ProjectSubscription>();
-		subList=projectSubscriptionService.getProjectSubPageList(req);
-		model.addObject("listData",subList);
+		subList = projectSubscriptionService.getProjectSubPageList(req);
+		model.addObject("listData", subList);
 		return model;
 	}
+
 	/**
-	 * 修改项目  wangchao
+	 * 修改项目 wangchao
 	 * 
 	 * @return
 	 */
@@ -373,52 +395,70 @@ public class ProjectController {
 
 	@RequestMapping("enrolllist")
 	public ModelAndView buyList() {
-		
+
 		ModelAndView view = new ModelAndView("adminView");
-		
+
 		view.addObject("subtitle", "项目管理");
-		
+
 		view.addObject("currenttitle", "报名项目列表");
-		
+
 		view.addObject("viewPath", "project/enrolllist");
-		
+
 		return view;
 	}
-	
+
 	@RequestMapping("enrolllistdo")
 	public ModelAndView payListDo(PagedProjectEnrollReq req) {
-		
+
 		ModelAndView view = new ModelAndView("project/enrolllistdo");
-		
-		PagedResponse<ProjectEnroll> listData=projectEnrollService.getProjectEnrollList(req);
-		
+
+		PagedResponse<ProjectEnroll> listData = projectEnrollService
+				.getProjectEnrollList(req);
+
 		view.addObject("listData", listData);
-		
+
 		return view;
 	}
 
 	/**
-	 * 修改项目融资状态  wangchao
+	 * 修改项目融资状态 wangchao
 	 * 
 	 * @return
 	 */
 	@RequestMapping("modifyprojectstatus")
 	@ResponseBody
-	public int modifyProjectStatus(HttpServletRequest request,ProjectStatusReq req) {
+	public int modifyProjectStatus(HttpServletRequest request,
+			ProjectStatusReq req) {
 		UserContext context = UserContext.getCurrentContext(request);
-		req.setOperater(context.getUserName());		 
+		req.setOperater(context.getUserName());
 		return projectService.modifyProjectStatus(req);
 	}
+
 	/**
-	 * 修改项目融资状态  wangchao
+	 * 修改项目融资状态 wangchao
 	 * 
 	 * @return
 	 */
 	@RequestMapping("isshelf")
 	@ResponseBody
-	public int isShelf(HttpServletRequest request,ProjectStatusReq req) {
+	public int isShelf(HttpServletRequest request, ProjectStatusReq req) {
 		UserContext context = UserContext.getCurrentContext(request);
-		req.setOperater(context.getUserName());		 
+		req.setOperater(context.getUserName());
 		return projectService.isShelf(req);
+	}
+
+	@RequestMapping("celgreenhand")
+	@ResponseBody
+	public int celgreenHand(Project pro) {
+		int a =0;
+		return projectService.updateByPrimaryKey(pro);
+	}
+
+	@RequestMapping("setgreenhand")
+	@ResponseBody
+	public int setgreenHand( Project pro) {
+		
+		return projectService.updateByPrimaryKeySelective(pro);
+		
 	}
 }
