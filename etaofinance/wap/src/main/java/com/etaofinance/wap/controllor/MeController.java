@@ -104,6 +104,12 @@ public class MeController {
 		view.addObject("currenttitle", "登录");
 		view.addObject("viewPath", "me/login");
 		view.addObject("reUrl",reUrl==null?"":reUrl);
+		if(UserContext.getCurrentContext(request).getUserInfo()!=null)
+		{
+			
+			ModelAndView view2 = new ModelAndView(new RedirectView(PropertyUtils.getProperty("java.wap.url")+"/home/index"));
+			return view2;
+		}
 		return view;
 	}
 	/**
