@@ -389,6 +389,15 @@
 			<if test="createtime != null and createtime!=''">
 				CreateTime = #{createtime,jdbcType=TIMESTAMP},
 			</if>
+			<if test="refusereasion != null">
+				Refusereasion = #{refusereasion,jdbcType=VARCHAR},
+			</if>
+			<if test="redidueFenshu != null">
+				RedidueFenshu = #{redidueFenshu,jdbcType=INTEGER},
+			</if>
+			<if test="rediduePreheatMaxFenShu != null">
+				RediduePreheatMaxFenShu = #{rediduePreheatMaxFenShu,jdbcType=INTEGER},
+			</if>
 		</set>
 		where Id = #{id,jdbcType=BIGINT}
 	</update>

@@ -104,6 +104,12 @@ public class MeController {
 		view.addObject("currenttitle", "登录");
 		view.addObject("viewPath", "me/login");
 		view.addObject("reUrl",reUrl==null?"":reUrl);
+		if(UserContext.getCurrentContext(request).getUserInfo()!=null)
+		{
+			
+			ModelAndView view2 = new ModelAndView(new RedirectView(PropertyUtils.getProperty("java.wap.url")+"/home/index"));
+			return view2;
+		}
 		return view;
 	}
 	/**
@@ -413,7 +419,7 @@ public class MeController {
 		switch (type) {
 		case 1:{tip="您尚未实名认证,请先进行实名认证";url=basePath+"/me/certification";button="去认证";}break;//实名认证
 		case 2:{tip="您当前有未审核通过的认证申请,请等待审核";url=basePath+"/me/userinfo";button="返回";}break;
-		case 3:{tip="您尚未设置支付密码,请先设置支付密码";url=basePath+"/pay/setpaypasswordstep1";button="支设置";}break;
+		case 3:{tip="您尚未设置支付密码,请先设置支付密码";url=basePath+"/pay/setpaypasswordstep1";button="去设置";}break;
 		case 4:{tip="您当前未绑定银行卡，请先绑定";url=basePath+"/me/addbankcard";button="去绑定";}break;
 //		case 3:{tip="";url=basePath+"/aa/aa";button="去认证";}break;
 //		case 4:{tip="";url=basePath+"/aa/aa";button="去认证";}break;

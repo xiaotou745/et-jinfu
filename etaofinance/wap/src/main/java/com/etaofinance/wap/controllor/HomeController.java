@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -86,7 +87,7 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping("/listdo")
-	public ModelAndView listdo(PagedProjectReq req)
+	public ModelAndView listdo(@RequestBody PagedProjectReq req)
 	{
 		ModelAndView view = new ModelAndView("home/listdo");
 		PagedResponse<ProjectModel> result=projectService.getProjectList(req);
@@ -176,7 +177,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/commentlistdo")
 	@RequireLogin
-	public ModelAndView commentlistdo(PagedProjectCommentReq commentReq)
+	public ModelAndView commentlistdo(@RequestBody PagedProjectCommentReq commentReq)
 	{
 		ModelAndView view = new ModelAndView("home/commentlistdo");
 		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());

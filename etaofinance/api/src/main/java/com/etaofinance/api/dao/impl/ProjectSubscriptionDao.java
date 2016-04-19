@@ -37,8 +37,8 @@ public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscript
 
 	@Override
 	public int insertSelective(ProjectSubscription record) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return getMasterSqlSessionUtil().insert("IProjectSubscriptionDao.insertSelective", record);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscript
 		return getReadOnlySqlSessionUtil().selectPageList("IProjectSubscriptionDao.getProjectSubList",req);
 	}
 	/**
-	 * 获取项目领头人信息
+	 * 锟斤拷取锟斤拷目锟斤拷头锟斤拷锟斤拷息
 	 */
 	@Override
 	public List<ProjectMember> getProjectLeadMember(Long projectId) {
