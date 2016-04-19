@@ -15,7 +15,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">付款ID</th>
 			<th>订单号</th>
 			<th>姓名</th>
 			<th>金额</th>

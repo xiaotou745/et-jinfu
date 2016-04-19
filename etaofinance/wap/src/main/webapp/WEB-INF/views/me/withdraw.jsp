@@ -7,6 +7,8 @@
 	String basePath = PropertyUtils.getProperty("java.wap.url");
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
+	String bankname= (String)request.getAttribute("bankname");
+	String cardnoStr= (String)request.getAttribute("cardnoStr");
 	double allowwithdrawprice=(double)request.getAttribute("allowwithdrawprice");
 	
 %>
@@ -29,7 +31,7 @@
 	</section>
 	<section class="container">
 		<div class="tips">
-			提现至：尾号为<b>****3210 </b>的农业银行储蓄卡
+			提现至：尾号为<b><%=cardnoStr%> </b>的<%=bankname%>储蓄卡
 		</div>
 	</section>
 	<section class="container top-gap">

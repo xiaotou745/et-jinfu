@@ -20,7 +20,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">领投人ID</th>
 			<th>用户名</th>
 			<th>手机号</th>
 			<th>邮箱</th>
@@ -45,9 +45,9 @@
 			<td><%=list.get(i).getRefuseReasion() %></td>
 			<td>
 			<%if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.WaitAudit.value() ){ %>
-				<input type="button" value="审核" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)" />
+			<a href="javascript:void(0)" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)" >审核</a> 
 			<% } else if(list.get(i).getAuditStatus() == MemberApplyInvestStatusEnum.AuditNotPass.value()) { %>
-				<input type="button" value="重审" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)" />
+			<a href="javascript:void(0)" onclick="showLeadAuditMember(<%=list.get(i).getId()%>)">重审</a>
 			<% } else {%>
 			<% } %>
 			</td>

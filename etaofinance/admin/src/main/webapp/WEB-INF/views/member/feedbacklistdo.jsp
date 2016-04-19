@@ -21,7 +21,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">反馈ID</th>
 			<th>反馈内容</th>
 			<th>提交人</th>
 			<th>电话</th>

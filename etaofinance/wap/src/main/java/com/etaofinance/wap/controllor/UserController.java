@@ -525,7 +525,7 @@ public class UserController {
 	}	
 	
 	/**
-	 * 领头人,投资人认证
+	 * 领投人,投资人认证
 	 * @param 
 	 * @author hulingbo
 	 * @date 2016年3月24日18:05:14
@@ -534,9 +534,9 @@ public class UserController {
 	@RequestMapping("certificationinvestor")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "领头人,投资人认证", httpMethod = "POST", 
+	@ApiOperation(value = "领投人,投资人认证", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "领头人,投资人认证")
+	notes = "领投人,投资人认证")
 	public HttpResultModel<Object> certificationInvestor(@RequestBody  MemberApply record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();

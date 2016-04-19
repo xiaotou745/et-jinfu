@@ -46,7 +46,7 @@ public interface IMemberApplyDao {
 	boolean IsHasTZApply(Long uid);
 	
 	/**
-	 * 是否存在领头人未审核的申请
+	 * 是否存在领投人未审核的申请
 	 * @param uid
 	 * @return
 	 */
