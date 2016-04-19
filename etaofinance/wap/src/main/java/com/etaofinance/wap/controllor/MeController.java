@@ -293,6 +293,28 @@ public class MeController {
 		Member member=UserContext.getCurrentContext(request).getUserInfo();
 		member=memberService.getById(member.getId());
 		view.addObject("member",member);
+		String levelStr="未认证",levelStr2="未认证";
+		if(member.getLevel()==2)
+		{
+			levelStr="已认证";
+		}
+		if(member.getLevel()==3)
+		{
+			levelStr2="已认证";
+		}				
+		boolean bt1= memberApplyService.IsHasTZApply(member.getId());
+		boolean bt2=memberApplyService.IsHasLTApply(member.getId());
+		if(bt1)
+		{
+			levelStr="认证中";
+		}
+		if(bt2)
+		{
+			levelStr2="认证中";
+		}
+		view.addObject("levelStr",levelStr);
+		view.addObject("levelStr2",levelStr2);
+	
 		return view;
 	}
 	/**

@@ -85,4 +85,16 @@ public class MemberApplyDao extends DaoBase implements IMemberApplyDao{
 		return res>0;
 	}
 
+	@Override
+	public boolean IsHasTZApply(Long uid) {
+		int res =getReadOnlySqlSessionUtil().selectOne("IMemberApplyDao.IsHasTZApply",uid);
+		return res>0;
+	}
+
+	@Override
+	public boolean IsHasLTApply(Long uid) {
+		int res =getReadOnlySqlSessionUtil().selectOne("IMemberApplyDao.IsHasLTApply",uid);
+		return res>0;
+	}
+
 }

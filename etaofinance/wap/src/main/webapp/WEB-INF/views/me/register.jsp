@@ -29,7 +29,7 @@
 			<button class="radius" data-role="vertify-code" disabled>获取验证码</button>
 		</div>
 		<div class="form-input">
-			<input type="text" placeholder="请设置6~20位密码" maxlength="20" data-role="password"/>
+			<input type="password" placeholder="请设置6~20位密码" maxlength="20" data-role="password"/>
 		</div>
 	</section>
 	<section class="container">
