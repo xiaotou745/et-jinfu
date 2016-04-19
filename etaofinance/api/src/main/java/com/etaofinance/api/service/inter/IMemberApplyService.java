@@ -28,4 +28,18 @@ public interface IMemberApplyService {
 	 * @return
 	 */
 	boolean IsHasApply(Long uid);
+	
+	/**
+	 * 是否存在投资人未审核的申请
+	 * @param uid
+	 * @return
+	 */
+	boolean IsHasTZApply(Long uid);
+	
+	/**
+	 * 是否存在领头人未审核的申请
+	 * @param uid
+	 * @return
+	 */
+	boolean IsHasLTApply(Long uid);
 }
