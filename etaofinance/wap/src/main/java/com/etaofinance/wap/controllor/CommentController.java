@@ -40,6 +40,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 public class CommentController {
 	@Autowired
 	private ICommentService commentService;
+	@Autowired
+	HttpServletRequest request;
 	
 	/**
 	 * 发布、回复评论
@@ -56,8 +58,10 @@ public class CommentController {
 	@ApiOperation(value = "评论", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "用户评论")
+	@RequireLogin
 	public HttpResultModel<Object> addComment(@RequestBody Comment req)
 	{
+		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
 		return  commentService.insert(req);
 	}
 	
@@ -75,6 +79,7 @@ public class CommentController {
 	@ApiOperation(value = "删除评论", httpMethod = "POST", 
 	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
 	notes = "删除评论")
+	@RequireLogin
 	public HttpResultModel<Object> updateCommentIsDel(@RequestBody Comment req)
 	{
 		return  commentService.updateByPrimaryKeyAndMem(req);

@@ -50,7 +50,7 @@
 	</seciton>
 	<section class="container">
 		<div class="btn-toggle">
-			<button>返回首页</button>
+			<a href="<%=basePath%>/home/index"><button>返回首页</button></a>
 		</div>
 	</section>
 

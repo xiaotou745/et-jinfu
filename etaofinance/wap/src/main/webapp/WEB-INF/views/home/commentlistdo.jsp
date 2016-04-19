@@ -1,3 +1,4 @@
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
 <%@page import="com.etaofinance.entity.domain.ProjectComment"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
@@ -30,28 +31,30 @@
                             	{
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
-                            	  <li>
-                                      <p><b></b></p>
+                            	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
+                                      <p><b>
+                                      <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
+                                      </b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
-                                      <span><%=commentList.get(i).getCreatetime()%></span>
+                                      <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
                                       {
-                                    	  %>回复<a href="###"><%=commentList.get(i).getReplayName()%>:</a>
+                                    	  %>回复<a href="#"><%=commentList.get(i).getReplayName()%>:</a>
                                     	  <%
                                       } %>
                                       	<%=commentList.get(i).getContent()%>
                                       	</span>
                                       	<%
-                                      	if(myid==commentList.get(i).getMemberid())
+                                      	if(myid==commentList.get(i).getMemberid()&&commentList.get(i).getIsdel()!=1)
                                       	{
                                       		%>
-                                      		<a class="ul-del" href="###">删除</a>
+                                      		<a class="ul-del" href="#">删除</a>
                                       		<%
                                       	}
                                       	%>
                                       </p>
-                                      <p><i></i></p>
+                                         <p class="reply"><i></i></p>
                                   </li>
                             		
                             		<%

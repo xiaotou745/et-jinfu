@@ -12,6 +12,7 @@
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	List<ProjectFavoriteDM> list=(ArrayList<ProjectFavoriteDM>)request.getAttribute("list");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 %>
 
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/project-concern.css">
@@ -19,19 +20,21 @@
         <div class="g-views">
           <%if(list!=null&&list.size()>0)
         	{
+        	  
         	  for(int i=0;i<list.size();i++)
         	  {
+        		  String s1=ParseHelper.ToDateString(ParseHelper.ToDate(list.get(i).getCreatetime()),"yyyy-MM-dd");
         		  %>
 				<section class="container bg">
 				<div class="title">
-					<div>关注时间：<%=list.get(i).getCreatetime()%></div>
+					<div>关注时间：<%=s1%></div>
 					<i class="<%=list.get(i).getProjectStatus()==3?"fall":"win"%>"><%=ProjectStatus.getEnum(list.get(i).getProjectStatus()).desc()%></i>
 				</div>
 				<div class="item">
-					<div><img src="<%=list.get(i).getProjectImage()%>" alt=""></div>
+					<div><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></div>
 						<dl>
 							<dt><%=list.get(i).getProjectName()%></dt>
-							<dd><span>上线时间：</span><%=ParseHelper.ToDateString(list.get(i).getProjectBeginDate())%></dd>
+							<dd><span>上线时间：</span><%=ParseHelper.ToDateString(list.get(i).getProjectBeginDate(),"yyyy-MM-dd")%></dd>
 						</dl>
 					</div>
 					<div class="offer">

@@ -32,7 +32,7 @@
 p.ProjectName, p.projectStatus,p.PreheatTime as projectBeginDate,p.ProjectImage
     from projectfavorite ps
 left join project  p on ps.ProjectId=p.Id
-where ps.memberid = #{memberid,jdbcType=BIGINT}
+where ps.memberid = #{memberid,jdbcType=BIGINT} and ps.IsDel=0
 	<if test="projectStatus>0">
 		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
 	</if>
@@ -150,4 +150,12 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
 			and b.EMail=''${email}''
 		</if>
 	</sql>
+	<!-- 是否关注该项目 -->
+	<select id="isMyFavorite" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT COUNT(1) FROM projectfavorite p WHERE p.IsDel=0 AND p.MemberId=#{uid,jdbcType=BIGINT} AND p.ProjectId=#{pid,jdbcType=BIGINT}
+	</select>
+	<!-- 取消关注 -->
+	<select id="cancelFavorite" parameterType="java.util.Map" >
+	UPDATE projectfavorite p set p.IsDel=1  WHERE p.IsDel=0 AND p.MemberId=#{uid,jdbcType=BIGINT} AND p.ProjectId=#{pid,jdbcType=BIGINT}
+	</select>
 </mapper>

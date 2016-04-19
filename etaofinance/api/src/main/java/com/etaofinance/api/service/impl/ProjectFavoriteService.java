@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.etaofinance.api.common.TransactionalRuntimeException;
 import com.etaofinance.api.dao.inter.IADVertDao;
 import com.etaofinance.api.dao.inter.IAccountAuthDao;
 import com.etaofinance.api.dao.inter.IBankDao;
+import com.etaofinance.api.dao.inter.IProjectDao;
 import com.etaofinance.api.dao.inter.IProjectFavoriteDao;
 import com.etaofinance.api.dao.inter.IProjectSubscriptionDao;
 import com.etaofinance.api.redis.RedisService;
@@ -24,6 +26,7 @@ import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.AccountAuth;
 import com.etaofinance.entity.AccountInfo;
 import com.etaofinance.entity.Bank;
+import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectFavorite;
 import com.etaofinance.entity.ProjectSubscription;
 import com.etaofinance.entity.common.HttpResultModel;
@@ -43,6 +46,8 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 
 	@Autowired
 	private IProjectFavoriteDao projectFavoriteDao;
+	@Autowired
+	private IProjectDao projectDao;
 	/**
 	 * 我关注的项目列表
 	 */
@@ -125,28 +130,34 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 		
 		return projectFavoriteDao.getFavoriteCntByProId(proId);
 	}
-
+	/**
+	 * 关注 取消关注
+	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public HttpResultModel<Object> follow(ProjectFavorite profavorite) {
-		
-		if (null == profavorite) {
-			
-			return null;
+		HttpResultModel<Object> followRes = new HttpResultModel<Object>();		
+		if(profavorite.getIsdel()==0)//增加关注
+		{
+			projectFavoriteDao.cancelFavorite(profavorite.getMemberid(), profavorite.getProjectid());
+			profavorite.setIsdel(null);
+			int r1=projectFavoriteDao.insertSelective(profavorite);
+			int r2=projectDao.changeFlowNum(profavorite.getProjectid(), 1);
+			if (r1 != 1 || r2 != 1)// 每个操作都应该只有一条影响
+			{
+				throw new TransactionalRuntimeException("关注失败!");
+			}
+		}else {
+			int r1=projectDao.changeFlowNum(profavorite.getProjectid(), -1);
+			int r2=projectFavoriteDao.cancelFavorite(profavorite.getMemberid(), profavorite.getProjectid());
+			if (r1 != 1)// 每个操作都应该只有一条影响
+			{
+				throw new TransactionalRuntimeException("取消关注失败!");
+			}
 		}
-
-		String id =String.valueOf(profavorite.getId());
-		HttpResultModel<Object> followRes = null;
-
-		if ("null" == id) {
-			// 首次关注
-			followRes = this.followProject(profavorite);
-
-		} else {
-			// 关注 或 取消关注
-			followRes = this.followByPrimaryKeySelective(profavorite);
-		}
+		followRes.setCode(1);
+		followRes.setMsg("操作成功!");
 		return followRes;
-		
 	}
 
 	@Override
@@ -165,6 +176,11 @@ public class ProjectFavoriteService implements  IProjectFavoriteService{
 	public PagedResponse<ProjectFavoriteInvestModel> getFavoritePageList(
 			PagedProjectFavReq req) {
 		return projectFavoriteDao.getFavoritePageList(req);
+	}
+
+	@Override
+	public int isMyFavorite(Long uid, Long pid) {
+		return projectFavoriteDao.isMyFavorite( uid,  pid);
 	}
 
 }

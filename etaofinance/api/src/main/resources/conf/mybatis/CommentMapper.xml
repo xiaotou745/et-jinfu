@@ -31,6 +31,7 @@
     values (#{projectid,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, 
       #{content,jdbcType=VARCHAR}, #{isreply,jdbcType=TINYINT}, #{recommentid,jdbcType=BIGINT})
   </insert>
+  <!-- 插入评论 -->
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Comment" >
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -58,6 +59,9 @@
       <if test="isdel != null" >
         IsDel,
       </if>
+      <if test="reCommentMemberId != null" >
+        reCommentMemberId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -83,6 +87,9 @@
       </if>
       <if test="isdel != null" >
         #{isdel,jdbcType=TINYINT},
+      </if>
+      <if test="reCommentMemberId != null" >
+       #{reCommentMemberId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -165,8 +172,8 @@
 		parameterType="com.etaofinance.entity.req.PagedProjectCommentReq"
 		statementType="CALLABLE">
 		{call Sp_CustomPage2015_V1(
-		' c.Id asc ',
-		' c.Id,
+		' c.Id desc ',
+		' c.Id,c.IsDel,
        c.MemberId,
        case when c.IsDel=1 THEN ''该评论已经被删除'' ELSE c.Content END  AS Content,
        c.IsReply,
