@@ -194,7 +194,7 @@ function CreateStrategylist() {
         item2.key = 'SteadyB';
         item2.value = 0;
         item2.description = "风险共担型第二个值";
-        if (p1b.length != 0 && IsDouble(p2b)) {
+        if (p2b.length != 0 && IsDouble(p2b)) {
             item2.value = p2b;
         }
         strategylist.push(item2);
