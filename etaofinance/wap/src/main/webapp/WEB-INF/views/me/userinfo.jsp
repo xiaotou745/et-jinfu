@@ -12,6 +12,7 @@
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	Member member=(Member)request.getAttribute("member");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 %>
 
    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/user-info.css">
@@ -20,7 +21,7 @@
             
     <section class="container bg">
         <div class="info">
-            <a href=""><img src="<%=member.getHeadimage()%>" alt=""></a>
+            <a href=""><img src="<%=imgurl+member.getHeadimage()%>" alt=""></a>
         </div>
     </section>
     <section class="container bg">

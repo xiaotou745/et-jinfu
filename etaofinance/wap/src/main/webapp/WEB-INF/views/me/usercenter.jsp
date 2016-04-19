@@ -12,6 +12,7 @@
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	MemberOther other=(MemberOther)request.getAttribute("other");
 	Member member=(Member)request.getAttribute("member");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 %>
 
 <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/user-center.css">
@@ -22,7 +23,7 @@
 		<section class="container bgEm">
         <div class="name">
             <div class="name_left">
-                <a href="<%=basePath%>/me/userinfo"><img src="<%=member.getHeadimage()%>" alt=""></a>
+                <a href="<%=basePath%>/me/userinfo"><img src="<%=imgurl+member.getHeadimage()%>" alt=""></a>
                 <div>
                     <div><%=member.getUsername()%></div>
                     <i class="<%=member.getLevel()>1?"on":""%>"></i>
