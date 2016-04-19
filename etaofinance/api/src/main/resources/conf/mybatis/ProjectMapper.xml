@@ -452,7 +452,7 @@
 		where Id = #{id,jdbcType=BIGINT}
 	</update>
 	<sql id="queryProjectListWhere">
-		1=1
+		auditStatus != 2
 		<if test="id>0">
 			and id=${id}
 		</if>
