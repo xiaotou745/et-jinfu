@@ -11,4 +11,7 @@ public interface IRoleInfoService {
 
     int update(RoleInfo record);
     List<RoleInfo> selectList();
+    
+    
+    RoleInfo getRoleInfoByName(String roleName);
 }
