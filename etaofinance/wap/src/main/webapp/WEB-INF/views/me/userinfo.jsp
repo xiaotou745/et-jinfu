@@ -12,6 +12,9 @@
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	Member member=(Member)request.getAttribute("member");
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
+	String levelStr=(String)request.getAttribute("levelStr");
+	String levelStr2=(String)request.getAttribute("levelStr2");
 %>
 
    <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/me/user-info.css">
@@ -20,7 +23,7 @@
             
     <section class="container bg">
         <div class="info">
-            <a href=""><img src="<%=member.getHeadimage()%>" alt=""></a>
+            <a href=""><img src="<%=imgurl+member.getHeadimage()%>" alt=""></a>
         </div>
     </section>
     <section class="container bg">
@@ -50,14 +53,14 @@
         <a href="<%=member.getLevel()>1?"#":basePath+"/me/certificationinvestor"%>">
             <div class="text  top-line">
                 <div>跟投人认证</div>
-                <span><%=member.getLevel()>1?"已认证":"未认证"%></span>
+                <span><%=levelStr %></span>
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>
           <a href="<%=member.getLevel()>2?"#":basePath+"/me/certificationleadinvestor"%>">
             <div class="text  top-line">
-                <div>领头人认证</div>
-                <span><%=member.getLevel()>2?"已认证":"未认证"%></span>
+                <div>领投人认证</div>
+                <span><%=levelStr2 %></span>
                 <i class="m-icon icon-arrow-r"></i>
             </div>
         </a>

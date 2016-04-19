@@ -25,40 +25,28 @@ public class CommentService implements ICommentService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**
+	 * 发布评论
+	 */
 	@Override
 	public HttpResultModel<Object> insert(Comment record) {
 		
 		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
-		
-		if(record.getMemberid() ==null && record.getMemberid().equals(""))
-		{	
-			resp.setCode(WithdrawformEnum.MemberIdIsNull.value());
-			resp.setMsg(WithdrawformEnum.MemberIdIsNull.desc());
-			return resp;			
-		}
-		
-		//recommentid is null：commnent;
-		//recommentid not null:reply;
-		if(record.getRecommentid() !=null && !record.getRecommentid().equals(""))
+		//是否回复
+		if(record.getRecommentid() !=null&&record.getReCommentMemberId()!=null)
 		{
 			record.setIsreply((byte)1);
 		}
-		else
-		{
-			record.setIsreply((byte)0);
-			record.setRecommentid((long)0);
-		}
-		int row = commentDao.insert(record);
+		int row = commentDao.insertSelective(record);
 		
 		if(row<=0)
 		{
-			resp.setCode(WithdrawformEnum.Err.value());
-			resp.setMsg(WithdrawformEnum.Err.desc());
+			resp.setCode(-1);
+			resp.setMsg("回复失败");
 			return resp;	
 		}
-		resp.setCode(WithdrawformEnum.Success.value());
-		resp.setMsg(WithdrawformEnum.Success.desc());		
+		resp.setCode(1);
+		resp.setMsg("回复成功");		
 		return resp;
 	}
 

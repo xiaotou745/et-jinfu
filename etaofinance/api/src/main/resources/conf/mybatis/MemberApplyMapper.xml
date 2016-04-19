@@ -284,4 +284,12 @@
 	SELECT COUNT(1) FROM memberapply m WHERE m.MemberId=#{uid,jdbcType=BIGINT} AND
    	m.Status=0
 	</select>
+		<select id="IsHasTZApply" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	SELECT COUNT(1) FROM memberapply m WHERE m.MemberId=#{uid,jdbcType=BIGINT} AND
+   	m.Status=0 AND m.TypeId=1
+	</select>
+			<select id="IsHasLTApply" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	SELECT COUNT(1) FROM memberapply m WHERE m.MemberId=#{uid,jdbcType=BIGINT} AND
+   	m.Status=0 AND m.TypeId=2
+	</select>
 </mapper>

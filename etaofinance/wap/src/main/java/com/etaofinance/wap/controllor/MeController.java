@@ -32,8 +32,10 @@ import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
 import com.etaofinance.api.service.inter.IWithdrawformService;
 import com.etaofinance.core.consts.RedissCacheKey;
+import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.util.CookieUtils;
 import com.etaofinance.core.util.PropertyUtils;
+import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
@@ -291,6 +293,28 @@ public class MeController {
 		Member member=UserContext.getCurrentContext(request).getUserInfo();
 		member=memberService.getById(member.getId());
 		view.addObject("member",member);
+		String levelStr="未认证",levelStr2="未认证";
+		if(member.getLevel()==2)
+		{
+			levelStr="已认证";
+		}
+		if(member.getLevel()==3)
+		{
+			levelStr2="已认证";
+		}				
+		boolean bt1= memberApplyService.IsHasTZApply(member.getId());
+		boolean bt2=memberApplyService.IsHasLTApply(member.getId());
+		if(bt1)
+		{
+			levelStr="认证中";
+		}
+		if(bt2)
+		{
+			levelStr2="认证中";
+		}
+		view.addObject("levelStr",levelStr);
+		view.addObject("levelStr2",levelStr2);
+	
 		return view;
 	}
 	/**
@@ -840,6 +864,44 @@ public class MeController {
 		view.addObject("currenttitle", "修改密码");
 		view.addObject("viewPath", "me/modifypassword");
 		return view;
-	}	
+	}
+	
+	/**账单详情
+	 * 
+	 * @param checkKey
+	 * @param userId
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("balancedetail")
+	@RequireLogin
+	public ModelAndView balancedetail(Long id) 
+	{
+		BalanceRecord item=balanceRecordService.getById(id);
+		ModelAndView view= new ModelAndView("wapView");
+		view.addObject("currenttitle", "账单详情");
+		view.addObject("item",item);
+		if(item.getTypeid()==BalanceRecordType.Refund.value())
+		{//退款
+			view.addObject("viewPath", "me/balancedetailrefund");
+			Project project=projectService.selectByPrimaryKey(item.getProjectid());
+			view.addObject("project",project);
+			return view;
+			
+		}else if(item.getTypeid()==BalanceRecordType.Apply.value())
+		{//提现
+			view.addObject("viewPath", "me/balancedetailapply");
+			return view;
+			
+		}else if(item.getTypeid()==BalanceRecordType.Invest.value())
+		{
+		 //投资
+			
+		}else {
+		 //充值
+		}
+		
+		return view;
+	}
 
 }

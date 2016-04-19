@@ -1,4 +1,5 @@
 <%@page import="com.etaofinance.core.enums.ProjectStatus"%>
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.entity.domain.ProjectComment"%>
 <%@page import="com.etaofinance.entity.ProjectImage"%>
 <%@page import="com.etaofinance.entity.domain.ProjectMember"%>
@@ -33,6 +34,7 @@
 	int isTzr=member==null?0:(member.getLevel()>1?1:0);//是否投资人
 	Long myid=member==null?0:member.getId();
 	int isLead=member==null?0:(member.getLevel()==3?1:0);//是否领头人
+	int isFavorite=(int)request.getAttribute("isFavorite");
 %>
 
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/detail.css">
@@ -76,7 +78,7 @@
                 {
 	                for(int i=0;i<leadList.size();i++)
 	                {%>
-	                 <li><%=leadList.get(i).getMemberName()%></li>
+	                 <li><span><img src="<%=imgurl+leadList.get(i).getHeadImg()%>"/></span><%=leadList.get(i).getMemberName()%></li>
 	                <%
 	                }
                 }else{
@@ -157,28 +159,30 @@
                             	{
                             		byte isr=commentList.get(i).getIsreply();
                             		%>
-                            	  <li>
-                                      <p><b></b></p>
+                            	  <li data-commentid="<%=commentList.get(i).getId()%>" data-userid="<%=commentList.get(i).getMemberid()%>">
+                                      <p><b>
+                                      <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
+                                      </b></p>
                                       <p><span><%=commentList.get(i).getCommontName()%></span>
-                                      <span><%=commentList.get(i).getCreatetime()%></span>
+                                      <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
                                       {
-                                    	  %>回复<a href="###"><%=commentList.get(i).getReplayName()%>:</a>
+                                    	  %>回复<a href="#"><%=commentList.get(i).getReplayName()%>:</a>
                                     	  <%
                                       } %>
                                       	<%=commentList.get(i).getContent()%>
                                       	</span>
                                       	<%
-                                      	if(myid==commentList.get(i).getMemberid())
+                                      	if(myid==commentList.get(i).getMemberid()&&commentList.get(i).getIsdel()!=1)
                                       	{
                                       		%>
-                                      		<a class="ul-del" href="###">删除</a>
+                                      		<a class="ul-del" href="#">删除</a>
                                       		<%
                                       	}
                                       	%>
                                       </p>
-                                      <p><i></i></p>
+                                      <p class="reply"><i></i></p>
                                   </li>
                             		
                             		<%
@@ -189,6 +193,16 @@
                             		<%
                             	}%>
                             </ul>
+                            <%if(commentList.size()==15)
+                            {
+                            	%>
+                            	  <div class="load-more"><span>加载更多</span><i class="m-icon icon-arrow-r"></i>
+             				<span class="loader2 hide"></span>
+        					</div>
+                            	<%
+                            }
+                            %>
+                          
                         </div>
                     </div>
                 		
@@ -255,13 +269,13 @@
    </section>
     <footer class="foot-list">
         <div class="foot-one">
-            <a href="###"></a><b><%=detaiModel.getFollownumber()%></b></div>
+            <a href="#" <%=isFavorite>0?"class=\"active\"":"" %>></a><b><%=detaiModel.getFollownumber()%></b></div>
         <!-- 按钮以及样式 按钮认证和我要领头是默认样式、成功按钮样式名为‘two-me’、预热按钮样式名为'two-you'-->
        		<div class="foot-two">
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >领投</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
 				 
 			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
 			{//购买中 +投资人
@@ -273,7 +287,7 @@
 			%>        
          	</div>
     </footer>
-    
+    	<input type="hidden" name="projectid" data-role="projectid" value="<%=detaiModel.getId()%>">
         </div>
     </div>
     <!-- error: point:pagejs is not defined; modname islayout/normal-flexible -->

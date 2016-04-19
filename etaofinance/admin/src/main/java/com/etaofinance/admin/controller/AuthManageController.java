@@ -116,7 +116,7 @@ public class AuthManageController {
 			authset.setMenuid(Integer.parseInt(authid));
 			deleteList.add(authset);
 		}
-		authorityAccountMenuSetService.modifyAuthList(insertList,deleteList);
+		authorityAccountMenuSetService.modifyAuthList(deleteList,insertList);
 
 		return "";
 	}

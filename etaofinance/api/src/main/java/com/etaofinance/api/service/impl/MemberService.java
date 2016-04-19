@@ -249,6 +249,7 @@ public class MemberService implements IMemberService {
 		register.setPhoneno(req.getPhoneNo());
 		register.setLoginpwd(MD5Util.MD5(req.getPwd()));
 		register.setUsername("etao_" + req.getPhoneNo());
+		register.setHeadimage("/Temp/temphead.jpg");
 		memberDao.insertSelective(register);
 		MemberOther moMemberOther = new MemberOther();
 		moMemberOther.setMemberid(register.getId());

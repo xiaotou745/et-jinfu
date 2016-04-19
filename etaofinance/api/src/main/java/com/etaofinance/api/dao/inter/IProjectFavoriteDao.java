@@ -32,5 +32,19 @@ public interface IProjectFavoriteDao {
     int getFavoriteCntByProId(Long proId);
     
     PagedResponse<ProjectFavoriteInvestModel> getFavoritePageList(PagedProjectFavReq req);
+    /**
+     * 项目是否关注
+     * @param uid
+     * @param pid
+     * @return
+     */
+    int isMyFavorite(Long uid, Long pid);
+    /**
+     * 取消关注
+     * @param uid
+     * @param pid
+     * @return
+     */
+    int cancelFavorite(Long uid, Long pid);
     
 }

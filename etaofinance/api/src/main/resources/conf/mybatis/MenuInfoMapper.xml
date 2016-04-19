@@ -29,7 +29,7 @@
             AuthCode
     FROM    menuinfo amc
             JOIN accountauth aam ON aam.MenuId = amc.Id
-            JOIN accountinfo kb ON kb.id = aam.id
+            JOIN accountinfo kb ON kb.id = aam.AccoutId
     WHERE   0>=kb.RoleId
             AND kb.id = #{accountId}
             AND kb.isLock = 0

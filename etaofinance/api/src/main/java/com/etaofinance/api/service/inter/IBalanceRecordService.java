@@ -31,7 +31,7 @@ public interface IBalanceRecordService {
 	PagedResponse<BalanceRecord> getPageList(PagedMemberBalanceRecordReq req);
 	
 	PagedResponse<BalanceRecord>  getBalanceRecordList(PagedBalancerecordReq req);
-	
+	BalanceRecord getById(Long id);
 	
     int insertSelective(BalanceRecord record);
 	
