@@ -21,10 +21,20 @@
 	//项目详情
 	ProjectModel detaiModel=(ProjectModel)request.getAttribute("detaiModel");
 	Long projectid=(Long)request.getAttribute("projectid");
-	int isShow=0;
+	int isShow=0;//是否显示领投
 	if(detaiModel.getProjectstatus()==3&&member.getLevel()==3)
 	{
 		isShow=1;
+	}
+	int showfen=0;//剩余份数
+	int isactive=0;//默认领投
+	if(detaiModel.getProjectstatus()==2&&member.getLevel()==3)
+	{	isactive=1;
+		showfen=detaiModel.getPreheatmaxfenshu()-detaiModel.getRediduePreheatMaxFenShu();
+	}else
+	{
+		
+		showfen=detaiModel.getFenshu()-detaiModel.getRedidueFenshu();
 	}
 
 %>
@@ -46,8 +56,8 @@
             选择认购身份
         </div>
         <div class="identity">
-            <span data-lead="0"><i class="select active"></i>跟投人</span>
-            <span data-lead="1"><i class="select"></i>领投人</span>
+            <span data-lead="0"><i class="select <%=isactive==0?"active":"" %>"></i>跟投人</span>
+            <span data-lead="1"><i class="select <%=isactive==1?"active":"" %>"></i>领投人</span>
         </div>
     </section>
 	<section class="container bg">
@@ -66,7 +76,7 @@
 			</div>
 			<div class="remain">
 				<span>￥<b data-role="price"><%=ParseHelper.digitsNum(detaiModel.getUnitprice(), 0)%></b>/份</span>
-				<span>剩余<b data-role="amount"><%=detaiModel.getFenshu()-detaiModel.getRedidueFenshu()%></b>份</span>
+				<span>剩余<b data-role="amount"><%=showfen%></b>份</span>
 			</div>
 			<div class="protocol">
 				<i class="m-icon icon-approval"></i>

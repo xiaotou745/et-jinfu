@@ -173,7 +173,7 @@
 		statementType="CALLABLE">
 		{call Sp_CustomPage2015_V1(
 		' c.Id desc ',
-		' c.Id,
+		' c.Id,c.IsDel,
        c.MemberId,
        case when c.IsDel=1 THEN ''该评论已经被删除'' ELSE c.Content END  AS Content,
        c.IsReply,

@@ -174,10 +174,10 @@
                                       	<%=commentList.get(i).getContent()%>
                                       	</span>
                                       	<%
-                                      	if(myid==commentList.get(i).getMemberid())
+                                      	if(myid==commentList.get(i).getMemberid()&&commentList.get(i).getIsdel()!=1)
                                       	{
                                       		%>
-                                      		<a class="ul-del" href="###">删除</a>
+                                      		<a class="ul-del" href="#">删除</a>
                                       		<%
                                       	}
                                       	%>
