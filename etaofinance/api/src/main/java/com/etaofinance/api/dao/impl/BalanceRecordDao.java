@@ -43,8 +43,8 @@ public class BalanceRecordDao extends DaoBase implements IBalanceRecordDao{
 
 	@Override
 	public BalanceRecord selectByPrimaryKey(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getReadOnlySqlSessionUtil().selectOne("IBalanceRecordDao.selectByPrimaryKey",id);
 	}
 
 	@Override

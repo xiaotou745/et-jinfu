@@ -193,6 +193,16 @@
                             		<%
                             	}%>
                             </ul>
+                            <%if(commentList.size()==15)
+                            {
+                            	%>
+                            	  <div class="load-more"><span>加载更多</span><i class="m-icon icon-arrow-r"></i>
+             				<span class="loader2 hide"></span>
+        					</div>
+                            	<%
+                            }
+                            %>
+                          
                         </div>
                     </div>
                 		

@@ -12,7 +12,7 @@
 	//静态资源跟地址
 	String staticResPath = PropertyUtils.getProperty("staticResourceUrl");
 	Member member=(Member)request.getAttribute("member");
-	
+	String imgurl=PropertyUtils.getProperty("ImageShowPath")+"/";
 	String levelStr=(String)request.getAttribute("levelStr");
 	String levelStr2=(String)request.getAttribute("levelStr2");
 %>
@@ -23,7 +23,7 @@
             
     <section class="container bg">
         <div class="info">
-            <a href=""><img src="<%=member.getHeadimage()%>" alt=""></a>
+            <a href=""><img src="<%=imgurl+member.getHeadimage()%>" alt=""></a>
         </div>
     </section>
     <section class="container bg">
