@@ -72,7 +72,7 @@ public class MoreController {
 		if(member!=null)
 		{
 			member=memberService.getById(member.getId());
-			if(member.getLevel()>1)//2投资人 3领头人
+			if(member.getLevel()>1)//2投资人 3领投人
 			{
 				flag=0;
 			}

@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">ID:</label>
+						<label class="col-sm-5 control-label">领投人ID:</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" name="txtId" id="txtId" onkeyup="this.value = parseInt(this.value); if (this.value=='NaN') { this.value = ''}" maxlength="10" />
 						</div>

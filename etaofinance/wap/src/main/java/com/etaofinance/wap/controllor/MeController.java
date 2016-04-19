@@ -713,6 +713,24 @@ public class MeController {
 			view2.addObject("type", "3");
 			return  view2;			
 		}	
+		
+		//未绑定银行卡 跳转
+		List<BankCard> bandCardList=bankCardService.getListByMemberId(memberId);
+		if(bandCardList==null || bandCardList.size()==0)
+		{
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "4");
+			return  view2;		
+		}		
+	    String bankname=bandCardList.get(0).getBankname();
+	    String cardno=bandCardList.get(0).getCardno();
+	    int len=cardno.length()-4;
+	    String cardnoStr="**** **** **** "+cardno.substring(len);  
+		view.addObject("bankname", bankname);	
+		view.addObject("cardnoStr", cardnoStr);
+		
 		double allowwithdrawprice=memberOther.getAllowwithdrawprice();		
 		double  WithdrawPendingAmount= withdrawformService.GetWithdrawPendingAmountByMbId(memberId);
 		view.addObject("allowwithdrawprice",allowwithdrawprice-WithdrawPendingAmount);

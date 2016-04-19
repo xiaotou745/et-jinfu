@@ -125,7 +125,7 @@ public class HomeController {
 			subList=projectSubscriptionService.getProjectLeadMember(projectid);
 		}
 		view.addObject("subList",subList);
-		//3.领头人
+		//3.领投人
 		List<ProjectMember> leadList=new ArrayList<ProjectMember>();
 		if(subList!=null)
 		{

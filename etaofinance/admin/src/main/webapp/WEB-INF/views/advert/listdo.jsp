@@ -21,7 +21,7 @@ if(list == null){
 <table class="table table-striped table-bordered table-hover dataTables-example">
 						<thead>
 							<tr>
-						<th width="5%">ID</th>
+						<th width="5%">广告ID</th>
 			<th>排序</th>
 			<th>广告标题</th>
 			<th>所属广告位</th>

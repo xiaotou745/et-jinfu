@@ -122,7 +122,7 @@ public class ProjectService implements IProjectService {
 			result.setMsg("支付密码错误,请重试!");
 			return result;
 		}
-		// 3项目预热中,购买人非领头人
+		// 3项目预热中,购买人非领投人
 		if (project.getProjectstatus() == ProjectStatus.Preheating.value()
 				&& user.getLevel() != MemberTypeEnum.LeadInvestUser.value()) {
 			result.setCode(-1);

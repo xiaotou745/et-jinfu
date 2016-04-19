@@ -20,7 +20,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">日志ID</th>
 			<th>日志内容</th>
 			<th>操作时间</th>
 			<th>操作IP</th>
