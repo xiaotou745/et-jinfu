@@ -35,7 +35,7 @@ public interface IWithdrawformService {
 	
     int updateByPrimaryKeySelective(Withdrawform record);
     
-    int Audit(long id,short status);
+    int Audit(long id,short status );
     
     double  GetWithdrawPendingAmountByMbId(Long memberId);
 }

@@ -26,6 +26,7 @@
 			<th>评论人名称</th>
 			<th>评论内容</th>
 			<th>评论时间</th>
+			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -38,6 +39,7 @@
 				<td><%=list.get(i).getUsername()%></td>
 			<td><%=list.get(i).getContent().length()>8?list.get(i).getContent().substring(0,8):list.get(i).getContent()%></td>
 			<td><%=dateFormater.format(list.get(i).getCreatetime()) %></td>	
+				<td><a href="javascript:void(0);" onclick="delComment(<%=list.get(i).getId() %>)">删除</a></td>	
 		</tr>
 		<%
 			}

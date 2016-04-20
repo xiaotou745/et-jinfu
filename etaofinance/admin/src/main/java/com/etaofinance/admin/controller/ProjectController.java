@@ -101,15 +101,10 @@ public class ProjectController {
 	public ModelAndView listDo(PagedProjectReq req) {
 
 		ModelAndView view = new ModelAndView("project/listdo");
-
 		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
-
 		req.setId(ParseHelper.ToInt(req.getId(), 0));
-
 		PagedResponse<Project> listData = projectService.queryProjectList(req);
-
 		view.addObject("listData", listData);
-
 		return view;
 	}
 
@@ -441,7 +436,22 @@ public class ProjectController {
 		return res;
 	}
 	
-	
+	/**
+	 * 删除项目交流
+	 * 
+	 * @return
+	 */
+	@RequestMapping("delcomment")
+	@ResponseBody
+	public int delcomment(Comment cmt) {
+		
+		// 删除 
+		cmt.setIsdel((byte)1);
+		
+		int res= commentService.updateByPrimaryKeySelective(cmt);		
+		
+		return res;
+	}
 	
 	/**
 	 * 修改项目融资状态 wangchao

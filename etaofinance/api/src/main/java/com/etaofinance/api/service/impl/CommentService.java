@@ -98,8 +98,12 @@ public class CommentService implements ICommentService {
 	
 	@Override
 	public int updateByPrimaryKeySelective(Comment record) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		
+		int res =0;
+		
+		res = commentDao.updateByPrimaryKeySelective(record);
+		return res;
 	}
 
 	@Override

@@ -1,11 +1,14 @@
 package com.etaofinance.admin.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.etaofinance.admin.common.UserContext;
 import com.etaofinance.api.service.inter.IBalanceRecordService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IRechargeService;
@@ -44,26 +47,18 @@ public class FinanceController {
 	 * @return
 	 */
 	@RequestMapping("buylist")
-	public ModelAndView buyList() {
-		
-		ModelAndView view = new ModelAndView("adminView");
-		
-		view.addObject("subtitle", "资金管理");
-		
-		view.addObject("currenttitle", "付款列表");
-		
-		view.addObject("viewPath", "finance/buylist");
-		
+	public ModelAndView buyList() {		
+		ModelAndView view = new ModelAndView("adminView");		
+		view.addObject("subtitle", "资金管理");		
+		view.addObject("currenttitle", "付款列表");		
+		view.addObject("viewPath", "finance/buylist");		
 		return view;
 	}
 	
 	@RequestMapping("buylistdo")
-	public ModelAndView payListDo(PagedBalancerecordReq req) {
-		
-		ModelAndView view = new ModelAndView("finance/buylistdo");
-		
-		PagedResponse<BalanceRecord> listData=balanceRecordService.getBalanceRecordList(req);
-		
+	public ModelAndView payListDo(PagedBalancerecordReq req) {		
+		ModelAndView view = new ModelAndView("finance/buylistdo");		
+		PagedResponse<BalanceRecord> listData=balanceRecordService.getBalanceRecordList(req);		
 		view.addObject("listData", listData);
 		return view;
 	}
@@ -76,25 +71,18 @@ public class FinanceController {
 	@RequestMapping("withdrawlist")
 	public ModelAndView withdrawList() {
 		
-		ModelAndView view = new ModelAndView("adminView");
-		
-		view.addObject("subtitle", "资金管理");
-		
-		view.addObject("currenttitle", "提现列表");
-		
-		view.addObject("viewPath", "finance/withdrawlist");
-		
+		ModelAndView view = new ModelAndView("adminView");		
+		view.addObject("subtitle", "资金管理");		
+		view.addObject("currenttitle", "提现列表");		
+		view.addObject("viewPath", "finance/withdrawlist");		
 		return view;
 	}
 	
 	
 	@RequestMapping("withdrawlistdo")
-	public ModelAndView withdrawListDo(PagedWithdrawReq req) {
-		
-		ModelAndView view = new ModelAndView("finance/withdrawlistdo");
-		
-		PagedResponse<Withdrawform> listData=withdrawformService.getWithdrawList(req);
-		
+	public ModelAndView withdrawListDo(PagedWithdrawReq req) {		
+		ModelAndView view = new ModelAndView("finance/withdrawlistdo");		
+		PagedResponse<Withdrawform> listData=withdrawformService.getWithdrawList(req);		
 		view.addObject("listData", listData);
 		return view;
 	}
@@ -105,54 +93,48 @@ public class FinanceController {
 	 * @return
 	 */
 	@RequestMapping("rechargelist")
-	public ModelAndView rechargeList() {
-		
-		ModelAndView view = new ModelAndView("adminView");
-		
-		view.addObject("subtitle", "资金管理");
-		
-		view.addObject("currenttitle", "充值列表");
-		
-		view.addObject("viewPath", "finance/rechargelist");
-		
+	public ModelAndView rechargeList() {		
+		ModelAndView view = new ModelAndView("adminView");		
+		view.addObject("subtitle", "资金管理");		
+		view.addObject("currenttitle", "充值列表");		
+		view.addObject("viewPath", "finance/rechargelist");		
 		return view;
 	}
 	
 	
 	@RequestMapping("rechargelistdo")
-	public ModelAndView rechargeListDo(PagedRechargeReq req) {
-		
-		ModelAndView view = new ModelAndView("finance/rechargelistdo");
-		
-		PagedResponse<Recharge> listData=rechargeService.getRechargeList(req);
-		
-		view.addObject("listData", listData);
-		
+	public ModelAndView rechargeListDo(PagedRechargeReq req) {		
+		ModelAndView view = new ModelAndView("finance/rechargelistdo");		
+		PagedResponse<Recharge> listData=rechargeService.getRechargeList(req);		
+		view.addObject("listData", listData);		
 		return view;
-	}
+	}	
 	
-	
-	
-	
-	@RequestMapping("refusewithdraw")
-	@ResponseBody
-	public int refuse(Long id) {
-		
-		
-		int ires= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
-		
-		return ires;
-		
-	}
-	
-	
+	/**
+	 * 提现审核通过
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月20日16:21:28
+	 * @return
+	 */
 	@RequestMapping("agreewithdraw")
 	@ResponseBody
-	public int agree(Long id) {
-		
-
-		int ires = withdrawformService.Audit(id,	(short) WithdrawStatus.Pass.value());
-
+	public int agree(HttpServletRequest request,Long id) {		
+		int ires = withdrawformService.Audit(id,(short) WithdrawStatus.Pass.value());
 		return ires;
 	}
+	
+	/**
+	 * 提现审核拒绝
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年4月20日16:21:58
+	 * @return
+	 */
+	@RequestMapping("refusewithdraw")
+	@ResponseBody
+	public int refuse(HttpServletRequest request,Long id) {			
+		int ires= withdrawformService.Audit(id, (short)WithdrawStatus.Refuse.value());
+		return ires;		
+	}	
 }

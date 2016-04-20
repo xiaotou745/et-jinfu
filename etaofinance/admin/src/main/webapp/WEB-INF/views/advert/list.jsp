@@ -53,14 +53,7 @@ width: 100%;
 							</div>
 						</div>
 					</div>
-				</div>				
-					<div class="col-lg-3">
-						<div class="form-group">
-							<label class="col-sm-5 control-label"></label>
-							<div class="col-sm-7">							
-   						</div>
-						</div>
-					</div>
+				</div>		
 					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="col-sm-5 control-label"></label>
@@ -70,7 +63,6 @@ width: 100%;
 						</div>
 					</div>
 				</div>
-
 			    <div class="row">
 						<div class="col-lg-3">
 						<button type="button" class="btn btn-w-m btn-primary" id=btnSearch
@@ -84,7 +76,9 @@ width: 100%;
 			   </div>
 	</div>	
 </div>
-<div id="content"></div>
+
+<div id="content">
+</div>
 
 <div tabindex="-1" class="modal inmodal" id="divadd"
 	role="dialog" aria-hidden="true" style="display: none;">
@@ -98,34 +92,28 @@ width: 100%;
 			</div>
 			<small class="font-bold">
 				<div class="modal-body">
-					<fieldset>
-            <br>
-            <div class="control-group">  
+	
                 <label>广告标题：</label><input  name="txtATitle" id="txtATitle" type="text" >
-            </div>
-            <div class="control-group">  
+      
+   
                 <label>链接地址：</label><input  name="txtAUrl" id="txtAUrl" type="text" >
-            </div>
-            <div class="control-group">  
+    
+  
                 <label>所属广告位：</label>
                 <%=HtmlHelper.getSelect("sltAType", EnumHelper.GetEnumItems(ADVertType.class), "desc", "value",null,"-1","全部") %>
-             </div>            
-              <div class="control-group">  
+         
+      
                 <label>图片地址：</label><input  name="txtAImageUrl" id="txtAImageUrl" type="text" >
-            </div>
-            <div class="control-group">  
+        
+  
                 <label>是否启用：</label>      
-  			 <select name="radAstatus"
-				 class="form-control m-b" id="radAstatus" >				
+  			 <select name="radAstatus"	 class="form-control m-b" id="radAstatus" >				
 					<option value="1">启用</option>
 					<option value="0">不启用</option>
 			</select> 
-            </div>
-           <div class="control-group">  
+       
                 <label>排序：</label><input  name="txtASortNo" id="txtASortNo" type="text" >
-            </div>           
-        </fieldset>
-				</div>
+
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button" id="btnAdd" onclick="saveAdd()">保存</button>
@@ -147,36 +135,27 @@ width: 100%;
 			</div>
 			<small class="font-bold">
 				<div class="modal-body">
-					<fieldset>
-            <br>                
-            <div class="control-group">  
+				
                 <label>广告标题：</label><input  name="txtETitle" id="txtETitle" type="text" >
+                
                 <input  name="txtEId" id="txtEId" type="hidden">
-            </div>
-            <div class="control-group">  
                 <label>链接地址：</label><input  name="txtEUrl" id="txtEUrl" type="text" >
-            </div>
-            <div class="control-group">  
+    
+      
                 <label>所属广告位：</label><%=HtmlHelper.getSelect("sltEType", EnumHelper.GetEnumItems(ADVertType.class), "desc", "value",null,"-1","全部") %>
-            </div>            
-              <div class="control-group">  
+        
+         
                 <label>图片地址：</label><input  name="txtEImageUrl" id="txtEImageUrl" type="text" >
-            </div>
-            <div class="control-group">  
+         
                 <label>是否启用：</label>
                 <select name="radEstatus"
 				 class="form-control m-b" id="radEstatus" >				
 					<option value="1">启用</option>
 					<option value="0">不启用</option>
 			</select> 
-            </div>
-           <div class="control-group">  
+    
                 <label>排序：</label><input  name="txtESortNo" id="txtESortNo" type="text" >
-            </div>           
             
-            
-        </fieldset>
-				</div>
 				<div class="modal-footer">
 					<button class="btn btn-white" type="button" data-dismiss="modal">关闭</button>
 					<button class="btn btn-primary" type="button" id="btnEdit" onclick="saveModify()">保存</button>
