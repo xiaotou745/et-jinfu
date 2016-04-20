@@ -76,4 +76,9 @@ public interface IProjectDao {
 	 * @return
 	 */
 	int changeFlowNum(Long poid,int num);
+	/**
+	 * 定时服务
+	 * @return
+	 */
+	int QuartzServie();
 }

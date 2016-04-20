@@ -137,5 +137,12 @@ return getMasterSqlSessionUtil().update("IProjectDao.updateByPrimaryKey", record
 		return getMasterSqlSessionUtil().update("IProjectDao.changeFlowNum",map);
 
 	}
+	/**
+	 * 定时服务.
+	 */
+	@Override
+	public int QuartzServie() {
+		return getMasterSqlSessionUtil().update("IProjectDao.QuartzServie");
+	}
 	
 }

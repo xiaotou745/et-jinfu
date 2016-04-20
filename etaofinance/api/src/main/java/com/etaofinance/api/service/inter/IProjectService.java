@@ -83,4 +83,10 @@ public interface IProjectService {
 	 * 获取数据统计汇总
 	 */
 	List<DataStatistics> getDataStatistics();
+	/**
+	 * 更改状态的定时服务.
+	 * 茹化肖
+	 * @return
+	 */
+	int QuartzServie();
 }

@@ -457,4 +457,11 @@ public class ProjectService implements IProjectService {
 		
 		return projectDao.updateByPrimaryKeySelective(record);
 	}
+	/**
+	 * 定时服务 茹化肖
+	 */
+	@Override
+	public int QuartzServie() {
+		return projectDao.QuartzServie();
+	}
 }
