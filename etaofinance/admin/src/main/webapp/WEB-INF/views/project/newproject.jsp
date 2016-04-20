@@ -309,8 +309,8 @@ String city_region = (String) request.getAttribute("city_region");
 							<div class="form-group">
 								<label class="col-sm-5 control-label">详细地址: </label>
 								<div class="col-sm-7">
-									<input type="text" maxlength="140" class="form-control"
-										name="projectAddress" id="projectAddress" value="" />
+									<input type="text" maxlength="240" class="form-control"
+										name="projectAddress" id="projectAddress" value=""  />
 								</div>
 							</div>
 						</div>
@@ -497,12 +497,17 @@ $(function(){
 	$('#projectFenShu').blur(function(){
 		 FenshuJisuan(2);
 	});
+	
+
 });
 
 //校验手机号会员ID
 $('#memberPhone').blur(function(){
 	validatePhoneNo();
 });
+
+
+
 
 
 function validatePhoneNo(){

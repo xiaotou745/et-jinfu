@@ -43,7 +43,7 @@
 				</div>
 				<div class="col-lg-3">
 					<div class="form-group">
-						<label class="col-sm-5 control-label">是否支付:</label>
+						<label class="col-sm-5 control-label">充值状态:</label>
 						<div class="col-sm-7">
 							<%=HtmlHelper.getSelect("rechargeStatus", EnumHelper.GetEnumItems(RechargeStatus.class), "desc", "value",null,"-2","全部") %>
 						</div>

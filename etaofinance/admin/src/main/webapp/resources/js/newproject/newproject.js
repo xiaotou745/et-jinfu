@@ -99,9 +99,9 @@ function SaveChek() {
         return false;
     }
     //详细地址
-    if (IsEmpty($('#projectAddress').val())) {
-        alert('详细地址不能为空!');
-        $('#projectAddress').focus();
+    if (IsEmpty($('#projectAddress').val()) || 30 <$('#projectAddress').val().length) {
+        alert('详细地址不能为空,不能超过30个字!');
+        $('#projectAddress').val('').focus();
         return false;
     }
     //上传图片验证.暂时只验证 项目图片.waptu片

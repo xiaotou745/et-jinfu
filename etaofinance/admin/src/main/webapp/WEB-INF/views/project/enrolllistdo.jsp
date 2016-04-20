@@ -7,6 +7,7 @@
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
 <%@page import="com.etaofinance.entity.ProjectEnroll"%>
 <%@page import="java.util.List"%>
+<%@page import="com.etaofinance.core.util.Config"%>
 <%
 	String basePath = PropertyUtils.getProperty("java.admin.url");
 %>
@@ -15,7 +16,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">项目报名ID</th>
 			<th>项目名称</th>
 			<th>联系人</th>
 			<th>电话</th>
@@ -47,7 +48,7 @@
 			<td><%=list.get(i).getOwnedindustry()%></td>
 			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(),
 						"")%></td>
-			<td><a href="<%=list.get(i).getBusinessplanurl()%>" target="_blank">下载</a></td>
+			<td><a href="<%=Config.ImgShowUrl+"/"+list.get(i).getBusinessplanurl()%>" target="_blank">下载</a></td>
 		</tr>
 		<%
 			}

@@ -19,7 +19,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">会员ID</th>
 			<th>用户名</th>
 			<th>手机号</th>
 			<th>邮箱</th>

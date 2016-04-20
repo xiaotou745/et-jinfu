@@ -148,30 +148,41 @@ $(function(){
 		window.open('<%=basePath%>/project/newproject');
 		});
 	});
+	
 	var jss = {
 		search : function(currentPage) {
 			var data = {
 				currentPage : currentPage,
-				"id" : $("#ProjectId").val().trim() == "" ? "0" : $(
-						"#ProjectId").val().trim(),
+				"id" : $("#ProjectId").val().trim() == "" ? "0" : $("#ProjectId").val().trim(),
 				"projectStatus" : $("#projectStatus").val(),
 				"projectName" : $("#ProjectName").val()
 			};
+			
 			$.post("<%=basePath%>/project/listdo",data,function(d){
 				$("#content").html(d);
 			});
 		}
 	}
 jss.search(1);
+	
 $("#btnSearch").click(function(){
 	jss.search(1);
 });
+
+
+
+
+
+
+
+
 //不通过时，弹出窗口
 function showRefuseDiv(projectid){
 	$("#curProjectId").val(projectid);
 	$("#txtRefuseReason").val("");
 	$("#refuseDiv").modal("show");
 }
+
 //拒绝确认按钮操作
 $("#btnRefuseConfirm").click(function(){
 	var url="<%=basePath%>/project/audit";
@@ -181,6 +192,8 @@ $("#btnRefuseConfirm").click(function(){
 		alert("请输入备注信息！")
 		return;
 	} 
+	
+	
 	var paramaters = {
 		"projectId" : $("#curProjectId").val(),
 		"remark" : remark,
@@ -208,12 +221,16 @@ $("#btnRefuseConfirm").click(function(){
 		}
 	});
 });
+
+
 //融资失败操作
 function investFail(projectid){
 	$('#investFailDiv').on('show.bs.modal',function(){
 		$(this).attr('data-projectid',projectid);
 	}).modal('show');
 }
+
+
 $("#investFailConfirm").click(function(){
 	var url="<%=basePath%>/project/modifyprojectstatus";	  
 	var paramaters = {
@@ -239,12 +256,16 @@ $("#investFailConfirm").click(function(){
 		}
 	});
 });
+
+
 //隐藏项目
 function hideProject(projectid){
 	$('#hideProjectDiv').on('show.bs.modal',function(){
 		$(this).attr('data-projectid',projectid);
 	}).modal('show');
 }
+
+
 $("#hideProjectConfirm").click(function(){
 	var url="<%=basePath%>/project/isshelf";	  
 	var paramaters = {
@@ -270,12 +291,72 @@ $("#hideProjectConfirm").click(function(){
 		}
 	});
 });
+
+
 //显示项目
 function showProject(projectid){
 	$('#showProjectDiv').on('show.bs.modal',function(){
 		$(this).attr('data-projectid',projectid);
 	}).modal('show'); 
 }
+
+
+
+function celGreenHand(proId){
+	if(confirm('确定取消新手专享吗？')){
+	var url="<%=basePath%>/project/setgreenhand";	  
+		var paramaters = {
+			"id" : proId,
+			"isNovice":0
+		};
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : paramaters,
+			success : function(result) {
+				if(result==1){
+					alert("取消成功！");
+					jss.search(1);
+				}else{
+					alert("取消失败！");
+				}
+			},
+			error : function(e) {
+				alert("取消失败！");
+			}
+		});
+	}
+}
+
+function setGreenHand(proId){
+	if(confirm('确定设置新手专享吗？')){
+		var url="<%=basePath%>/project/setgreenhand";	  
+		
+		var paramaters = {
+			"id" : proId,
+			"isNovice":"1"
+		};
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : paramaters,
+			success : function(result) {
+				if(result==1){
+					alert("设置成功！");
+					jss.search(1);
+				}else{
+					alert("设置失败！");
+				}
+			},
+			error : function(e) {
+				alert("设置失败！");
+			}
+		});
+	}
+}
+
+
+
 $("#showProjectConfirm").click(function(){
 	var url="<%=basePath%>/project/isshelf";	  
 	var paramaters = {

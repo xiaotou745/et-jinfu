@@ -17,13 +17,13 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">充值ID</th>
 			<th>订单号</th>
 			<th>姓名</th>
 			<th>金额</th>
 			<th>支付方式</th>
 			<th>创建时间</th>
-			<th>是否支付</th>
+			<th>充值状态</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -16,7 +16,7 @@
 	class="table table-striped table-bordered table-hover dataTables-example">
 	<thead>
 		<tr>
-			<th width="5%">ID</th>
+			<th width="5%">提现ID</th>
 			<th>姓名</th>
 			<th>提现金额</th>
 			<th>提现银行</th>
@@ -26,7 +26,7 @@
 			<th>到账时间</th>
 			<th>拒绝理由</th>
 			<th>状态</th>
-			<th>审核操作</th>
+			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -64,7 +64,15 @@
 				<a href="javascript:void(0)" onclick="hideProject(<%=list.get(i).getId()%>)">隐藏</a>
 			<%  } else {%>			 
 				<a href="javascript:void(0)" onclick="showProject(<%=list.get(i).getId()%>)">显示</a>
-			<%}} %>						 
+			<%}} %> <%
+ 	if (list.get(i).getIsNovice() == 1) {
+ %> <a href="javascript:void(0)"
+				onclick="celGreenHand(<%=list.get(i).getId()%>)">取消新手专享</a> <%
+ 	} else {
+ %> <a href="javascript:void(0)"
+				onclick="setGreenHand(<%=list.get(i).getId()%>)">设为新手专享</a> <%
+ 	}
+ %>
 			</td>
 		</tr>
 		<%

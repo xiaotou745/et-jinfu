@@ -88,7 +88,12 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public PagedResponse<Project> queryProjectList(PagedProjectReq req) {
-		return projectDao.queryProjectList(req);
+		
+		PagedResponse<Project> res = null;
+		
+		res= projectDao.queryProjectList(req);
+		
+		return res;
 	}
 
 	/**
@@ -122,7 +127,7 @@ public class ProjectService implements IProjectService {
 			result.setMsg("支付密码错误,请重试!");
 			return result;
 		}
-		// 3项目预热中,购买人非领头人
+		// 3项目预热中,购买人非领投人
 		if (project.getProjectstatus() == ProjectStatus.Preheating.value()
 				&& user.getLevel() != MemberTypeEnum.LeadInvestUser.value()) {
 			result.setCode(-1);
@@ -443,5 +448,13 @@ public class ProjectService implements IProjectService {
 	@Override
 	public List<DataStatistics> getDataStatistics() {
 		return projectDao.getDataStatistics();
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Project record) {
+	
+		
+		
+		return projectDao.updateByPrimaryKeySelective(record);
 	}
 }

@@ -45,4 +45,15 @@ public class RoleInfoService implements IRoleInfoService {
 		return roleInfoDao.selectList();
 	}
 
+	@Override
+	public RoleInfo getRoleInfoByName(String roleName) {
+	
+		
+		RoleInfo role = null;
+		
+		role = roleInfoDao.getRoleInfoByName(roleName);
+		
+		return role;
+	}
+
 }

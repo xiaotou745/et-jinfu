@@ -37,6 +37,8 @@ public interface IProjectService {
      */
     HttpResultModel<Object>  subproject(SubProjectReq req);
     
+    
+    int updateByPrimaryKeySelective(Project record);
 	/**
 	 * 我发起的项目
 	 * @param 
