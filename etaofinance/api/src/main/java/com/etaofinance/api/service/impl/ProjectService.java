@@ -150,6 +150,16 @@ public class ProjectService implements IProjectService {
 			result.setMsg("您尚未进行投资人认证,请先进行投资人认证!");
 			return result;
 		}
+		//新手专享判断
+		if(project.getIsNovice()==1)
+		{
+			if(projectSubscriptionDao.isMyHave(project.getId(), user.getId())>0)
+			{
+				result.setCode(-1);
+				result.setMsg("新手专享项目只能认购一次!");
+				return result;
+			}
+		}
 
 		if (req.getIsLead() == 1) {
 			// 领投人

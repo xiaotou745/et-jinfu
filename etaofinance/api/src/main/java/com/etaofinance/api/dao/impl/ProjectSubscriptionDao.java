@@ -1,6 +1,8 @@
 package com.etaofinance.api.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,7 @@ import com.etaofinance.entity.domain.ProjectSubscriptionDM;
 import com.etaofinance.entity.req.PagedADVertReq;
 import com.etaofinance.entity.req.PagedProjectSubReq;
 import com.etaofinance.entity.req.ProSubInvestReq;
+import com.mongodb.util.Hash;
 @Repository
 public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscriptionDao{
 
@@ -82,6 +85,16 @@ public class ProjectSubscriptionDao extends DaoBase implements IProjectSubscript
 	public List<ProjectMember> getProjectLeadMember(Long projectId) {
 		return getReadOnlySqlSessionUtil().selectList("IProjectSubscriptionDao.getProjectLeadMember",projectId);
  
+	}
+	/**
+	 * 该项目是否已经认购
+	 */
+	@Override
+	public int isMyHave(Long pid, Long uid) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("pid", pid);
+		map.put("uid", uid);
+		return getMasterSqlSessionUtil().selectOne("IProjectSubscriptionDao.isMyHave",map);
 	}	
 
 }

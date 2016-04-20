@@ -257,4 +257,9 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
 WHERE p.ProjectId=#{projectId,jdbcType=BIGINT}
   ORDER BY p.Id asc    
   </select>
+  <!-- 查询项目是否已经认购 -->
+  <select id="isMyHave" parameterType="java.util.Map" resultType="java.lang.Integer">
+  SELECT COUNT(1) FROM projectsubscription p WHERE p.ProjectId=#{pid,jdbcType=BIGINT} AND
+  p.MemberId=#{uid,jdbcType=BIGINT} AND p.RefundStatus=0
+  </select>
 </mapper>
