@@ -657,17 +657,16 @@ function InitProvince()
 function InitProjectImg(){
 	$("#ProjectImg").hide();
 }
-//校验手机号会员ID
-$('#memberPhone').blur(function(){
-	validatePhoneNo();
-});
+
+
 function validatePhoneNo(){
     var url='<%=basePath%>/member/getmemberid';
 		var phone = $('#memberPhone').val();
 		if (phone.length == 0) {
-			//alert("请输入手机号！");
+			alert("会员手机号不能为空！");
 			return false;
 		}
+		var res = false;
 		$.post(url, {
 			'phoneno' : phone
 		}, function(d) {
@@ -675,12 +674,13 @@ function validatePhoneNo(){
 			{
 				alert('该会员不存在,请重新输入手机号!');
 				$('#memberPhone').focus();//设置焦点
-				return false;
+				res= false;
 			} else {
 				$('#memberId').val(d);
-				return true;
+				res=true;
 			}
 		});
+		return res;
 	}
 	//份额计算
 	function FenshuJisuan() {

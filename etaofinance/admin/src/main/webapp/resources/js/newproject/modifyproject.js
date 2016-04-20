@@ -21,11 +21,19 @@ function IsEmpty(n) {
 
 //保存校验
 function SaveChek() {
+	var res= validatePhoneNo();
+	 if(!res){
+		 return false;
+	 }
+		 
     if (IsEmpty($('#memberId').val()) || $('#memberId').val() == 0) {
         alert('会员手机号不能为空!');
         $('#memberId').focus();
         return false;
     }
+    
+   
+    
     if (IsEmpty($('#projectName').val())) {
         alert('项目名称不能为空!');
         $('#projectName').focus();
@@ -130,7 +138,7 @@ function SaveChek() {
     var pcode = $('#provinceCode').val();
     var ccode = $('#cityCode').val();
     var acode = $('#regionCode').val();
-    if (pcode == -1 || ccode == -1 || acode == -1) {
+    if (pcode == -1) {
         alert('请选择正确的省份,城市或区域!');
         return false;
     }

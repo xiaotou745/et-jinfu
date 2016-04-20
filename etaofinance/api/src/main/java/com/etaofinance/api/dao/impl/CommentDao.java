@@ -47,8 +47,13 @@ public class CommentDao extends DaoBase implements ICommentDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(Comment record) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		
+		int res =0;
+		
+		res = this.getMasterSqlSessionUtil().update("ICommentDao.updateByPrimaryKeySelective", record);
+		return res;
+		
 	}
 	
 	@Override
