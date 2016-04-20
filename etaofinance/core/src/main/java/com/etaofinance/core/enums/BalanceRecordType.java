@@ -10,7 +10,9 @@ public enum BalanceRecordType {
 	
 	Recharge(3,"充值"),
 	
-	Apply(4,"提现");
+	Apply(4,"提现"),
+	
+	ApplyErr(5,"提现审核拒绝退款");
 	
 
 	

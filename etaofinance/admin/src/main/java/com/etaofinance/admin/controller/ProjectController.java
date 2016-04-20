@@ -101,15 +101,10 @@ public class ProjectController {
 	public ModelAndView listDo(PagedProjectReq req) {
 
 		ModelAndView view = new ModelAndView("project/listdo");
-
 		req.setAuditStatus(ProjectAuditStatus.AuditPass.value());
-
 		req.setId(ParseHelper.ToInt(req.getId(), 0));
-
 		PagedResponse<Project> listData = projectService.queryProjectList(req);
-
 		view.addObject("listData", listData);
-
 		return view;
 	}
 

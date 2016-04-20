@@ -95,7 +95,8 @@ public class WithdrawformService implements IWithdrawformService{
 		record.setWithwardno(uuid);
 		record.setStatus((short) WithdrawformStatus.Status1.value());			 	
 		record.setAccounttype("1");
-		record.setAccountno(bankCardList.get(0).getCardno());		
+		record.setAccountno(bankCardList.get(0).getCardno());
+		record.setBankname(bankCardList.get(0).getBankname());	
 		int rowWithdraw= withdrawformDao.insertSelective(record);		
 		if(rowWithdraw<=0)
 		{
@@ -116,7 +117,7 @@ public class WithdrawformService implements IWithdrawformService{
 		balance.setMemberid(record.getMemberid());
 		balance.setWithwardid(record.getId());
 		balance.setRemark("提现流水");
-		balance.setTypeid((short) BalanceRecordType.Recharge.value());
+		balance.setTypeid((short) BalanceRecordType.Apply.value());
 		balance.setRelationno(uuid);
 		balance.setOptname(record.getCreatename());
 
@@ -181,61 +182,56 @@ public class WithdrawformService implements IWithdrawformService{
 	@Override
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public int Audit(long id, short status) {
+		Withdrawform withdraw = new Withdrawform();
+		withdraw.setId(id);
+		withdraw.setStatus(status);
 		
-//		// 1 拒绝
-//		// 1.1 update withdrawform	
-//		int updateWithdrawRes =0;
-//		
-//		Withdrawform withdraw = new Withdrawform();
-//		withdraw.setId(id);
-//		withdraw.setStatus(status);
-//		
-//		updateWithdrawRes = this.updateByPrimaryKeySelective(withdraw);
-//		
-//		if(0==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-//
-//			throw new TransactionalRuntimeException("拒绝失败");
-//		}
-//		else if(1==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-//			
-//			return 1;	
-//		}
-//		
-//		// 2 通过
-//		// 2.1 update withdrawform
-//	
-//		if(0==updateWithdrawRes){
-//			throw new TransactionalRuntimeException("通过失败");
-//		}
-//		// 2.2 insert balancerecord
-//		 // 获取 withdraw
-//		Withdrawform withdrawMd = this.getWithdrawMdById(id);
-//		
-//		BalanceRecord balance =new BalanceRecord();
-//
-//		balance.setId(null);
-//		balance.setAmount(-withdrawMd.getAmount());
-//		balance.setAfteramount(- withdrawMd.getAmount());
-//		balance.setMemberid(withdrawMd.getMemberid());
-//		balance.setRemark("提现审核");
-//		balance.setTypeid((short) BalanceRecordType.Apply.value());
-//		balance.setRelationno(withdrawMd.getWithwardno());
-//		balance.setOptname("optName");
-//		
-//		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
-//		if (0 == insertBalanceRes) {
-//
-//			throw new TransactionalRuntimeException("流水表异常");
-//		}
-//
-//		// 2.3 update memberother
-//		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdrawMd.getMemberid(),
-//				-withdrawMd.getAmount(),withdrawMd.getAmount());
-//		if (0 == updateMemberOterRes) {
-//
-//			throw new TransactionalRuntimeException("余额表异常");
-//		}
-		
+		if(status == WithdrawStatus.Pass.value())
+		{
+			int rowUpdate= this.updateByPrimaryKeySelective(withdraw);
+			if(rowUpdate<=0)
+			{
+				throw new TransactionalRuntimeException("通过失败");	
+			}		
+		}
+		else
+		{
+			int rowUpdate= this.updateByPrimaryKeySelective(withdraw);
+			if(rowUpdate<=0)
+			{
+				throw new TransactionalRuntimeException("拒绝失败");	
+			}
+			
+			Withdrawform wfModel= withdrawformDao.selectByPrimaryKey(id);
+			Long memberid=wfModel.getMemberid();	
+			String createname=wfModel.getCreatename();
+			//余额表
+			MemberOther mbOther = new MemberOther();		
+			mbOther.setMemberid(memberid);		
+			mbOther.setBalanceprice(wfModel.getAmount());			
+			int rowMemberOther = memberOtherDao.updateMemberOther(mbOther);
+			if (rowMemberOther<=0) {
+					throw new TransactionalRuntimeException("余额表异常");
+			}
+			
+			//余额流水表
+			BalanceRecord balance =new BalanceRecord();	
+			balance.setAmount(wfModel.getAmount());	
+			balance.setMemberid(memberid);
+			balance.setWithwardid(id);
+			balance.setRemark("提现审核拒绝退款");
+			balance.setTypeid((short) BalanceRecordType.ApplyErr.value());
+			balance.setRelationno(wfModel.getWithwardno());
+			balance.setOptname(createname);
+
+			int rowBalanceRecord = balanceRecordDao.insertBalanceRecord(balance);		
+			if (rowBalanceRecord<=0) {
+				throw new TransactionalRuntimeException("流水表异常");
+			}
+			
+		}
+	
+
 		return 1;
 	}
 
