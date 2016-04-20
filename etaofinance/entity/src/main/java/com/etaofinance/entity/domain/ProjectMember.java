@@ -12,7 +12,7 @@ public class ProjectMember {
 	private int isLead;
 	private Date createDate;
 	public String getMemberName() {
-		return memberName.substring(0,3)+"****";
+		return memberName;
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;

@@ -32,13 +32,15 @@
 					<div>关注时间：<%=s1%></div>
 					<i class="<%=list.get(i).getProjectStatus()==3?"fall":"win"%>"><%=ProjectStatus.getEnum(list.get(i).getProjectStatus()).desc()%></i>
 				</div>
+				<a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getProjectid()%>">
 				<div class="item">
-					<div><a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getProjectid()%>"><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></a></div>
+					<div><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></div>
 						<dl>
 							<dt><%=list.get(i).getProjectName()%></dt>
 							<dd><span>上线时间：</span><%=ParseHelper.ToDateString(list.get(i).getProjectBeginDate(),"yyyy-MM-dd")%></dd>
 						</dl>
 					</div>
+				</a>
 					<div class="offer">
 						<ul>
 							<%

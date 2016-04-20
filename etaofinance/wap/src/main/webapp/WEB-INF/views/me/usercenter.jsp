@@ -1,3 +1,4 @@
+<%@page import="com.etaofinance.core.util.ParseHelper"%>
 <%@page import="com.etaofinance.entity.Member"%>
 <%@page import="com.etaofinance.entity.MemberOther"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -41,7 +42,7 @@
         <a href="<%=basePath%>/me/accountblance">
         <div class="text">
             <div><i class="m-icon icon-money"></i>账户余额</div>
-            <span>￥<%=other.getBalanceprice() %></span>
+            <span>￥<%=ParseHelper.digitsNum(other.getBalanceprice(), 2) %></span>
             <i class="m-icon icon-arrow-r"></i>
         </div>
         </a>

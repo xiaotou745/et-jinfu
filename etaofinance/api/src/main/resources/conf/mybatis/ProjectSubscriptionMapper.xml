@@ -247,7 +247,7 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
 	</sql>
   <!-- 获取投资人-->
   <select id="getProjectLeadMember" parameterType="java.lang.Long" resultType="com.etaofinance.entity.domain.ProjectMember">
-    SELECT m.UserName AS membername,
+    SELECT m.TrueName AS membername,
     p.Amount,
     m.HeadImage AS headimg,
     p.IsLead,

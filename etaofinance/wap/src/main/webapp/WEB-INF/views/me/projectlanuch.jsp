@@ -32,13 +32,15 @@
 							<span></span>
 							<i class="<%=list.get(i).getProjectstatus()==3?"fall":"" %>"><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></i>
 						</div>
+						<a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getId()%>">
 						<div class="item">
-							<div><a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getId()%>"><img src="<%=imgurl+list.get(i).getProjectimage()%>" alt=""></a></div>
+							<div><img src="<%=imgurl+list.get(i).getProjectimage()%>" alt=""></div>
 							<dl>
 								<dt><%=list.get(i).getProjectname()%></dt>
 								<dd><span>融资进度：</span>已完成<%=list.get(i).getSchedule()%>%</dd>
 							</dl>
 						</div>
+						</a>
 					</section>
             		<%
             	}

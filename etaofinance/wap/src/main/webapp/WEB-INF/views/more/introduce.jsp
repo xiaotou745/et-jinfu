@@ -36,7 +36,7 @@
 			if(flag==1)
 			{
 				%>
-				<a href="<%=basePath%>/me/certificationinvestor"><button disabled="disabled">认证跟投人</button></a>
+				<a href="<%=basePath%>/me/certificationinvestor"><button >认证跟投人</button></a>
 				<% 
 			}
 			%>

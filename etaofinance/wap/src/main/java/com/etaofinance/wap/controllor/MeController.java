@@ -833,7 +833,7 @@ public class MeController {
 	public ModelAndView paymanagement() 
 	{
 		ModelAndView view= new ModelAndView("wapView");
-		view.addObject("currenttitle", "提现");
+		view.addObject("currenttitle", "支付管理");
 		view.addObject("viewPath", "me/paymanagement");
 		
 		long memberId= UserContext.getCurrentContext(request).getUserInfo().getId();

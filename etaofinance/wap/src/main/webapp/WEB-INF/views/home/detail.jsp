@@ -238,7 +238,7 @@
                         		{
                         			%>
                         			<li>
-                                	<p><%=subList.get(i).getMemberName()%></p>
+                                	<p><%=subList.get(i).getMemberName().substring(0,2)+"****"%></p>
                                 	<%=subList.get(i).getIsLead()==1?"<p class=\"head-list-one\">领投人</p>":"<p></p>"%>
                                 	<p>认投金额:<b>￥<%=subList.get(i).getAmount() %></b>
                                 	<span><%=subList.get(i).getCreateDate()%></span></p>

@@ -30,14 +30,16 @@ for(int i=0;i<list.size();i++)
 <span><%=list.get(i).getRefundstatus()==1?"已退款":""%></span>
 <i class="<%=list.get(i).getProjectStatus()==5?"fall":""%>"><%=ProjectStatus.getEnum(list.get(i).getProjectStatus()).desc()%></i>
 </div>
+<a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getProjectid()%>">
 <div class="item">
-<div><a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getProjectid()%>"><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></a></div>
+<div><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></div>
 <dl>
 	<dt><%=list.get(i).getProjectName()%></dt>
 	<dd><span>认购金额：</span><%=list.get(i).getAmount()%></dd>
 	<dd><span>认购时间：</span><%=ParseHelper.ToDateString(list.get(i).getCreatetime())%></dd>
 </dl>
 </div>
+</a>
 <%
 if(list.get(i).getRefundstatus()==Short.valueOf("1"))
 	{%>

@@ -23,7 +23,7 @@
 		<section class="container bg top-gap">
 			<div class="label-input">
 				<label>项目名称</label>
-				<input type="text" placeholder="请填写项目标题" name="title" data-role="title"/>
+				<input type="text" placeholder="请填写项目标题" name="title" data-role="title" maxlength="15"/>
 			</div>
 			<div class="label-select" data-role='industryType'>
 				<label>项目所在行业</label>
@@ -41,25 +41,25 @@
 		</section>
 		<section class="container">
 			<div>
-				或者直接将您的融资计划书发送至：xxxx@etao.cn，我们审核通过后，会及时与您联系。
+				或者直接将您的融资计划书发送至：xiangmu@etao.cn，我们审核通过后，会及时与您联系。
 			</div>
 		</section>
 		<section class="container bg">
 			<div class="label-input">
 				<label>联系人</label>
-				<input type="text" name="contacts" data-role="contacts" value="<%=name%>"/>
+				<input type="text" name="contacts" data-role="contacts" value="<%=name%>" maxlength="10"/>
 			</div>
 		</section>
 		<section class="container bg">
 			<div class="label-input">
 				<label>联系电话</label>
-				<input type="text" name="phoneno" data-role="phoneno" value="<%=phone%>"/>
+				<input type="text" name="phoneno" data-role="phoneno" value="<%=phone%>"maxlength="12"/>
 			</div>
 		</section>
 		<section class="container bg">
 			<div class="label-input">
 				<label>联系邮箱</label>
-				<input type="text" name="email" data-role="email" value="<%=email%>"/>
+				<input type="text" name="email" data-role="email" value="<%=email%>"maxlength="30"/>
 			</div>
 		</section>
 		<section class="container top-gap">

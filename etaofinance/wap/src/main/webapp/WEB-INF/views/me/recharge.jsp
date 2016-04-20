@@ -31,18 +31,19 @@
 						<div>推荐有银联卡的用户使用</div>
 					</div>
 				</div>
-				<i class="select"></i>
-			</div>
-			<div class="content top-line">
-				<div class="des-wrap">
-					<i class="wallet"></i>
-					<div class="des">
-						<div>易淘钱包</div>
-						<div>推荐有易淘钱包账号的用户使用</div>
-					</div>
-				</div>
 				<span class="select active"></span>
+<!-- 				<i class="select"></i> -->
 			</div>
+<!-- 			<div class="content top-line"> -->
+<!-- 				<div class="des-wrap"> -->
+<!-- 					<i class="wallet"></i> -->
+<!-- 					<div class="des"> -->
+<!-- 						<div>易淘钱包</div> -->
+<!-- 						<div>推荐有易淘钱包账号的用户使用</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<span class="select active"></span> -->
+<!-- 			</div> -->
 		</div>
 	</section>
 	<section class="container top-gap">
