@@ -57,6 +57,43 @@ public class FinanceControllor {
 	HttpServletRequest request;
 	
 	/**
+	 * 充值
+	 * @param recharge
+	 * @return
+	 */
+	@RequestMapping("recharge")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<Object> recharge(@RequestBody Recharge record)
+	{
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
+		record.setMemberid(memberid);	
+		record.setCreatename(createname);	
+		return	rechargeService.recharge(record);
+		
+	}
+	
+	/**
+	 * 提现
+	 * @param 
+	 * @author hulingbo
+	 * @date 2016年3月29日15:58:02
+	 * @return
+	 */
+	@RequestMapping("/createwithdrawform")
+	@ResponseBody
+	@RequireLogin
+	public HttpResultModel<Object> createWithdrawform(@RequestBody Withdrawform record)
+	{		
+		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
+		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
+		record.setMemberid(memberid);
+		record.setCreatename(createname);
+		return withdrawformService.create(record);
+	}
+	
+	/**
 	 * 获取账户流水
 	 * @param 
 	 * @author hulingbo
@@ -88,25 +125,6 @@ public class FinanceControllor {
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
 		record.setMemberId(memberid);	
 		return balanceRecordService.selectBRDetail(record);
-	}
-	
-	/**
-	 * 提现
-	 * @param 
-	 * @author hulingbo
-	 * @date 2016年3月29日15:58:02
-	 * @return
-	 */
-	@RequestMapping("/createwithdrawform")
-	@ResponseBody
-	@RequireLogin
-	public HttpResultModel<Object> createWithdrawform(@RequestBody Withdrawform record)
-	{		
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
-		record.setMemberid(memberid);
-		record.setCreatename(createname);
-		return withdrawformService.create(record);
 	}
 	
 	/**
@@ -144,24 +162,7 @@ public class FinanceControllor {
 	}
 	
 	
-	/**
-	 * 充值
-	 * @param recharge
-	 * @return
-	 */
-	@RequestMapping("recharge")
-	@ResponseBody
-	@RequireLogin
-	public HttpResultModel<Object> recharge(@RequestBody Recharge record)
-	{
-		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
-		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
-		record.setMemberid(memberid);	
-		record.setCreatename(createname);	
-		return	rechargeService.recharge(record);
-		
-	}
-	
+
 
 	
 	

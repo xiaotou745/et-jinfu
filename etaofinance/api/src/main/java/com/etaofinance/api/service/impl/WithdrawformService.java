@@ -115,7 +115,7 @@ public class WithdrawformService implements IWithdrawformService{
 		balance.setAmount(-record.getAmount());	
 		balance.setMemberid(record.getMemberid());
 		balance.setWithwardid(record.getId());
-		balance.setRemark("充值流水");
+		balance.setRemark("提现流水");
 		balance.setTypeid((short) BalanceRecordType.Recharge.value());
 		balance.setRelationno(uuid);
 		balance.setOptname(record.getCreatename());
