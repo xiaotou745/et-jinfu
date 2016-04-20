@@ -33,7 +33,6 @@
 		showfen=detaiModel.getPreheatmaxfenshu()-detaiModel.getRediduePreheatMaxFenShu();
 	}else
 	{
-		
 		showfen=detaiModel.getFenshu()-detaiModel.getRedidueFenshu();
 	}
 

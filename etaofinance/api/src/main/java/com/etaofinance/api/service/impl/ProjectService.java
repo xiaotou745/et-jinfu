@@ -108,7 +108,7 @@ public class ProjectService implements IProjectService {
 	 * 认购项目 茹化肖
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	@Transactional(rollbackFor = Exception.class, timeout = 300)
 	public HttpResultModel<Object> subproject(SubProjectReq req) {
 		HttpResultModel<Object> result = new HttpResultModel<Object>();
 		Member user = memberDao.selectById(req.getUserId());
@@ -243,8 +243,7 @@ public class ProjectService implements IProjectService {
 		if (req.getIsLead() == 1)// 领投
 		{
 			// 已购买的份数加上新的份数
-			updateProject.setRediduePreheatMaxFenShu(p
-					.getRediduePreheatMaxFenShu() + req.getQuantity());
+			updateProject.setRediduePreheatMaxFenShu(p.getRediduePreheatMaxFenShu() + req.getQuantity());
 		}
 		int res4 = projectDao.updateByPrimaryKeySelective(updateProject);
 		if (res1 != 1 || res2 != 1 || res3 != 1 || res4 != 1)// 每个操作都应该只有一条影响

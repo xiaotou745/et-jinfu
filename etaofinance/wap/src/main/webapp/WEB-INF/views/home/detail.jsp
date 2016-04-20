@@ -275,15 +275,18 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >我要领投</button></a><% 
 				 
-			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
+			}else if(detaiModel.getProjectstatus()==2&&isLead==0){
+				//预热加非领头人
+				%><a href="#"><button class="two-you" disabled="disabled">开始时间<%=ParseHelper.ToDateString(detaiModel.getStarttime(),"yyyy-MM-dd")%></button></a><% 
+			}else if(detaiModel.getProjectstatus()==3)
 			{//购买中 +投资人
 				%><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
-			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
-			{//预热中+投资中+非投资人
-				%><a href="<%=basePath%>/me/usercenter"><button >认证</button></a><% 
-			}
+			}else if(detaiModel.getProjectstatus()==4)
+			{//项目结束
+				%><a href="#"><button class="two-me" disabled="disabled">项目结束</button></a><% 
+			}	
 			%>        
          	</div>
     </footer>
