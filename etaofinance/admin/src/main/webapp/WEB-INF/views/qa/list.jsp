@@ -52,7 +52,6 @@ width: 100%;
 							</div>
 						</div>
 					</div>
-				</div>				
 					<div class="col-lg-3">
 						<div class="form-group">
 							<label class="col-sm-5 control-label"></label>
@@ -60,18 +59,11 @@ width: 100%;
    						</div>
 						</div>
 					</div>
-					<div class="col-lg-3">
-						<div class="form-group">
-							<label class="col-sm-5 control-label"></label>
-							<div class="col-sm-7">
-							  
-							</div>
-						</div>
-					</div>
+				
 				</div>
 
 			    <div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-12">
 						<button type="button" class="btn btn-w-m btn-primary" id=btnSearch
 							style="margin-left: 35px;height:30px;">查询</button>
 								<button type="button" class="btn btn-w-m btn-primary" id="add"  onclick="showAdd()"
@@ -83,6 +75,10 @@ width: 100%;
 			   </div>
 	</div>	
 </div>
+
+
+
+
 <div id="content"></div>
 
 <div tabindex="-1" class="modal inmodal" id="divadd"
@@ -171,6 +167,7 @@ width: 100%;
 	</div> 
 </div>
 
+<input type="hidden" value="" id="txtEId" />
 	<script>		
 	var jss={
 			search:function(currentPage){	
@@ -197,6 +194,7 @@ width: 100%;
 	});		
 
 	function showAdd(){ 
+        $('#txtEId').val('');
         $('#txtAQuestion').val('');
         $('#txtAAnswer').val('');      
         $('#txtASortNo').val('0');         
@@ -243,10 +241,11 @@ width: 100%;
 		var txtEAnswer= $('#txtEAnswer').val().trim();	
 		var radEIsDel= $('#radEIsDel').val().trim();		
 		var txtESortNo= $('#txtESortNo').val().trim();		
-	   
+		   var id=$('#txtEId').val().trim();
 
 
 	    var paramaters = {
+	    		"id":id,
                 "question": txtEQuestion.trim(),
                 "answer": txtEAnswer.trim(),
                 "isdel": radEIsDel.trim(),                

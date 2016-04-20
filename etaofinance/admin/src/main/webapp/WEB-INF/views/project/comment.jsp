@@ -4,6 +4,10 @@
 <%@ page import="com.etaofinance.core.util.EnumHelper"%>
 <%@ page import="com.etaofinance.core.enums.MemberTypeEnum"%>
 <%@page import="com.etaofinance.core.util.PropertyUtils"%>
+<%
+	String basePath =PropertyUtils.getProperty("java.admin.url");
+%>
+
 <div class="wrapper wrapper-content animated fadeInRight form-horizontal">
 	<div class="row">
 		<div class="col-lg-12">
@@ -39,7 +43,7 @@
 			</div>
 			<div class="row">
 			<div class="col-lg-2">
-					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 925px;">查询</button>
+					<button type="button" class="btn btn-w-m btn-primary" id="btnSearch" style="margin-left: 62px;">查询</button>
 				</div>
 			</div>
 		</div>
@@ -91,4 +95,20 @@ var GetQueryString = function(name) {
 	$("#btnSearch").click(function(){
 		jss.search(1);
 	});
+	
+	function delComment(commentId){
+		var data = {
+				"id":commentId
+		};
+		$.post('<%=basePath%>/project/delcomment/',data,function(res){
+			if(0 < res){
+				alert('删除成功！');
+				jss.search(1);
+			
+			}else{
+				alert('删除失败！');
+			}
+		})
+		
+	}
 </script>

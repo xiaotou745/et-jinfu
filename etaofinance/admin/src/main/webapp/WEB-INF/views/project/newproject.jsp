@@ -135,7 +135,7 @@ String city_region = (String) request.getAttribute("city_region");
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">发起者会员手机号: </label>
 								<div class="col-sm-6">
@@ -159,31 +159,31 @@ String city_region = (String) request.getAttribute("city_region");
 					</div>
 					<div class="row">
 
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">项目类型: </label>
-								<div class="col-sm-6">
-									<input id="rProjectType1" name="rProjectType" type="radio"
-										value="1" checked="checked"> <label>稳健型</label> <input
-										id="rProjectType2" name="rProjectType" type="radio" value="2">
-									<label>风险共担型</label>
+								<div class="col-sm-7">
+									<input id="rProjectType1" name="rProjectType" type="radio"value="1" checked="checked"> 稳健型 
+									<input id="rProjectType2" name="rProjectType" type="radio" value="2">风险共担型
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-4 row">
 							<div class="form-group" id="ProjectType1">
 								<label class="col-sm-5 control-label">年化收益: </label>
+								
+								
+								<div class="col-sm-7">
 								<div class="col-sm-2">
-									<input type="text" class="form-control" id="projectType1A"
-										value="" style="width: 50px;" />
+									<input type="text" class="form-control" id="projectType1A"	 style="width:30px;padding:0px;"//>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">%</div>
 								<div class="col-sm-1" style="line-height: 33px;">+</div>
 								<div class="col-sm-2" id="ProjectType1Check">
-									<input type="text" class="form-control" id="projectType1B"
-										value="" style="width: 50px;" />
+									<input type="text" class="form-control" id="projectType1B"	 style="width:30px;padding:0px;"/>
 								</div>
 								<div class="col-sm-1" style="line-height: 33px;">%</div>
+								</div>
 							</div>
 							<div class="form-group" id="ProjectType2" style="display: none">
 								<label class="col-sm-5 control-label">年化收益: </label>
@@ -206,7 +206,7 @@ String city_region = (String) request.getAttribute("city_region");
 
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">一句话简介: </label>
 								<div class="col-sm-7">
@@ -217,7 +217,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">融资金额: </label>
 								<div class="col-sm-4">
@@ -237,7 +237,7 @@ String city_region = (String) request.getAttribute("city_region");
 								<div class="col-sm-1" style="line-height: 33px;">份</div>
 							</div>
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">每份金额: </label>
 								<div class="col-sm-4">
@@ -249,7 +249,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">领投总额最高限额: </label>
 								<div class="col-sm-4">
@@ -274,7 +274,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">省份: </label>
 								<div class="col-sm-6">
@@ -292,7 +292,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">区域: </label>
 								<div class="col-sm-6">
@@ -305,7 +305,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">详细地址: </label>
 								<div class="col-sm-7">
@@ -323,7 +323,7 @@ String city_region = (String) request.getAttribute("city_region");
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">项目图: </label>
 								<div class="col-sm-6">
@@ -333,7 +333,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<div class="col-sm-7 uploader">
 									<ul id="ProjectImgBox" class="filelist">
@@ -343,7 +343,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">项目概况(pc): </label>
 								<div class="col-sm-6">
@@ -354,7 +354,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectDescImgPcBox" class="filelist">
@@ -364,7 +364,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">项目概况(Wap): </label>
 								<div class="col-sm-6">
@@ -374,7 +374,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectDescImgWapBox" class="filelist">
@@ -384,7 +384,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">回报说明(pc): </label>
 								<div class="col-sm-6">
@@ -394,7 +394,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectHuibaoImgPcBox" class="filelist">
@@ -404,7 +404,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="col-sm-5 control-label">回报说明(Wap): </label>
 								<div class="col-sm-6">
@@ -414,7 +414,7 @@ String city_region = (String) request.getAttribute("city_region");
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-9">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<div class="col-sm-9  uploader">
 									<ul id="ProjectHuibaoImgWapBox" class="filelist">
@@ -424,7 +424,7 @@ String city_region = (String) request.getAttribute("city_region");
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-9">
 							<span id="tip" style="color: red"></span>
 							<button type="button" class="btn btn-w-m btn-primary"
 								id="clearAll" style="margin-left: 3px; height: 30px;">重置</button>
@@ -490,7 +490,6 @@ $(function(){
 		}
 	});
 	
-	
 	$('#projectAmount').blur(function(){
 		FenshuJisuan();
 	});	
@@ -499,32 +498,30 @@ $(function(){
 	});
 });
 
-//校验手机号会员ID
-$('#memberPhone').blur(function(){
-	validatePhoneNo();
-});
-
-
 function validatePhoneNo(){
     var url='<%=basePath%>/member/getmemberid';
 		var phone = $('#memberPhone').val();
+
 		if (phone.length == 0) {
-			//alert("请输入手机号！");
+			alert('会员手机号不能为空');
 			return false;
 		}
-		$.post(url, {
-			'phoneno' : phone
-		}, function(d) {
+		
+		var res=false;
+		$.post(url, {	'phoneno' : phone}, function(d) {
 			if (d == 0)//会员不存在
 			{
 				alert('该会员不存在,请重新输入手机号!');
 				$('#memberPhone').focus();//设置焦点
-				return false;
+				res= false;
 			} else {
 				$('#memberId').val(d);
-				return true;
+				res= true;
 			}
 		});
+		
+		
+		return res;
 	}
 	
 	
@@ -542,13 +539,16 @@ function validatePhoneNo(){
 	
 	//保存
 	$('#saveProject').click(function() {
+		
 		if (!SaveChek()) {
 			return;
 		}
+		
 		var proObjReq = new Object();
 		proObjReq.project = CreateProj();
 		proObjReq.projectStrategyList = CreateStrategylist();
 		proObjReq.projectImageList = CreateImgList();
+		
 		//构建数据库信息
 		var json_data = JSON.stringify(proObjReq);
 		$("#tip").html("正在执行。。。");

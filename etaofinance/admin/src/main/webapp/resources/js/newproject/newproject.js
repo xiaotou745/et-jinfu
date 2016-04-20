@@ -20,11 +20,20 @@ function IsEmpty(n) {
 
 //保存校验
 function SaveChek() {
+	
+	var res= validatePhoneNo();
+	
+	 if(!res){
+		 return false;
+	 }
+	 
     if (IsEmpty($('#memberId').val()) || $('#memberId').val() == 0) {
         alert('会员手机号不能为空!');
         $('#memberId').focus();
         return false;
     }
+    
+    
     if (IsEmpty($('#projectName').val())) {
         alert('项目名称不能为空!');
         $('#projectName').focus();
