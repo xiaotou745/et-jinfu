@@ -220,7 +220,7 @@
 				data:paramaters,
 				success:function(result){
 					alert("成功！");
-					jss.search(1);
+					window.location.href = "<%=basePath%>/member/leadinvestlist";	
 				},
 				error:function(e){
 					alert("失败！");

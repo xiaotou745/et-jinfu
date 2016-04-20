@@ -53,7 +53,19 @@ public class MemberApplyService implements IMemberApplyService{
 	public HttpResultModel<Object> create(MemberApply record) {		
 		
 		HttpResultModel<Object> resp = new HttpResultModel<Object>();				
+		// 先判断当前会员下是否有正在认证的
+	boolean hasOrNt = this.IsHasApply(record.getMemberid());
+	
+	if(hasOrNt){
+		resp.setCode(MemberApplyEnum.Err.value());
+		resp.setMsg(MemberApplyEnum.Err.desc());
+		resp.setData("当前存在未审核的申请");
+		return resp;	
+	}
+
+		
 		int row= memberApplyDao.insertSelective(record);		
+		
 		if(row<=0)
 		{
 			resp.setCode(MemberApplyEnum.Err.value());

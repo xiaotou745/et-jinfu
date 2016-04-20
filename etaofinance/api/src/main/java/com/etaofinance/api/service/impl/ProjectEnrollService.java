@@ -130,6 +130,13 @@ public class ProjectEnrollService implements IProjectEnrollService{
 		return projectEnrollRes;
 	}
 
+	@Override
+	public int updateByPrimaryKeySelective(ProjectEnroll record) {
+		int res =0;
+		res = projectEnrollDao.updateByPrimaryKeySelective(record);
+		return res;
+	}
+
 
 	
 	

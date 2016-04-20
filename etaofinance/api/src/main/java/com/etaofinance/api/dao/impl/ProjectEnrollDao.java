@@ -43,8 +43,12 @@ public class ProjectEnrollDao extends DaoBase implements IProjectEnrollDao{
 
 	@Override
 	public int updateByPrimaryKeySelective(ProjectEnroll record) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+
+		res = this.getMasterSqlSessionUtil().update(
+				"IProjectEnrollDao.updateByPrimaryKeySelective", record);
+		
+		return res;
 	}
 
 	@Override

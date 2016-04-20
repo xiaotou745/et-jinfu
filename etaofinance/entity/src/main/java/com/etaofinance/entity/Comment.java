@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Comment {
     private Long id;
-
+    private String username;
     private Long projectid;
 
     private Long memberid;
@@ -34,6 +34,14 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+	public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getProjectid() {

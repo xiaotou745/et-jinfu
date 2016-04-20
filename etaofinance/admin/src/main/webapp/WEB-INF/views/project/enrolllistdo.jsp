@@ -23,6 +23,8 @@
 			<th>邮箱</th>
 			<th>行业</th>
 			<th>提交时间</th>
+			<th>审核状态</th>
+			<th>拒绝理由</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -38,6 +40,8 @@
 			}
 			
 			for (int i = 0; i < list.size(); i++) {
+		
+		int status = list.get(i).getStatus();
 		%>
 		<tr>
 			<td><%=list.get(i).getId()%></td>
@@ -46,9 +50,32 @@
 			<td><%=list.get(i).getPhoneno()%></td>
 			<td><%=list.get(i).getEmail()%></td>
 			<td><%=list.get(i).getOwnedindustry()%></td>
-			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(),
-						"")%></td>
-			<td><a href="<%=Config.ImgShowUrl+"/"+list.get(i).getBusinessplanurl()%>" target="_blank">下载</a></td>
+			<td><%=ParseHelper.ToDateString(list.get(i).getCreatetime(),"")%></td>
+			<%
+				if (0 == status) {
+			%>
+			<td>未审核</td>
+			<%
+				} else if (1 == status) {
+			%><td>审核通过</td>
+			<%
+				} else {
+			%>
+			<td>未审核通过</td>
+			<%
+				}
+			%>
+			<td><%=list.get(i).getRefuseremark()%></td>
+			<td><a href="<%=Config.ImgShowUrl+"/"+list.get(i).getBusinessplanurl()%>" target="_blank">下载</a>
+			
+			
+			<%
+			if(0==status){
+			%>
+			<a data-toggle="modal"  data-target="#myModal" id="apply" onclick="setHidId(<%=list.get(i).getId()%>)">审核</a>
+			<%} %>
+			
+			</td>
 		</tr>
 		<%
 			}
