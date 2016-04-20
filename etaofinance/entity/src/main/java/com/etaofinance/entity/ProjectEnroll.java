@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class ProjectEnroll {
     private Long id;
-    
+
     private Long memberid;
 
-	private String title;
+    private String title;
 
     private String ownedindustry;
 
@@ -25,6 +25,14 @@ public class ProjectEnroll {
 
     private Date createtime;
 
+    private Integer status;
+
+    private String refuseremark;
+
+    private Date opttime;
+
+    private String optname;
+
     public Long getId() {
         return id;
     }
@@ -32,14 +40,14 @@ public class ProjectEnroll {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Long getMemberid() {
-		return memberid;
-	}
 
-	public void setMemberid(Long memberid) {
-		this.memberid = memberid;
-	}
+    public Long getMemberid() {
+        return memberid;
+    }
+
+    public void setMemberid(Long memberid) {
+        this.memberid = memberid;
+    }
 
     public String getTitle() {
         return title;
@@ -111,5 +119,37 @@ public class ProjectEnroll {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRefuseremark() {
+        return refuseremark;
+    }
+
+    public void setRefuseremark(String refuseremark) {
+        this.refuseremark = refuseremark == null ? null : refuseremark.trim();
+    }
+
+    public Date getOpttime() {
+        return opttime;
+    }
+
+    public void setOpttime(Date opttime) {
+        this.opttime = opttime;
+    }
+
+    public String getOptname() {
+        return optname;
+    }
+
+    public void setOptname(String optname) {
+        this.optname = optname == null ? null : optname.trim();
     }
 }

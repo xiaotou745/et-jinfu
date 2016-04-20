@@ -36,8 +36,8 @@
 			for (int i = 0; i < list.size(); i++) {
 		%>
 		<tr>
-			<td><%=list.get(i).getId()%></td>
-			<td><%=list.get(i).getProjectname()%></td>
+				<td><%=list.get(i).getId()%></td>
+			<td><a target="_blank" href="<%=basePath%>/project/previewproject?id=<%=list.get(i).getId()%>"><%=list.get(i).getProjectname()%></td>
 			<td><%=list.get(i).getSchedule()%>%</td>
 			<td><%=list.get(i).getInvestmentnumber()%></td>
 			<td><%=list.get(i).getFollownumber()%></td>

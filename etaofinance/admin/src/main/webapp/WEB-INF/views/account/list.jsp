@@ -88,35 +88,39 @@ List<RoleInfo> roleData = (List<RoleInfo>) request.getAttribute("roleData");
 		</div>
 	</div>
 </div>
-<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
-<div class="modal-dialog modal-sm">
-    <div class="modal-content">
-	<div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	    <h4 class="modal-title">用户操作</h4>
-	</div>
-<div class="modal-body">
 
-真实姓名：<input id="txtUserName"/><br/><br/>
-登录名称：<input id="txtLoginName"/><br/><br/>
-登录密码：<input type="password" id="txtPwd"/><br/><br/>
-确认密码：<input type="password" id="txtConfirmPwd"/><br/><br/>
-<br/>
-是否启用：<input type="radio" value="0" name="radstatus" id="radyes" checked/>
-	  <label for="radyes">启用</label>
-	  <input type="radio" value="1" name="radstatus" id="radno"/>
-	  <label for="radno">不启用</label>
-</div>
-	<div class="modal-footer">
-	    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-	    <button type="button" id="saveuser" class="btn btn-primary">保存</button>
+
+<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">用户操作</h4>
+			</div>
+			<div class="modal-body">
+				真实姓名：<input id="txtUserName" /><br />
+				<br /> 登录名称：<input id="txtLoginName" /><br />
+				<br /> 登录密码：<input type="password" id="txtPwd" /><br />
+				<br /> 确认密码：<input type="password" id="txtConfirmPwd" /><br />
+				<br /> <br /> 是否启用：<input type="radio" value="0" name="radstatus"
+					id="radyes" checked /> <label for="radyes">启用</label> <input
+					type="radio" value="1" name="radstatus" id="radno" /> <label
+					for="radno">不启用</label>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+				<button type="button" id="saveuser" class="btn btn-primary">保存</button>
+			</div>
+		</div>
 	</div>
-    </div>
 </div>
-</div>
+
+
 
 <script>
-
 
 var jss={
 		search:function(currentPage){

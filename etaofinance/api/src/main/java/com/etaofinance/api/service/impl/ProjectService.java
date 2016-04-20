@@ -31,6 +31,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectLogModel;
 import com.etaofinance.entity.ProjectSubscription;
@@ -453,8 +454,6 @@ public class ProjectService implements IProjectService {
 	@Override
 	public int updateByPrimaryKeySelective(Project record) {
 	
-		
-		
 		return projectDao.updateByPrimaryKeySelective(record);
 	}
 }

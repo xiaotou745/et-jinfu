@@ -490,24 +490,19 @@ $(function(){
 		}
 	});
 	
-	//计算份额
-	$('#projectAmount').blur(function(){
-		 FenshuJisuan(1);
-	});
-	$('#projectFenShu').blur(function(){
-		 FenshuJisuan(2);
-	});
 	
-
+	$('#projectAmount').blur(function(){
+		FenshuJisuan();
+	});	
+	$('#projectFenShu').blur(function(){
+		FenshuJisuan();
+	});
 });
 
 //校验手机号会员ID
 $('#memberPhone').blur(function(){
 	validatePhoneNo();
 });
-
-
-
 
 
 function validatePhoneNo(){
@@ -534,34 +529,17 @@ function validatePhoneNo(){
 	
 	
 	//份额计算
-	function FenshuJisuan(obj) {
-		var a = $('#projectAmount').val();
-		var b = $('#projectFenShu').val();
-		if (a.length == 0 || b.length == 0) {
-			return;
-		}
-
-		
-		if (obj == 1 && (!isInt(a) || a == 0)) {
-			alert('请输入正确的融资金额');
-			$('#projectAmount').focus();
-			return;
-		}
-
-		if (obj == 2 && (!isInt(b) || b == 0)) {
-			alert('请输入正确的份数');
-			$('#projectFenShu').focus();
-			return;
-		}
-
-		var c = a / b;
-		if (!isInt(c) || c == 0) {
-			alert('每份金额必须为整数，请调整份数或者融资金额!');
-			$('#projectUnitPrice').val(0);
-		} else {
-			$('#projectUnitPrice').val(c);
-		}
+	function FenshuJisuan() {
+	    var a = $('#projectAmount').val();
+	    var b = $('#projectFenShu').val();
+	    
+	    
+	    if(a.length!=0 && b.length!=0&&isInt(a)&&isInt(b)){
+	    	$('#projectUnitPrice').val(a/b)
+	    }
 	}
+	
+	
 	//保存
 	$('#saveProject').click(function() {
 		if (!SaveChek()) {

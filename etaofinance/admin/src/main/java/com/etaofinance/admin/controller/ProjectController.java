@@ -42,6 +42,7 @@ import com.etaofinance.entity.PublicProvinceCity;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.ProjectFavoriteInvestModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.req.EnrollProjectAuditReq;
 import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedBalancerecordReq;
 import com.etaofinance.entity.req.PagedCommentReq;
@@ -420,6 +421,28 @@ public class ProjectController {
 		return view;
 	}
 
+	
+	
+	/**
+	 * 审核报名项目
+	 * 
+	 * @return
+	 */
+	@RequestMapping("auditenroll")
+	@ResponseBody
+	public int auditEnrollProject(HttpServletRequest request,	ProjectEnroll req) {
+		
+		UserContext context = UserContext.getCurrentContext(request);
+		
+		req.setOptname(context.getUserName());
+		
+		int res= projectEnrollService.updateByPrimaryKeySelective(req);
+		
+		return res;
+	}
+	
+	
+	
 	/**
 	 * 修改项目融资状态 wangchao
 	 * 

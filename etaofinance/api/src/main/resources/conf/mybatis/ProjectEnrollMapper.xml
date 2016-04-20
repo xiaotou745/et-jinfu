@@ -3,7 +3,7 @@
 <mapper namespace="com.etaofinance.api.dao.inter.IProjectEnrollDao" >
   <resultMap id="BaseResultMap" type="com.etaofinance.entity.ProjectEnroll" >
     <id column="Id" property="id" jdbcType="BIGINT" />
-    <result column="MemberId" jdbcType="BIGINT" property="memberid" />
+    <result column="MemberId" property="memberid" jdbcType="BIGINT" />
     <result column="Title" property="title" jdbcType="VARCHAR" />
     <result column="OwnedIndustry" property="ownedindustry" jdbcType="VARCHAR" />
     <result column="BusinessPlanName" property="businessplanname" jdbcType="VARCHAR" />
@@ -13,11 +13,15 @@
     <result column="Contacts" property="contacts" jdbcType="VARCHAR" />
     <result column="CreateName" property="createname" jdbcType="VARCHAR" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="RefuseRemark" property="refuseremark" jdbcType="VARCHAR" />
+    <result column="OptTime" property="opttime" jdbcType="TIMESTAMP" />
+    <result column="OptName" property="optname" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-     Id, MemberId, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, 
-    Contacts, CreateName, CreateTime
+  Id, MemberId, Title, OwnedIndustry, BusinessPlanName, BusinessPlanUrl, PhoneNo, EMail, 
+    Contacts, CreateName, CreateTime, Status, RefuseRemark, OptTime, OptName
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -33,20 +37,27 @@
   </delete>
   
   <insert id="insert" parameterType="com.etaofinance.entity.ProjectEnroll" >
-    insert into projectenroll (Id, MemberId, Title, 
+   insert into projectenroll (Id, MemberId, Title, 
       OwnedIndustry, BusinessPlanName, BusinessPlanUrl, 
       PhoneNo, EMail, Contacts, 
-      CreateName, CreateTime)
+      CreateName, CreateTime, Status, 
+      RefuseRemark, OptTime, OptName
+      )
     values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
       #{ownedindustry,jdbcType=VARCHAR}, #{businessplanname,jdbcType=VARCHAR}, #{businessplanurl,jdbcType=VARCHAR}, 
       #{phoneno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
-      #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+      #{createname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{refuseremark,jdbcType=VARCHAR}, #{opttime,jdbcType=TIMESTAMP}, #{optname,jdbcType=VARCHAR}
+      )
   </insert>
   
   <insert id="insertSelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
     insert into projectenroll
-    <trim prefix="(" suffix=")" suffixOverrides="," > 
-       <if test="memberid != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="memberid != null" >
         MemberId,
       </if>
       <if test="title != null" >
@@ -76,9 +87,24 @@
       <if test="createtime != null" >
         CreateTime,
       </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="refuseremark != null" >
+        RefuseRemark,
+      </if>
+      <if test="opttime != null" >
+        OptTime,
+      </if>
+      <if test="optname != null" >
+        OptName,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," > 
-          <if test="memberid != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberid != null" >
         #{memberid,jdbcType=BIGINT},
       </if>
       <if test="title != null" >
@@ -108,13 +134,25 @@
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="refuseremark != null" >
+        #{refuseremark,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        #{optname,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="com.etaofinance.entity.ProjectEnroll" >
-    update projectenroll
+     update projectenroll
     <set >
-       <if test="memberid != null">
+      <if test="memberid != null" >
         MemberId = #{memberid,jdbcType=BIGINT},
       </if>
       <if test="title != null" >
@@ -144,14 +182,26 @@
       <if test="createtime != null" >
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="refuseremark != null" >
+        RefuseRemark = #{refuseremark,jdbcType=VARCHAR},
+      </if>
+      <if test="opttime != null" >
+        OptTime = #{opttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optname != null" >
+        OptName = #{optname,jdbcType=VARCHAR},
+      </if>
     </set>
     where Id = #{id,jdbcType=BIGINT}
   </update>
   
   <update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.ProjectEnroll" >
-    update projectenroll
+     update projectenroll
     set MemberId = #{memberid,jdbcType=BIGINT},
-     Title = #{title,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=VARCHAR},
       OwnedIndustry = #{ownedindustry,jdbcType=VARCHAR},
       BusinessPlanName = #{businessplanname,jdbcType=VARCHAR},
       BusinessPlanUrl = #{businessplanurl,jdbcType=VARCHAR},
@@ -159,7 +209,11 @@
       EMail = #{email,jdbcType=VARCHAR},
       Contacts = #{contacts,jdbcType=VARCHAR},
       CreateName = #{createname,jdbcType=VARCHAR},
-      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Status = #{status,jdbcType=INTEGER},
+      RefuseRemark = #{refuseremark,jdbcType=VARCHAR},
+      OptTime = #{opttime,jdbcType=TIMESTAMP},
+      OptName = #{optname,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=BIGINT}
   </update>
   
