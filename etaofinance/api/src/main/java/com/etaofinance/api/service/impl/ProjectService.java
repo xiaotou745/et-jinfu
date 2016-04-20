@@ -31,6 +31,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Member;
 import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
+import com.etaofinance.entity.ProjectEnroll;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.ProjectLogModel;
 import com.etaofinance.entity.ProjectSubscription;
@@ -40,6 +41,7 @@ import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ModifyProjectImg;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
@@ -148,6 +150,16 @@ public class ProjectService implements IProjectService {
 			result.setMsg("您尚未进行投资人认证,请先进行投资人认证!");
 			return result;
 		}
+		//新手专享判断
+		if(project.getIsNovice()==1)
+		{
+			if(projectSubscriptionDao.isMyHave(project.getId(), user.getId())>0)
+			{
+				result.setCode(-1);
+				result.setMsg("新手专享项目只能认购一次!");
+				return result;
+			}
+		}
 
 		if (req.getIsLead() == 1) {
 			// 领投人
@@ -243,8 +255,7 @@ public class ProjectService implements IProjectService {
 		if (req.getIsLead() == 1)// 领投
 		{
 			// 已购买的份数加上新的份数
-			updateProject.setRediduePreheatMaxFenShu(p
-					.getRediduePreheatMaxFenShu() + req.getQuantity());
+			updateProject.setRediduePreheatMaxFenShu(p.getRediduePreheatMaxFenShu() + req.getQuantity());
 		}
 		int res4 = projectDao.updateByPrimaryKeySelective(updateProject);
 		if (res1 != 1 || res2 != 1 || res3 != 1 || res4 != 1)// 每个操作都应该只有一条影响
@@ -453,8 +464,18 @@ public class ProjectService implements IProjectService {
 	@Override
 	public int updateByPrimaryKeySelective(Project record) {
 	
-		
-		
 		return projectDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public List<ToDoDataStatistics> getToDoDataStatices() {
+		return projectDao.getToDoDataStatices();
+	}
+	/**
+	 * 定时服务 茹化肖
+	 */
+	@Override
+	public int QuartzServie() {
+		return projectDao.QuartzServie();
 	}
 }

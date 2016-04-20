@@ -9,9 +9,15 @@
     <result column="OptName" property="optname" jdbcType="NVARCHAR" />
     <result column="BeLock" property="belock" jdbcType="BIT" />
   </resultMap>
+  
     <select id="selectList" resultType="com.etaofinance.entity.RoleInfo">
     select * from roleinfo 
   </select>
+     
+    <select id="getRoleInfoByName" resultType="com.etaofinance.entity.RoleInfo" parameterType="String" >
+    select * from roleinfo where RoleName = #{roleName,jdbcType=VARCHAR} limit 1
+  </select>
+  
   
   <insert id="insert" parameterType="com.etaofinance.entity.RoleInfo" >
     insert into roleinfo (RoleName, isLock,OptName,OptTime,CreateName,CreateTime)
@@ -22,6 +28,7 @@
     #{createname,jdbcType=VARCHAR},
      now())
   </insert>
+  
 <update id="update" parameterType="com.etaofinance.entity.RoleInfo" >
     update roleinfo
     set RoleName = #{rolename,jdbcType=VARCHAR},
@@ -29,4 +36,6 @@
       islock = #{islock,jdbcType=BIT}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
 </mapper>

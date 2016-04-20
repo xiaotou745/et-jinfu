@@ -34,11 +34,11 @@
 p.ProjectName, p.projectStatus,p.ProjectImage
     from projectsubscription ps
 left join project  p on ps.ProjectId=p.Id
-where ps.memberid = #{memberid,jdbcType=BIGINT}
+where ps.memberid = #{memberid,jdbcType=BIGINT} 
 	<if test="projectStatus>0">
 		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
 	</if>
-	order by ps.CreateTime desc
+	order by ps.Id desc 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectsubscription
@@ -256,5 +256,10 @@ where ps.memberid = #{memberid,jdbcType=BIGINT}
   LEFT JOIN member m ON m.Id=p.MemberId
 WHERE p.ProjectId=#{projectId,jdbcType=BIGINT}
   ORDER BY p.Id asc    
+  </select>
+  <!-- 查询项目是否已经认购 -->
+  <select id="isMyHave" parameterType="java.util.Map" resultType="java.lang.Integer">
+  SELECT COUNT(1) FROM projectsubscription p WHERE p.ProjectId=#{pid,jdbcType=BIGINT} AND
+  p.MemberId=#{uid,jdbcType=BIGINT} AND p.RefundStatus=0
   </select>
 </mapper>

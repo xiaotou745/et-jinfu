@@ -55,7 +55,7 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
-		<include refid="Base_Column_List" />
+		*
 		from project
 		where Id = #{id,jdbcType=BIGINT}
 	</select>
@@ -82,6 +82,7 @@
 		<if test="projectStatus != null">
 			and projectstatus=#{projectStatus,jdbcType=SMALLINT}
 		</if>
+		order by id desc
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from
@@ -645,8 +646,25 @@
 		(SELECT SUM(case TypeId WHEN 4 then Amount ELSE 0 END) from balancerecord) cash
 		FROM project
 	</select>
+	<!-- 待办事物统计 -->
+	<select id="getToDoDataStatices" resultType="com.etaofinance.entity.domain.ToDoDataStatistics">
+	    select 
+		SUM(case when TypeId = 1 AND Status = 0 then 1 else 0 END) gtuser,
+		SUM(case when TypeId = 2 AND Status = 0 then 1 else 0 END) ltuser,
+		(SELECT SUM(CASE AuditStatus when 1 then 1 ELSE 0 END) from project) dshProject,
+		(SELECT SUM(case Status when 1 then 1 else 0 END) from withdrawform)dshtx,
+		(SELECT SUM(CASE RefundStatus when 0 then 1 ELSE 0 END) from projectsubscription) ordercount,
+		(select COUNT(Id) from qa) qacount
+		from memberapply
+	</select>
 	<!-- 修改关注人数 -->
 	<update id="changeFlowNum"  parameterType="java.util.Map">
 	UPDATE project p set p.FollowNumber=(p.FollowNumber+#{num,jdbcType=INTEGER}) WHERE p.Id=#{pid,jdbcType=BIGINT}
+	</update>
+	<!--  定时服务-->
+	<update id="QuartzServie">
+UPDATE project p set p.ProjectStatus=2 WHERE p.ProjectStatus=1 AND p.AuditStatus=2 AND NOW() > p.PreheatTime AND p.StartTime>NOW();
+UPDATE project p set p.ProjectStatus=3 WHERE p.ProjectStatus=2 AND p.AuditStatus=2 AND NOW() > p.StartTime   AND p.EndTime>NOW();
+UPDATE project p set p.ProjectStatus=4 WHERE p.ProjectStatus=3 AND p.AuditStatus=2 AND p.FenShu=p.RedidueFenshu;
 	</update>
 </mapper>

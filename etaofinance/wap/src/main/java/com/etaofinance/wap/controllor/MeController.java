@@ -493,6 +493,8 @@ public class MeController {
 		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
 		List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
 		view.addObject("list", list);
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
 		return view;
 	}
 	/**

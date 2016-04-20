@@ -25,4 +25,14 @@ public class RoleInfoDao extends DaoBase implements IRoleInfoDao{
 		 return getReadOnlySqlSessionUtil().selectList("IRoleInfoDao.selectList");
 	}
 
+	@Override
+	public RoleInfo getRoleInfoByName(String roleName) {
+	
+		RoleInfo role = null;
+		
+		role = getReadOnlySqlSessionUtil().selectOne("IRoleInfoDao.getRoleInfoByName", roleName);
+		
+		return role;
+	}
+
 }

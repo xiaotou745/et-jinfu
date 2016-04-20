@@ -148,7 +148,7 @@
                     <div class="detail-box-list container">
                         <div class="box-list-input">
                             <textarea placeholder="在此处写上您的评论或问题" data-role="comment"></textarea>
-                            <button disabled>发布</button>
+                            <button disabled data-role="publish">发布</button>
                         </div>
                         <div class="box-list-ul">
                             <ul>
@@ -163,7 +163,7 @@
                                       <p><b>
                                       <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
                                       </b></p>
-                                      <p><span><%=commentList.get(i).getCommontName()%></span>
+                                      <p><span data-role="author"><%=commentList.get(i).getCommontName()%></span>
                                       <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
@@ -275,15 +275,18 @@
 			<%
 			if(detaiModel.getProjectstatus()==2&&isLead==1)
 			{//领头人+预热
-				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
+				 %><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >我要领投</button></a><% 
 				 
-			}else if(detaiModel.getProjectstatus()==3&&isTzr==1)
+			}else if(detaiModel.getProjectstatus()==2&&isLead==0){
+				//预热加非领头人
+				%><a href="#"><button class="two-you" disabled="disabled">开始时间<%=ParseHelper.ToDateString(detaiModel.getStarttime(),"yyyy-MM-dd")%></button></a><% 
+			}else if(detaiModel.getProjectstatus()==3)
 			{//购买中 +投资人
 				%><a href="<%=basePath%>/home/subscribe?projectid=<%=detaiModel.getId()%>"><button >认购</button></a><% 
-			}else if((detaiModel.getProjectstatus()==2||detaiModel.getProjectstatus()==3)&&isTzr==0)
-			{//预热中+投资中+非投资人
-				%><a href="<%=basePath%>/me/usercenter"><button >认证</button></a><% 
-			}
+			}else if(detaiModel.getProjectstatus()==4)
+			{//项目结束
+				%><a href="#"><button class="two-me" disabled="disabled">项目结束</button></a><% 
+			}	
 			%>        
          	</div>
     </footer>

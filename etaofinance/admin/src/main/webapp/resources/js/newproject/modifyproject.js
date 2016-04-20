@@ -18,6 +18,7 @@ function IsEmpty(n) {
     return /^\s*$/.test(n);
 }
 
+
 //保存校验
 function SaveChek() {
     if (IsEmpty($('#memberId').val()) || $('#memberId').val() == 0) {
@@ -30,6 +31,7 @@ function SaveChek() {
         $('#projectName').focus();
         return false;
     }
+    
     var onlinePreheatDate=$("#onlinePreheatDate").val();
     var openFinancingDate=$("#openFinancingDate").val();
     var endFinancingDate=$("#endFinancingDate").val();
@@ -69,20 +71,46 @@ function SaveChek() {
             return false;
         }
     }
+    
+    
     //一句话简介判断
     if (IsEmpty($('#projectDescription').val())) {
         alert('一句话简介不能为空!');
         $('#projectDescription').focus();
         return false;
     }
+    
     //融资金额判断
     var a = $('#projectAmount').val();
     var b = $('#projectFenShu').val();
     var c = $('#projectUnitPrice').val();
-    if (parseInt(a) == 0 || parseInt(b) == 0 || parseInt(c) == 0 || parseInt(c) * parseInt(b) != parseInt(a)) {
-        alert('请输入正确的融资金额和份数!');
-        return false;
-    }
+  
+	if (a.length == 0 || b.length == 0 ) {
+		   alert('请输入正确的融资金额和份数!');
+		   alert(1);
+		return false;
+	}
+
+	if (!isInt(a) || a == 0) {
+		alert('融资金额必须为正整数');
+		   alert(2);
+		$('#projectAmount').focus();
+		return false;
+	}
+
+	if ( !isInt(b) || b == 0) {
+		alert('份数必须为正整数');
+		   alert(3);
+		$('#projectFenShu').focus();
+		return false;
+	}
+
+	  if (parseInt(a) == 0 || parseInt(b) == 0 || parseInt(c) == 0 || parseInt(c) * parseInt(b) != parseInt(a)) {
+	        alert('请输入正确的融资金额和份数!');
+			   alert(4);
+	        return false;
+	    }
+    
     //最高份数
     var ltzg = $('#projectPreheatMaxFenShu').val();
     //最低限制

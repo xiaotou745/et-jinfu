@@ -9,17 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.etaofinance.api.service.inter.IADVertService;
 import com.etaofinance.api.service.inter.ICommentService;
+import com.etaofinance.api.service.inter.IMemberOtherService;
 import com.etaofinance.api.service.inter.IMemberService;
 import com.etaofinance.api.service.inter.IProjectFavoriteService;
 import com.etaofinance.api.service.inter.IProjectImageService;
 import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.api.service.inter.IProjectSubscriptionService;
+import com.etaofinance.core.util.PropertyUtils;
 import com.etaofinance.entity.ADVert;
 import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Project;
 import com.etaofinance.entity.ProjectImage;
 import com.etaofinance.entity.common.PagedResponse;
@@ -59,6 +63,8 @@ public class HomeController {
 	IMemberService memberService;
 	@Autowired
 	IProjectFavoriteService projectFavoriteService;
+	@Autowired
+	IMemberOtherService memberOtherService;
 	/**
 	 * 首页
 	 * @return
@@ -206,6 +212,15 @@ public class HomeController {
 	@RequireLogin
 	public ModelAndView subscribeinputpaypassword(Long projectid,Integer quantity,Integer islead)
 	{
+		MemberOther memberOther=memberOtherService.getByMemberId(UserContext.getCurrentContext(request).getUserInfo().getId());
+		if(memberOther.getPaypassword()==null||memberOther.getPaypassword().equals(""))
+		{
+			String basePath = PropertyUtils.getProperty("java.wap.url");
+			basePath+="/me/transfer";		
+			ModelAndView view2= new ModelAndView(new RedirectView(basePath));
+			view2.addObject("type", "3");
+			return  view2;		
+		}
 		ModelAndView view = new ModelAndView("wapView");
 		view.addObject("currenttitle", "支付密码");
 		view.addObject("viewPath", "home/subscribeinputpaypassword");

@@ -23,6 +23,7 @@
 		<tr>
 			<th width="5%">ID</th>
 			<th>评论人ID</th>
+			<th>评论人名称</th>
 			<th>评论内容</th>
 			<th>评论时间</th>
 		</tr>
@@ -34,6 +35,7 @@
 		<tr>
 			<td><%=list.get(i).getId() %></td>
 			<td><%=list.get(i).getMemberid()%></td>
+				<td><%=list.get(i).getUsername()%></td>
 			<td><%=list.get(i).getContent().length()>8?list.get(i).getContent().substring(0,8):list.get(i).getContent()%></td>
 			<td><%=dateFormater.format(list.get(i).getCreatetime()) %></td>	
 		</tr>

@@ -52,12 +52,22 @@ public class RoleController {
 	@RequestMapping("add")
 	@ResponseBody
 	public int add(HttpServletRequest request,String roleName) {
+		
+		
+		// 先校验roleName 是否已经存在
+		RoleInfo role = roleInfoService.getRoleInfoByName(roleName);
+		
+		if(null!=role){
+			return -1;
+		}
+		
 		UserContext context = UserContext.getCurrentContext(request);
 		RoleInfo record=new RoleInfo();
 		record.setIslock(false);
 		record.setOptname(context.getUserName());
 		record.setCreatename(context.getUserName());
 		record.setRolename(roleName);
+		
 		return roleInfoService.insert(record);
 	}
 	@RequestMapping(value = "authlist", produces = "application/json; charset=utf-8")

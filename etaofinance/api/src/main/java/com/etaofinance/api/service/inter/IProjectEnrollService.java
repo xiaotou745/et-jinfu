@@ -24,5 +24,7 @@ public interface IProjectEnrollService {
 	PagedResponse<ProjectEnroll> getProjectEnrollList(
 			PagedProjectEnrollReq req);
 	
+	
+    int updateByPrimaryKeySelective(ProjectEnroll record);
 
 }

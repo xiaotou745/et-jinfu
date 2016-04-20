@@ -61,18 +61,53 @@
 <div id="content">
 </div>
 
-<script>
 
-	var jss={
-			search:function(currentPage){
-				var data={currentPage:currentPage,
-				"title":$("#title").val(),
-				"ownedIndustry":$("#ownedIndustry").val(),
-					"startTime":$("#beginDate").val(),
-						"endTime":$("#endDate").val()
-					
-				};
-				$.post("<%=basePath%>/project/enrolllistdo",data,function(d){
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">报名项目审核</h4>
+			</div>
+			<div class="modal-body">
+				<table>
+					<tr>
+						<td>审核：</td>
+						<td><input type="radio" name="status" id="statusFir"
+							value="1" checked> 通过 <input type="radio" name="status"
+							id="statusSec" value="-1">未通过</td>
+					</tr>
+					<tr style="visibility: hidden;" id=rdtr>
+						<td>拒绝理由：</td>
+						<td><input type="text" style="length: 200px;" id="refuseRemark"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="applyenroll">
+					确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="" value=""  id="hidId"/>
+<input type="hidden" name="" value="1" id="hidStatus"/>
+<script>
+	var jss = {
+		search : function(currentPage) {
+			var data = {
+				currentPage : currentPage,
+				"title" : $("#title").val(),
+				"ownedIndustry" : $("#ownedIndustry").val(),
+				"startTime" : $("#beginDate").val(),
+				"endTime" : $("#endDate").val()
+
+			};
+			$.post("<%=basePath%>/project/enrolllistdo",data,function(d){
 					$("#content").html(d);
 				});
 			}
@@ -82,6 +117,62 @@
 	
 	$("#btnSearch").click(function(){
 		jss.search(1);
+	});
+	
+	function setHidId(hidId){
+		$('#hidId').val(hidId);
+	}
+	
+	function setDefaultVal(){
+		$('#refuseRemark').val('');
+		$('#hidId').val('');
+		$('#hidStatus').val(1);
+		$('#statusSec').removeAttr('checked');
+		$('#statusFir').attr('checked',true);
+		$('.close').click();
+		$('#rdtr').css('visibility','hidden');
+	}
+	$('input[name="status"]').click(function(){
+		
+
+	$('input[name="status"]').each(function() {
+			var thisRdio = $(this);
+			if (thisRdio.is(':checked')) {
+
+				var ckrdioval = thisRdio.val();
+
+				if (1 == ckrdioval) {
+
+					$('#rdtr').css('visibility', 'hidden');
+					$('#refuseRmark').val('');
+				}
+
+				if (-1 == ckrdioval) {
+					$('#rdtr').css('visibility', 'visible');
+				}
+				$('#hidStatus').val(ckrdioval);
+			}
+		})
+	});
+
+	$('#applyenroll').click(function() {
+
+		var data = {
+			"id" : $('#hidId').val(),
+			"status" : $('#hidStatus').val(),
+			"refuseremark" : $('#refuseRemark').val()
+		};
+
+		$.post('<%=basePath%>/project/auditenroll',data,function(res){
+			if(res>0){
+				alert('审核成功');
+				setDefaultVal();
+				window.location.reload();
+			//	jss.search(1);
+			}else{
+				alert('审核失败');
+			}
+		});
 	});
 	
 	

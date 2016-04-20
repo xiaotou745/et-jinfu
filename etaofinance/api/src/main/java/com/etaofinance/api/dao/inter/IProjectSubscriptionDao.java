@@ -27,8 +27,14 @@ public interface IProjectSubscriptionDao {
 
     PagedResponse<ProjectSubscription> getProjectSubPageList(PagedProjectSubReq req);
     /**
-     * »ñÈ¡ÏîÄ¿ÁìÍ¶Èë
+     * ï¿½ï¿½È¡ï¿½ï¿½Ä¿ï¿½ï¿½Í¶ï¿½ï¿½
      * @param projectId
      * @return
      */
-    List<ProjectMember> getProjectLeadMember(Long projectId);}
+    List<ProjectMember> getProjectLeadMember(Long projectId);
+    /**
+     * è¯¥é¡¹ç›®æ˜¯å¦å·²ç»è®¤è´­
+     * @return
+     */
+    int isMyHave(Long pid,Long uid);
+}

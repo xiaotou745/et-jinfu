@@ -104,7 +104,12 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public PagedResponse<Comment> getCommentPagingList(PagedCommentReq req) {
-		return commentDao.getCommentPagingList(req);
+	
+		PagedResponse<Comment> comments =null;
+		
+		comments= commentDao.getCommentPagingList(req);
+		
+		return comments;
 	}
 	/**
 	 * 分页获取评论列表

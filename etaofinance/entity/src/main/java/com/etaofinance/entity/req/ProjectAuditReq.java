@@ -1,6 +1,7 @@
 package com.etaofinance.entity.req;
 
 public class ProjectAuditReq {
+	
 	private long projectId;
 	
 	private int auditStatus;
@@ -118,4 +119,8 @@ public class ProjectAuditReq {
 	public void setLogRemark(String logRemark) {
 		this.logRemark = logRemark;
 	}
+	
+	
+	
+
 }

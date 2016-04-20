@@ -684,28 +684,12 @@ function validatePhoneNo(){
 	}
 	//份额计算
 	function FenshuJisuan() {
-		var a = $('#projectAmount').val();
-		var b = $('#projectFenShu').val();
-		if (a.length == 0 || b.length == 0) {
-			return;
-		}
-		if (!isInt(a)) {
-			alert('请输入正确的融资金额');
-			$('#projectAmount').focus();
-			return;
-		}
-		if (!isInt(b)) {
-			alert('请输入正确的份数');
-			$('#projectFenShu').focus();
-			return;
-		}
-		var c = a / b;
-		if (!isInt(c) || c == 0) {
-			alert('每份金额必须为整数，请调整份数或者融资金额!');
-			$('#projectUnitPrice').val(0);
-		} else {
-			$('#projectUnitPrice').val(c);
-		}
+		 var a = $('#projectAmount').val();
+		    var b = $('#projectFenShu').val();
+		    
+		    if(a.length!=0 && b.length!=0&&isInt(a)&&isInt(b)){
+		    	$('#projectUnitPrice').val(a/b)
+		    }
 	}
 	//保存
 	$('#modifyProject').click(function() {

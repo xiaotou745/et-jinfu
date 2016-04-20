@@ -164,7 +164,11 @@ $("#btnConfirm").click(function(){
 		if (remark.trim().length == 0) {
 			alert("请输入备注信息！")
 			return;
-		}		
+		}
+		if (remark.trim().length >20) {
+			alert("备注信息长度不超过20！")
+			return;
+		}
 		var onlinePreheatDate=$("#onlinePreheatDate").val();
 		var openFinancingDate=$("#openFinancingDate").val();
 		var endFinancingDate=$("#endFinancingDate").val();

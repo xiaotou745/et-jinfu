@@ -4,9 +4,9 @@ public enum MemberTypeEnum {
 	 
 	CommonUser(0,"普通用户"),
 	
-	LeadInvestUser(2,"跟投人"),
+	LeadInvestUser(3,"领投人"),
 	
-	FollowInvestUser(3,"领投人"),
+	FollowInvestUser(2,"跟投人"),
 	
 	CertificationUser(1,"实名认证用户");
 	

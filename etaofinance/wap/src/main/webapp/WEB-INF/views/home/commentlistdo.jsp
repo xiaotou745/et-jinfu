@@ -35,7 +35,7 @@
                                       <p><b>
                                       <img src="<%=imgurl+commentList.get(i).getHeadImage()%>">
                                       </b></p>
-                                      <p><span><%=commentList.get(i).getCommontName()%></span>
+                                      <p><span data-role="author"><%=commentList.get(i).getCommontName()%></span>
                                       <span><%=ParseHelper.ToDateString(commentList.get(i).getCreatetime())%></span>
                                       <span>
                                       <%if(isr==1)
