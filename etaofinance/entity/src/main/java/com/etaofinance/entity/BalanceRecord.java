@@ -15,9 +15,9 @@ public class BalanceRecord {
 
     private Short typeid;
 
-    private Long projectid;
+    private Long withwardid;
 
-    private String relationno;
+	private String relationno;
 
     private String remark;
 
@@ -75,13 +75,13 @@ public class BalanceRecord {
         this.typeid = typeid;
     }
 
-    public Long getProjectid() {
-        return projectid;
-    }
+    public Long getWithwardid() {
+		return withwardid;
+	}
 
-    public void setProjectid(Long projectid) {
-        this.projectid = projectid;
-    }
+	public void setWithwardid(Long withwardid) {
+		this.withwardid = withwardid;
+	}
 
     public String getRelationno() {
         return relationno;

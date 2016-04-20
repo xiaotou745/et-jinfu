@@ -20,6 +20,7 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String basePath =PropertyUtils.getProperty("java.wap.url");
 		String IsOpenSwagger=PropertyUtils.getProperty("IsOpenSwagger");
+		String reurl=basePath+"/me/login?reUrl="+request.getHeader("Referer");
 		if(request.getServletPath().equals("/common/swagger")&&IsOpenSwagger.equals("0"))
 		{//验证是否开启Swagger  1 开启 0未开启 不允许访问
 			response.sendRedirect(basePath);
@@ -44,13 +45,14 @@ public class AuthInteceptor extends HandlerInterceptorAdapter {
 	        			HttpResultModel<Object> rep=new HttpResultModel<Object>();
 	        			rep.setCode(-1);
 	        			rep.setMsg("请登录后操作!");
+	        			rep.setUrl(reurl);
 	        			String data = JsonUtil.obj2string(rep);
 	        	        response.setHeader("content-type", "text/html;charset=UTF-8");
 	        	        OutputStream out = response.getOutputStream();
 	        	        out.write(data.getBytes("UTF-8"));
 	        	        return false;
 	        		}
-	        		response.sendRedirect(basePath+"/me/login");
+	        		response.sendRedirect(reurl);
 	        		return false;
 	        		
 	        	}//IF LOGIN END

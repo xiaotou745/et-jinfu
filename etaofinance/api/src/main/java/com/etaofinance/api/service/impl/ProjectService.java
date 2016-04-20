@@ -110,7 +110,7 @@ public class ProjectService implements IProjectService {
 	 * 认购项目 茹化肖
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class, timeout = 300)
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public HttpResultModel<Object> subproject(SubProjectReq req) {
 		HttpResultModel<Object> result = new HttpResultModel<Object>();
 		Member user = memberDao.selectById(req.getUserId());
@@ -149,6 +149,16 @@ public class ProjectService implements IProjectService {
 			result.setCode(-1);
 			result.setMsg("您尚未进行投资人认证,请先进行投资人认证!");
 			return result;
+		}
+		//新手专享判断
+		if(project.getIsNovice()==1)
+		{
+			if(projectSubscriptionDao.isMyHave(project.getId(), user.getId())>0)
+			{
+				result.setCode(-1);
+				result.setMsg("新手专享项目只能认购一次!");
+				return result;
+			}
 		}
 
 		if (req.getIsLead() == 1) {
@@ -219,7 +229,7 @@ public class ProjectService implements IProjectService {
 		MemberOther updateOther = new MemberOther();
 		// 余额=余额-应付款
 		Float yF = (p.getUnitprice() * req.getQuantity());
-		Double YR = mo.getBalanceprice();
+		Float YR = mo.getBalanceprice();
 		updateOther.setBalanceprice(YR - yF);
 		updateOther.setAllowwithdrawprice(mo.getAllowwithdrawprice() - yF);
 		updateOther.setMemberid(m.getId());
@@ -230,7 +240,7 @@ public class ProjectService implements IProjectService {
 		bRecord.setMemberid(m.getId());
 		bRecord.setAfteramount((float) (YR - yF));
 		bRecord.setTypeid(ParseHelper.ToShort(RecordType.Invest.value()));
-		bRecord.setProjectid(p.getId());
+		bRecord.setWithwardid(p.getId());
 		bRecord.setRemark("认购项目");
 		bRecord.setOptname(m.getTruename());
 		int res3 = blanceRecordDao.insertSelective(bRecord);

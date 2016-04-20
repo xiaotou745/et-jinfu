@@ -60,27 +60,16 @@ public class MemberOtherDao  extends DaoBase implements IMemberOtherDao{
 	}
 
 	@Override
-	public int updateMemberOther(Long memberId, Float amount,Float applyAmount) {
+	public int updateMemberOther(MemberOther record) {
 
-		MemberOther mbOther = new MemberOther();
-		
-		mbOther.setMemberid(memberId);
-		
-		mbOther.setAllowwithdrawprice((double)amount);
-		
-		if(null==applyAmount){
-			mbOther.setHaswithdrawprice(null);
-		}else{
-			mbOther.setHaswithdrawprice((double)applyAmount);
-		}
-		
-		return getMasterSqlSessionUtil().update("IMemberOtherDao.updateMemberOther",mbOther);
+
+		return getMasterSqlSessionUtil().update("IMemberOtherDao.updateMemberOther",record);
 		
 	}
-	@Override
-	public int updateMemberOther(Long memberId, Float amount) {
-
-		return this.updateMemberOther(memberId, amount, null);
-		
-	}
+//	@Override
+//	public int updateMemberOther(Long memberId, Float amount) {
+//		
+//		return this.updateMemberOther(memberId, amount, null);
+//		
+//	}
 }

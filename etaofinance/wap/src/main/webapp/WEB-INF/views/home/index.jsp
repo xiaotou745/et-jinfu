@@ -19,7 +19,8 @@
  <link rel="stylesheet" href="<%=staticResPath%>/etao-crowdfunding/css/p/home/index.css">
     <div class="g-wrap">
         <div class="g-views">
-            
+       <div class="content-wrap">
+       <div class="content">      
     <div class="swiper-container banner-1">
         <div class="swiper-wrapper">
         	<%if(adlist==null||adlist.size()==0)
@@ -135,6 +136,8 @@ if(itemList!=null&&itemList.size()>0)
     
     </div>
     </section>
+    </div>
+    </div>
     <div class="footer top-line">
     <ul>
         <li class="on"><a href="#"><i class="m-icon icon-home"></i><span>首页</span></a></li>

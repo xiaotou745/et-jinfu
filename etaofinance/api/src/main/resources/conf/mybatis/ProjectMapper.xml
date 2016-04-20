@@ -55,7 +55,7 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
-		<include refid="Base_Column_List" />
+		*
 		from project
 		where Id = #{id,jdbcType=BIGINT}
 	</select>
@@ -82,6 +82,7 @@
 		<if test="projectStatus != null">
 			and projectstatus=#{projectStatus,jdbcType=SMALLINT}
 		</if>
+		order by id desc
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from

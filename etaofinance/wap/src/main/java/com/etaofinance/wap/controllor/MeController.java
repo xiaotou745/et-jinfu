@@ -493,6 +493,8 @@ public class MeController {
 		req.setMemberid(UserContext.getCurrentContext(request).getUserInfo().getId());
 		List<ProjectFavoriteDM> list=projectFavoriteService.getListMore(req);
 		view.addObject("list", list);
+		Member member=memberService.getById(UserContext.getCurrentContext(request).getUserInfo().getId());
+		view.addObject("member", member);
 		return view;
 	}
 	/**
@@ -733,9 +735,8 @@ public class MeController {
 		view.addObject("bankname", bankname);	
 		view.addObject("cardnoStr", cardnoStr);
 		
-		double allowwithdrawprice=memberOther.getAllowwithdrawprice();		
-		double  WithdrawPendingAmount= withdrawformService.GetWithdrawPendingAmountByMbId(memberId);
-		view.addObject("allowwithdrawprice",allowwithdrawprice-WithdrawPendingAmount);
+		double allowwithdrawprice=memberOther.getAllowwithdrawprice();				
+		view.addObject("allowwithdrawprice",allowwithdrawprice);
 		return view;
 	}
 	
@@ -902,7 +903,7 @@ public class MeController {
 		if(item.getTypeid()==BalanceRecordType.Refund.value())
 		{//退款
 			view.addObject("viewPath", "me/balancedetailrefund");
-			Project project=projectService.selectByPrimaryKey(item.getProjectid());
+			Project project=projectService.selectByPrimaryKey(item.getWithwardid());
 			view.addObject("project",project);
 			return view;
 			

@@ -27,8 +27,10 @@ import com.etaofinance.core.enums.BalanceRecordEnum;
 import com.etaofinance.core.enums.BalanceRecordType;
 import com.etaofinance.core.enums.BankCardEnum;
 import com.etaofinance.core.enums.MemberEnum;
+import com.etaofinance.core.enums.RechargeStatus;
 import com.etaofinance.core.enums.WithdrawStatus;
 import com.etaofinance.core.enums.WithdrawformEnum;
+import com.etaofinance.core.enums.WithdrawformStatus;
 import com.etaofinance.core.enums.returnenums.HttpReturnRnums;
 import com.etaofinance.core.util.OrderNoHelper;
 import com.etaofinance.core.util.PropertyUtils;
@@ -39,6 +41,7 @@ import com.etaofinance.entity.BalanceRecord;
 import com.etaofinance.entity.Bank;
 import com.etaofinance.entity.BankCard;
 import com.etaofinance.entity.Member;
+import com.etaofinance.entity.MemberOther;
 import com.etaofinance.entity.Withdrawform;
 import com.etaofinance.entity.common.HttpResultModel;
 import com.etaofinance.entity.common.PagedResponse;
@@ -65,11 +68,13 @@ public class WithdrawformService implements IWithdrawformService{
 	@Autowired
 	private IMemberOtherDao memberOtherDao;
 	
+	@Autowired
+	private IBankCardDao bankCardDao;
+	
 	@Override
-	public HttpResultModel<Object> create(Withdrawform record) {
-		//问题，对接银行， 提现验证，提现后金额
-		
-		HttpResultModel<Object> resp = new HttpResultModel<Object>();		
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	public HttpResultModel<Object> create(Withdrawform record) {	
+		HttpResultModel<Object> resp = new HttpResultModel<Object>();	
 		
 		if(record.getMemberid() ==null && record.getMemberid().equals(""))
 		{	
@@ -77,18 +82,47 @@ public class WithdrawformService implements IWithdrawformService{
 			resp.setMsg(WithdrawformEnum.MemberIdIsNull.desc());
 			return resp;			
 		}		
-		record.setWithwardno(OrderNoHelper.generateOrderCode(record.getMemberid().intValue()));
-		record.setStatus((short)1);
-		record.setCreatetime(new Date());		 	
+		 List<BankCard> bankCardList= bankCardDao.getListByMemberId(record.getMemberid());
+		 if(bankCardList==null ||bankCardList.size()<1)
+		 {
+				resp.setCode(WithdrawformEnum.BindCardIsNull.value());
+				resp.setMsg(WithdrawformEnum.BindCardIsNull.desc());
+				return resp;
+		 }
+		
+		//写入提现表
+		String uuid=OrderNoHelper.generatePrefixNoCode("TX", record.getMemberid().intValue());
+		record.setWithwardno(uuid);
+		record.setStatus((short) WithdrawformStatus.Status1.value());			 	
 		record.setAccounttype("1");
-		//临时
-		record.setAccountno("x000000001");		
-		int row= withdrawformDao.insertSelective(record);		
-		if(row<=0)
+		record.setAccountno(bankCardList.get(0).getCardno());		
+		int rowWithdraw= withdrawformDao.insertSelective(record);		
+		if(rowWithdraw<=0)
 		{
-			resp.setCode(WithdrawformEnum.Err.value());
-			resp.setMsg(WithdrawformEnum.Err.desc());
-			return resp;	
+			throw new TransactionalRuntimeException("提现表异常");	
+		}
+		//余额表
+		MemberOther mbOther = new MemberOther();		
+		mbOther.setMemberid(record.getMemberid());		
+		mbOther.setBalanceprice(-record.getAmount());			
+		int rowMemberOther = memberOtherDao.updateMemberOther(mbOther);
+		if (rowMemberOther<=0) {
+				throw new TransactionalRuntimeException("余额表异常");
+		}
+		
+		//余额流水表
+		BalanceRecord balance =new BalanceRecord();	
+		balance.setAmount(-record.getAmount());	
+		balance.setMemberid(record.getMemberid());
+		balance.setWithwardid(record.getId());
+		balance.setRemark("提现流水");
+		balance.setTypeid((short) BalanceRecordType.Recharge.value());
+		balance.setRelationno(uuid);
+		balance.setOptname(record.getCreatename());
+
+		int rowBalanceRecord = balanceRecordDao.insertBalanceRecord(balance);		
+		if (rowBalanceRecord<=0) {
+			throw new TransactionalRuntimeException("流水表异常");
 		}
 		
 		resp.setCode(WithdrawformEnum.Success.value());
@@ -148,59 +182,59 @@ public class WithdrawformService implements IWithdrawformService{
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public int Audit(long id, short status) {
 		
-		// 1 拒绝
-		// 1.1 update withdrawform	
-		int updateWithdrawRes =0;
-		
-		Withdrawform withdraw = new Withdrawform();
-		withdraw.setId(id);
-		withdraw.setStatus(status);
-		
-		updateWithdrawRes = this.updateByPrimaryKeySelective(withdraw);
-		
-		if(0==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-
-			throw new TransactionalRuntimeException("拒绝失败");
-		}
-		else if(1==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
-			
-			return 1;	
-		}
-		
-		// 2 通过
-		// 2.1 update withdrawform
-	
-		if(0==updateWithdrawRes){
-			throw new TransactionalRuntimeException("通过失败");
-		}
-		// 2.2 insert balancerecord
-		 // 获取 withdraw
-		Withdrawform withdrawMd = this.getWithdrawMdById(id);
-		
-		BalanceRecord balance =new BalanceRecord();
-
-		balance.setId(null);
-		balance.setAmount(-withdrawMd.getAmount());
-		balance.setAfteramount(- withdrawMd.getAmount());
-		balance.setMemberid(withdrawMd.getMemberid());
-		balance.setRemark("提现审核");
-		balance.setTypeid((short) BalanceRecordType.Apply.value());
-		balance.setRelationno(withdrawMd.getWithwardno());
-		balance.setOptname("optName");
-		
-		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
-		if (0 == insertBalanceRes) {
-
-			throw new TransactionalRuntimeException("流水表异常");
-		}
-
-		// 2.3 update memberother
-		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdrawMd.getMemberid(),
-				-withdrawMd.getAmount(),withdrawMd.getAmount());
-		if (0 == updateMemberOterRes) {
-
-			throw new TransactionalRuntimeException("余额表异常");
-		}
+//		// 1 拒绝
+//		// 1.1 update withdrawform	
+//		int updateWithdrawRes =0;
+//		
+//		Withdrawform withdraw = new Withdrawform();
+//		withdraw.setId(id);
+//		withdraw.setStatus(status);
+//		
+//		updateWithdrawRes = this.updateByPrimaryKeySelective(withdraw);
+//		
+//		if(0==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
+//
+//			throw new TransactionalRuntimeException("拒绝失败");
+//		}
+//		else if(1==updateWithdrawRes && status == WithdrawStatus.Refuse.value()){
+//			
+//			return 1;	
+//		}
+//		
+//		// 2 通过
+//		// 2.1 update withdrawform
+//	
+//		if(0==updateWithdrawRes){
+//			throw new TransactionalRuntimeException("通过失败");
+//		}
+//		// 2.2 insert balancerecord
+//		 // 获取 withdraw
+//		Withdrawform withdrawMd = this.getWithdrawMdById(id);
+//		
+//		BalanceRecord balance =new BalanceRecord();
+//
+//		balance.setId(null);
+//		balance.setAmount(-withdrawMd.getAmount());
+//		balance.setAfteramount(- withdrawMd.getAmount());
+//		balance.setMemberid(withdrawMd.getMemberid());
+//		balance.setRemark("提现审核");
+//		balance.setTypeid((short) BalanceRecordType.Apply.value());
+//		balance.setRelationno(withdrawMd.getWithwardno());
+//		balance.setOptname("optName");
+//		
+//		int insertBalanceRes = balanceRecordDao.insertSelective(balance);
+//		if (0 == insertBalanceRes) {
+//
+//			throw new TransactionalRuntimeException("流水表异常");
+//		}
+//
+//		// 2.3 update memberother
+//		int updateMemberOterRes = memberOtherDao.updateMemberOther(withdrawMd.getMemberid(),
+//				-withdrawMd.getAmount(),withdrawMd.getAmount());
+//		if (0 == updateMemberOterRes) {
+//
+//			throw new TransactionalRuntimeException("余额表异常");
+//		}
 		
 		return 1;
 	}
