@@ -8,6 +8,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
@@ -69,6 +70,10 @@ public interface IProjectDao {
 	 * 获取数据统计汇总
 	 */
 	List<DataStatistics> getDataStatistics();
+	/*
+	 * 待办理数据统计汇总
+	 */
+	List<ToDoDataStatistics> getToDoDataStatices();
 	/**
 	 * 修改数量
 	 * @param poid

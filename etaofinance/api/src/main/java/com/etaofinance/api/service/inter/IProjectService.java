@@ -7,6 +7,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
@@ -83,6 +84,10 @@ public interface IProjectService {
 	 * 获取数据统计汇总
 	 */
 	List<DataStatistics> getDataStatistics();
+	/*
+	 * 待办理数据统计汇总
+	 */
+	List<ToDoDataStatistics> getToDoDataStatices();
 	/**
 	 * 更改状态的定时服务.
 	 * 茹化肖

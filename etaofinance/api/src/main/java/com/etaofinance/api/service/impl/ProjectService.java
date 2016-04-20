@@ -40,6 +40,7 @@ import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ModifyProjectImg;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
@@ -455,6 +456,11 @@ public class ProjectService implements IProjectService {
 		
 		
 		return projectDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public List<ToDoDataStatistics> getToDoDataStatices() {
+		return projectDao.getToDoDataStatices();
 	}
 	/**
 	 * 定时服务 茹化肖
