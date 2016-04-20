@@ -34,11 +34,11 @@
 p.ProjectName, p.projectStatus,p.ProjectImage
     from projectsubscription ps
 left join project  p on ps.ProjectId=p.Id
-where ps.memberid = #{memberid,jdbcType=BIGINT}
+where ps.memberid = #{memberid,jdbcType=BIGINT} 
 	<if test="projectStatus>0">
 		and	p.projectStatus=#{projectStatus,jdbcType=SMALLINT}
 	</if>
-	order by ps.CreateTime desc
+	order by ps.Id desc 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from projectsubscription

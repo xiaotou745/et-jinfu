@@ -33,7 +33,7 @@
 							<i class="<%=list.get(i).getProjectstatus()==3?"fall":"" %>"><%=ProjectStatus.getEnum(list.get(i).getProjectstatus()).desc()%></i>
 						</div>
 						<div class="item">
-							<div><img src="<%=imgurl+list.get(i).getProjectimage()%>" alt=""></div>
+							<div><a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getId()%>"><img src="<%=imgurl+list.get(i).getProjectimage()%>" alt=""></a></div>
 							<dl>
 								<dt><%=list.get(i).getProjectname()%></dt>
 								<dd><span>融资进度：</span>已完成<%=list.get(i).getSchedule()%>%</dd>
