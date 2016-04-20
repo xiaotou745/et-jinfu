@@ -109,7 +109,7 @@ public class ProjectService implements IProjectService {
 	 * 认购项目 茹化肖
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class, timeout = 300)
+	@Transactional(rollbackFor = Exception.class, timeout = 30)
 	public HttpResultModel<Object> subproject(SubProjectReq req) {
 		HttpResultModel<Object> result = new HttpResultModel<Object>();
 		Member user = memberDao.selectById(req.getUserId());

@@ -23,7 +23,9 @@ public class ProjectSubscriptionService implements  IProjectSubscriptionService{
 
 	@Autowired
 	private IProjectSubscriptionDao projectSubscriptionDao;
-
+	/**
+	 * 投资的项目
+	 */
 	@Override
 	public List<ProjectSubscriptionDM> getListMore(ProSubInvestReq record) {
 		return projectSubscriptionDao.getListMore(record);

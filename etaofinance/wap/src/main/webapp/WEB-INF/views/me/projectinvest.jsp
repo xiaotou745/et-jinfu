@@ -31,7 +31,7 @@ for(int i=0;i<list.size();i++)
 <i class="<%=list.get(i).getProjectStatus()==5?"fall":""%>"><%=ProjectStatus.getEnum(list.get(i).getProjectStatus()).desc()%></i>
 </div>
 <div class="item">
-<div><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></div>
+<div><a href="<%=basePath%>/home/detail?projectid=<%=list.get(i).getProjectid()%>"><img src="<%=imgurl+list.get(i).getProjectImage()%>" alt=""></a></div>
 <dl>
 	<dt><%=list.get(i).getProjectName()%></dt>
 	<dd><span>认购金额：</span><%=list.get(i).getAmount()%></dd>
@@ -39,10 +39,10 @@ for(int i=0;i<list.size();i++)
 </dl>
 </div>
 <%
-if(list.get(i).getRefundstatus()==1)
-	%>
+if(list.get(i).getRefundstatus()==Short.valueOf("1"))
+	{%>
 	<div><a href="#">查看退款详情></a></div>
-	<% 
+	<%} 
 %>
 </section>
 
