@@ -22,13 +22,8 @@ public interface IRechargeService {
 	
 	/**
 	 * 充值
-	 * @param memberId  会员id
-	 * @param amount      充值金额
-	 * @param accountType  充值账户类型
+	 * @param 
 	 * @return
 	 */
-	HttpResultModel<Object> recharge(Long memberId, Float amount, Integer accountType);
-	
-	HttpResultModel<Object> recharge(Long memberId, Float amount, Integer accountType,String createName);
-	 HttpResultModel<Object> recharge(Recharge recharge);
+	HttpResultModel<Object> recharge(Recharge recharge);
 }

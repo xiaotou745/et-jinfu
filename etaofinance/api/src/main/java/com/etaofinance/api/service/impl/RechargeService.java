@@ -99,89 +99,61 @@ public class RechargeService implements IRechargeService {
 	public PagedResponse<Recharge> getRechargeList(PagedRechargeReq req) {
 		return rechargeDao.getRechargeList(req);
 	}
-
-	
-
-	
+		
 	/**
 	 * 充值
-	 */
-	@Override
-	public HttpResultModel<Object> recharge(Long memberId, Float amount,
-			Integer accountType) {
-
-		return this.recharge(memberId, amount, accountType, "系统");
-		
-		
-	}
-	
-	public HttpResultModel<Object> recharge(Recharge recharge){
-		
-		return this.recharge(recharge.getMemberid(),recharge.getAmount(),recharge.getAccounttype(),recharge.getCreatename());
-		
-	}
-	
+	 */	
 	@Override
 	@Transactional(rollbackFor = Exception.class, timeout = 30)
-	public HttpResultModel<Object> recharge(Long memberId, Float amount,
-			Integer accountType, String createName) {
+	public HttpResultModel<Object> recharge(Recharge record) {
 		HttpResultModel<Object> res = new HttpResultModel<Object>();
-
-
-		res.setCode(HttpReturnRnums.Fail.value());
-		res.setMsg(HttpReturnRnums.Fail.desc());
-
-		// todo:唯一标识码--- 其实应该有一个公共的方法去处理各种单号的问题
-		//UUID uuid =  UUID.randomUUID();
-		String uuid=OrderNoHelper.generatePrefixNoCode("RC", memberId.intValue());
+		if(record.getAccounttype()==null || record.getAccounttype().equals(""))
+			record.setAccounttype(1);
 		
-
-		// 1 insert recharge
+		//充值表
 		Recharge charge = new Recharge();
-
-		charge.setAccounttype(accountType);
-		charge.setAmount(amount);
-		charge.setCreatename(createName);
-		charge.setMemberid(memberId);
-		charge.setOptname(createName);
-		charge.setRemark("充值");
-		charge.setStatus((short) RechargeStatus.Success.value());
+		String uuid=OrderNoHelper.generatePrefixNoCode("CZ", record.getMemberid().intValue());
 		charge.setNo(uuid);
-
-		// 2 insert balancerecord
-		BalanceRecord balance =new BalanceRecord();
-
-		balance.setId(null);
-		balance.setAmount(amount);
-		balance.setAfteramount(amount);
-		balance.setMemberid(memberId);
-		balance.setRemark("充值流水");
-		balance.setTypeid((short) BalanceRecordType.Recharge.value());
-		balance.setRelationno(uuid);
-		balance.setOptname(createName);
-
-		// 3 update memberother
+		charge.setAccounttype(record.getAccounttype());
+		charge.setAmount(record.getAmount());
+		charge.setCreatename(record.getCreatename());
+		charge.setMemberid( record.getMemberid());
+		charge.setOptname(record.getCreatename());
+		charge.setRemark("充值");
+		charge.setStatus((short) RechargeStatus.Success.value());		
 		int insertRechargeRes = this.insertSelective(charge);
 		if (0 == insertRechargeRes) {
 			throw new TransactionalRuntimeException("充值表异常");
 		}
-
-		int insertBalanceRes = balanceRecordDao.insertTran(balance);
 		
-		if (0 == insertBalanceRes) {
-
-			throw new TransactionalRuntimeException("流水表异常");
-		}
-		int updateMemberOterRes = memberOtherDao.updateMemberOther(memberId,
-				amount,null);
+		//余额表
+		MemberOther mbOther = new MemberOther();		
+		mbOther.setMemberid(record.getMemberid());		
+		mbOther.setBalanceprice(record.getAmount());			
+		int updateMemberOterRes = memberOtherDao.updateMemberOther(mbOther);
 		if (0 == updateMemberOterRes) {
 
 			throw new TransactionalRuntimeException("余额表异常");
 		}
 
+		//余额流水表
+		BalanceRecord balance =new BalanceRecord();	
+		balance.setAmount(record.getAmount());	
+		balance.setMemberid(record.getMemberid());
+		balance.setWithwardid((long)0);
+		balance.setRemark("充值流水");
+		balance.setTypeid((short) BalanceRecordType.Recharge.value());
+		balance.setRelationno(uuid);
+		balance.setOptname(record.getCreatename());
+
+		int insertBalanceRes = balanceRecordDao.insertBalanceRecord(balance);		
+		if (0 == insertBalanceRes) {
+
+			throw new TransactionalRuntimeException("流水表异常");
+		}
+
 		res.setCode(HttpReturnRnums.Success.value());
-		res.setMsg(HttpReturnRnums.Success.desc());
-		//res.setData("充值成功");
+		res.setMsg(HttpReturnRnums.Success.desc());		
 		String basePath = PropertyUtils.getProperty("java.wap.url");
 		basePath+="/me/accountblance";	
 		res.setUrl(basePath);		

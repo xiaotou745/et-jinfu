@@ -5,11 +5,11 @@ public class MemberOther {
 
 	    private Long memberid;
 
-	    private Double balanceprice;
+	    private Float balanceprice;
 
-	    private Double allowwithdrawprice;
+	    private Float allowwithdrawprice;
 
-	    private Double haswithdrawprice;
+	    private Float haswithdrawprice;
 
 	    private String paypassword;
 
@@ -29,27 +29,27 @@ public class MemberOther {
 	        this.memberid = memberid;
 	    }
 
-	    public Double getBalanceprice() {
+	    public Float getBalanceprice() {
 	        return balanceprice;
 	    }
 
-	    public void setBalanceprice(Double balanceprice) {
+	    public void setBalanceprice(Float balanceprice) {
 	        this.balanceprice = balanceprice;
 	    }
 
-	    public Double getAllowwithdrawprice() {
+	    public Float getAllowwithdrawprice() {
 	        return allowwithdrawprice;
 	    }
 
-	    public void setAllowwithdrawprice(Double allowwithdrawprice) {
+	    public void setAllowwithdrawprice(Float allowwithdrawprice) {
 	        this.allowwithdrawprice = allowwithdrawprice;
 	    }
 
-	    public Double getHaswithdrawprice() {
+	    public Float getHaswithdrawprice() {
 	        return haswithdrawprice;
 	    }
 
-	    public void setHaswithdrawprice(Double haswithdrawprice) {
+	    public void setHaswithdrawprice(Float haswithdrawprice) {
 	        this.haswithdrawprice = haswithdrawprice;
 	    }
 

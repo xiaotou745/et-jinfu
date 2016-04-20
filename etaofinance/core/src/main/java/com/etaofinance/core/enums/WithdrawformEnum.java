@@ -15,7 +15,11 @@ public enum WithdrawformEnum {
 	/**
 	 * 用户不存在
 	 */
-	MemberIdIsNull(-2,"用户不存在"),	
+	MemberIdIsNull(-2,"用户不存在"),
+	/**
+	 * 未绑定银行卡
+	 */
+	BindCardIsNull(-3,"未绑定银行卡"),	
 	/**
 	 * Id为空
 	 */

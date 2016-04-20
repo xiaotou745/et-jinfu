@@ -66,9 +66,6 @@ public class FinanceControllor {
 	@RequestMapping("/getbalancerecordlist")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "获取账户流水", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取账户流水")
 	public List<BalanceRecordDM> getBalanceRecordList(@RequestBody PublicMemberReq record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
@@ -86,9 +83,6 @@ public class FinanceControllor {
 	@RequestMapping("/getbalancerecorddetail")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "获取账户流水详情", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取账户流水详情")
 	public HttpResultModel<BalanceRecordDM> getBalanceRecordDetail(@RequestBody PublicMemberReq record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
@@ -125,9 +119,6 @@ public class FinanceControllor {
 	@RequestMapping("/getwithdrawformlist")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "获取可提现记录", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取可提现记录")
 	public List<WithdrawformDM> getWithdrawformList(@RequestBody PublicMemberReq record)
 	{		
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
@@ -145,9 +136,6 @@ public class FinanceControllor {
 	@RequestMapping("/getWithdrawformdetail")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "获取可提现记录详情", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "获取可提现记录详情")
 	public HttpResultModel<WithdrawformDM> getWithdrawformDetail(@RequestBody PublicMemberReq record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
@@ -164,17 +152,12 @@ public class FinanceControllor {
 	@RequestMapping("recharge")
 	@ResponseBody
 	@RequireLogin
-	@ApiOperation(value = "充值", httpMethod = "POST", 
-	consumes="application/json;charset=UFT-8",produces="application/json;charset=UFT-8",
-	notes = "充值")
 	public HttpResultModel<Object> recharge(@RequestBody Recharge record)
 	{
 		Long memberid=UserContext.getCurrentContext(request).getUserInfo().getId();	
 		String createname=UserContext.getCurrentContext(request).getUserInfo().getUsername();
 		record.setMemberid(memberid);	
-		record.setCreatename(createname);
-		if(record.getAccounttype()==null || record.getAccounttype().equals(""))
-			record.setAccounttype(1);
+		record.setCreatename(createname);	
 		return	rechargeService.recharge(record);
 		
 	}

@@ -217,7 +217,7 @@ public class ProjectService implements IProjectService {
 		MemberOther updateOther = new MemberOther();
 		// 余额=余额-应付款
 		Float yF = (p.getUnitprice() * req.getQuantity());
-		Double YR = mo.getBalanceprice();
+		Float YR = mo.getBalanceprice();
 		updateOther.setBalanceprice(YR - yF);
 		updateOther.setAllowwithdrawprice(mo.getAllowwithdrawprice() - yF);
 		updateOther.setMemberid(m.getId());
@@ -228,7 +228,7 @@ public class ProjectService implements IProjectService {
 		bRecord.setMemberid(m.getId());
 		bRecord.setAfteramount((float) (YR - yF));
 		bRecord.setTypeid(ParseHelper.ToShort(RecordType.Invest.value()));
-		bRecord.setProjectid(p.getId());
+		bRecord.setWithwardid(p.getId());
 		bRecord.setRemark("认购项目");
 		bRecord.setOptname(m.getTruename());
 		int res3 = blanceRecordDao.insertSelective(bRecord);

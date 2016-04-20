@@ -7,7 +7,7 @@
 		<result column="Amount" property="amount" jdbcType="REAL" />
 		<result column="AfterAmount" property="afteramount" jdbcType="REAL" />
 		<result column="TypeId" property="typeid" jdbcType="SMALLINT" />
-		<result column="ProjectId" property="projectid" jdbcType="BIGINT" />
+		<result column="WithwardId" property="withwardid" jdbcType="BIGINT" />
 		<result column="RelationNo" property="relationno" jdbcType="VARCHAR" />
 		<result column="Remark" property="remark" jdbcType="VARCHAR" />
 		<result column="OptName" property="optname" jdbcType="VARCHAR" />
@@ -15,7 +15,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		Id, MemberId, Amount, AfterAmount, TypeId, ProjectId, RelationNo, Remark,
+		Id, MemberId, Amount, AfterAmount, TypeId, WithwardId, RelationNo, Remark,
 		OptName,
 		OptTime
 	</sql>
@@ -31,7 +31,7 @@
 	<select id="selectDMByPrimaryKey" resultType="com.etaofinance.entity.domain.BalanceRecordDM"
 		parameterType="java.lang.Long">
 		select
-		b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.ProjectId,
+		b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.WithwardId,
 		b.RelationNo, b.Remark, b.OptName,
 		b.OptTime,CASE WHEN b.TypeId = 1 THEN '投资'
 		WHEN b.TypeId = 2 THEN '退款至余额'
@@ -41,14 +41,14 @@
 		END AS typeName ,
 		p.ProjectName
 		from balancerecord b
-		left join project p on b.ProjectId=p.Id
+		left join project p on b.WithwardId=p.Id
 		where b.Id = #{id,jdbcType=BIGINT}
 	</select>
 
 	<select id="getListMore" resultType="com.etaofinance.entity.domain.BalanceRecordDM"
 		parameterType="java.lang.Long">
 		select
-		b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.ProjectId,
+		b.Id, b.MemberId, b.Amount, b.AfterAmount, b.TypeId, b.WithwardId,
 		b.RelationNo, b.Remark, b.OptName,
 		b.OptTime,CASE WHEN b.TypeId = 1 THEN '投资'
 		WHEN b.TypeId = 2 THEN '退款至余额'
@@ -58,7 +58,7 @@
 		END AS typeName ,
 		p.ProjectName
 		from balancerecord b
-		left join project p on b.ProjectId=p.Id
+		left join project p on b.WithwardId=p.Id
 		where b.memberid = #{memberId,jdbcType=BIGINT}
 	</select>
 
@@ -69,12 +69,12 @@
 
 	<insert id="insert" parameterType="com.etaofinance.entity.BalanceRecord">
 		insert into balancerecord (Id, MemberId, Amount,
-		AfterAmount, TypeId, ProjectId,
+		AfterAmount, TypeId, WithwardId,
 		RelationNo, Remark, OptName,
 		OptTime)
 		values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT},
 		#{amount,jdbcType=REAL},
-		#{afteramount,jdbcType=REAL}, #{typeid,jdbcType=SMALLINT}, #{projectid,jdbcType=BIGINT},
+		#{afteramount,jdbcType=REAL}, #{typeid,jdbcType=SMALLINT}, #{withwardid,jdbcType=BIGINT},
 		#{relationno,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
 		#{optname,jdbcType=VARCHAR},
 		#{opttime,jdbcType=TIMESTAMP})
@@ -83,9 +83,6 @@
 	<insert id="insertSelective" parameterType="com.etaofinance.entity.BalanceRecord">
 		insert into balancerecord
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				Id,
-			</if>
 			<if test="memberid != null">
 				MemberId,
 			</if>
@@ -98,8 +95,8 @@
 			<if test="typeid != null">
 				TypeId,
 			</if>
-			<if test="projectid != null">
-				ProjectId,
+			<if test="withwardid != null">
+				WithwardId,
 			</if>
 			<if test="relationno != null">
 				RelationNo,
@@ -116,9 +113,6 @@
 		</trim>
 
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=BIGINT},
-			</if>
 			<if test="memberid != null">
 				#{memberid,jdbcType=BIGINT},
 			</if>
@@ -131,8 +125,8 @@
 			<if test="typeid != null">
 				#{typeid,jdbcType=SMALLINT},
 			</if>
-			<if test="projectid != null">
-				#{projectid,jdbcType=BIGINT},
+			<if test="withwardid != null">
+				#{withwardid,jdbcType=BIGINT},
 			</if>
 			<if test="relationno != null">
 				#{relationno,jdbcType=VARCHAR},
@@ -149,12 +143,16 @@
 		</trim>
 	</insert>
 
-	<insert id="insertTran" parameterType="com.etaofinance.entity.BalanceRecord">
+	<insert id="insertBalanceRecord" parameterType="com.etaofinance.entity.BalanceRecord">
+	insert into balancerecord
+(MemberId,Amount,AfterAmount,TypeId,WithwardId,RelationNo,Remark,OptName)
+select #{memberid,jdbcType=BIGINT},#{amount,jdbcType=REAL},m.BalancePrice,#{typeid,jdbcType=SMALLINT},#{withwardid,jdbcType=BIGINT},
+#{relationno,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{optname,jdbcType=VARCHAR}
+from memberother as m where m.MemberId=#{memberid,jdbcType=BIGINT}
+	</insert>
+	<insert id="insertBRecord1" parameterType="com.etaofinance.entity.BalanceRecord">
 		insert into balancerecord
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				Id,
-			</if>
+		<trim prefix="(" suffix=")" suffixOverrides=",">	
 			<if test="memberid != null">
 				MemberId,
 			</if>
@@ -167,8 +165,8 @@
 			<if test="typeid != null">
 				TypeId,
 			</if>
-			<if test="projectid != null">
-				ProjectId,
+			<if test="withwardid != null">
+				WithwardId,
 			</if>
 			<if test="relationno != null">
 				RelationNo,
@@ -184,39 +182,21 @@
 			</if>
 		</trim>
 
-		<trim prefix="select " suffix="" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=BIGINT},
-			</if>
+		<trim prefix="select " suffix="" suffixOverrides=",">	
 			<if test="memberid != null">
 				#{memberid,jdbcType=BIGINT},
 			</if>
 			<if test="amount != null">
 				#{amount,jdbcType=REAL},
 			</if>
-			<if test="amount != null">
-	#{amount,jdbcType=REAL} +			 
- case when 0 = 
- (
-	select  count(1)  from balancerecord 
-	where memberid = 1
-	order by opttime desc
-	limit 1
-
-) then 0 else (
-
-	select  afteramount  from balancerecord 
-	where memberid = 1
-	order by opttime desc
-	limit 1 
-	
-)end afteramount ,
+			<if test="afteramount != null">
+				AfterAmount,
 			</if>
 			<if test="typeid != null">
 				#{typeid,jdbcType=SMALLINT},
 			</if>
-			<if test="projectid != null">
-				#{projectid,jdbcType=BIGINT},
+			<if test="withwardid != null">
+				#{withwardid,jdbcType=BIGINT},
 			</if>
 			<if test="relationno != null">
 				#{relationno,jdbcType=VARCHAR},
@@ -247,8 +227,8 @@
 			<if test="typeid != null">
 				TypeId = #{typeid,jdbcType=SMALLINT},
 			</if>
-			<if test="projectid != null">
-				ProjectId = #{projectid,jdbcType=BIGINT},
+			<if test="withwardid != null">
+				withwardid = #{withwardid,jdbcType=BIGINT},
 			</if>
 			<if test="relationno != null">
 				RelationNo = #{relationno,jdbcType=VARCHAR},
@@ -272,7 +252,7 @@
 		Amount = #{amount,jdbcType=REAL},
 		AfterAmount = #{afteramount,jdbcType=REAL},
 		TypeId = #{typeid,jdbcType=SMALLINT},
-		ProjectId = #{projectid,jdbcType=BIGINT},
+		withwardid = #{withwardid,jdbcType=BIGINT},
 		RelationNo = #{relationno,jdbcType=VARCHAR},
 		Remark = #{remark,jdbcType=VARCHAR},
 		OptName = #{optname,jdbcType=VARCHAR},
@@ -317,7 +297,7 @@
 	<sql id="getBuyListWhere">
 		TypeId = 1
 		<if test="proId>0">
-			and ProjectId=${proId}
+			and withwardid=${proId}
 		</if>
 		<if test="createName!= null and createName!=''">
 			and OptName like ''%${createName}%''

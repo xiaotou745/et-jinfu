@@ -78,6 +78,10 @@ where w.memberid = #{memberid,jdbcType=BIGINT}
       #{accountno,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.etaofinance.entity.Withdrawform" >
+  		<selectKey resultType="java.lang.Long" keyProperty="id"
+			order="AFTER">
+			select @@IDENTITY as id
+		</selectKey>
     insert into withdrawform
     <trim prefix="(" suffix=")" suffixOverrides="," > 
       <if test="memberid != null" >

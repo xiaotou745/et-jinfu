@@ -26,8 +26,8 @@ public interface IMemberOtherDao {
     
     int updateByMemberIdSelective(MemberOther record);
 
-	int updateMemberOther(Long memberId, Float amount);
+//	int updateMemberOther(Long memberId, Float amount);
 
-	int updateMemberOther(Long memberId, Float amount,Float applyMount);
+	int updateMemberOther(MemberOther record);
 
 }

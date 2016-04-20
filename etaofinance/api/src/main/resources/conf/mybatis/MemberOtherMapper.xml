@@ -4,11 +4,11 @@
 	<resultMap id="BaseResultMap" type="com.etaofinance.entity.MemberOther">
 		<id column="Id" property="id" jdbcType="BIGINT" />
 		<result column="MemberId" property="memberid" jdbcType="BIGINT" />
-		<result column="BalancePrice" property="balanceprice" jdbcType="DOUBLE" />
+		<result column="BalancePrice" property="balanceprice" jdbcType="REAL" />
 		<result column="AllowWithdrawPrice" property="allowwithdrawprice"
-			jdbcType="DOUBLE" />
+			jdbcType="REAL" />
 		<result column="HasWithdrawPrice" property="haswithdrawprice"
-			jdbcType="DOUBLE" />
+			jdbcType="REAL" />
 		<result column="PayPassWord" property="paypassword" jdbcType="VARCHAR" />
 	</resultMap>
 
@@ -44,9 +44,9 @@
 		AllowWithdrawPrice, HasWithdrawPrice, PayPassWord
 		)
 		values (#{id,jdbcType=BIGINT}, #{memberid,jdbcType=BIGINT},
-		#{balanceprice,jdbcType=DOUBLE},
-		#{allowwithdrawprice,jdbcType=DOUBLE},
-		#{haswithdrawprice,jdbcType=DOUBLE}, #{paypassword,jdbcType=VARCHAR}
+		#{balanceprice,jdbcType=REAL},
+		#{allowwithdrawprice,jdbcType=REAL},
+		#{haswithdrawprice,jdbcType=REAL}, #{paypassword,jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -80,13 +80,13 @@
 				#{memberid,jdbcType=BIGINT},
 			</if>
 			<if test="balanceprice != null">
-				#{balanceprice,jdbcType=DOUBLE},
+				#{balanceprice,jdbcType=REAL},
 			</if>
 			<if test="allowwithdrawprice != null">
-				#{allowwithdrawprice,jdbcType=DOUBLE},
+				#{allowwithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="haswithdrawprice != null">
-				#{haswithdrawprice,jdbcType=DOUBLE},
+				#{haswithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="paypassword != null">
 				#{paypassword,jdbcType=VARCHAR},
@@ -101,13 +101,13 @@
 				MemberId = #{memberid,jdbcType=BIGINT},
 			</if>
 			<if test="balanceprice != null">
-				BalancePrice = #{balanceprice,jdbcType=DOUBLE},
+				BalancePrice = #{balanceprice,jdbcType=REAL},
 			</if>
 			<if test="allowwithdrawprice != null">
-				AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=DOUBLE},
+				AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="haswithdrawprice != null">
-				HasWithdrawPrice = #{haswithdrawprice,jdbcType=DOUBLE},
+				HasWithdrawPrice = #{haswithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="paypassword != null">
 				PayPassWord = #{paypassword,jdbcType=VARCHAR},
@@ -123,13 +123,13 @@
 			<!-- MemberId = #{memberid,jdbcType=BIGINT}, -->
 			<!-- </if> -->
 			<if test="balanceprice != null">
-				BalancePrice = #{balanceprice,jdbcType=DOUBLE},
+				BalancePrice = #{balanceprice,jdbcType=REAL},
 			</if>
 			<if test="allowwithdrawprice != null">
-				AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=DOUBLE},
+				AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="haswithdrawprice != null">
-				HasWithdrawPrice = #{haswithdrawprice,jdbcType=DOUBLE},
+				HasWithdrawPrice = #{haswithdrawprice,jdbcType=REAL},
 			</if>
 			<if test="paypassword != null">
 				PayPassWord = #{paypassword,jdbcType=VARCHAR},
@@ -141,9 +141,9 @@
 	<update id="updateByPrimaryKey" parameterType="com.etaofinance.entity.MemberOther">
 		update memberother
 		set MemberId = #{memberid,jdbcType=BIGINT},
-		BalancePrice = #{balanceprice,jdbcType=DOUBLE},
-		AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=DOUBLE},
-		HasWithdrawPrice = #{haswithdrawprice,jdbcType=DOUBLE},
+		BalancePrice = #{balanceprice,jdbcType=REAL},
+		AllowWithdrawPrice = #{allowwithdrawprice,jdbcType=REAL},
+		HasWithdrawPrice = #{haswithdrawprice,jdbcType=REAL},
 		PayPassWord = #{paypassword,jdbcType=VARCHAR}
 		where Id = #{id,jdbcType=BIGINT}
 	</update>
@@ -153,15 +153,10 @@
 		update memberother
 		set
 		<trim suffixOverrides=",">
-			<if test="allowwithdrawprice != null">
-				BalancePrice =BalancePrice + #{allowwithdrawprice,jdbcType=DOUBLE} ,
-			</if>
-			<if test="allowwithdrawprice != null">
-				AllowWithdrawPrice =AllowWithdrawPrice+ #{allowwithdrawprice,jdbcType=DOUBLE},
-			</if>
-			<if test="haswithdrawprice != null">
-				HasWithdrawPrice =HasWithdrawPrice+ #{haswithdrawprice,jdbcType=DOUBLE},
-			</if>
+			<if test="balanceprice != null">
+				BalancePrice =BalancePrice + #{balanceprice,jdbcType=REAL} ,
+				AllowWithdrawPrice =AllowWithdrawPrice+ #{balanceprice,jdbcType=REAL},
+			</if>				
 		</trim>
 		where MemberId = #{memberid,jdbcType=BIGINT}
 	</update>
