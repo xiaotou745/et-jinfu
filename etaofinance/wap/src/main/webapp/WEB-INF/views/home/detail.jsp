@@ -148,7 +148,7 @@
                     <div class="detail-box-list container">
                         <div class="box-list-input">
                             <textarea placeholder="在此处写上您的评论或问题" data-role="comment"></textarea>
-                            <button disabled>发布</button>
+                            <button disabled data-role="publish">发布</button>
                         </div>
                         <div class="box-list-ul">
                             <ul>
