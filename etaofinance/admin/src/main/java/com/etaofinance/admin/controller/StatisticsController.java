@@ -15,6 +15,7 @@ import com.etaofinance.api.service.inter.IProjectService;
 import com.etaofinance.entity.Comment;
 import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.DataStatistics;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.PagedCommentReq;
 
 @Controller
@@ -32,6 +33,17 @@ public class StatisticsController {
 		model.addObject("currenttitle", "数据统计");
 		model.addObject("viewPath", "statistics/index");
 		List<DataStatistics> dt =projectService.getDataStatistics();
+		model.addObject("listData",dt);
+		return model;
+	}
+	
+	@RequestMapping("dbdata")
+	public ModelAndView dbdata() {
+		ModelAndView model = new ModelAndView("adminView");
+		model.addObject("subtitle", "首页");
+		model.addObject("currenttitle", "待办事物");
+		model.addObject("viewPath", "statistics/dbdata");
+		List<ToDoDataStatistics> dt =projectService.getToDoDataStatices();
 		model.addObject("listData",dt);
 		return model;
 	}

@@ -41,6 +41,7 @@ import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ModifyProjectImg;
 import com.etaofinance.entity.domain.ProjectModel;
 import com.etaofinance.entity.domain.PublishProjectReq;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.ModifyProjectReq;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
@@ -109,7 +110,7 @@ public class ProjectService implements IProjectService {
 	 * 认购项目 茹化肖
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class, timeout = 30)
+	@Transactional(rollbackFor = Exception.class, timeout = 300)
 	public HttpResultModel<Object> subproject(SubProjectReq req) {
 		HttpResultModel<Object> result = new HttpResultModel<Object>();
 		Member user = memberDao.selectById(req.getUserId());
@@ -244,8 +245,7 @@ public class ProjectService implements IProjectService {
 		if (req.getIsLead() == 1)// 领投
 		{
 			// 已购买的份数加上新的份数
-			updateProject.setRediduePreheatMaxFenShu(p
-					.getRediduePreheatMaxFenShu() + req.getQuantity());
+			updateProject.setRediduePreheatMaxFenShu(p.getRediduePreheatMaxFenShu() + req.getQuantity());
 		}
 		int res4 = projectDao.updateByPrimaryKeySelective(updateProject);
 		if (res1 != 1 || res2 != 1 || res3 != 1 || res4 != 1)// 每个操作都应该只有一条影响
@@ -455,5 +455,17 @@ public class ProjectService implements IProjectService {
 	public int updateByPrimaryKeySelective(Project record) {
 	
 		return projectDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public List<ToDoDataStatistics> getToDoDataStatices() {
+		return projectDao.getToDoDataStatices();
+	}
+	/**
+	 * 定时服务 茹化肖
+	 */
+	@Override
+	public int QuartzServie() {
+		return projectDao.QuartzServie();
 	}
 }
