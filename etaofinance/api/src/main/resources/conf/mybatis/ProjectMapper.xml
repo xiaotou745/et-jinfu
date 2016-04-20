@@ -660,4 +660,10 @@
 	<update id="changeFlowNum"  parameterType="java.util.Map">
 	UPDATE project p set p.FollowNumber=(p.FollowNumber+#{num,jdbcType=INTEGER}) WHERE p.Id=#{pid,jdbcType=BIGINT}
 	</update>
+	<!--  定时服务-->
+	<update id="QuartzServie">
+UPDATE project p set p.ProjectStatus=2 WHERE p.ProjectStatus=1 AND p.AuditStatus=2 AND NOW() > p.PreheatTime AND p.StartTime>NOW();
+UPDATE project p set p.ProjectStatus=3 WHERE p.ProjectStatus=2 AND p.AuditStatus=2 AND NOW() > p.StartTime   AND p.StartTime>NOW();
+UPDATE project p set p.ProjectStatus=4 WHERE p.ProjectStatus=3 AND p.AuditStatus=2 AND p.FenShu=p.RedidueFenshu;
+	</update>
 </mapper>

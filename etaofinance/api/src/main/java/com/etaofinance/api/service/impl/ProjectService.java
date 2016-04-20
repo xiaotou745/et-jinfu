@@ -463,4 +463,11 @@ public class ProjectService implements IProjectService {
 	public List<ToDoDataStatistics> getToDoDataStatices() {
 		return projectDao.getToDoDataStatices();
 	}
+	/**
+	 * 定时服务 茹化肖
+	 */
+	@Override
+	public int QuartzServie() {
+		return projectDao.QuartzServie();
+	}
 }

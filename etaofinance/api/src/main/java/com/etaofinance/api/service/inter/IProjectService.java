@@ -88,4 +88,10 @@ public interface IProjectService {
 	 * 待办理数据统计汇总
 	 */
 	List<ToDoDataStatistics> getToDoDataStatices();
+	/**
+	 * 更改状态的定时服务.
+	 * 茹化肖
+	 * @return
+	 */
+	int QuartzServie();
 }
