@@ -13,6 +13,7 @@ import com.etaofinance.entity.common.PagedResponse;
 import com.etaofinance.entity.domain.DataStatistics;
 import com.etaofinance.entity.domain.ProjectFavoriteDM;
 import com.etaofinance.entity.domain.ProjectModel;
+import com.etaofinance.entity.domain.ToDoDataStatistics;
 import com.etaofinance.entity.req.PagedProjectReq;
 import com.etaofinance.entity.req.ProLaunchReq;
 import com.etaofinance.entity.req.ProjectAuditReq;
@@ -125,6 +126,15 @@ return getMasterSqlSessionUtil().update("IProjectDao.updateByPrimaryKey", record
 		return getReadOnlySqlSessionUtil()
 				.selectList(
 						"IProjectDao.getDataStatices");
+	}
+	/**
+	 * 待办事物统计
+	 */
+	@Override
+	public List<ToDoDataStatistics> getToDoDataStatices() {
+		return getReadOnlySqlSessionUtil()
+				.selectList(
+						"IProjectDao.getToDoDataStatices");
 	}
 	/**
 	 * 修改关注人数

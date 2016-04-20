@@ -645,6 +645,17 @@
 		(SELECT SUM(case TypeId WHEN 4 then Amount ELSE 0 END) from balancerecord) cash
 		FROM project
 	</select>
+	<!-- 待办事物统计 -->
+	<select id="getToDoDataStatices" resultType="com.etaofinance.entity.domain.ToDoDataStatistics">
+	    select 
+		SUM(case when TypeId = 1 AND Status = 0 then 1 else 0 END) gtuser,
+		SUM(case when TypeId = 2 AND Status = 0 then 1 else 0 END) ltuser,
+		(SELECT SUM(CASE AuditStatus when 1 then 1 ELSE 0 END) from project) dshProject,
+		(SELECT SUM(case Status when 1 then 1 else 0 END) from withdrawform)dshtx,
+		(SELECT SUM(CASE RefundStatus when 0 then 1 ELSE 0 END) from projectsubscription) ordercount,
+		(select COUNT(Id) from qa) qacount
+		from memberapply
+	</select>
 	<!-- 修改关注人数 -->
 	<update id="changeFlowNum"  parameterType="java.util.Map">
 	UPDATE project p set p.FollowNumber=(p.FollowNumber+#{num,jdbcType=INTEGER}) WHERE p.Id=#{pid,jdbcType=BIGINT}
