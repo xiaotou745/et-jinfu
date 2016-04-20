@@ -155,7 +155,7 @@ $(function(){
 				currentPage : currentPage,
 				"id" : $("#ProjectId").val().trim() == "" ? "0" : $("#ProjectId").val().trim(),
 				"projectStatus" : $("#projectStatus").val(),
-				"projectName" : $("#ProjectName").val()
+				"projectName" : $("#ProjectName").val().trim().replace('\'','"')
 			};
 			
 			$.post("<%=basePath%>/project/listdo",data,function(d){
